@@ -158,6 +158,8 @@ void Gun_Task(void const * argument)
       }break;
       case 2://连发模式
       {
+        pid_dial_pos.pos_out = all_speed;//匀速过程
+        /*
           check_count++;
         if(check_count < 1000)//初始时一直保持匀速
         {
@@ -193,6 +195,7 @@ void Gun_Task(void const * argument)
               break;
           }
         }
+        */
 
       }break;
     }

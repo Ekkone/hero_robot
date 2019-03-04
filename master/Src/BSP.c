@@ -176,7 +176,7 @@ void BSP_Init(void)
 /*开启ADC的DMA接收，注意缓存不能小于2，不能设置为_IO型即易变量*/
 	HAL_ADC_Start_DMA(&hadc1, (uint32_t*)uhADCxConvertedValue, 10); 
 	/*陀螺仪*/
-//	 MPU6500_Init();
+	 MPU6500_Init();
 	/*摩擦轮*/
 	GUN_Init();
 	/*使能can中断*/

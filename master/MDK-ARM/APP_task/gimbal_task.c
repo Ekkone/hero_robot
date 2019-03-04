@@ -35,6 +35,8 @@ pid_t pid_yaw_saber = {0};  //外接陀螺仪 /*目前只用于位置环*/
 pid_t pid_yaw_saber_spd = {0};
 pid_t pid_pit_saber = {0};
 pid_t pid_pit_saber_spd = {0};
+
+extern float speed_golf;
 /* 内部函数原型声明----------------------------------------------------------*/
 /**                                                           //待续
 	**************************************************************
@@ -47,10 +49,11 @@ pid_t pid_pit_saber_spd = {0};
 void gimbal_pid_init(void)
 {
 		/*pitch axis motor pid parameter*/
+  /*imu pid parameter*/
 	PID_struct_init(&pid_pit, POSITION_PID, 5000, 1000,
-                  4.0f, 0.02f, 5.0f); 
-  PID_struct_init(&pid_pit_jy901_spd, POSITION_PID, 5000, 1000,
-                  2.0f, 0.0f, 0.0f );
+									5.0f, 0.0f, 39.0f); 
+	PID_struct_init(&pid_pit_spd, POSITION_PID, 5000, 1000,
+                  2.5f, 0.0f, 0.0f );
 	
   /* yaw axis motor pid parameter */
 //	 PID_struct_init(&pid_yaw, POSITION_PID, 5000, 1000,
@@ -97,7 +100,7 @@ void Gimbal_Contrl_Task(void const * argument)
     {
 	
 	   RefreshTaskOutLineTime(GimbalContrlTask_ON);
-
+      IMU_Get_Data();
 			// 只用jy901的角度数据
 			switch(0)
 			{
@@ -114,7 +117,7 @@ void Gimbal_Contrl_Task(void const * argument)
 				default:{	//自由射击
 //					pid_calc(&pid_yaw, yaw_get.total_angle, yaw_set.expect);
 //					pid_calc(&pid_yaw_jy901_spd,(ptr_jy901_t_angular_velocity.vz), pid_yaw.pos_out);
-
+          #if jy901
 					yaw_set.expect = minipc_rx.angle_yaw + yaw_set.expect;
 					pit_set.expect = minipc_rx.angle_pit + pit_set.expect;
 					minipc_rx.angle_yaw = 0;
@@ -126,7 +129,16 @@ void Gimbal_Contrl_Task(void const * argument)
 					//pit轴
 					pid_calc(&pid_pit, pit_get.total_angle, pit_set.expect);
 					pid_calc(&pid_pit_jy901_spd,(ptr_jy901_t_angular_velocity.vy), pid_pit.pos_out);
-					
+          #endif
+          #if imu
+          pid_calc(&pid_yaw, yaw_get.total_angle,yaw_set.expect);
+          pid_calc(&pid_yaw_spd,(imu_data.gz), pid_yaw.pos_out);
+          //pit轴
+          pid_calc(&pid_pit, pit_get.total_angle, pit_set.expect);
+          pid_calc(&pid_pit_spd,(imu_data.gy), pid_pit.pos_out);
+//        pid_calc(&pid_pit_spd,(imu_data.gy), 0);
+          #endif
+          
 				}
 				break;
 			}
@@ -151,8 +163,8 @@ void Gimbal_Contrl_Task(void const * argument)
 //			 printf("\n\r**************DOWN*************\n\r");
 //			 printf("yaw_set:%d,yaw_get:%d,out:%d  ",yaw_set.expect,yaw_get.total_angle,(int16_t)(-pid_yaw_spd.pos_out));
 //			 printf("pit_set:%d,pit_get:%d,out:%d\n\r\n",pit_set.expect,pit_get.total_angle,(int16_t)(-pid_pit_spd.pos_out));
+       printf("angle=%5f\tspeed=%4f\r\n",pit_get.total_angle * 0.0439,speed_golf);
 			 	}                                                                                                        
-		 
 		  	Pitch_Current_Value=(-pid_pit_jy901_spd.pos_out); 
 		    Yaw_Current_Value= (-pid_yaw_jy901_spd.pos_out); 
 				if(gimbal_disable_flg==1)

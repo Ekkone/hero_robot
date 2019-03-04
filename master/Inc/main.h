@@ -49,9 +49,12 @@
 #define BoardOld 				1	//1为旧板子，0为新板子
 #define BoardNew				0
 
-#define infantry 				1 	//步兵车
+#define infantry 				0 	//步兵车
 #define engineer				0 	//工程车
-#define hero						0		//英雄车
+#define hero						1		//英雄车
+
+#define imu             1
+#define jy901           0
 
 #define pritnf_JY901  	0		//JY901是否有数据
 #define pritnf_Gimbal 	0		//云台两轴Can是否有数据

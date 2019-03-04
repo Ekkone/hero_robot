@@ -597,6 +597,7 @@ void HAL_CAN_RxCpltCallback(CAN_HandleTypeDef *hcan)
 	}
 }
 //外部中断回调函数
+float speed_golf = 0;
 void	HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 {
 	if(GPIO_Pin == GPIO_PIN_2)//gate1
@@ -608,6 +609,7 @@ void	HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 	{
 		Photoelectric_gate2 = Micro_Tick;
 		gate2_counter++;
+    speed_golf = (float)(0.05 / 0.000005 / (Photoelectric_gate2 - Photoelectric_gate1));
  	}
 }
 /* USER CODE END 1 */

@@ -1,13 +1,19 @@
+/*************************************************************************************
+*	@file			SystemState.c
+* @author	 	   by  donglin   
+*	@version 	V1.0
+*	@date			
+* @brief		NONE
+*************************************************************************************//* Includes ------------------------------------------------------------------------*/
 #include "SystemState.h"
 #include "tim.h"
-/*   by  donglin   */
-
-
+/* External variables --------------------------------------------------------------*/
+/* Internal variables --------------------------------------------------------------*/
 SystemStateDef SystemState={0};
 float g_TimePer[100]={0};
 float g_Time_DeviceOutLine[DeviceTotal_No]={0};//外设最近一次通信时间数组
 float g_Time_TASKOutLine[TASKTotal_No]={0};//外设最近一次通信时间数组
-
+/* Private function prototypes ---------------------------------------------------*/
 //断线检测检测
 void OutLine_Check()
 {
@@ -116,4 +122,13 @@ void RefreshTaskOutLineTime(TASK_NoDEF Task_No)
 	g_Time_DeviceOutLine[Task_No]=GetSystemTimer();
 	
 }
+
+/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
+
+
+
+
+
+
+
 

@@ -26,10 +26,10 @@
 /* 任务主体部分 -------------------------------------------------------------*/
 
 
-
+#if BoardNew
 void Led_Task(void const * argument)
 {
-#if BoardNew
+
 	osDelay(100);
 	portTickType xLastWakeTime;
   xLastWakeTime = xTaskGetTickCount();
@@ -103,9 +103,9 @@ void Led_Task(void const * argument)
 		
 	 }
  }
-#endif
-}
 
+}
+#endif
 
 
 void Check_Task(void const * argument)

@@ -1,11 +1,18 @@
+/*************************************************************************************
+*	@file			SystemState.h
+* @author	 	
+*	@version 	V1.0
+*	@date			
+* @brief		NONE
+*************************************************************************************/
 #ifndef __SysState_H__
 #define __SysState_H__
 
+/* Includes ------------------------------------------------------------------------*/
 #include "stm32f4xx_hal.h"
 #include "FreeRTOS.h"
 #include "cmsis_os.h"
-
-
+/* Exported macro ------------------------------------------------------------*/
 #define OutLine_Time 50 //断线检测时间
 #define Motor_Stall_Time 200
 #define Motor_Stall_Spd 5
@@ -13,7 +20,7 @@
 #define MyFlagSet(x,y) x=x|(0x00000001<<y) //设置标志位  y第几位
 #define MyFlagClear(x,y) x=x&~(0x00000001<<y)
 #define MyFlagGet(x,y) (x&(0x00000001<<y))
-
+/* Exported types ------------------------------------------------------------*/
 typedef struct{
 	short Mode;//运行模式
 	short Enable;//状态
@@ -55,9 +62,10 @@ typedef enum
 	TASKTotal_No	
 }TASK_NoDEF;
 
+/* Exported constants --------------------------------------------------------*/
 extern SystemStateDef SystemState;
-
-
+/* Internal functions ------------------------------------------------------- */
+/* Exported functions ------------------------------------------------------- */
 int SystemState_Inite(void);//SystemState初始化
 void RefreshSysTime(void);//刷新系统时间（mm）
 float GetSystemTimer(void);//获取系统当前准确时间
@@ -71,8 +79,22 @@ void RefreshTaskOutLineTime(TASK_NoDEF Task_No);
 
 void vOutLineCheck_Task(void const *argument);
 
-
-
-
-
 #endif
+/************************ (H) COPYRIGHT STMicroelectronics *****END OF FILE****/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
