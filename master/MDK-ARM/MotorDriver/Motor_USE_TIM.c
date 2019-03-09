@@ -32,6 +32,7 @@ void TIM5_PWM_Init(uint32_t speed1,uint32_t speed2)
 **/
 void GUN_Init(void)
 {
+  /*Ð¡Ä¦²ÁÂÖ*/
 		__HAL_TIM_ENABLE(&htim5);
 		HAL_TIM_PWM_Start(&htim5,TIM_CHANNEL_1);
 		HAL_TIM_PWM_Start(&htim5,TIM_CHANNEL_2);
@@ -40,9 +41,8 @@ void GUN_Init(void)
 		TIM5_PWM_Init(100,100);
 		HAL_Delay(2000);
 	  TIM5_PWM_Init(100,100);
-		//
 		TIM5_PWM_Init(lowspeed,lowspeed);
-
+  
 		HAL_GPIO_WritePin(GPIOG, GPIO_PIN_13, GPIO_PIN_RESET);
 }
 

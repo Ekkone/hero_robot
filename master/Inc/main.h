@@ -53,7 +53,7 @@
 #define engineer				0 	//工程车
 #define hero						1		//英雄车
 
-#define imu             1
+#define imu             1  //云台数据反馈
 #define jy901           0
 
 #define pritnf_JY901  	0		//JY901是否有数据

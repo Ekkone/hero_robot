@@ -67,17 +67,15 @@ void Minipc_Pid_Init()
 ****************************************************************************************/
 void RemoteControlProcess()  
 {
-
-
-//									printf("遥控器模式!!!");
-	         if(chassis_gimble_Mode_flg==1)
+      /*遥控杆数据处理*/
+	         if(chassis_gimble_Mode_flg==1) //左拨轮中，XY运动
 					 {
 						  pit_set.expect = pit_set.expect +(0x400-RC_Ctl.rc.ch3)/20;	
 							yaw_set.expect = yaw_set.expect +(0x400-RC_Ctl.rc.ch2)/20;	
 							moto_3508_set.dstVmmps_X=((RC_Ctl.rc.ch0-0x400)*5);
 							moto_3508_set.dstVmmps_Y=((RC_Ctl.rc.ch1-0x400)*5);
 					 }
-					 else
+					 else//WY运动
 					 {
 						  pit_set.expect = pit_set.expect +(0x400-RC_Ctl.rc.ch3)/20;	
 							yaw_set.expect = yaw_set.expect +(0x400-RC_Ctl.rc.ch2)/20;	
@@ -85,39 +83,46 @@ void RemoteControlProcess()
 							moto_3508_set.dstVmmps_Y=((RC_Ctl.rc.ch1-0x400)*5);
 					 }
 
-
-					
-					if(press_counter>=press_times)
+			/*左按键数据处理*/	
+					if(press_counter >= press_times)//左按键延迟，时间由press_time控制
 					{
-							press_counter=press_times+1;
-									if(RC_Ctl.rc.s1==1)
-									{
-										
-										shot_anjian_counter++;
-										if(shot_anjian_counter > shot_frequency)
-										{
-										chassis_gimble_Mode_flg=1;
-										ptr_heat_gun_t.sht_flg=1;
-										press_counter=0;
-										shot_anjian_counter=0;
-										}
-									}
-                  else if(RC_Ctl.rc.s1==2)
-                  {
-										chassis_gimble_Mode_flg=1;
-                    ptr_heat_gun_t.sht_flg=2;
-                  }
-                  else
-                  {
-                    ptr_heat_gun_t.sht_flg=0;
-                    chassis_gimble_Mode_flg=0;
-                  }
-								
-				
-							if(RC_Ctl.rc.s1==2)
-									{
-										HAL_GPIO_WritePin(GPIOG, GPIO_PIN_13, GPIO_PIN_SET);
-									}
+						press_counter=press_times+1;
+            /*按键检查*/
+            switch(RC_Ctl.rc.s1)
+            {
+              case 1://上
+              {
+                /*底盘*/
+                chassis_gimble_Mode_flg=1;
+                /*发射*/
+                shot_anjian_counter++;
+                if(shot_anjian_counter > shot_frequency)//非连续触发信号
+                {
+                  ptr_heat_gun_t.sht_flg=1;
+                  press_counter=0;
+                  shot_anjian_counter=0;
+                }
+              }break;
+              case 2://下
+              {
+                /*底盘*/
+                chassis_gimble_Mode_flg=1;
+                /*发射*/
+                ptr_heat_gun_t.sht_flg=2;
+                /**/
+                HAL_GPIO_WritePin(GPIOG, GPIO_PIN_13, GPIO_PIN_SET);
+              }break;
+              case 3://中
+              {
+                /*底盘*/
+                chassis_gimble_Mode_flg=0;
+                /*发射*/
+                ptr_heat_gun_t.sht_flg=0;
+                    
+              }break;
+              default:break;
+            }
+
 					}
 }
 
@@ -238,8 +243,11 @@ void Remote_Data_Task(void const * argument)
 			Remote_Ctrl();
 				switch(RC_Ctl.rc.s2)
 				{
+          /*上*/
 					case 1: RemoteControlProcess();break; 
+          /*下*/
 					case 2: hard_brak();break;
+          /*中*/
 					case 3: MouseKeyControlProcess();break;
 					default :break;
 				}					

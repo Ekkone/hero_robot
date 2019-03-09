@@ -76,25 +76,28 @@ void Chassis_pid_init(void)
 ****************************************************************************************/
 void Chassis_Contrl_Task(void const * argument)
 {
+  /*数据初始化*/
 	static float  wheel[4]={0,0,0,0};
-	
 	osDelay(200);//延时200ms
 	portTickType xLastWakeTime;
   xLastWakeTime = xTaskGetTickCount();
-	
-
-      chassis_disable_flg=0;
-	    Chassis_pid_init();
+  chassis_disable_flg=0;
+  
+  /*功能初始化*/
+	Chassis_pid_init();
+  
 	for(;;)
 	{
 	  IMU_Get_Data();
     RefreshTaskOutLineTime(ChassisContrlTask_ON);
-//	 	switch(chassis_gimble_Mode_flg)
+    /*底盘模式*/
 		switch(chassis_gimble_Mode_flg)
 		{	
 			case 0:	{	//分离	
+        /*麦轮解算得出wheel[4]*/
 			motor_move_setvmmps(wheel,moto_3508_set.dstVmmps_X,moto_3508_set.dstVmmps_Y,moto_3508_set.dstVmmps_W);
 			}break;
+      
 			case 1:	{	//底盘跟随云台
 	  	/*有两个组合：
 			*						 1. get:yaw_get.totalangle 
@@ -102,24 +105,20 @@ void Chassis_Contrl_Task(void const * argument)
 			*			  		 2. get:yaw_get.angle
 			*								set:枪口在正中心时候的云台绝对值 
 			*/	
+        /*跟随位置环*/
 			pid_calc(&pid_chassis_follow,yaw_get.total_angle,0);
+        /*跟随速度环*/
 			pid_calc(&pid_chassis_follow_spd,-(imu_data.gz),pid_chassis_follow.pos_out);
 		
-
+        /*麦轮解算得出wheel[4]*/
 			motor_move_setvmmps(wheel,moto_3508_set.dstVmmps_X,moto_3508_set.dstVmmps_Y,pid_chassis_follow_spd.pos_out); 																																												
 			}break;
 		}
+    /*速度环计算*/
 		for(int i=0; i<4; i++)
 			{		
 				pid_calc(&pid_3508_spd[i], moto_chassis_get[i].speed_rpm, wheel[i]);
 			}
-//			
-//      	if(chassis_gimble_Mode_flg==1&&abs(yaw_get.total_angle)>2000)//电机失能保护
-//				{
-//			        gimbal_disable_flg=1;
-//			 		    chassis_disable_flg=1;
-//		  			   
-//				}
 		
 		/**********功率限制*********/
 
@@ -139,24 +138,6 @@ void Chassis_Contrl_Task(void const * argument)
 
 							
 	  /************end***********/	
-		
-			/*电流环控制*/
-
-//			for(int i=0; i<4; i++)
-//				{		
-//					pid_calc(&pid_3508_current[i], moto_chassis_get[i].real_current, wheel[i]);
-//				}	
-
-//				`
-//			int16_t  *ptr = angle; //初始化指针
-//			angle[0]	= (wheel[0]);
-//			angle[1]	= (moto_chassis_get[0].real_current);
-
-//			vcan_sendware((uint8_t *)ptr,2*sizeof(angle[0]));
-
-				
-				
-//				printf("set:%f  , get:%d , out:%f \n",wheel[0],moto_chassis_get[0].real_current,pid_3508_current[0].pos_out);
 				
 			if(printf_Chassis){ 
 			printf("total:%d，set: 0\n\r",yaw_get.total_angle);
@@ -168,7 +149,9 @@ void Chassis_Contrl_Task(void const * argument)
 																	Current_set[3]);
 			printf("*********************\n");
 			}
-			if(chassis_disable_flg==1)
+			
+      /*驱动电机*/
+      if(chassis_disable_flg==1)//失能
 			{
 				  Chassis_Motor_Disable(&hcan2);
 			}
@@ -178,8 +161,7 @@ void Chassis_Contrl_Task(void const * argument)
 												pid_3508_spd[0].pos_out,
 												pid_3508_spd[1].pos_out, 
 												pid_3508_spd[2].pos_out, 
-												pid_3508_spd[3].pos_out);
-								
+												pid_3508_spd[3].pos_out);					
 			}
 				
 			if(0){  //数据发送和任务检测   _待续

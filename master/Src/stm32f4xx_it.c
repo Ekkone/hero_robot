@@ -519,7 +519,7 @@ void HAL_CAN_RxCpltCallback(CAN_HandleTypeDef *hcan)
 	{
 		switch(hcan1.pRxMsg->StdId)
 		{
-			case 0x205:
+			case CAN_6623_YAW:
 			{
 				
        RefreshDeviceOutLineTime(MotorY_NO);
@@ -533,7 +533,7 @@ void HAL_CAN_RxCpltCallback(CAN_HandleTypeDef *hcan)
 				}
 //				yaw_get.angle=(uint16_t)(hcan->pRxMsg->Data[0]<<8 |hcan->pRxMsg->Data[1]) ;
 			}break;
-			case 0x206:
+			case CAN_6623_PIT:
 			{
 				
 				RefreshDeviceOutLineTime(MotorP_NO);
@@ -546,7 +546,7 @@ void HAL_CAN_RxCpltCallback(CAN_HandleTypeDef *hcan)
 					get_moto_measure_6623(&pit_get,&hcan1);
 				}
 			}break;
-			case 0x201:
+			case CAN_2006_B:
 			{
 				
 				RefreshDeviceOutLineTime(MotorB_NO);
@@ -560,6 +560,55 @@ void HAL_CAN_RxCpltCallback(CAN_HandleTypeDef *hcan)
 					get_moto_measure_6623(&moto_dial_get, &hcan1);
 				}
 			}break;
+      case CAN_3508_Shot1_ID:
+      {
+        RefreshDeviceOutLineTime(MotorM1_NO);
+        
+        if(moto_shot_get[0].msg_cnt++ <= 50)	
+				{
+					get_moto_offset(&moto_shot_get[0],&hcan1);
+				}
+				else{		
+					moto_shot_get[0].msg_cnt=51;	
+					get_moto_measure_3508(&moto_shot_get[0], &hcan1);
+				}
+      }break;
+      case CAN_3508_Shot2_ID:
+      {
+        RefreshDeviceOutLineTime(MotorM2_NO);
+        if(moto_shot_get[1].msg_cnt++ <= 50)	
+				{
+					get_moto_offset(&moto_shot_get[1],&hcan1);
+				}
+				else{		
+					moto_shot_get[1].msg_cnt=51;	
+					get_moto_measure_3508(&moto_shot_get[1], &hcan1);
+				}
+      }break;
+      case CAN_3508_B:
+      {
+        RefreshDeviceOutLineTime(Motor_bo_NO);
+        if(moto_bo.msg_cnt++ <= 50)	
+				{
+					get_moto_offset(&moto_bo,&hcan1);
+				}
+				else{		
+					moto_shot_get[1].msg_cnt=51;	
+					get_moto_measure_3508(&moto_bo, &hcan1);
+				}
+      }break;
+      case CAN_3508_LAST:
+      {
+        RefreshDeviceOutLineTime(MotorL_NO);
+        if(moto_last.msg_cnt++ <= 50)	
+				{
+					get_moto_offset(&moto_last,&hcan1);
+				}
+				else{		
+					moto_shot_get[1].msg_cnt=51;	
+					get_moto_measure_3508(&moto_last, &hcan1);
+				}
+      }break;
 			default: break;
 		}
 		if( HAL_BUSY == HAL_CAN_Receive_IT(&hcan1, CAN_FIFO0))//开启中断接收
