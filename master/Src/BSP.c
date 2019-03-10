@@ -1,22 +1,35 @@
+/*************************************************************************************
+*	@file			BSP.c
+* @author	 	
+*	@version 	V1.0
+*	@date			
+* @brief		NONE
+*************************************************************************************//* Includes ------------------------------------------------------------------------*/
 #include "BSP.h"
-
+/* External variables --------------------------------------------------------------*/
 volatile unsigned long long FreeRTOSRunTimeTicks;
-
-xQueueHandle UART1_RX_QueHandle;//串口1接收队列
-xQueueHandle UART2_RX_QueHandle;//串口2接收队列
-xQueueHandle UART6_RX_QueHandle;//串口6接收队列
-xQueueHandle UART8_RX_QueHandle;//串口8接收队列
-
+/* Internal variables --------------------------------------------------------------*/
+/* Private function prototypes ---------------------------------------------------*/
+/**
+	**************************************************************
+	** Descriptions:	新板子电源初始化
+	** Input:	huart  
+  **						
+	**					
+	**					
+	** Output: NULL
+	**************************************************************
+**/
 void Power_Init(void)
 {
-#if BoardNew
+  #if BoardNew
 
-HAL_GPIO_WritePin(GPIOH, GPIO_PIN_2, GPIO_PIN_SET);   //power1
-HAL_GPIO_WritePin(GPIOH, GPIO_PIN_3, GPIO_PIN_SET);   //power2
-HAL_GPIO_WritePin(GPIOH, GPIO_PIN_4, GPIO_PIN_SET);   //power3
-HAL_GPIO_WritePin(GPIOH, GPIO_PIN_5, GPIO_PIN_SET);   //power4
+  HAL_GPIO_WritePin(GPIOH, GPIO_PIN_2, GPIO_PIN_SET);   //power1
+  HAL_GPIO_WritePin(GPIOH, GPIO_PIN_3, GPIO_PIN_SET);   //power2
+  HAL_GPIO_WritePin(GPIOH, GPIO_PIN_4, GPIO_PIN_SET);   //power3
+  HAL_GPIO_WritePin(GPIOH, GPIO_PIN_5, GPIO_PIN_SET);   //power4
 
-#endif
+  #endif
 	HAL_Delay(50);
 }
 
@@ -74,7 +87,7 @@ while( UART8_RX_DATA[0] != 0x55 ||  JY61_Frame_flag == 1)
 //								JY61_Frame_flag = 0;
 //								JY61_Frame_Num = 0;
 							
-								HAL_UART_Receive_DMA(&huart8,UART8_RX_DATA,SizeofJY901);	//陀螺仪接收
+								HAL_UART_Receive_DMA(&huart8,UART8_RX_DATA,SizeofJY61);	//陀螺仪接收
 
 				   } else if(JY61_Frame_Num == 50)
 							 {
@@ -92,9 +105,19 @@ while( UART8_RX_DATA[0] != 0x55 ||  JY61_Frame_flag == 1)
 
 
 
-void JY901_Init(void)
+/**
+	**************************************************************
+	** Descriptions:JY61初始化函数
+	** Input: 	
+  **						
+	**					
+	**					
+	** Output: NULL
+	**************************************************************
+**/
+void JY61_Init(void)
 {
-	uint8_t JY901[6][5] = {
+	uint8_t JY61[6][5] = {
 													{0xff,0xaa,0x24,0x01,0x00},//六轴算法
 													{0xff,0xaa,0x02,0x00,0x00},//开启自动校准
 													{0xff,0xaa,0x02,0x0c,0x00},//回传内容:0x0c是输出速度和角度//0x08是只输出角度
@@ -103,27 +126,48 @@ void JY901_Init(void)
 													{0xff,0xaa,0x04,0x06,0x00}//设置串口波特率:115200
 												};
 		
-	HAL_UART_Transmit_DMA(&huart8,JY901[2],5);
+	HAL_UART_Transmit_DMA(&huart8,JY61[2],5);
 	HAL_Delay(100);
-	HAL_UART_Transmit_DMA(&huart8,JY901[3],5);
+	HAL_UART_Transmit_DMA(&huart8,JY61[3],5);
 	HAL_Delay(100);
-	HAL_UART_Transmit_DMA(&huart8,JY901[4],5);	
+	HAL_UART_Transmit_DMA(&huart8,JY61[4],5);	
 	HAL_Delay(100);
-	if(HAL_UART_Transmit_DMA(&huart8,JY901[2],5) == HAL_OK )	
+	if(HAL_UART_Transmit_DMA(&huart8,JY61[2],5) == HAL_OK )	
 	{
-		printf("JY901 Init \n\r");
+		printf("JY61 Init \n\r");
 	}
-		if(HAL_UART_Transmit_DMA(&huart8,JY901[4],5) == HAL_OK)	
+		if(HAL_UART_Transmit_DMA(&huart8,JY61[4],5) == HAL_OK)	
 	{
-		printf("JY901 Init save\n\r");
+		printf("JY61 Init save\n\r");
 	}
 }
 
-void ConfigureTimerForRunTimeStats(void)  //时间统计
+/**
+	**************************************************************
+	** Descriptions:时间统计
+	** Input: 	
+  **						
+	**					
+	**					
+	** Output: NULL
+	**************************************************************
+**/
+void ConfigureTimerForRunTimeStats(void)  
 {
 	FreeRTOSRunTimeTicks = 0;
 	MX_TIM3_Init(); //周期50us，频率20K
 }
+
+/**
+	**************************************************************
+	** Descriptions:初始化
+	** Input: 	
+  **						
+	**					
+	**					
+	** Output: NULL
+	**************************************************************
+**/
 void BSP_Init(void)
 {
 	
@@ -139,18 +183,18 @@ void BSP_Init(void)
 	CanFilter_Init(&hcan1);
 	CanFilter_Init(&hcan2);
 	/*定时器*/
-  MX_TIM5_Init();
+  MX_TIM5_Init();//摩擦轮PWM波
   MX_TIM12_Init();//测速模块定时器
 	MX_TIM6_Init();
 	SystemState_Inite();
   /*ADC*/
 	MX_ADC1_Init();
 	/*串口*/
-  MX_UART8_Init();
   MX_USART1_UART_Init();
 	MX_USART2_UART_Init();
   MX_USART3_UART_Init();
   MX_USART6_UART_Init();
+  MX_UART8_Init();
 	/*SPI*/
 	MX_SPI5_Init();
 
@@ -161,17 +205,9 @@ void BSP_Init(void)
 	
 	/*使能DMA中断*/
 	HAL_UART_Receive_DMA(&huart1,USART1_RX_DATA,SizeofRemote); //这一步的目的是创建一段接受内存，和CAN的一样
-	HAL_UART_Receive_DMA(&huart8,UART8_RX_DATA,SizeofJY901);
+	HAL_UART_Receive_DMA(&huart8,UART8_RX_DATA,SizeofJY61);
 //  HAL_UART_Receive_DMA(&huart8,HOST_Buffer.buffer,sizeof(HOST_Buffer.buffer));//Sabar
 	HAL_UART_Receive_DMA(&huart2,USART2_RX_DATA,SizeofMinipc);
-
-   /* 队列初始化  */
-//  UART1_RX_QueHandle=xQueueCreate(SizeofRemote,30);
-//	if(NULL==UART1_RX_QueHandle) while(1); 
-//  UART2_RX_QueHandle=xQueueCreate(5,30);
-//  UART6_RX_QueHandle=xQueueCreate(5,30);
-//  UART8_RX_QueHandle=xQueueCreate(SizeofJY901,30);
-//	if(NULL==UART8_RX_QueHandle) while(1);   
 
 /*开启ADC的DMA接收，注意缓存不能小于2，不能设置为_IO型即易变量*/
 	HAL_ADC_Start_DMA(&hadc1, (uint32_t*)uhADCxConvertedValue, 10); 
@@ -187,3 +223,10 @@ void BSP_Init(void)
 	HAL_Delay(1000);
 
 }
+
+
+/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
+
+
+
+

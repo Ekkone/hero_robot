@@ -36,12 +36,12 @@ pid_t * Motor_PID[20]={ &pid_3508_spd[0],    //Motor_PID[0]
 												&pid_3508_pos,       //Motor_PID[4]
 												&pid_dial_spd,       //Motor_PID[5]
 												&pid_dial_pos,       //Motor_PID[6]
-												&pid_pit_jy901_spd,  //Motor_PID[7]
-												&pid_yaw_jy901_spd,  //Motor_PID[8]
+												&pid_pit_jy61_spd,  //Motor_PID[7]
+												&pid_yaw_jy61_spd,  //Motor_PID[8]
 												&pid_pit,            //Motor_PID[9]
-												&pid_yaw_jy901,      //Motor_PID[10]
+												&pid_yaw_jy61,      //Motor_PID[10]
 												&pid_yaw,            //Motor_PID[11]
-	                      &pid_yaw_jy901_spd,0,0,0,0,0,0,0,  //Motor_PID[12]
+	                      &pid_yaw_jy61_spd,0,0,0,0,0,0,0,  //Motor_PID[12]
                        };
 													
 /* 外部函数原型声明 ----------------------------------------------------------*/

@@ -160,10 +160,10 @@ void testTask(void const * argument)
 //		printf("%s\n\r",InfoBuffer);
 
 		  int16_t  *ptr = angle; //初始化指针
-			angle[0]	= (ptr_jy901_t_yaw.final_angle);
-			angle[1]	= (ptr_jy901_t_angular_velocity.vz);
-			angle[2]	= ((int16_t)pid_yaw_jy901.pos_out);
-			angle[3]	= (int16_t)(-pid_yaw_jy901_spd.pos_out);
+			angle[0]	= (ptr_jy61_t_yaw.final_angle);
+			angle[1]	= (ptr_jy61_t_angular_velocity.vz);
+			angle[2]	= ((int16_t)pid_yaw_jy61.pos_out);
+			angle[3]	= (int16_t)(-pid_yaw_jy61_spd.pos_out);
 			/*用虚拟示波器，发送数据*/
 			vcan_sendware((uint8_t *)ptr,4*sizeof(angle[0]));
 		  vcan_sendware((uint8_t *)ptr,4*sizeof(angle[1]));

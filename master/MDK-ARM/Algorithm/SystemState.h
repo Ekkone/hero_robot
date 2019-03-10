@@ -47,7 +47,7 @@ typedef enum
     MotorM1_NO,
     MotorM2_NO,
     Motor_bo_NO,
-    MotorL_NO,
+    MotorS_NO,
 	  JY61_NO,
 	
 		DeviceTotal_No	

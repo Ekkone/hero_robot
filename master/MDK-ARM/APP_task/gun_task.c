@@ -59,8 +59,6 @@ void Gun_Task(void const * argument)
 	xLastWakeTime = xTaskGetTickCount();
 
 	Gun_Pid_Init();
-  /*设定摩擦轮*/
-  int big_gun_speed = 100;
   /*设定发弹*/
 
 
@@ -84,14 +82,6 @@ void Gun_Task(void const * argument)
 
       }break;
     }
-	/*大摩擦轮*/
-    for(uint8_t i = 0;i < 2;i++)
-    {
-      /*速度环*/
-      pid_calc(&pid_shot_spd[i],moto_shot_get[i].speed_rpm,big_gun_speed);
-    }
-    /*驱动电机*/
-    Shot_Motor(&hcan1,pid_shot_spd[0].pos_out,pid_shot_spd[1].pos_out);
     
     
         osDelayUntil(&xLastWakeTime,GUN_PERIOD);

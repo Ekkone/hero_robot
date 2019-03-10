@@ -54,9 +54,9 @@
 #define hero						1		//英雄车
 
 #define imu             1  //云台数据反馈
-#define jy901           0
+#define jy61            0
 
-#define pritnf_JY901  	0		//JY901是否有数据
+#define pritnf_JY61  	  0		//JY61是否有数据
 #define pritnf_Gimbal 	0		//云台两轴Can是否有数据
 #define pritnf_Imu    	0   //imu是否有数据
 #define printf_Referee 	0		//裁判系统是否有数据

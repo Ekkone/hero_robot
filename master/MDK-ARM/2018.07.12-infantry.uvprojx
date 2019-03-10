@@ -573,9 +573,9 @@
               <FilePath>../Src/stm32f4xx_hal_msp.c</FilePath>
             </File>
             <File>
-              <FileName>资源使用情况.txt</FileName>
+              <FileName>资源使用情况.c</FileName>
               <FileType>5</FileType>
-              <FilePath>..\Src\资源使用情况.txt</FilePath>
+              <FilePath>..\Src\资源使用情况.c</FilePath>
             </File>
           </Files>
         </Group>

@@ -107,10 +107,10 @@ extern pid_t pid_pos[4];
 #endif
 		
 extern pid_t pid_yaw;
-extern pid_t pid_yaw_jy901;
-extern pid_t pid_yaw_jy901_spd;
-extern pid_t pid_pit_jy901;
-extern pid_t pid_pit_jy901_spd;
+extern pid_t pid_yaw_jy61;
+extern pid_t pid_yaw_jy61_spd;
+extern pid_t pid_pit_jy61;
+extern pid_t pid_pit_jy61_spd;
 extern pid_t pid_pit;
 extern pid_t pid_yaw_spd;
 extern pid_t pid_pit_spd;

@@ -10,13 +10,13 @@
 
 #define SizeofReferee 100
 #define SizeofRemote 18
-#define SizeofJY901	 33
+#define SizeofJY61	 33
 #define SizeofMinipc  9
 extern uint8_t USART1_RX_DATA[(SizeofRemote)];//Ò£¿Ø
 extern uint16_t USART1_RX_NUM;
 extern uint8_t USART6_RX_DATA[(SizeofReferee)];//²ÃÅĞÏµÍ³
 extern uint16_t USART6_RX_NUM;
-extern uint8_t UART8_RX_DATA[(SizeofJY901)];//Íâ½ÓÍÓÂİÒÇ
+extern uint8_t UART8_RX_DATA[(SizeofJY61)];//Íâ½ÓÍÓÂİÒÇ
 extern uint16_t UART8_RX_NUM;
 
 /* ±¾Ä£¿éÏòÍâ²¿Ìá¹©µÄÊı¾İÀàĞÍ¶¨Òå --------------------------------------------*/
@@ -82,8 +82,8 @@ struct SQ
 typedef struct    //Íâ½ÓÍÓÂİÒÇ    ¿ÉÒÔ¸Ä³ÉÌ×ÓÃµç»ú²ÎÊıµÄ½á¹¹Ìåmoto_measure_t  _´ıĞø
 {
 	float err;
-	float JY901_angle;
-	float JY901_angle_last;
+	float JY61_angle;
+	float JY61_angle_last;
 	float first_angle;
 	float angle_round;
   float final_angle;
@@ -96,7 +96,7 @@ typedef struct    //Íâ½ÓÍÓÂİÒÇ    ¿ÉÒÔ¸Ä³ÉÌ×ÓÃµç»ú²ÎÊıµÄ½á¹¹Ìåmoto_measure_t  _´
 	float vz_last;
 	int8_t frame;
 	uint8_t times;
-}JY901_t;
+}JY61_t;
 ///////////////Ò£¿Ø/////////////////////
 typedef struct //Ò£¿ØÆ÷¼°¼üÊóÍ¨µÀ
 		{ 
@@ -149,9 +149,9 @@ typedef struct
 
 /* ±¾Ä£¿éÏòÍâ²¿Ìá¹©µÄ½Ó¿Ú³£Á¿ÉùÃ÷ --------------------------------------------*/
 /**************Íâ½ÓÍÓÂİÒÇ*******************/
-extern JY901_t  	ptr_jy901_t_yaw;//Íâ½ÓÍÓÂİÒÇÊı¾İ
-extern JY901_t  	ptr_jy901_t_pit;
-extern JY901_t    ptr_jy901_t_angular_velocity;
+extern JY61_t  	ptr_jy61_t_yaw;//Íâ½ÓÍÓÂİÒÇÊı¾İ
+extern JY61_t  	ptr_jy61_t_pit;
+extern JY61_t    ptr_jy61_t_angular_velocity;
 /*****************mpu6500*****************/
 extern uint8_t MPU_id;
 extern IMUDataTypedef imu_data;
@@ -161,7 +161,7 @@ extern RC_Ctl_t RC_Ctl; //Ò£¿ØÊı¾İ
 
 /* ±¾Ä£¿éÏòÍâ²¿Ìá¹©µÄ½Ó¿Úº¯ÊıÔ­ĞÍÉùÃ÷ ----------------------------------------*/
 //Íâ½ÓÍÓÂİÒÇ
-void JY901_Data_Pro(void);
+void JY61_Data_Pro(void);
 //Ò£¿Ø
 void Remote_Ctrl(void);
 //mpu6500
@@ -316,7 +316,7 @@ uint8_t IST_Reg_Read_By_MPU(uint8_t addr);
 #define MPU6500_NSS_Low() HAL_GPIO_WritePin(GPIOF, GPIO_PIN_6, GPIO_PIN_RESET)
 #define MPU6500_NSS_High() HAL_GPIO_WritePin(GPIOF, GPIO_PIN_6, GPIO_PIN_SET)
 
-//JY901 È«¾ÖÅäÖÃ
+//JY61 È«¾ÖÅäÖÃ
 #define SAVE 			0x00
 #define CALSW 		0x01
 #define RSW 			0x02

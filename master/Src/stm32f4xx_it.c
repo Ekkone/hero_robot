@@ -288,48 +288,7 @@ void DMA2_Stream1_IRQHandler(void)
   /* USER CODE END DMA2_Stream1_IRQn 1 */
 }
 
-void USART3_IRQHandler (void)
-{
-	
-    if(__HAL_UART_GET_IT_SOURCE(&huart3, UART_IT_RXNE) != RESET)  //Ω” ’÷–∂œ
-		{
-			
-		 // Res=(uint8_t)(huart3.Instance->DR & (uint8_t)0x00FFU);
-			
-			HAL_UART_RxCpltCallback(&huart3);
-			
-	   //RENXŒª‘⁄∂¡DRºƒ¥Ê∆˜≤Ÿ◊˜÷Æ∫ÛæÕª·◊‘∂Ø«Â≥˝£¨”¶∏√≤ª–Ë“™’‚∏ˆ«Â≥˝∫Ø ˝
-			__HAL_UART_CLEAR_FLAG(&huart3,UART_FLAG_RXNE);
-			
-		 }
-    
-}
 
-void UART8_IRQHandler(void)
-{
-	uint8_t tmp1,tmp2;
-	tmp1 = __HAL_UART_GET_FLAG(&huart8, UART_FLAG_IDLE);   //ø’œ–÷–∂œ÷–Ω´“— ’◊÷Ω⁄ ˝»°≥ˆ∫Û£¨Õ£÷πDMA
-  tmp2 = __HAL_UART_GET_IT_SOURCE(&huart8, UART_IT_IDLE);
-	
-   if((tmp1 != RESET)&&(tmp2 != RESET))
-	{
-		
-		RefreshDeviceOutLineTime(JY61_NO);
-		
-		__HAL_DMA_DISABLE(&hdma_uart8_rx);
-		__HAL_UART_CLEAR_IDLEFLAG(&huart8);
-		
-		UART8_RX_NUM=(SizeofJY901)-(hdma_uart8_rx.Instance->NDTR);
-		
-		JY901_Data_Pro();
-		__HAL_DMA_SET_COUNTER(&hdma_uart8_rx,SizeofJY901);
-    __HAL_DMA_ENABLE(&hdma_uart8_rx);
-	}
-  HAL_UART_IRQHandler(&huart8);
-  /* USER CODE BEGIN UART8_IRQn 1 */
-
-  /* USER CODE END UART8_IRQn 1 */
-}
 
 void USART1_IRQHandler (void)
 {
@@ -381,6 +340,46 @@ void USART2_IRQHandler (void)
 
 
 
+void USART3_IRQHandler (void)
+{
+	
+    if(__HAL_UART_GET_IT_SOURCE(&huart3, UART_IT_RXNE) != RESET)  //Ω” ’÷–∂œ
+		{
+			
+		 // Res=(uint8_t)(huart3.Instance->DR & (uint8_t)0x00FFU);
+			
+			HAL_UART_RxCpltCallback(&huart3);
+			
+	   //RENXŒª‘⁄∂¡DRºƒ¥Ê∆˜≤Ÿ◊˜÷Æ∫ÛæÕª·◊‘∂Ø«Â≥˝£¨”¶∏√≤ª–Ë“™’‚∏ˆ«Â≥˝∫Ø ˝
+			__HAL_UART_CLEAR_FLAG(&huart3,UART_FLAG_RXNE);
+			
+		 }
+}
+void UART8_IRQHandler(void)
+{
+	uint8_t tmp1,tmp2;
+	tmp1 = __HAL_UART_GET_FLAG(&huart8, UART_FLAG_IDLE);   //ø’œ–÷–∂œ÷–Ω´“— ’◊÷Ω⁄ ˝»°≥ˆ∫Û£¨Õ£÷πDMA
+  tmp2 = __HAL_UART_GET_IT_SOURCE(&huart8, UART_IT_IDLE);
+	
+   if((tmp1 != RESET)&&(tmp2 != RESET))
+	{
+		
+		RefreshDeviceOutLineTime(JY61_NO);
+		
+		__HAL_DMA_DISABLE(&hdma_uart8_rx);
+		__HAL_UART_CLEAR_IDLEFLAG(&huart8);
+		
+		UART8_RX_NUM=(SizeofJY61)-(hdma_uart8_rx.Instance->NDTR);
+		
+		JY61_Data_Pro();
+		__HAL_DMA_SET_COUNTER(&hdma_uart8_rx,SizeofJY61);
+    __HAL_DMA_ENABLE(&hdma_uart8_rx);
+	}
+  HAL_UART_IRQHandler(&huart8);
+  /* USER CODE BEGIN UART8_IRQn 1 */
+
+  /* USER CODE END UART8_IRQn 1 */
+}
 /**
 * @brief This function handles DMA1 stream5 global interrupt.
 */
@@ -512,7 +511,16 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)  //Ω” ’ÕÍ≥…            ‘
 	}
 	
 }
-
+/**
+	**************************************************************
+	** Descriptions:CANΩ” ’ªÿµ˜∫Ø ˝
+	** Input: 	
+  **						
+	**					
+	**					
+	** Output: NULL
+	**************************************************************
+**/
 void HAL_CAN_RxCpltCallback(CAN_HandleTypeDef *hcan)
 {
 	if(hcan == &hcan1)
@@ -560,53 +568,16 @@ void HAL_CAN_RxCpltCallback(CAN_HandleTypeDef *hcan)
 					get_moto_measure_6623(&moto_dial_get, &hcan1);
 				}
 			}break;
-      case CAN_3508_Shot1_ID:
+      case CAN_3508_STIR:
       {
-        RefreshDeviceOutLineTime(MotorM1_NO);
-        
-        if(moto_shot_get[0].msg_cnt++ <= 50)	
+        RefreshDeviceOutLineTime(MotorS_NO);
+        if(moto_stir_get.msg_cnt++ <= 50)	
 				{
-					get_moto_offset(&moto_shot_get[0],&hcan1);
+					get_moto_offset(&moto_stir_get,&hcan1);
 				}
 				else{		
-					moto_shot_get[0].msg_cnt=51;	
-					get_moto_measure_3508(&moto_shot_get[0], &hcan1);
-				}
-      }break;
-      case CAN_3508_Shot2_ID:
-      {
-        RefreshDeviceOutLineTime(MotorM2_NO);
-        if(moto_shot_get[1].msg_cnt++ <= 50)	
-				{
-					get_moto_offset(&moto_shot_get[1],&hcan1);
-				}
-				else{		
-					moto_shot_get[1].msg_cnt=51;	
-					get_moto_measure_3508(&moto_shot_get[1], &hcan1);
-				}
-      }break;
-      case CAN_3508_B:
-      {
-        RefreshDeviceOutLineTime(Motor_bo_NO);
-        if(moto_bo.msg_cnt++ <= 50)	
-				{
-					get_moto_offset(&moto_bo,&hcan1);
-				}
-				else{		
-					moto_shot_get[1].msg_cnt=51;	
-					get_moto_measure_3508(&moto_bo, &hcan1);
-				}
-      }break;
-      case CAN_3508_LAST:
-      {
-        RefreshDeviceOutLineTime(MotorL_NO);
-        if(moto_last.msg_cnt++ <= 50)	
-				{
-					get_moto_offset(&moto_last,&hcan1);
-				}
-				else{		
-					moto_shot_get[1].msg_cnt=51;	
-					get_moto_measure_3508(&moto_last, &hcan1);
+					moto_stir_get.msg_cnt=51;	
+					get_moto_measure_3508(&moto_stir_get, &hcan1);
 				}
       }break;
 			default: break;
@@ -645,7 +616,16 @@ void HAL_CAN_RxCpltCallback(CAN_HandleTypeDef *hcan)
 		}	
 	}
 }
-//Õ‚≤ø÷–∂œªÿµ˜∫Ø ˝
+/**
+	**************************************************************
+	** Descriptions:Õ‚≤ø÷–∂œªÿµ˜∫Ø ˝
+	** Input: 	
+  **						
+	**					
+	**					
+	** Output: »´æ÷±‰¡ø speed_golf
+	**************************************************************
+**/
 float speed_golf = 0;
 void	HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 {

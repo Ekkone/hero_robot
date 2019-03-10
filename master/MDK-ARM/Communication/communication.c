@@ -19,7 +19,7 @@
  uint16_t USART1_RX_NUM;
  uint8_t USART6_RX_DATA[(SizeofReferee)];//裁判系统
  uint16_t USART6_RX_NUM;
- uint8_t UART8_RX_DATA[(SizeofJY901)];//外接陀螺仪
+ uint8_t UART8_RX_DATA[(SizeofJY61)];//外接陀螺仪
  uint16_t UART8_RX_NUM;
  struct STime			stcTime;
  struct SAcc 			stcAcc;
@@ -43,9 +43,9 @@
 
 /* 内部变量 ------------------------------------------------------------------*/
 //外接陀螺仪
-JY901_t   ptr_jy901_t_yaw =  {0};
-JY901_t   ptr_jy901_t_pit =  {0};
-JY901_t  	ptr_jy901_t_angular_velocity = {0};
+JY61_t   ptr_jy61_t_yaw =  {0};
+JY61_t   ptr_jy61_t_pit =  {0};
+JY61_t  	ptr_jy61_t_angular_velocity = {0};
 
 //mpu6500
 uint8_t MPU_id = 0;
@@ -61,14 +61,14 @@ IMUDataTypedef imu_data_offest = {0,0,0,0,0,0,0,0,0,0};
 
 /***************************************************************************************
 **
-	*	@brief	JY901_Data_Pro()
+	*	@brief	JY61_Data_Pro()
 	*	@param
 	*	@supplement	在中断中被调用，用于串口接收陀螺仪的数据，并对数据进行处理
 	*	@retval	
 ****************************************************************************************/
 static unsigned char ucRxCnt = 0;
 static unsigned char buff_transition[11] = {0}; //过渡段缓存
-static unsigned char buff_last[SizeofJY901] = {0};
+static unsigned char buff_last[SizeofJY61] = {0};
 
 /**********************jy601***********************/
 
@@ -89,7 +89,7 @@ void select(uint8_t * buff,uint8_t i)
 	}
 }
 
-void JY901_Data_Pro()
+void JY61_Data_Pro()
 {	
 	
 		portTickType xLastWakeTime;
@@ -131,9 +131,9 @@ void JY901_Data_Pro()
 
 	}
 	
-	//jy901
+	//jy61
 	/*寻找第一个帧头位置*/
-//	for(uint8_t i = 0;i < SizeofJY901/3;i++)
+//	for(uint8_t i = 0;i < SizeofJY61/3;i++)
 //	{
 //		if(buff[i] == 0x55)
 //		{
@@ -154,62 +154,62 @@ void JY901_Data_Pro()
 	
 
 	
-			ptr_jy901_t_pit.JY901_angle = (float)stcAngle.Angle[1]*0.005493f;
-			ptr_jy901_t_yaw.JY901_angle = (float)stcAngle.Angle[2]*0.005493f;	
+			ptr_jy61_t_pit.JY61_angle = (float)stcAngle.Angle[1]*0.005493f;
+			ptr_jy61_t_yaw.JY61_angle = (float)stcAngle.Angle[2]*0.005493f;	
 	   
-//		if(pritnf_JY901){    //调试用
-//			printf("gz=%f\n",ptr_jy901_t_yaw.JY901_angle);
+//		if(pritnf_JY61){    //调试用
+//			printf("gz=%f\n",ptr_jy61_t_yaw.JY61_angle);
 //    	float *ptr = NULL; //初始化指针
-//			ptr = &(ptr_jy901_t_yaw.final_angle);	
+//			ptr = &(ptr_jy61_t_yaw.final_angle);	
 //			/*用虚拟示波器，发送数据*/
-//			vcan_sendware((uint8_t *)ptr,sizeof(ptr_jy901_t_yaw.final_angle));
+//			vcan_sendware((uint8_t *)ptr,sizeof(ptr_jy61_t_yaw.final_angle));
 //		 }
-		if(ptr_jy901_t_yaw.times>5)
+		if(ptr_jy61_t_yaw.times>5)
 			{
-//			ptr_jy901_t_pit.JY901_angle = Limit_filter(ptr_jy901_t_pit.JY901_angle_last,ptr_jy901_t_pit.JY901_angle,30);
-//	    ptr_jy901_t_yaw.JY901_angle = Limit_filter(ptr_jy901_t_yaw.JY901_angle_last,ptr_jy901_t_yaw.JY901_angle,30);
-				ptr_jy901_t_yaw.times=6;
-				ptr_jy901_t_yaw.err=ptr_jy901_t_yaw.JY901_angle-ptr_jy901_t_yaw.JY901_angle_last;
-			if(ptr_jy901_t_yaw.err<-180)  
-				ptr_jy901_t_yaw.angle_round++;
-			else if(ptr_jy901_t_yaw.err>180)  
-				ptr_jy901_t_yaw.angle_round--;
-			ptr_jy901_t_yaw.final_angle=(ptr_jy901_t_yaw.angle_round*360+ptr_jy901_t_yaw.JY901_angle-ptr_jy901_t_yaw.first_angle)*22.75f;
+//			ptr_jy61_t_pit.JY61_angle = Limit_filter(ptr_jy61_t_pit.JY61_angle_last,ptr_jy61_t_pit.JY61_angle,30);
+//	    ptr_jy61_t_yaw.JY61_angle = Limit_filter(ptr_jy61_t_yaw.JY61_angle_last,ptr_jy61_t_yaw.JY61_angle,30);
+				ptr_jy61_t_yaw.times=6;
+				ptr_jy61_t_yaw.err=ptr_jy61_t_yaw.JY61_angle-ptr_jy61_t_yaw.JY61_angle_last;
+			if(ptr_jy61_t_yaw.err<-180)  
+				ptr_jy61_t_yaw.angle_round++;
+			else if(ptr_jy61_t_yaw.err>180)  
+				ptr_jy61_t_yaw.angle_round--;
+			ptr_jy61_t_yaw.final_angle=(ptr_jy61_t_yaw.angle_round*360+ptr_jy61_t_yaw.JY61_angle-ptr_jy61_t_yaw.first_angle)*22.75f;
 			
-			ptr_jy901_t_pit.err=ptr_jy901_t_pit.JY901_angle-ptr_jy901_t_pit.JY901_angle_last;
-			if(ptr_jy901_t_pit.err<-180) 
-				ptr_jy901_t_pit.angle_round++;
-			else if(ptr_jy901_t_pit.err>180)
-				ptr_jy901_t_pit.angle_round--;
+			ptr_jy61_t_pit.err=ptr_jy61_t_pit.JY61_angle-ptr_jy61_t_pit.JY61_angle_last;
+			if(ptr_jy61_t_pit.err<-180) 
+				ptr_jy61_t_pit.angle_round++;
+			else if(ptr_jy61_t_pit.err>180)
+				ptr_jy61_t_pit.angle_round--;
 			//计算最终结果
-		  ptr_jy901_t_pit.final_angle=(ptr_jy901_t_pit.angle_round*360+ptr_jy901_t_pit.JY901_angle-ptr_jy901_t_pit.first_angle);
-//		  ptr_jy901_t_pit.final_angle=(ptr_jy901_t_pit.JY901_angle-ptr_jy901_t_pit.first_angle);
+		  ptr_jy61_t_pit.final_angle=(ptr_jy61_t_pit.angle_round*360+ptr_jy61_t_pit.JY61_angle-ptr_jy61_t_pit.first_angle);
+//		  ptr_jy61_t_pit.final_angle=(ptr_jy61_t_pit.JY61_angle-ptr_jy61_t_pit.first_angle);
 			i=(xWakeTime-xLastWakeTime);
 		  xLastWakeTime=	xWakeTime;
 			}
 			else 
 			{
-				ptr_jy901_t_yaw.first_angle = ptr_jy901_t_yaw.JY901_angle;
-				ptr_jy901_t_pit.first_angle = ptr_jy901_t_pit.JY901_angle;
+				ptr_jy61_t_yaw.first_angle = ptr_jy61_t_yaw.JY61_angle;
+				ptr_jy61_t_pit.first_angle = ptr_jy61_t_pit.JY61_angle;
 			}
 			
 
-			ptr_jy901_t_yaw.JY901_angle_last = ptr_jy901_t_yaw.JY901_angle;
-			ptr_jy901_t_pit.JY901_angle_last = ptr_jy901_t_pit.JY901_angle;
-			ptr_jy901_t_yaw.times++;
+			ptr_jy61_t_yaw.JY61_angle_last = ptr_jy61_t_yaw.JY61_angle;
+			ptr_jy61_t_pit.JY61_angle_last = ptr_jy61_t_pit.JY61_angle;
+			ptr_jy61_t_yaw.times++;
 
 		
 			
 
-			ptr_jy901_t_angular_velocity.vx = stcGyro.w[0] * 0.06103516f;
-			ptr_jy901_t_angular_velocity.vy = stcGyro.w[1] * 0.06103516f;
-			ptr_jy901_t_angular_velocity.vz = stcGyro.w[2] * 0.06103516f;			
+			ptr_jy61_t_angular_velocity.vx = stcGyro.w[0] * 0.06103516f;
+			ptr_jy61_t_angular_velocity.vy = stcGyro.w[1] * 0.06103516f;
+			ptr_jy61_t_angular_velocity.vz = stcGyro.w[2] * 0.06103516f;			
 			
-			ptr_jy901_t_angular_velocity.vz = Limit_filter(ptr_jy901_t_angular_velocity.vz_last,ptr_jy901_t_angular_velocity.vz,700);
-			ptr_jy901_t_angular_velocity.vy = Limit_filter(ptr_jy901_t_angular_velocity.vy_last,ptr_jy901_t_angular_velocity.vy,700);
+			ptr_jy61_t_angular_velocity.vz = Limit_filter(ptr_jy61_t_angular_velocity.vz_last,ptr_jy61_t_angular_velocity.vz,700);
+			ptr_jy61_t_angular_velocity.vy = Limit_filter(ptr_jy61_t_angular_velocity.vy_last,ptr_jy61_t_angular_velocity.vy,700);
 			
-			ptr_jy901_t_angular_velocity.vy_last = ptr_jy901_t_angular_velocity.vy;
-			ptr_jy901_t_angular_velocity.vz_last = ptr_jy901_t_angular_velocity.vz;
+			ptr_jy61_t_angular_velocity.vy_last = ptr_jy61_t_angular_velocity.vy;
+			ptr_jy61_t_angular_velocity.vz_last = ptr_jy61_t_angular_velocity.vz;
 			
 
 
@@ -237,13 +237,13 @@ void JY901_Data_Pro()
 //	}
 //}
 
-//void JY901_Data_Pro()
+//void JY61_Data_Pro()
 //{	
 //  int16_t data_sum=0;
 //	
 //	uint8_t  * buff = UART8_RX_DATA;//串口8
 //	/*寻找第一个帧头位置*/
-//	for(uint8_t i = 0;i < SizeofJY901;i++)
+//	for(uint8_t i = 0;i < SizeofJY61;i++)
 //	{
 //		if(buff[i] == 0x55)
 //		{
@@ -259,15 +259,15 @@ void JY901_Data_Pro()
 //			memcpy(buff_last,buff,11);
 //			
 //			select(buff_transition,0);
-//			ptr_jy901_t_angular_velocity.vx = stcGyro.w[0] * 0.06103516f;
-//			ptr_jy901_t_angular_velocity.vy = stcGyro.w[1] * 0.06103516f;
-//			ptr_jy901_t_angular_velocity.vz = stcGyro.w[2] * 0.06103516f;			
+//			ptr_jy61_t_angular_velocity.vx = stcGyro.w[0] * 0.06103516f;
+//			ptr_jy61_t_angular_velocity.vy = stcGyro.w[1] * 0.06103516f;
+//			ptr_jy61_t_angular_velocity.vz = stcGyro.w[2] * 0.06103516f;			
 //			
-//			ptr_jy901_t_angular_velocity.vz = Limit_filter(ptr_jy901_t_angular_velocity.vz_last,ptr_jy901_t_angular_velocity.vz,700);
-//			ptr_jy901_t_angular_velocity.vy = Limit_filter(ptr_jy901_t_angular_velocity.vy_last,ptr_jy901_t_angular_velocity.vy,700);
+//			ptr_jy61_t_angular_velocity.vz = Limit_filter(ptr_jy61_t_angular_velocity.vz_last,ptr_jy61_t_angular_velocity.vz,700);
+//			ptr_jy61_t_angular_velocity.vy = Limit_filter(ptr_jy61_t_angular_velocity.vy_last,ptr_jy61_t_angular_velocity.vy,700);
 //			
-//			ptr_jy901_t_angular_velocity.vy_last = ptr_jy901_t_angular_velocity.vy;
-//			ptr_jy901_t_angular_velocity.vz_last = ptr_jy901_t_angular_velocity.vz;
+//			ptr_jy61_t_angular_velocity.vy_last = ptr_jy61_t_angular_velocity.vy;
+//			ptr_jy61_t_angular_velocity.vz_last = ptr_jy61_t_angular_velocity.vz;
 //			
 
 

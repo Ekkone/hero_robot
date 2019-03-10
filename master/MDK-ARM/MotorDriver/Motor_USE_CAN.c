@@ -28,9 +28,7 @@
 /* 外部变量声明 --------------------------------------------------------------*/
 /*******************摩擦轮电机和底盘电机的参数变量***************************/
 moto_measure_t   moto_chassis_get[4] = {0};//4 个 3508
-moto_measure_t   moto_shot_get[2] = {0};//2个3508摩擦轮
-moto_measure_t   moto_bo;
-moto_measure_t   moto_last;
+moto_measure_t   moto_stir_get = {0};  //3508
 moto_measure_t   moto_dial_get = {0};  //c2006
 moto_measure_t   pit_get;
 moto_measure_t   yaw_get;
@@ -40,7 +38,7 @@ moto_measure_t   yaw_get;
 //为can发送分别创建缓存，防止串口发送的时候因只有一段内存而相互覆盖
 static CanTxMsgTypeDef  Cloud_Platform_Data;
 static CanTxMsgTypeDef	 Chassis_Motor_Data;
-static CanTxMsgTypeDef	 Shot_Motor_Data;
+static CanTxMsgTypeDef	 Stir_Motor_Data;
 static CanTxMsgTypeDef  Allocate_Motor_Data;
 /* 函数原型声明 ----------------------------------------------------------*/
 
@@ -84,7 +82,7 @@ void Cloud_Platform_Motor(CAN_HandleTypeDef * hcan,int16_t yaw,int16_t	pitch)
 	** Output: NULL
 	**************************************************************
 **/
-void Cloud_Platform_Motor_jiaozhun(CAN_HandleTypeDef * hcan)
+void Cloud_Platform_Motor_Correct(CAN_HandleTypeDef * hcan)
 {
 	
 		Cloud_Platform_Data.StdId = 0x3F0;
@@ -194,64 +192,7 @@ void Chassis_Motor_Disable( CAN_HandleTypeDef * hcan)
 			hcan->pTxMsg = &Chassis_Motor_Data;
 			HAL_CAN_Transmit(hcan,5);
 }	
-/**
-	**************************************************************
-	** Descriptions: 大摩擦轮驱动函数
-	** Input: 	
-	**			   hcan:要使用的CAN1
-	**					iq1:两个电机的电流值
-	** Output: NULL
-	**************************************************************
-**/
-void Shot_Motor( CAN_HandleTypeDef * hcan,
-									  int16_t iq1,int16_t iq2)
-{
-			Chassis_Motor_Data.DLC = 0x08;
-			Chassis_Motor_Data.IDE = CAN_ID_STD;
-			Chassis_Motor_Data.RTR = CAN_RTR_DATA;
-			Chassis_Motor_Data.StdId = 0x1FF;
 
-			Chassis_Motor_Data.Data[0]=0x00;
-			Chassis_Motor_Data.Data[1]=0x00;
-			Chassis_Motor_Data.Data[2]=0x00;
-			Chassis_Motor_Data.Data[3]=0x00;
-			Chassis_Motor_Data.Data[4]=iq1>>8;
-			Chassis_Motor_Data.Data[5]=iq1;
-			Chassis_Motor_Data.Data[6]=iq2>>8;
-			Chassis_Motor_Data.Data[7]=iq2;
-	
-			hcan->pTxMsg = &Shot_Motor_Data;
-			HAL_CAN_Transmit(hcan,0);
-}	
-
-/**
-	**************************************************************
-	** Descriptions: 底盘电机失能函数
-	** Input: 	
-	**			   hcan:要使用的CAN2
-	**					iqn:第n个底盘电机的电流值
-	** Output: NULL
-	**************************************************************
-**/
-void Shot_Motor_Disable( CAN_HandleTypeDef * hcan)
-{
-			Chassis_Motor_Data.DLC = 0x08;
-			Chassis_Motor_Data.IDE = CAN_ID_STD;
-			Chassis_Motor_Data.RTR = CAN_RTR_DATA;
-			Chassis_Motor_Data.StdId = 0x1FF;
-
-			Chassis_Motor_Data.Data[0]=0x00;
-			Chassis_Motor_Data.Data[1]=0x00;
-			Chassis_Motor_Data.Data[2]=0x00;
-			Chassis_Motor_Data.Data[3]=0x00;
-			Chassis_Motor_Data.Data[4]=0x00;
-			Chassis_Motor_Data.Data[5]=0x00;
-			Chassis_Motor_Data.Data[6]=0x00;
-			Chassis_Motor_Data.Data[7]=0x00;
-	
-			hcan->pTxMsg = &Shot_Motor_Data;
-			HAL_CAN_Transmit(hcan,5);
-}	
 /**
 	**************************************************************
 	** Descriptions: 拨弹电机驱动函数
@@ -279,6 +220,64 @@ void Allocate_Motor(CAN_HandleTypeDef * hcan,int16_t value)
 			Allocate_Motor_Data.Data[7]=0;
 	
 			hcan->pTxMsg = &Allocate_Motor_Data;
+			HAL_CAN_Transmit(hcan,0);
+}
+/**
+	**************************************************************
+	** Descriptions: 搅拌电机驱动函数
+	** Input: 	
+	**			   hcan:要使用的CAN1
+	**				value:搅拌电机的电流值
+	** Output: NULL
+	**************************************************************
+**/
+void Stir_Motor(CAN_HandleTypeDef * hcan,int16_t value)
+{
+
+			Allocate_Motor_Data.DLC = 0x08;
+			Allocate_Motor_Data.IDE = CAN_ID_STD;
+			Allocate_Motor_Data.RTR = CAN_RTR_DATA;
+			Allocate_Motor_Data.StdId = 0x200;
+
+			Allocate_Motor_Data.Data[0]=0;
+			Allocate_Motor_Data.Data[1]=0;
+			Allocate_Motor_Data.Data[2]=value>>8;
+			Allocate_Motor_Data.Data[3]=value;
+			Allocate_Motor_Data.Data[4]=0;
+			Allocate_Motor_Data.Data[5]=0;
+			Allocate_Motor_Data.Data[6]=0;
+			Allocate_Motor_Data.Data[7]=0;
+	
+			hcan->pTxMsg = &Stir_Motor_Data;
+			HAL_CAN_Transmit(hcan,0);
+}
+/**
+	**************************************************************
+	** Descriptions: 搅拌电机驱动函数
+	** Input: 	
+	**			   hcan:要使用的CAN1
+	**				value:搅拌电机的电流值
+	** Output: NULL
+	**************************************************************
+**/
+void Stir_Motor_Disable(CAN_HandleTypeDef * hcan)
+{
+
+			Allocate_Motor_Data.DLC = 0x08;
+			Allocate_Motor_Data.IDE = CAN_ID_STD;
+			Allocate_Motor_Data.RTR = CAN_RTR_DATA;
+			Allocate_Motor_Data.StdId = 0x200;
+
+			Allocate_Motor_Data.Data[0]=0;
+			Allocate_Motor_Data.Data[1]=0;
+			Allocate_Motor_Data.Data[2]=0;
+			Allocate_Motor_Data.Data[3]=0;
+			Allocate_Motor_Data.Data[4]=0;
+			Allocate_Motor_Data.Data[5]=0;
+			Allocate_Motor_Data.Data[6]=0;
+			Allocate_Motor_Data.Data[7]=0;
+	
+			hcan->pTxMsg = &Stir_Motor_Data;
 			HAL_CAN_Transmit(hcan,0);
 }
 /**                                                           //待续

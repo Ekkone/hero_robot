@@ -55,15 +55,6 @@ void Chassis_pid_init(void)
 			PID_struct_init(&pid_3508_spd[i], POSITION_PID, 10000, 2000,
 										1.5f,	0.1f,	0.1f	);  //4 motos angular rate closeloop.
 		}
-	
-		PID_struct_init(&pid_3508_current[0], POSITION_PID, 6000, 500,
-								0.65f,	0.01f,	0.1f	);  //4 motos angular rate closeloop.
-		PID_struct_init(&pid_3508_current[1], POSITION_PID, 6000, 500,
-								0.6f,	0.01f,	0.01f	);  //4 motos angular rate closeloop.
-		PID_struct_init(&pid_3508_current[2], POSITION_PID, 6000, 500,
-								0.6f,	0.01f,	0.01f	);  //4 motos angular rate closeloop.
-		PID_struct_init(&pid_3508_current[3], POSITION_PID, 6000, 500,
-									0.6f,	0.01f,	0.01f	);  //4 motos angular rate closeloop.
 }
 /* 任务主体部分 -------------------------------------------------------------*/
 
@@ -140,14 +131,7 @@ void Chassis_Contrl_Task(void const * argument)
 	  /************end***********/	
 				
 			if(printf_Chassis){ 
-			printf("total:%d，set: 0\n\r",yaw_get.total_angle);
-			printf("x:%f,y:%f,w:%f\n\r",moto_3508_set.dstVmmps_X,moto_3508_set.dstVmmps_Y,pid_3508_pos.pos_out);
-			printf("out[1]:%f\n\r[2]:%f\n\r[3]:%f\n\r[4]:%f\n\r",
-																	Current_set[0],
-																	Current_set[1], 
-																	Current_set[2], 
-																	Current_set[3]);
-			printf("*********************\n");
+			
 			}
 			
       /*驱动电机*/

@@ -6,8 +6,8 @@
 #include "stdint.h"
 #include "tim.h"
 
-#define highspeed 200
-#define lowspeed  130
+#define highspeed 2000
+#define lowspeed  1300
 
 void TIM5_PWM_Init(uint32_t speed1,uint32_t speed2);
 void GUN_Init(void);
