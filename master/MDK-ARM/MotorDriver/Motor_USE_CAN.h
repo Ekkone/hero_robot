@@ -1,5 +1,5 @@
 /*************************************************************************************
-*	@file			bsp.h
+*	@file			Motor_USE_CAN.h
 * @author	 	
 *	@version 	V1.0
 *	@date			
@@ -51,7 +51,6 @@ typedef struct{
 /* Exported constants------------------------------------------------------------*/
 extern moto_measure_t   moto_chassis_get[];
 extern moto_measure_t   moto_dial_get;   //					_×¢ÊÍ
-extern moto_measure_t   moto_shot_get[2];//2¸ö3508Ä¦²ÁÂÖ
 extern moto_measure_t   moto_bo;
 extern moto_measure_t   moto_stir_get;
 extern moto_measure_t   pit_get;

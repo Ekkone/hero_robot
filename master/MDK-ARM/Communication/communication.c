@@ -21,6 +21,8 @@
  uint16_t USART6_RX_NUM;
  uint8_t UART8_RX_DATA[(SizeofJY61)];//外接陀螺仪
  uint16_t UART8_RX_NUM;
+ uint8_t UART4_RX_DATA[(SizeofJY61)];//外接陀螺仪
+ uint16_t UART4_RX_NUM;
  struct STime			stcTime;
  struct SAcc 			stcAcc;
  struct SGyro 		stcGyro;
@@ -98,7 +100,7 @@ void JY61_Data_Pro()
 	
   int16_t data_sum=0;
 	static int16_t i=0;
-	uint8_t  * buff = UART8_RX_DATA;//串口8
+	uint8_t  * buff = UART4_RX_DATA;//串口4
 	
 	uint8_t JY_NUM = 0;
 	static uint8_t buff_last[11] = {0};  	 //上一帧的残余数据

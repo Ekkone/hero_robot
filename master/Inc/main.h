@@ -53,8 +53,8 @@
 #define engineer				0 	//工程车
 #define hero						1		//英雄车
 
-#define imu             1  //云台数据反馈
-#define jy61            0
+#define imu             0  //云台数据反馈
+#define jy61            1
 
 #define pritnf_JY61  	  0		//JY61是否有数据
 #define pritnf_Gimbal 	0		//云台两轴Can是否有数据

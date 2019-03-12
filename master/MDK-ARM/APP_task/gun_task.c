@@ -28,7 +28,7 @@ pid_t pid_shot_spd[2]  = {0};	//摩擦轮速度环
 /* 内部函数原型声明----------------------------------------------------------*/
 void Gun_Pid_Init()
 {
-  /**/
+  /*拨弹电机*/
 		PID_struct_init(&pid_dial_pos, POSITION_PID, 6000, 5000,
 									1.0f,	0.0000f,	0.0f);  
 		//pid_pos[i].deadband=500;
@@ -79,7 +79,7 @@ void Gun_Task(void const * argument)
       }break;
       case 2://连发模式
       {
-
+        
       }break;
     }
     

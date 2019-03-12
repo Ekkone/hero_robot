@@ -62,14 +62,16 @@ extern TIM_HandleTypeDef htim12;
 
 extern DMA_HandleTypeDef hdma_adc1;
 
-extern DMA_HandleTypeDef hdma_uart8_rx;
 extern DMA_HandleTypeDef hdma_usart1_rx;
 extern DMA_HandleTypeDef hdma_usart2_rx;
 extern DMA_HandleTypeDef hdma_usart3_rx;
+extern DMA_HandleTypeDef hdma_uart4_rx;
 extern DMA_HandleTypeDef hdma_usart6_rx;
+extern DMA_HandleTypeDef hdma_uart8_rx;
 
 extern xQueueHandle UART1_RX_QueHandle;//串口1接收队列
 extern xQueueHandle UART2_RX_QueHandle;//串口2接收队列
+extern xQueueHandle UART4_RX_QueHandle;//串口2接收队列
 extern xQueueHandle UART6_RX_QueHandle;//串口6接收队列
 extern xQueueHandle UART8_RX_QueHandle;//串口8接收队列
 
@@ -287,8 +289,46 @@ void DMA2_Stream1_IRQHandler(void)
 
   /* USER CODE END DMA2_Stream1_IRQn 1 */
 }
+/**
+* @brief This function handles DMA2 stream1 global interrupt.
+*/
+void DMA1_Stream2_IRQHandler(void)
+{
+  /* USER CODE BEGIN DMA2_Stream1_IRQn 0 */
+	
+  /* USER CODE END DMA2_Stream1_IRQn 0 */
+  HAL_DMA_IRQHandler(&hdma_uart4_rx);
+  /* USER CODE BEGIN DMA2_Stream1_IRQn 1 */
 
-
+  /* USER CODE END DMA2_Stream1_IRQn 1 */
+}
+/**
+* @brief This function handles DMA2 stream2 global interrupt.
+*/
+void DMA2_Stream2_IRQHandler(void)
+{
+  /* USER CODE END DMA2_Stream2_IRQn 0 */
+  HAL_DMA_IRQHandler(&hdma_usart1_rx);
+  /* USER CODE END DMA2_Stream2_IRQn 1 */
+}
+/**
+* @brief This function handles DMA1 stream6 global interrupt.
+*/
+void DMA1_Stream6_IRQHandler(void)
+{
+  /* USER CODE END DMA2_Stream2_IRQn 0 */
+  HAL_DMA_IRQHandler(&hdma_uart8_rx);
+  /* USER CODE END DMA2_Stream2_IRQn 1 */
+}
+/**
+* @brief This function handles DMA1 stream5 global interrupt.
+*/
+void DMA1_Stream5_IRQHandler(void)
+{
+  /* USER CODE END DMA2_Stream2_IRQn 0 */
+  HAL_DMA_IRQHandler(&hdma_usart2_rx);
+  /* USER CODE END DMA2_Stream2_IRQn 1 */
+}
 
 void USART1_IRQHandler (void)
 {
@@ -355,6 +395,31 @@ void USART3_IRQHandler (void)
 			
 		 }
 }
+void UART4_IRQHandler(void)
+{
+	uint8_t tmp1,tmp2;
+	tmp1 = __HAL_UART_GET_FLAG(&huart4, UART_FLAG_IDLE);   //空闲中断中将已收字节数取出后，停止DMA
+  tmp2 = __HAL_UART_GET_IT_SOURCE(&huart4, UART_IT_IDLE);
+	
+   if((tmp1 != RESET)&&(tmp2 != RESET))
+	{
+		
+		RefreshDeviceOutLineTime(JY61_NO);
+		
+		__HAL_DMA_DISABLE(&hdma_uart4_rx);
+		__HAL_UART_CLEAR_IDLEFLAG(&huart4);
+		
+		UART4_RX_NUM=(SizeofJY61)-(hdma_uart4_rx.Instance->NDTR);
+		
+		JY61_Data_Pro();
+		__HAL_DMA_SET_COUNTER(&hdma_uart4_rx,SizeofJY61);
+    __HAL_DMA_ENABLE(&hdma_uart4_rx);
+	}
+  HAL_UART_IRQHandler(&huart4);
+  /* USER CODE BEGIN UART8_IRQn 1 */
+
+  /* USER CODE END UART8_IRQn 1 */
+}
 void UART8_IRQHandler(void)
 {
 	uint8_t tmp1,tmp2;
@@ -380,34 +445,6 @@ void UART8_IRQHandler(void)
 
   /* USER CODE END UART8_IRQn 1 */
 }
-/**
-* @brief This function handles DMA1 stream5 global interrupt.
-*/
-/**
-* @brief This function handles DMA2 stream2 global interrupt.
-*/
-void DMA2_Stream2_IRQHandler(void)
-{
-  /* USER CODE END DMA2_Stream2_IRQn 0 */
-  HAL_DMA_IRQHandler(&hdma_usart1_rx);
-  /* USER CODE END DMA2_Stream2_IRQn 1 */
-}
-
-
-void DMA1_Stream6_IRQHandler(void)
-{
-  /* USER CODE END DMA2_Stream2_IRQn 0 */
-  HAL_DMA_IRQHandler(&hdma_uart8_rx);
-  /* USER CODE END DMA2_Stream2_IRQn 1 */
-}
-
-void DMA1_Stream5_IRQHandler(void)
-{
-  /* USER CODE END DMA2_Stream2_IRQn 0 */
-  HAL_DMA_IRQHandler(&hdma_usart2_rx);
-  /* USER CODE END DMA2_Stream2_IRQn 1 */
-}
-
 
 /**
 * @brief This function handles CAN1 RX0 interrupts.

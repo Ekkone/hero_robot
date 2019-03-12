@@ -22,15 +22,18 @@ float pid_calc(pid_t* pid, float get, float set);
 ------------------------------------------------------------------------------
 */
 /* 内部变量------------------------------------------------------------------*/
+
 pid_t pid_yaw       = {0};  //yaw轴位置环
 pid_t pid_pit       = {0};	//pit轴位置环
 pid_t pid_yaw_spd   = {0};	//yaw轴速度环
 pid_t pid_pit_spd   = {0};	//pit轴速度环
 
+
 pid_t pid_yaw_jy61 = {0};  //外接陀螺仪 /*目前只用于位置环*/ 
 pid_t pid_pit_jy61 = {0};
 pid_t pid_yaw_jy61_spd = {0};
 pid_t pid_pit_jy61_spd = {0};
+
 
 /* 内部函数原型声明----------------------------------------------------------*/
 /**                                                           //待续
@@ -54,15 +57,15 @@ void gimbal_pid_init(void)
   /* yaw axis motor pid parameter */
 	 PID_struct_init(&pid_yaw, POSITION_PID, 5000, 1000,
                   10.0f, 0.02f, 10.0f); 
-	 PID_struct_init(&pid_yaw_jy61_spd, POSITION_PID, 5000, 1000,
+	 PID_struct_init(&pid_yaw_spd, POSITION_PID, 5000, 1000,
                   2.0f, 0.0f, 0.0f );
   #endif
   #if jy61
 	//use jy61
-//  PID_struct_init(&pid_yaw_jy61, POSITION_PID, 5000, 1000,
-//                  5.0f, 0.1f, 25.0f); //	
-//  PID_struct_init(&pid_yaw_jy61_spd, POSITION_PID, 5000, 1000,
-//                  2.5f, 0.0f, 1.0f ); 
+  PID_struct_init(&pid_pit_jy61, POSITION_PID, 5000, 1000,
+                  5.0f, 0.1f, 25.0f); //	
+  PID_struct_init(&pid_pit_jy61_spd, POSITION_PID, 5000, 1000,
+                  2.5f, 0.0f, 1.0f ); 
   
   PID_struct_init(&pid_yaw_jy61, POSITION_PID, 5000, 100,
                   3.0f, 0.02f, 5.0f); //	
@@ -108,6 +111,7 @@ void Gimbal_Contrl_Task(void const * argument)
         pid_calc(&pid_pit, pit_get.total_angle, pit_set.expect);
         pid_calc(&pid_pit_spd,(imu_data.gy), pid_pit.pos_out);
 //        pid_calc(&pid_pit_spd,(imu_data.gy), 0);
+      
         Pitch_Current_Value=(pid_pit_spd.pos_out); 
 		    Yaw_Current_Value= (-pid_yaw_spd.pos_out);
       #endif
@@ -117,9 +121,8 @@ void Gimbal_Contrl_Task(void const * argument)
         pit_set.expect = minipc_rx.angle_pit + pit_set.expect;
         minipc_rx.angle_yaw = 0;
         minipc_rx.angle_pit = 0;
-
+        //yaw轴
         pid_calc(&pid_yaw_jy61,(ptr_jy61_t_yaw.final_angle),yaw_set.expect);
-  //					pid_calc(&pid_yaw_jy61, yaw_get.total_angle,yaw_set.expect);
         pid_calc(&pid_yaw_jy61_spd,(ptr_jy61_t_angular_velocity.vz), pid_yaw_jy61.pos_out);
         //pit轴
         pid_calc(&pid_pit, pit_get.total_angle, pit_set.expect);
@@ -128,7 +131,8 @@ void Gimbal_Contrl_Task(void const * argument)
         Pitch_Current_Value=(-pid_pit_jy61_spd.pos_out); 
 		    Yaw_Current_Value= (-pid_yaw_jy61_spd.pos_out);
       #endif
-      
+        
+        printf("%f\r\n",ptr_jy61_t_yaw.final_angle);
         /*驱动电机*/
 				if(gimbal_disable_flg==1)//失能
 				{

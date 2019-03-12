@@ -158,7 +158,7 @@ void testTask(void const * argument)
 //		printf("%s\r\n",InfoBuffer);
 //		vTaskList(InfoBuffer);
 //		printf("%s\n\r",InfoBuffer);
-
+    #if jy61
 		  int16_t  *ptr = angle; //≥ı ºªØ÷∏’Î
 			angle[0]	= (ptr_jy61_t_yaw.final_angle);
 			angle[1]	= (ptr_jy61_t_angular_velocity.vz);
@@ -174,6 +174,7 @@ void testTask(void const * argument)
 	  printf("  yaw=%d \n\t",yaw_get.angle);
 		
 		HAL_GPIO_TogglePin(LED_RED_GPIO_Port,LED_RED_Pin); //Red
+    #endif
 		
 		osDelayUntil(&xLastWakeTime,100);
 	}
