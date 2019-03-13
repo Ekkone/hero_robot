@@ -3,7 +3,7 @@
  * Auto generated Run-Time-Environment Component Configuration File
  *      *** Do not modify ! ***
  *
- * Project: '2018.07.12-infantry' 
+ * Project: 'hero_robot' 
  * Target:  'hero_robot' 
  */
 

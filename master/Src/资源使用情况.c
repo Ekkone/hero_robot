@@ -5,7 +5,7 @@
 旧板子：
 
 -时钟          输入					PLLCK系数					输出					  
-			   HSE 16MHz			M=12，N=336，P=2			SYSCLK					        168MHz
+			   HSE   12MHz			M=12，N=336，P=2			SYSCLK					        168MHz
                                               APB1-peripheral clock	  42MHz
                                               APB1-timer clock		    84MHz
                                               APB2-peripheral clock 	84MHz
