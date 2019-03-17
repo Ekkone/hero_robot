@@ -3,7 +3,7 @@
 
 #include "stm32f4xx_hal.h"
 #include "stm32f4xx.h"
-#include "USART.h"
+#include "usart.h"
 #include "String.h"
 
 

@@ -542,7 +542,7 @@ void IMU_Get_Data()
 	{
 		data_sum += gy_data_filter[i];
 	}
-	imu_data.gy=data_sum / 5;
+	imu_data.gy=data_sum / 10;
 
 	data_sum = 0;
 	

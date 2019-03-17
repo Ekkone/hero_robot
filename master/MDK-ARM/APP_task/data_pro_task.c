@@ -72,7 +72,7 @@ void RemoteControlProcess()
 					 {
 						  pit_set.expect = pit_set.expect +(0x400-RC_Ctl.rc.ch3)/20;	
 							yaw_set.expect = yaw_set.expect +(0x400-RC_Ctl.rc.ch2)/20;	
-							moto_3508_set.dstVmmps_X=((RC_Ctl.rc.ch0-0x400)*5);
+							moto_3508_set.dstVmmps_X=-((RC_Ctl.rc.ch0-0x400)*5);
 							moto_3508_set.dstVmmps_Y=((RC_Ctl.rc.ch1-0x400)*5);
 					 }
 					 else//WY运动
@@ -98,7 +98,7 @@ void RemoteControlProcess()
                 shot_anjian_counter++;
                 if(shot_anjian_counter > shot_frequency)//非连续触发信号
                 {
-                  ptr_heat_gun_t.sht_flg=1;
+                  ptr_heat_gun_t.sht_flg=1;//单发
                   press_counter=0;
                   shot_anjian_counter=0;
                 }
@@ -108,7 +108,7 @@ void RemoteControlProcess()
                 /*底盘*/
                 chassis_gimble_Mode_flg=1;
                 /*发射*/
-                ptr_heat_gun_t.sht_flg=2;
+                ptr_heat_gun_t.sht_flg=3;
                 /**/
                 HAL_GPIO_WritePin(GPIOG, GPIO_PIN_13, GPIO_PIN_SET);
               }break;

@@ -80,7 +80,7 @@ extern void Gimbal_Contrl_Task(void const * argument);
 extern void Gun_Task(void const * argument);
 extern void MiniPC_Data_task(void const * argument);
 extern void Led_Task(void const * argument);
-extern void vOutLineCheck_Task(void const *argument);
+//extern void vOutLineCheck_Task(void const *argument);
 extern void Check_Task(void const *argument);
 
 void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
@@ -143,8 +143,8 @@ void MX_FREERTOS_Init(void) {
 //	osThreadDef(CheckTask, Check_Task, osPriorityNormal, 0, 128);
 //	CheckTaskHandle = osThreadCreate(osThread(CheckTask), NULL);
 	
-	osThreadDef(vOutLineCheckTask, vOutLineCheck_Task, osPriorityNormal, 0, 64);
-	vOutLineCheckTaskHandle = osThreadCreate(osThread(vOutLineCheckTask), NULL);
+//	osThreadDef(vOutLineCheckTask, vOutLineCheck_Task, osPriorityNormal, 0, 64);
+//	vOutLineCheckTaskHandle = osThreadCreate(osThread(vOutLineCheckTask), NULL);
 
   /* USER CODE END RTOS_THREADS */
 

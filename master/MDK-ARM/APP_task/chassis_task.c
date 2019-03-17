@@ -145,8 +145,10 @@ void Chassis_Contrl_Task(void const * argument)
 												pid_3508_spd[0].pos_out,
 												pid_3508_spd[1].pos_out, 
 												pid_3508_spd[2].pos_out, 
-												pid_3508_spd[3].pos_out);					
-			}
+												pid_3508_spd[3].pos_out);       
+//        	Chassis_Motor(&hcan1,
+//												300,300,300,300);	
+      }        
 				
 			if(0){  //数据发送和任务检测   _待续
 			//	if(HAL_GPIO_ReadPin(GPIOI,GPIO_PIN_0) == 1)            //弹仓检测  低电平触发发送0为子弹空

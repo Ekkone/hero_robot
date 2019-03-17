@@ -46,6 +46,9 @@ typedef struct{
 	uint16_t			angle_buf[FILTER_BUF_LEN];
 	uint16_t			fited_angle;	
 	uint32_t			msg_cnt;
+  int32_t      run_time;
+	int32_t      cmd_time;
+	int32_t      reverse_time;
 }moto_measure_t;
 
 /* Exported constants------------------------------------------------------------*/

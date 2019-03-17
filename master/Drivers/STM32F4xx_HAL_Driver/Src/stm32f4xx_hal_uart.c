@@ -1663,7 +1663,6 @@ static HAL_StatusTypeDef UART_WaitOnFlagUntilTimeout(UART_HandleTypeDef *huart, 
     /* Check for the Timeout */
     if(Timeout != HAL_MAX_DELAY)
     {
-
       if((Timeout == 0U)||((HAL_GetTick() - Tickstart ) > Timeout))
       {
         /* Disable TXE, RXNE, PE and ERR (Frame error, noise error, overrun error) interrupts for the interrupt process */
