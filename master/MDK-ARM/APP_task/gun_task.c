@@ -32,16 +32,19 @@ void Allocate_Motor(CAN_HandleTypeDef * hcan,int16_t value);
 pid_t pid_dial_pos  = {0};  //拨盘电机位置环
 pid_t pid_dial_spd  = {0};	//拨盘电机速度环
 pid_t pid_shot_spd[2]  = {0};	//摩擦轮速度环
+pid_t pid_stir_spd = {0};
 /* 内部函数原型声明----------------------------------------------------------*/
 void Gun_Pid_Init()
 {
   /*拨弹电机*/
 		PID_struct_init(&pid_dial_pos, POSITION_PID, 6000, 5000,
-									1.5f,	0.0000f,	0.0f);  
-		//pid_pos[i].deadband=500;
+									2.5f,	0.03f,	5.0f);  
+		//pid_dial_pos.deadband = 10;
 		PID_struct_init(&pid_dial_spd, POSITION_PID, 6000, 5000,
 									1.0f,	0.0f,	0.0f	);  
-		pid_pit_spd.deadband=10;//2.5f,	0.03f,	1.0f	
+		/*拨盘电机*/
+		PID_struct_init(&pid_stir_spd, POSITION_PID, 6000, 5000,
+									1.5f,	0.0f,	0.0f	); 	
 }
 /* 任务主体部分 -------------------------------------------------------------*/
 
@@ -64,6 +67,7 @@ void Gun_Task(void const * argument)
   uint8_t motor_stop_flag=0;
 	static int32_t set_angle = 0;
 	int32_t set_speed = 0;
+  int32_t set_stir_speed = 0;
 	static uint8_t set_cnt = 0;
   static uint8_t block_flag;
   static float check_time = 0;
@@ -71,33 +75,7 @@ void Gun_Task(void const * argument)
 	for(;;)
 	{
 		RefreshTaskOutLineTime(GunTask_ON);
-	/*判断拨盘是否转到位置*/		
-		if(moto_dial_get.round_cnt >= 5*set_cnt)
-			{
-				moto_dial_get.round_cnt=0;
-				moto_dial_get.offset_angle=moto_dial_get.angle;
-				moto_dial_get.total_angle=0;	
-				moto_dial_get.run_time=GetSystemTimer();
-			}
-//			else
-//			{
-//					if( my_abs(moto_dial_get.run_time-moto_dial_get.cmd_time)>BLOCK_TIME )//堵转判定
-//					{
-//					
-//						block_flag=1;
-//						
-//					}
-//		  }
-//	
-//			if( moto_dial_get.reverse_time-moto_dial_get.run_time < REVERSE_TIME && block_flag)//反转设定
-//			{
-//				ptr_heat_gun_t.sht_flg=10;//反转
-//				moto_dial_get.round_cnt=0;
-//				moto_dial_get.offset_angle=moto_dial_get.angle;
-//				moto_dial_get.total_angle=0;	
-//				
-//			}else     block_flag=0;
-      
+
  /*判断发射模式*/
     switch(ptr_heat_gun_t.sht_flg)
     {
@@ -105,25 +83,37 @@ void Gun_Task(void const * argument)
 			{
 				set_angle=0;
 				set_speed=0;
+        set_stir_speed = 0;
 				set_cnt=0;
 				moto_dial_get.cmd_time=GetSystemTimer();
 			}break;
       case 1://单发模式
       {
+        /*设定角度*/
 				moto_dial_get.cmd_time=GetSystemTimer();
 				set_cnt=1;
-				set_angle=42125*set_cnt;
-				
+				set_angle=42125*set_cnt*3;
+        /*清零*/
+				moto_dial_get.round_cnt=0;
+				moto_dial_get.offset_angle=moto_dial_get.angle;
+				moto_dial_get.total_angle=0;	
+        /*进入位置环*/
+        ptr_heat_gun_t.sht_flg = 11;
+      }break;
+      case 11:
+      {
         /*pid位置环*/
         pid_calc(&pid_dial_pos, moto_dial_get.total_angle,set_angle);	
 				set_speed=pid_dial_pos.pos_out;
-
+        set_stir_speed = 1000;
+        //set_speed = 5000;
       }break;
       case 2://3连发模式
       {
 				moto_dial_get.cmd_time=GetSystemTimer();
 				set_cnt=3;
 				set_angle=-42125*set_cnt;
+        set_stir_speed = 1000;
 			
         /*pid位置环*/
         pid_calc(&pid_dial_pos, moto_dial_get.total_angle,set_angle);	
@@ -133,6 +123,7 @@ void Gun_Task(void const * argument)
       { 
 				moto_dial_get.cmd_time=GetSystemTimer();
         set_speed = 5000;
+        set_stir_speed = 1000;
         set_cnt=1;
 				
       }break;
@@ -146,8 +137,12 @@ void Gun_Task(void const * argument)
     }
      /*速度环*/
      pid_calc(&pid_dial_spd,moto_dial_get.speed_rpm ,set_speed);
+    pid_calc(&pid_stir_spd,moto_stir_get.speed_rpm ,500);
+      
+    //printf("%d",moto_dial_get.speed_rpm);
      /*驱动拨弹电机*/
 		 Allocate_Motor(&hcan1,pid_dial_spd.pos_out);
+     Stir_Motor(&hcan1,pid_stir_spd.pos_out);
 		 minipc_rx.state_flag=0;
 		 set_speed=0;	   
     

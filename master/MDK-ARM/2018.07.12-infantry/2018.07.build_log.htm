@@ -21,8 +21,8 @@ Target DLL:      Segger\JL2CM3.dll V2.99.31.0
 Dialog DLL:      TCM.DLL V1.36.1.0
  
 <h2>Project:</h2>
-F:\Work\hero_robot\master\MDK-ARM\2018.07.12-infantry.uvprojx
-Project File Date:  03/16/2019
+F:\Work\hero\master\MDK-ARM\2018.07.12-infantry.uvprojx
+Project File Date:  03/19/2019
 
 <h2>Output:</h2>
 *** Using Compiler 'V5.06 update 6 (build 750)', folder: 'D:\Keil\ARM\ARMCC\Bin'
@@ -46,16 +46,18 @@ compiling gun_task.c...
       *pIalpha = __QSUB(product1, product2);
 ../Drivers/CMSIS/Include/arm_math.h(5366): warning:  #223-D: function "__QADD" declared implicitly
       *pIbeta = __QADD(product4, product3);
-APP_task\gun_task.c(64): warning:  #177-D: variable "motor_stop_flag"  was declared but never referenced
+APP_task\gun_task.c(67): warning:  #177-D: variable "motor_stop_flag"  was declared but never referenced
     uint8_t motor_stop_flag=0;
-APP_task\gun_task.c(68): warning:  #177-D: variable "block_flag"  was declared but never referenced
+APP_task\gun_task.c(70): warning:  #550-D: variable "set_stir_speed"  was set but never used
+    int32_t set_stir_speed = 0;
+APP_task\gun_task.c(72): warning:  #177-D: variable "block_flag"  was declared but never referenced
     static uint8_t block_flag;
-APP_task\gun_task.c(69): warning:  #177-D: variable "check_time"  was declared but never referenced
+APP_task\gun_task.c(73): warning:  #177-D: variable "check_time"  was declared but never referenced
     static float check_time = 0;
-APP_task\gun_task.c: 12 warnings, 0 errors
+APP_task\gun_task.c: 13 warnings, 0 errors
 linking...
-Program Size: Code=29172 RO-data=692 RW-data=336 ZI-data=21264  
-"2018.07.12-infantry\2018.07.12-infantry" - 0 Error(s), 12 Warning(s).
+Program Size: Code=29300 RO-data=692 RW-data=336 ZI-data=21392  
+"2018.07.12-infantry\2018.07.12-infantry" - 0 Error(s), 13 Warning(s).
 
 <h2>Software Packages used:</h2>
 
