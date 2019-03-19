@@ -37,7 +37,7 @@ int16_t W_speed_max = 3000;
 int16_t W_speed_min = -3000; 
 uint8_t press_counter;
 uint8_t shot_anjian_counter=0;
-uint8_t shot_frequency = 150;
+uint8_t shot_frequency = 100;
 int8_t chassis_gimble_Mode_flg;
 //volatile float remain_power=0.0;   //底盘功率 _待续
 //float power; 				 //底盘功率 _测试
@@ -108,7 +108,13 @@ void RemoteControlProcess()
                 /*底盘*/
                 chassis_gimble_Mode_flg=1;
                 /*发射*/
-                ptr_heat_gun_t.sht_flg=3;
+                shot_anjian_counter++;
+                if(shot_anjian_counter > shot_frequency)//非连续触发信号
+                {
+                  ptr_heat_gun_t.sht_flg=2;//3发
+                  press_counter=0;
+                  shot_anjian_counter=0;
+                }
                 /**/
                 HAL_GPIO_WritePin(GPIOG, GPIO_PIN_13, GPIO_PIN_SET);
               }break;

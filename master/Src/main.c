@@ -121,7 +121,7 @@ int main(void)
 uint32_t Micro_Tick; //µ•Œª0.005ms
 uint32_t Photoelectric_gate1 = 0,Photoelectric_gate2 = 0;
 uint16_t gate1_counter = 0,gate2_counter = 0;
-static float Golf_speed = 0;
+ float Golf_speed = 0;
 int16_t Golf_counter = 0;
 /*≤‚ÀŸdown*/
 
@@ -144,16 +144,16 @@ void testTask(void const * argument)
 		static uint16_t counter_last;
 		
 		RefreshTaskOutLineTime(testTask_ON);
-//		if(gate1_counter == gate2_counter)
-//		{
-//			Golf_speed = (float)(GunLength / MicroTime / (Photoelectric_gate1 - Photoelectric_gate2));
+		if(gate1_counter == gate2_counter)
+		{
+			Golf_speed = (float)(GunLength / MicroTime / (Photoelectric_gate1 - Photoelectric_gate2));
 
-//			if(counter_last != gate1_counter)
-//			{
-//				printf("Golf_speed = %4f\n",Golf_speed);
-//			}
-//			counter_last = gate1_counter;
-//		}
+			if(counter_last != gate1_counter)
+			{
+				printf("Golf_speed = %4f\n",Golf_speed);
+			}
+			counter_last = gate1_counter;
+		}
 //		vTaskGetRunTimeStats(InfoBuffer);
 //		printf("%s\r\n",InfoBuffer);
 //		vTaskList(InfoBuffer);

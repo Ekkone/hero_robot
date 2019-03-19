@@ -49,10 +49,17 @@ void gimbal_pid_init(void)
 		/*pitch axis motor pid parameter*/
   #if imu
   /*imu pid parameter*/
+  /*暂时稳定版*/
 	PID_struct_init(&pid_pit, POSITION_PID, 5000, 1000,
-									20.0f, 0.01f, 110.0f); 
+									17.0f, 0.03f, 75.0f); 
 	PID_struct_init(&pid_pit_spd, POSITION_PID, 5000, 1000,
-                  0.5f, 0.0f, 0.1f );
+                  1.0f, 0.0f, 0.1f );
+  /*在调版*/
+//  PID_struct_init(&pid_pit, POSITION_PID, 10000, 1000,
+//									10.0f, 0.0f, 4.0f); 
+//	PID_struct_init(&pid_pit_spd, POSITION_PID, 10000, 1000,
+//                  2.0f, 0.01f, 0.01f);
+
 	
   /* yaw axis motor pid parameter */
 	 PID_struct_init(&pid_yaw, POSITION_PID, 5000, 1000,
@@ -132,9 +139,9 @@ void Gimbal_Contrl_Task(void const * argument)
 		    Yaw_Current_Value= (-pid_yaw_jy61_spd.pos_out);
       #endif
         
-        printf("%f\r\n",ptr_jy61_t_yaw.final_angle);
-        Pitch_Current_Value=0; 
-		    Yaw_Current_Value= 0;
+//        printf("%f\r\n",ptr_jy61_t_yaw.final_angle);
+//        Pitch_Current_Value=0; 
+//		    Yaw_Current_Value= 0;
         /*驱动电机*/
 				if(gimbal_disable_flg==1)//失能
 				{

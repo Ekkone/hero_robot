@@ -3,7 +3,7 @@
 <title>Static Call Graph - [2018.07.12-infantry\2018.07.12-infantry]</title></head>
 <body><HR>
 <H1>Static Call Graph for image 2018.07.12-infantry\2018.07.12-infantry</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060750: Last Updated: Tue Mar 19 15:23:28 2019
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060750: Last Updated: Tue Mar 19 20:56:38 2019
 <BR><P>
 <H3>Maximum Stack Usage =        296 bytes + Unknown(Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -466,6 +466,7 @@ Global Symbols
 <BR>[Calls]<UL><LI><a href="#[80]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_double_round
 </UL>
 <BR>[Called By]<UL><LI><a href="#[df]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_EXTI_Callback
+<LI><a href="#[71]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;testTask
 <LI><a href="#[c4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GetSystemTimer
 <LI><a href="#[136]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_fp_digits
 </UL>
@@ -484,11 +485,13 @@ Global Symbols
 <BR>[Calls]<UL><LI><a href="#[7f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_double_epilogue
 </UL>
 <BR>[Called By]<UL><LI><a href="#[df]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_EXTI_Callback
+<LI><a href="#[71]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;testTask
 <LI><a href="#[c4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GetSystemTimer
 </UL>
 
-<P><STRONG><a name="[c8]"></a>__aeabi_f2d</STRONG> (Thumb, 38 bytes, Stack size 0 bytes, f2d.o(.text))
-<BR><BR>[Called By]<UL><LI><a href="#[74]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Gimbal_Contrl_Task
+<P><STRONG><a name="[c9]"></a>__aeabi_f2d</STRONG> (Thumb, 38 bytes, Stack size 0 bytes, f2d.o(.text))
+<BR><BR>[Called By]<UL><LI><a href="#[75]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Gun_Task
+<LI><a href="#[71]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;testTask
 <LI><a href="#[124]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MyTime_statistics
 </UL>
 
@@ -503,6 +506,7 @@ Global Symbols
 <BR>[Calls]<UL><LI><a href="#[87]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_float_round
 </UL>
 <BR>[Called By]<UL><LI><a href="#[df]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_EXTI_Callback
+<LI><a href="#[71]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;testTask
 <LI><a href="#[c4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GetSystemTimer
 </UL>
 
@@ -841,24 +845,22 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[b5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;power_limit
 </UL>
 
-<P><STRONG><a name="[74]"></a>Gimbal_Contrl_Task</STRONG> (Thumb, 260 bytes, Stack size 8 bytes, gimbal_task.o(i.Gimbal_Contrl_Task))
+<P><STRONG><a name="[74]"></a>Gimbal_Contrl_Task</STRONG> (Thumb, 234 bytes, Stack size 8 bytes, gimbal_task.o(i.Gimbal_Contrl_Task))
 <BR><BR>[Stack]<UL><LI>Max Depth = 144<LI>Call Chain = Gimbal_Contrl_Task &rArr; IMU_Get_Data &rArr; MPU6500_Read_Regs &rArr; HAL_SPI_TransmitReceive &rArr; SPI_CheckFlag_BSY &rArr; SPI_WaitFlagStateUntilTimeout
 </UL>
 <BR>[Calls]<UL><LI><a href="#[af]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;xTaskGetTickCount
 <LI><a href="#[b7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osDelayUntil
 <LI><a href="#[ae]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osDelay
 <LI><a href="#[b2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RefreshTaskOutLineTime
-<LI><a href="#[c8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_f2d
 <LI><a href="#[b3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;pid_calc
 <LI><a href="#[bb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Cloud_Platform_Motor_Disable
 <LI><a href="#[ba]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Cloud_Platform_Motor
 <LI><a href="#[c7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;gimbal_pid_init
 <LI><a href="#[b1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;IMU_Get_Data
-<LI><a href="#[c9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2printf
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> freertos.o(.constdata)
 </UL>
-<P><STRONG><a name="[ca]"></a>Gun_Pid_Init</STRONG> (Thumb, 100 bytes, Stack size 24 bytes, gun_task.o(i.Gun_Pid_Init))
+<P><STRONG><a name="[c8]"></a>Gun_Pid_Init</STRONG> (Thumb, 100 bytes, Stack size 24 bytes, gun_task.o(i.Gun_Pid_Init))
 <BR><BR>[Stack]<UL><LI>Max Depth = 32<LI>Call Chain = Gun_Pid_Init &rArr; PID_struct_init
 </UL>
 <BR>[Calls]<UL><LI><a href="#[b9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PID_struct_init
@@ -866,18 +868,20 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[75]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Gun_Task
 </UL>
 
-<P><STRONG><a name="[75]"></a>Gun_Task</STRONG> (Thumb, 364 bytes, Stack size 16 bytes, gun_task.o(i.Gun_Task))
+<P><STRONG><a name="[75]"></a>Gun_Task</STRONG> (Thumb, 358 bytes, Stack size 16 bytes, gun_task.o(i.Gun_Task))
 <BR><BR>[Stack]<UL><LI>Max Depth = 128<LI>Call Chain = Gun_Task &rArr; RefreshTaskOutLineTime &rArr; GetSystemTimer &rArr; __aeabi_dadd &rArr; _double_epilogue &rArr; _double_round
 </UL>
 <BR>[Calls]<UL><LI><a href="#[af]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;xTaskGetTickCount
 <LI><a href="#[b7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osDelayUntil
 <LI><a href="#[ae]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osDelay
+<LI><a href="#[c9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_f2d
 <LI><a href="#[b2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RefreshTaskOutLineTime
 <LI><a href="#[c4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GetSystemTimer
 <LI><a href="#[b3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;pid_calc
 <LI><a href="#[cb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Stir_Motor
 <LI><a href="#[90]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Allocate_Motor
-<LI><a href="#[ca]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Gun_Pid_Init
+<LI><a href="#[c8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Gun_Pid_Init
+<LI><a href="#[ca]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2printf
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> freertos.o(.constdata)
 </UL>
@@ -1720,7 +1724,7 @@ Global Symbols
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = MyTime_statistics
 </UL>
 <BR>[Calls]<UL><LI><a href="#[d4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GetTick
-<LI><a href="#[c8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_f2d
+<LI><a href="#[c9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_f2d
 </UL>
 <BR>[Called By]<UL><LI><a href="#[b5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;power_limit
 <LI><a href="#[125]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Remain_Power_Calculate
@@ -1736,7 +1740,7 @@ Global Symbols
 </UL>
 <BR>[Called By]<UL><LI><a href="#[b0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Chassis_pid_init
 <LI><a href="#[c7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;gimbal_pid_init
-<LI><a href="#[ca]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Gun_Pid_Init
+<LI><a href="#[c8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Gun_Pid_Init
 </UL>
 
 <P><STRONG><a name="[d7]"></a>RefreshDeviceOutLineTime</STRONG> (Thumb, 20 bytes, Stack size 8 bytes, systemstate.o(i.RefreshDeviceOutLineTime))
@@ -1774,7 +1778,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[b5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;power_limit
 </UL>
 
-<P><STRONG><a name="[126]"></a>RemoteControlProcess</STRONG> (Thumb, 242 bytes, Stack size 24 bytes, data_pro_task.o(i.RemoteControlProcess))
+<P><STRONG><a name="[126]"></a>RemoteControlProcess</STRONG> (Thumb, 254 bytes, Stack size 24 bytes, data_pro_task.o(i.RemoteControlProcess))
 <BR><BR>[Stack]<UL><LI>Max Depth = 24<LI>Call Chain = RemoteControlProcess
 </UL>
 <BR>[Calls]<UL><LI><a href="#[c3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_WritePin
@@ -1956,10 +1960,11 @@ Global Symbols
 
 <P><STRONG><a name="[171]"></a>__1printf</STRONG> (Thumb, 0 bytes, Stack size 24 bytes, printfa.o(i.__0printf), UNUSED)
 
-<P><STRONG><a name="[c9]"></a>__2printf</STRONG> (Thumb, 0 bytes, Stack size 24 bytes, printfa.o(i.__0printf))
+<P><STRONG><a name="[ca]"></a>__2printf</STRONG> (Thumb, 0 bytes, Stack size 24 bytes, printfa.o(i.__0printf))
 <BR><BR>[Stack]<UL><LI>Max Depth = 24<LI>Call Chain = __2printf
 </UL>
-<BR>[Called By]<UL><LI><a href="#[74]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Gimbal_Contrl_Task
+<BR>[Called By]<UL><LI><a href="#[75]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Gun_Task
+<LI><a href="#[71]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;testTask
 </UL>
 
 <P><STRONG><a name="[172]"></a>__c89printf</STRONG> (Thumb, 0 bytes, Stack size 24 bytes, printfa.o(i.__0printf), UNUSED)
@@ -2118,13 +2123,18 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[144]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;xTaskGenericCreate
 </UL>
 
-<P><STRONG><a name="[71]"></a>testTask</STRONG> (Thumb, 30 bytes, Stack size 8 bytes, main.o(i.testTask))
+<P><STRONG><a name="[71]"></a>testTask</STRONG> (Thumb, 104 bytes, Stack size 8 bytes, main.o(i.testTask))
 <BR><BR>[Stack]<UL><LI>Max Depth = 120<LI>Call Chain = testTask &rArr; RefreshTaskOutLineTime &rArr; GetSystemTimer &rArr; __aeabi_dadd &rArr; _double_epilogue &rArr; _double_round
 </UL>
 <BR>[Calls]<UL><LI><a href="#[af]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;xTaskGetTickCount
 <LI><a href="#[b7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osDelayUntil
 <LI><a href="#[ae]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osDelay
+<LI><a href="#[85]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_ui2d
+<LI><a href="#[c9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_f2d
+<LI><a href="#[83]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_ddiv
+<LI><a href="#[86]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_d2f
 <LI><a href="#[b2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RefreshTaskOutLineTime
+<LI><a href="#[ca]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2printf
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> freertos.o(.constdata)
 </UL>

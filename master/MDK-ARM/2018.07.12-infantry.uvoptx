@@ -120,10 +120,7 @@
         <SetRegEntry>
           <Number>0</Number>
           <Key>DLGUARM</Key>
-          <Name>€^e
-?zw€^e
-?zw€^e
-</Name>
+          <Name>犬??zw犬??zw犬?</Name>
         </SetRegEntry>
         <SetRegEntry>
           <Number>0</Number>
@@ -197,6 +194,21 @@
           <count>7</count>
           <WinNumber>1</WinNumber>
           <ItemText>moto_stir_get.speed_rpm,0x0A</ItemText>
+        </Ww>
+        <Ww>
+          <count>8</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>speed_golf</ItemText>
+        </Ww>
+        <Ww>
+          <count>9</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>gate1_counter</ItemText>
+        </Ww>
+        <Ww>
+          <count>10</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>gate2_counter</ItemText>
         </Ww>
       </WatchWindow1>
       <WatchWindow2>

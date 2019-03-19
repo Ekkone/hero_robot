@@ -20,6 +20,7 @@
 /* 外部变量声明--------------------------------------------------------------*/
 Heat_Gun_t  ptr_heat_gun_t;
 extern uint8_t shot_frequency;
+extern float Golf_speed;
 //Power_Heat * power_heat;
 /* 外部函数原型声明-----------------------------------------------------------
 float pid_calc(pid_t* pid, float get, float set);
@@ -38,10 +39,10 @@ void Gun_Pid_Init()
 {
   /*拨弹电机*/
 		PID_struct_init(&pid_dial_pos, POSITION_PID, 6000, 5000,
-									2.5f,	0.03f,	5.0f);  
+									1.5f,	0.0f,	3.0f);  
 		//pid_dial_pos.deadband = 10;
 		PID_struct_init(&pid_dial_spd, POSITION_PID, 6000, 5000,
-									1.0f,	0.0f,	0.0f	);  
+									1.0f,	0.0f,	0.1f	);  
 		/*拨盘电机*/
 		PID_struct_init(&pid_stir_spd, POSITION_PID, 6000, 5000,
 									1.5f,	0.0f,	0.0f	); 	
@@ -92,7 +93,7 @@ void Gun_Task(void const * argument)
         /*设定角度*/
 				moto_dial_get.cmd_time=GetSystemTimer();
 				set_cnt=1;
-				set_angle=42125*set_cnt*3;
+				set_angle=58982*set_cnt;
         /*清零*/
 				moto_dial_get.round_cnt=0;
 				moto_dial_get.offset_angle=moto_dial_get.angle;
@@ -112,12 +113,14 @@ void Gun_Task(void const * argument)
       {
 				moto_dial_get.cmd_time=GetSystemTimer();
 				set_cnt=3;
-				set_angle=-42125*set_cnt;
+				set_angle=58982*set_cnt;
         set_stir_speed = 1000;
-			
-        /*pid位置环*/
-        pid_calc(&pid_dial_pos, moto_dial_get.total_angle,set_angle);	
-				set_speed=pid_dial_pos.pos_out;
+        /*清零*/
+				moto_dial_get.round_cnt=0;
+				moto_dial_get.offset_angle=moto_dial_get.angle;
+				moto_dial_get.total_angle=0;
+        /*进入位置环*/
+        ptr_heat_gun_t.sht_flg = 11;
       }break;
       case 3://连发模式
       { 
@@ -139,10 +142,10 @@ void Gun_Task(void const * argument)
      pid_calc(&pid_dial_spd,moto_dial_get.speed_rpm ,set_speed);
     pid_calc(&pid_stir_spd,moto_stir_get.speed_rpm ,500);
       
-    //printf("%d",moto_dial_get.speed_rpm);
+    printf("speed=%4f\r\n",Golf_speed);
      /*驱动拨弹电机*/
 		 Allocate_Motor(&hcan1,pid_dial_spd.pos_out);
-     Stir_Motor(&hcan1,pid_stir_spd.pos_out);
+     Stir_Motor(&hcan1,2000);
 		 minipc_rx.state_flag=0;
 		 set_speed=0;	   
     
