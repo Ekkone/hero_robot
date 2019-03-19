@@ -73,14 +73,14 @@ void RemoteControlProcess()
 						  pit_set.expect = pit_set.expect +(0x400-RC_Ctl.rc.ch3)/20;	
 							yaw_set.expect = yaw_set.expect +(0x400-RC_Ctl.rc.ch2)/20;	
 							moto_3508_set.dstVmmps_X=-((RC_Ctl.rc.ch0-0x400)*5);
-							moto_3508_set.dstVmmps_Y=((RC_Ctl.rc.ch1-0x400)*5);
+							moto_3508_set.dstVmmps_Y=-((RC_Ctl.rc.ch1-0x400)*5);
 					 }
 					 else//WY运动
 					 {
 						  pit_set.expect = pit_set.expect +(0x400-RC_Ctl.rc.ch3)/20;	
 							yaw_set.expect = yaw_set.expect +(0x400-RC_Ctl.rc.ch2)/20;	
 							moto_3508_set.dstVmmps_W=((RC_Ctl.rc.ch0-0x400)*5);
-							moto_3508_set.dstVmmps_Y=((RC_Ctl.rc.ch1-0x400)*5);
+							moto_3508_set.dstVmmps_Y=-((RC_Ctl.rc.ch1-0x400)*5);
 					 }
 
 			/*左按键数据处理*/	
@@ -93,7 +93,7 @@ void RemoteControlProcess()
               case 1://上
               {
                 /*底盘*/
-                chassis_gimble_Mode_flg=1;
+                //chassis_gimble_Mode_flg=1;
                 /*发射*/
                 shot_anjian_counter++;
                 if(shot_anjian_counter > shot_frequency)//非连续触发信号
@@ -106,7 +106,7 @@ void RemoteControlProcess()
               case 2://下
               {
                 /*底盘*/
-                chassis_gimble_Mode_flg=1;
+                //chassis_gimble_Mode_flg=1;
                 /*发射*/
                 shot_anjian_counter++;
                 if(shot_anjian_counter > shot_frequency)//非连续触发信号

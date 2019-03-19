@@ -51,9 +51,9 @@ void gimbal_pid_init(void)
   /*imu pid parameter*/
   /*暂时稳定版*/
 	PID_struct_init(&pid_pit, POSITION_PID, 5000, 1000,
-									17.0f, 0.03f, 75.0f); 
+									10.0f, 0.0f, 50.0f); 
 	PID_struct_init(&pid_pit_spd, POSITION_PID, 5000, 1000,
-                  1.0f, 0.0f, 0.1f );
+                  1.5f, 0.0f, 0.0f );
   /*在调版*/
 //  PID_struct_init(&pid_pit, POSITION_PID, 10000, 1000,
 //									10.0f, 0.0f, 4.0f); 
@@ -63,7 +63,7 @@ void gimbal_pid_init(void)
 	
   /* yaw axis motor pid parameter */
 	 PID_struct_init(&pid_yaw, POSITION_PID, 5000, 1000,
-                  10.0f, 0.02f, 9.0f); 
+                  10.0f, 0.02f, 12.0f); 
 	 PID_struct_init(&pid_yaw_spd, POSITION_PID, 5000, 1000,
                   2.0f, 0.0f, 0.0f );
   #endif
@@ -119,7 +119,7 @@ void Gimbal_Contrl_Task(void const * argument)
         pid_calc(&pid_pit_spd,(imu_data.gy), pid_pit.pos_out);
 //        pid_calc(&pid_pit_spd,(imu_data.gy), 0);
       
-        Pitch_Current_Value=(pid_pit_spd.pos_out); 
+        Pitch_Current_Value=(-pid_pit_spd.pos_out); 
 		    Yaw_Current_Value= (-pid_yaw_spd.pos_out);
       #endif
       

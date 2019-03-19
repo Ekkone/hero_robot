@@ -145,7 +145,7 @@ void Gun_Task(void const * argument)
     printf("speed=%4f\r\n",Golf_speed);
      /*Çý¶¯²¦µ¯µç»ú*/
 		 Allocate_Motor(&hcan1,pid_dial_spd.pos_out);
-     Stir_Motor(&hcan1,2000);
+     //Stir_Motor(&hcan1,2000);
 		 minipc_rx.state_flag=0;
 		 set_speed=0;	   
     
