@@ -138,15 +138,11 @@ float pid_calc(pid_t* pid, float get, float set){
     {
         pid->pout = pid->p * pid->err[NOW];
         pid->iout += pid->i * pid->err[NOW];
-        pid->dout_new = pid->d * (pid->err[NOW] - pid->err[LAST] );
-			  
-		    pid->dout = LPF_1st(pid->dout_last,pid->dout_new,0.6);
-			
+        pid->dout = pid->d * (pid->err[NOW] - pid->err[LAST] );
         abs_limit(&(pid->iout), pid->IntegralLimit);
         pid->pos_out = pid->pout + pid->iout + pid->dout;
         abs_limit(&(pid->pos_out), pid->MaxOutput);
         pid->last_pos_out = pid->pos_out;	//update last time 
-			  pid->dout_last = pid->dout;
     }
     else if(pid->pid_mode == DELTA_PID)//增量式P
     {

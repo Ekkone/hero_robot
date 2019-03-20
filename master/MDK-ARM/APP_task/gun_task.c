@@ -39,10 +39,10 @@ void Gun_Pid_Init()
 {
   /*拨弹电机*/
 		PID_struct_init(&pid_dial_pos, POSITION_PID, 6000, 5000,
-									1.5f,	0.0f,	3.0f);  
+									0.7f,	0.0f,	1.8f);  
 		//pid_dial_pos.deadband = 10;
 		PID_struct_init(&pid_dial_spd, POSITION_PID, 6000, 5000,
-									1.0f,	0.0f,	0.1f	);  
+									1.5f,	0.0f,	0.15f	);  
 		/*拨盘电机*/
 		PID_struct_init(&pid_stir_spd, POSITION_PID, 6000, 5000,
 									1.5f,	0.0f,	0.0f	); 	
