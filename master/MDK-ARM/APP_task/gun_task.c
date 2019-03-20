@@ -142,7 +142,7 @@ void Gun_Task(void const * argument)
      pid_calc(&pid_dial_spd,moto_dial_get.speed_rpm ,set_speed);
     pid_calc(&pid_stir_spd,moto_stir_get.speed_rpm ,500);
       
-    printf("speed=%4f\r\n",Golf_speed);
+    //printf("speed=%4f\r\n",Golf_speed);
      /*Çý¶¯²¦µ¯µç»ú*/
 		 Allocate_Motor(&hcan1,pid_dial_spd.pos_out);
      //Stir_Motor(&hcan1,2000);

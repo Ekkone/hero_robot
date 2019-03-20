@@ -51,9 +51,10 @@ void gimbal_pid_init(void)
   /*imu pid parameter*/
   /*暂时稳定版*/
 	PID_struct_init(&pid_pit, POSITION_PID, 5000, 1000,
-									10.0f, 0.0f, 28.0f); 
+									5.0f, 0.0f, 14.8f); 
+  //pid_pit.deadband = 1.5;
 	PID_struct_init(&pid_pit_spd, POSITION_PID, 5000, 1000,
-                  1.0f, 0.0f, 0.0f );
+                  2.0f, 0.0f, 0.0f );
   /*在调版*/
 //  PID_struct_init(&pid_pit, POSITION_PID, 5000, 1000,
 //									15.0f, 0.0f, 10.0f); 

@@ -173,7 +173,7 @@ void StartDefaultTask(void const * argument)
 			}
 			break;
 	}
-	if(key_cnt>10)
+	if(key_cnt>9)
 		key_cnt = 0;
 #if defined CAN_CONTROL
 	set_spd[1] = key_cnt * 1000;
