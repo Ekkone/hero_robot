@@ -50,9 +50,9 @@ void gimbal_pid_init(void)
   #if imu
   /*imu pid parameter*/
   /*暂时稳定版*/
+  /*50*/
 	PID_struct_init(&pid_pit, POSITION_PID, 5000, 1000,
 									5.0f, 0.0f, 14.8f); 
-  //pid_pit.deadband = 1.5;
 	PID_struct_init(&pid_pit_spd, POSITION_PID, 5000, 1000,
                   2.0f, 0.0f, 0.0f );
   /*在调版*/
@@ -141,8 +141,8 @@ void Gimbal_Contrl_Task(void const * argument)
       #endif
         
 //        printf("%f\r\n",ptr_jy61_t_yaw.final_angle);
-        Pitch_Current_Value=0; 
-		    Yaw_Current_Value= 0;
+//        Pitch_Current_Value=0; 
+//		    Yaw_Current_Value= 0;
         /*驱动电机*/
 				if(gimbal_disable_flg==1)//失能
 				{

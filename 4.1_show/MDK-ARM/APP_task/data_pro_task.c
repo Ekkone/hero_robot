@@ -93,7 +93,7 @@ void RemoteControlProcess()
               case 1://上
               {
                 /*底盘*/
-                chassis_gimble_Mode_flg=1;
+//                chassis_gimble_Mode_flg=1;
                 /*发射*/
                 shot_anjian_counter++;
                 if(shot_anjian_counter > shot_frequency)//非连续触发信号
@@ -106,7 +106,7 @@ void RemoteControlProcess()
               case 2://下
               {
                 /*底盘*/
-                chassis_gimble_Mode_flg=1;
+//                chassis_gimble_Mode_flg=1;
                 /*发射*/
                 shot_anjian_counter++;
                 if(shot_anjian_counter > shot_frequency)//非连续触发信号
