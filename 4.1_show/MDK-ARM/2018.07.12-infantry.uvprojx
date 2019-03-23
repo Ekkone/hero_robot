@@ -732,6 +732,11 @@
               <FileType>1</FileType>
               <FilePath>.\APP_task\led_task.c</FilePath>
             </File>
+            <File>
+              <FileName>test_task.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\APP_task\test_task.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

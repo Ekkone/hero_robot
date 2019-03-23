@@ -133,6 +133,7 @@ void StartDefaultTask(void const * argument)
 			{
 				pid_calc(&pid_spd[i], moto_chassis[i].speed_rpm, set_spd[i]);
 			}
+      printf("%d",moto_chassis[1].speed_rpm);
 			set_moto_current(&hcan1, pid_spd[0].pos_out, 
 									pid_spd[1].pos_out,
 									pid_spd[2].pos_out,

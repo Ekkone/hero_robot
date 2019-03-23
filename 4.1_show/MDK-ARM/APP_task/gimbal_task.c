@@ -64,7 +64,7 @@ void gimbal_pid_init(void)
 	
   /* yaw axis motor pid parameter */
 	 PID_struct_init(&pid_yaw, POSITION_PID, 5000, 1000,
-                  10.0f, 0.02f, 12.0f); 
+                  10.0f, 0.02f, 10.0f); 
 	 PID_struct_init(&pid_yaw_spd, POSITION_PID, 5000, 1000,
                   2.0f, 0.0f, 0.0f );
   #endif
@@ -113,6 +113,8 @@ void Gimbal_Contrl_Task(void const * argument)
       #if imu
         IMU_Get_Data();
         //yaw÷·
+      yaw_set.expect = 0;
+      
         pid_calc(&pid_yaw, yaw_get.total_angle,yaw_set.expect);
         pid_calc(&pid_yaw_spd,(imu_data.gz), pid_yaw.pos_out);
         //pit÷·

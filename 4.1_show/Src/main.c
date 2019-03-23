@@ -115,70 +115,78 @@ int main(void)
 
 }
 /*测速模块*/
-#define GunLength 0.05
-#define MicroTime 0.000005
+//#define GunLength 0.05
+//#define MicroTime 0.000005
 
-uint32_t Micro_Tick; //单位0.005ms
-uint32_t Photoelectric_gate1 = 0,Photoelectric_gate2 = 0;
-uint16_t gate1_counter = 0,gate2_counter = 0;
- float Golf_speed = 0;
-int16_t Golf_counter = 0;
-/*测速down*/
+//uint32_t Micro_Tick; //单位0.005ms
+//uint32_t Photoelectric_gate1 = 0,Photoelectric_gate2 = 0;
+//uint16_t gate1_counter = 0,gate2_counter = 0;
+// float Golf_speed = 0;
+//int16_t Golf_counter = 0;
+///*测速down*/
 
-void testTask(void const * argument)
-{
-	
-//	char InfoBuffer[1000];
+//void testTask(void const * argument)
+//{
+//	
+////	char InfoBuffer[1000];
 
-	static double micro_timenow = 0;
-	static double micro_timelast = 0;
-	static double micro_time = 0;
-	int16_t angle[4];	
-	osDelay(200);//延时200ms
-	portTickType xLastWakeTime;
-  xLastWakeTime = xTaskGetTickCount();
-	
-	
-	for(;;)
-	{ 				
-		static uint16_t counter_last;
-		
-		RefreshTaskOutLineTime(testTask_ON);
-		if(gate1_counter == gate2_counter)
-		{
-			Golf_speed = (float)(GunLength / MicroTime / (Photoelectric_gate1 - Photoelectric_gate2));
+//	static double micro_timenow = 0;
+//	static double micro_timelast = 0;
+//	static double micro_time = 0;
+//	int16_t angle = 0;	
+//	osDelay(200);//延时200ms
+//	portTickType xLastWakeTime;
+//  xLastWakeTime = xTaskGetTickCount();
+//  float speed[30];
+//	
+//	
+//	for(;;)
+//	{ 				
+//		static uint16_t counter_last;
+//		static uint8_t count = 0;
+//		RefreshTaskOutLineTime(testTask_ON);
+//    //#if printf_speed
+//		if(gate1_counter == gate2_counter)
+//		{
+//			Golf_speed = (float)(GunLength / MicroTime / (Photoelectric_gate1 - Photoelectric_gate2));
 
-			if(counter_last != gate1_counter)
-			{
-				printf("Golf_speed = %4f\n",Golf_speed);
-			}
-			counter_last = gate1_counter;
-		}
-//		vTaskGetRunTimeStats(InfoBuffer);
-//		printf("%s\r\n",InfoBuffer);
-//		vTaskList(InfoBuffer);
-//		printf("%s\n\r",InfoBuffer);
-    #if jy61
-		  int16_t  *ptr = angle; //初始化指针
-			angle[0]	= (ptr_jy61_t_yaw.final_angle);
-			angle[1]	= (ptr_jy61_t_angular_velocity.vz);
-			angle[2]	= ((int16_t)pid_yaw_jy61.pos_out);
-			angle[3]	= (int16_t)(-pid_yaw_jy61_spd.pos_out);
-			/*用虚拟示波器，发送数据*/
-			vcan_sendware((uint8_t *)ptr,4*sizeof(angle[0]));
-		  vcan_sendware((uint8_t *)ptr,4*sizeof(angle[1]));
-		  vcan_sendware((uint8_t *)ptr,4*sizeof(angle[2]));
-		  vcan_sendware((uint8_t *)ptr,4*sizeof(angle[3]));
-		
-		printf("  pit=%d \n\t",pit_get.total_angle);
-	  printf("  yaw=%d \n\t",yaw_get.angle);
-		
-		HAL_GPIO_TogglePin(LED_RED_GPIO_Port,LED_RED_Pin); //Red
-    #endif
-		
-		osDelayUntil(&xLastWakeTime,100);
-	}
-}
+//			if(counter_last != gate1_counter)
+//			{
+//        if(count == 3)
+//          count = 0;
+//        speed[count] = Golf_speed;
+//        count++;
+//        
+////				printf("Golf_speed = %4f\n",Golf_speed);
+//			}
+//			counter_last = gate1_counter;
+//		}
+//    if(HAL_GPIO_ReadPin(KEY_GPIO_Port,KEY_Pin) == 0)
+//    {
+//      for(uint8_t i = 0;i<30;i++)
+//      {
+//        printf("%d is %4f\r\n",i,speed[i]);
+//      }
+//    }
+//    //#endif
+////		vTaskGetRunTimeStats(InfoBuffer);
+////		printf("%s\r\n",InfoBuffer);
+////		vTaskList(InfoBuffer);
+////		printf("%s\n\r",InfoBuffer);
+//  #if printf_sendware
+//		  int16_t  *ptr = &angle; //初始化指针
+//			angle	= (pit_get.total_angle);
+//			/*用虚拟示波器，发送数据*/
+//			vcan_sendware((uint8_t *)ptr,sizeof(angle));
+//		
+////		printf("  pit=%d \n\t",pit_get.total_angle);
+////	  printf("  yaw=%d \n\t",yaw_get.angle);
+//		
+//		HAL_GPIO_TogglePin(LED_RED_GPIO_Port,LED_RED_Pin); //Red
+//	#endif
+//		osDelayUntil(&xLastWakeTime,100);
+//	}
+//}
 
 /** System Clock Configuration
 */

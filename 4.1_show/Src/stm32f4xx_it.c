@@ -345,13 +345,14 @@ void USART1_IRQHandler (void)
 			__HAL_DMA_SET_COUNTER(&hdma_usart1_rx,SizeofRemote);
 			__HAL_DMA_ENABLE(&hdma_usart1_rx);
 		
-		RefreshDeviceOutLineTime(Remote_NO);
+		//RefreshDeviceOutLineTime(Remote_NO);
 		
     HAL_UART_IRQHandler(&huart1);
   /* USER CODE BEGIN UART8_IRQn 1 */
     vTaskNotifyGiveFromISR(RemoteDataTaskHandle,&pxHigherPriorityTaskWoken);
 		portYIELD_FROM_ISR(pxHigherPriorityTaskWoken);			
 	}
+
   /* USER CODE END UART8_IRQn 1 */
 }
 
@@ -511,13 +512,14 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)  //Ω” ’ÕÍ≥…            ‘
 	 static  BaseType_t  pxHigherPriorityTaskWoken;
 		if(huart == &huart1)
 	{
-/*  	
-		  __HAL_UART_CLEAR_OREFLAG(&huart1);
-			__HAL_DMA_SET_COUNTER(&hdma_usart1_rx,SizeofRemote);
-			__HAL_DMA_ENABLE(&hdma_usart1_rx);
-      vTaskNotifyGiveFromISR(RemoteDataTaskHandle,&pxHigherPriorityTaskWoken);
-			portYIELD_FROM_ISR(pxHigherPriorityTaskWoken);			
-*/
+  	
+//		  __HAL_UART_CLEAR_OREFLAG(&huart1);
+//			__HAL_DMA_SET_COUNTER(&hdma_usart1_rx,SizeofRemote);
+//			__HAL_DMA_ENABLE(&hdma_usart1_rx);
+//      HAL_UART_Receive_DMA(&huart1,USART1_RX_DATA,SizeofRemote); 
+//      vTaskNotifyGiveFromISR(RemoteDataTaskHandle,&pxHigherPriorityTaskWoken);
+//			portYIELD_FROM_ISR(pxHigherPriorityTaskWoken);			
+
 
 	}else if(huart == &huart2)
 	{ 

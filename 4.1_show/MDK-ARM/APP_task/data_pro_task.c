@@ -21,7 +21,7 @@ else if(val>=max)\
 pid_t pid_minipc_yaw={0};
 pid_t pid_minipc_pit={0};
 
-#define REMOTE_PERIOD 1
+#define REMOTE_PERIOD 2
 #define MINIPC_PERIOD 2
 /* 外部变量声明--------------------------------------------------------------*/
 
