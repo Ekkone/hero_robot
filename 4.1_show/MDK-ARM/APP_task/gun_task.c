@@ -72,7 +72,7 @@ void Gun_Task(void const * argument)
 	static uint8_t set_cnt = 0;
   static uint8_t block_flag;
   static float check_time = 0;
-
+  static uint8_t contiue_flag = 0;
 	for(;;)
 	{
 		RefreshTaskOutLineTime(GunTask_ON);
@@ -82,11 +82,23 @@ void Gun_Task(void const * argument)
     {
 			case 0://停止58982
 			{
-				set_angle=0;
-				set_speed=0;
-        set_stir_speed = 0;
-				set_cnt=0;
-				moto_dial_get.cmd_time=GetSystemTimer();
+        
+        switch(contiue_flag)
+        {
+          case 0:
+          {
+            /*设定角度*/
+            set_angle=moto_dial_get.total_angle;	
+            /*搅拌电机*/
+            set_stir_speed = 0;
+            contiue_flag = 1;
+          }break;
+          case 1:
+          {
+            goto position;
+          }break;
+        }
+        
 			}break;
       case 1://单发模式
       {
@@ -100,14 +112,15 @@ void Gun_Task(void const * argument)
 				moto_dial_get.total_angle=0;	
         /*进入位置环*/
         ptr_heat_gun_t.sht_flg = 11;
+        /*搅拌电机*/
+        set_stir_speed = 700;
+        contiue_flag = 0;
       }break;
       case 11:
       {
         /*pid位置环*/
-        pid_calc(&pid_dial_pos, moto_dial_get.total_angle,set_angle);	
+       position: pid_calc(&pid_dial_pos, moto_dial_get.total_angle,set_angle);	
 				set_speed=pid_dial_pos.pos_out;
-        set_stir_speed = 1000;
-        //set_speed = 5000;
       }break;
       case 2://3连发模式
       {
@@ -121,12 +134,15 @@ void Gun_Task(void const * argument)
 				moto_dial_get.total_angle=0;
         /*进入位置环*/
         ptr_heat_gun_t.sht_flg = 11;
+        /*搅拌电机*/
+        set_stir_speed = 700;
+        contiue_flag = 0;
       }break;
       case 3://连发模式
       { 
 				moto_dial_get.cmd_time=GetSystemTimer();
         set_speed = 5000;
-        set_stir_speed = 1000;
+        set_stir_speed = 700;
         set_cnt=1;
 				
       }break;
@@ -140,12 +156,12 @@ void Gun_Task(void const * argument)
     }
      /*速度环*/
      pid_calc(&pid_dial_spd,moto_dial_get.speed_rpm ,set_speed);
-    pid_calc(&pid_stir_spd,moto_stir_get.speed_rpm ,500);
+     pid_calc(&pid_stir_spd,moto_stir_get.speed_rpm ,set_stir_speed);
       
     //printf("speed=%4f\r\n",Golf_speed);
      /*驱动拨弹电机*/
 		 Allocate_Motor(&hcan1,pid_dial_spd.pos_out);
-     //Stir_Motor(&hcan1,2000);
+     Stir_Motor(&hcan1,pid_stir_spd.pos_out);
 		 minipc_rx.state_flag=0;
 		 set_speed=0;	   
     

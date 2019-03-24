@@ -234,19 +234,19 @@ void Allocate_Motor(CAN_HandleTypeDef * hcan,int16_t value)
 void Stir_Motor(CAN_HandleTypeDef * hcan,int16_t value)
 {
 
-			Allocate_Motor_Data.DLC = 0x08;
-			Allocate_Motor_Data.IDE = CAN_ID_STD;
-			Allocate_Motor_Data.RTR = CAN_RTR_DATA;
-			Allocate_Motor_Data.StdId = 0x200;
+			Stir_Motor_Data.DLC = 0x08;
+			Stir_Motor_Data.IDE = CAN_ID_STD;
+			Stir_Motor_Data.RTR = CAN_RTR_DATA;
+			Stir_Motor_Data.StdId = 0x200;
 
-			Allocate_Motor_Data.Data[0]=0;
-			Allocate_Motor_Data.Data[1]=0;
-			Allocate_Motor_Data.Data[2]=value>>8;
-			Allocate_Motor_Data.Data[3]=value;
-			Allocate_Motor_Data.Data[4]=0;
-			Allocate_Motor_Data.Data[5]=0;
-			Allocate_Motor_Data.Data[6]=0;
-			Allocate_Motor_Data.Data[7]=0;
+			Stir_Motor_Data.Data[0]=0;
+			Stir_Motor_Data.Data[1]=0;
+			Stir_Motor_Data.Data[2]=value>>8;
+			Stir_Motor_Data.Data[3]=value;
+			Stir_Motor_Data.Data[4]=0;
+			Stir_Motor_Data.Data[5]=0;
+			Stir_Motor_Data.Data[6]=0;
+			Stir_Motor_Data.Data[7]=0;
 	
 			hcan->pTxMsg = &Stir_Motor_Data;
 			HAL_CAN_Transmit(hcan,0);
@@ -263,19 +263,19 @@ void Stir_Motor(CAN_HandleTypeDef * hcan,int16_t value)
 void Stir_Motor_Disable(CAN_HandleTypeDef * hcan)
 {
 
-			Allocate_Motor_Data.DLC = 0x08;
-			Allocate_Motor_Data.IDE = CAN_ID_STD;
-			Allocate_Motor_Data.RTR = CAN_RTR_DATA;
-			Allocate_Motor_Data.StdId = 0x200;
+			Stir_Motor_Data.DLC = 0x08;
+			Stir_Motor_Data.IDE = CAN_ID_STD;
+			Stir_Motor_Data.RTR = CAN_RTR_DATA;
+			Stir_Motor_Data.StdId = 0x200;
 
-			Allocate_Motor_Data.Data[0]=0;
-			Allocate_Motor_Data.Data[1]=0;
-			Allocate_Motor_Data.Data[2]=0;
-			Allocate_Motor_Data.Data[3]=0;
-			Allocate_Motor_Data.Data[4]=0;
-			Allocate_Motor_Data.Data[5]=0;
-			Allocate_Motor_Data.Data[6]=0;
-			Allocate_Motor_Data.Data[7]=0;
+			Stir_Motor_Data.Data[0]=0;
+			Stir_Motor_Data.Data[1]=0;
+			Stir_Motor_Data.Data[2]=0;
+			Stir_Motor_Data.Data[3]=0;
+			Stir_Motor_Data.Data[4]=0;
+			Stir_Motor_Data.Data[5]=0;
+			Stir_Motor_Data.Data[6]=0;
+			Stir_Motor_Data.Data[7]=0;
 	
 			hcan->pTxMsg = &Stir_Motor_Data;
 			HAL_CAN_Transmit(hcan,0);
