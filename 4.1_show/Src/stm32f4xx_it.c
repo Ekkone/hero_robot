@@ -329,7 +329,7 @@ void DMA1_Stream5_IRQHandler(void)
   HAL_DMA_IRQHandler(&hdma_usart2_rx);
   /* USER CODE END DMA2_Stream2_IRQn 1 */
 }
-
+volatile uint8_t RemoteData_flag = 0;
 void USART1_IRQHandler (void)
 {
 	 static  BaseType_t  pxHigherPriorityTaskWoken;
@@ -345,11 +345,12 @@ void USART1_IRQHandler (void)
 			__HAL_DMA_SET_COUNTER(&hdma_usart1_rx,SizeofRemote);
 			__HAL_DMA_ENABLE(&hdma_usart1_rx);
 		
-		//RefreshDeviceOutLineTime(Remote_NO);
+		RefreshDeviceOutLineTime(Remote_NO);
 		
     HAL_UART_IRQHandler(&huart1);
   /* USER CODE BEGIN UART8_IRQn 1 */
-    vTaskNotifyGiveFromISR(RemoteDataTaskHandle,&pxHigherPriorityTaskWoken);
+    RemoteData_flag = 1;
+    //vTaskNotifyGiveFromISR(RemoteDataTaskHandle,&pxHigherPriorityTaskWoken);
 		portYIELD_FROM_ISR(pxHigherPriorityTaskWoken);			
 	}
 

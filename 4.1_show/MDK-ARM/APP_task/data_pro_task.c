@@ -71,14 +71,14 @@ void RemoteControlProcess()
 	         if(chassis_gimble_Mode_flg==1) //左拨轮中，XY运动
 					 {
 						  pit_set.expect = pit_set.expect +(0x400-RC_Ctl.rc.ch3)/20;	
-							//yaw_set.expect = yaw_set.expect +(0x400-RC_Ctl.rc.ch2)/20;	
+							yaw_set.expect = yaw_set.expect +(0x400-RC_Ctl.rc.ch2)/20;	
 							moto_3508_set.dstVmmps_X=-((RC_Ctl.rc.ch0-0x400)*5);
 							moto_3508_set.dstVmmps_Y=-((RC_Ctl.rc.ch1-0x400)*5);
 					 }
 					 else//WY运动
 					 {
 						  pit_set.expect = pit_set.expect +(0x400-RC_Ctl.rc.ch3)/20;	
-							//yaw_set.expect = yaw_set.expect +(0x400-RC_Ctl.rc.ch2)/20;	
+							yaw_set.expect = yaw_set.expect +(0x400-RC_Ctl.rc.ch2)/20;	
 							moto_3508_set.dstVmmps_W=((RC_Ctl.rc.ch0-0x400)*5);
 							moto_3508_set.dstVmmps_Y=-((RC_Ctl.rc.ch1-0x400)*5);
 					 }
@@ -227,6 +227,7 @@ void hard_brak()
 	*	@supplement	遥控数据接收及处理任务
 	*	@retval	
 ****************************************************************************************/
+extern volatile uint8_t RemoteData_flag;
 void Remote_Data_Task(void const * argument)
 {
 	uint32_t NotifyValue;
@@ -238,10 +239,10 @@ void Remote_Data_Task(void const * argument)
 	for(;;)
 	{
 		
-		   NotifyValue=ulTaskNotifyTake(pdTRUE,portMAX_DELAY);
-    if(NotifyValue==1)
+		   //NotifyValue=ulTaskNotifyTake(pdTRUE,portMAX_DELAY);
+    if(RemoteData_flag==1)
 		{
-			
+			RemoteData_flag = 0;
 			NotifyValue=0;
 			HAL_GPIO_TogglePin(GPIOF,GPIO_PIN_14); //GRE_main
 			
