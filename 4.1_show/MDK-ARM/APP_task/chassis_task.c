@@ -48,7 +48,7 @@ void Chassis_pid_init(void)
 	                4.0f, 0.01f , 20.0f  );
 //	  pid_chassis_follow.deadband=10;
 	 PID_struct_init(&pid_chassis_follow_spd, POSITION_PID,4000,1000,
-	                0.5f, 0.0f , 0.0f  );
+	                0.8f, 0.0f , 0.0f  );
 	
 		for(int i=0; i<4; i++)
 		{ 
@@ -98,7 +98,7 @@ void Chassis_Contrl_Task(void const * argument)
 			*/	
         /*跟随位置环*/
 			pid_calc(&pid_chassis_follow,yaw_get.total_angle,0);
-        /*跟随速度环*/
+        /*跟随速度环*/ 
 			pid_calc(&pid_chassis_follow_spd,-(imu_data.gz),pid_chassis_follow.pos_out);
 		
         /*麦轮解算得出wheel[4]*/

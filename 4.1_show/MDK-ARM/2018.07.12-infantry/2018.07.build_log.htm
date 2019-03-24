@@ -27,37 +27,29 @@ Project File Date:  03/23/2019
 <h2>Output:</h2>
 *** Using Compiler 'V5.06 update 6 (build 750)', folder: 'D:\Keil\ARM\ARMCC\Bin'
 Build target '2018.07.12-infantry'
-compiling gun_task.c...
-../Drivers/CMSIS/Include/arm_math.h(4889): warning:  #223-D: function "__SMUAD" declared implicitly
-      acc = (q31_t) __SMUAD((uint32_t)S->A0, (uint32_t)in);
-../Drivers/CMSIS/Include/arm_math.h(4893): warning:  #223-D: function "__SMLALD" declared implicitly
-      acc = (q63_t)__SMLALD((uint32_t)S->A1, (uint32_t)*vstate, (uint64_t)acc);
-../Drivers/CMSIS/Include/arm_math.h(4907): warning:  #223-D: function "__SSAT" declared implicitly
-      out = (q15_t) (__SSAT((acc >> 15), 16));
-../Drivers/CMSIS/Include/arm_math.h(5032): warning:  #223-D: function "__QADD" declared implicitly
-      *pIbeta = __QADD(product1, product2);
-../Drivers/CMSIS/Include/arm_math.h(5129): warning:  #223-D: function "__QSUB" declared implicitly
-      *pIb = __QSUB(product2, product1);
-../Drivers/CMSIS/Include/arm_math.h(5250): warning:  #223-D: function "__QADD" declared implicitly
-      *pId = __QADD(product1, product2);
-../Drivers/CMSIS/Include/arm_math.h(5253): warning:  #223-D: function "__QSUB" declared implicitly
-      *pIq = __QSUB(product4, product3);
-../Drivers/CMSIS/Include/arm_math.h(5363): warning:  #223-D: function "__QSUB" declared implicitly
-      *pIalpha = __QSUB(product1, product2);
-../Drivers/CMSIS/Include/arm_math.h(5366): warning:  #223-D: function "__QADD" declared implicitly
-      *pIbeta = __QADD(product4, product3);
-APP_task\gun_task.c(99): warning:  #111-D: statement is unreachable
-            }break;
-APP_task\gun_task.c(68): warning:  #177-D: variable "motor_stop_flag"  was declared but never referenced
-    uint8_t motor_stop_flag=0;
-APP_task\gun_task.c(73): warning:  #177-D: variable "block_flag"  was declared but never referenced
-    static uint8_t block_flag;
-APP_task\gun_task.c(74): warning:  #177-D: variable "check_time"  was declared but never referenced
-    static float check_time = 0;
-APP_task\gun_task.c: 13 warnings, 0 errors
+compiling test_task.c...
+APP_task\test_task.h(26): warning:  #1-D: last line of file ends without a newline
+  /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
+APP_task\test_task.c(44): warning:  #177-D: variable "count"  was declared but never referenced
+  		static uint8_t count = 0;
+APP_task\test_task.c(77): warning:  #177-D: variable "p1"  was declared but never referenced
+        int16_t  *p1  = &speed_set;
+APP_task\test_task.c(29): warning:  #177-D: variable "micro_timenow"  was declared but never referenced
+  	static double micro_timenow = 0;
+APP_task\test_task.c(30): warning:  #177-D: variable "micro_timelast"  was declared but never referenced
+  	static double micro_timelast = 0;
+APP_task\test_task.c(31): warning:  #177-D: variable "micro_time"  was declared but never referenced
+  	static double micro_time = 0;
+APP_task\test_task.c(33): warning:  #177-D: variable "angle_yaw"  was declared but never referenced
+    int16_t angle_yaw = 0;
+APP_task\test_task.c(38): warning:  #177-D: variable "speed"  was declared but never referenced
+    float speed[30];
+APP_task\test_task.c(90): warning:  #1-D: last line of file ends without a newline
+  /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
+APP_task\test_task.c: 9 warnings, 0 errors
 linking...
-Program Size: Code=29584 RO-data=692 RW-data=344 ZI-data=21392  
-"2018.07.12-infantry\2018.07.12-infantry" - 0 Error(s), 13 Warning(s).
+Program Size: Code=29752 RO-data=692 RW-data=344 ZI-data=21392  
+"2018.07.12-infantry\2018.07.12-infantry" - 0 Error(s), 9 Warning(s).
 
 <h2>Software Packages used:</h2>
 
@@ -80,7 +72,7 @@ Package Vendor: Keil
 <h2>Collection of Component Files used:</h2>
 
    * Component: ARM::CMSIS:CORE:5.1.2
-Build Time Elapsed:  00:00:03
+Build Time Elapsed:  00:00:05
 </pre>
 </body>
 </html>

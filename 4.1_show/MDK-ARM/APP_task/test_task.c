@@ -76,10 +76,8 @@ void testTask(void const * argument)
 		  int16_t  *ptr = &angle; //初始化指针
       int16_t  *p1  = &speed_set;
 			angle	= (pit_get.total_angle);
-      speed_set = yaw_get.total_angle;
 			/*用虚拟示波器，发送数据*/
-			//vcan_sendware((uint8_t *)ptr,sizeof(angle));
-      vcan_sendware((uint8_t *)p1,sizeof(speed_set));
+			vcan_sendware((uint8_t *)ptr,sizeof(angle));
 		
 //		printf("  pit=%d \n\t",pit_get.total_angle);
 //	  printf("  yaw=%d \n\t",yaw_get.angle);
