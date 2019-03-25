@@ -71,25 +71,35 @@ void gimbal_pid_init(void)
   #endif
   #if jy61
 /*‘› ±Œ»∂®∞Ê*/
-//  PID_struct_init(&pid_pit_jy61, POSITION_PID, 5000, 1000,
-//                  6.0f, 0.06f, 11.0f); //	
-//  PID_struct_init(&pid_pit_jy61_spd, POSITION_PID, 5000, 1000,
-//                  2.5f, 0.0f, 0.0f ); 
-//  
-//  PID_struct_init(&pid_yaw_jy61, POSITION_PID, 5000, 300,
-//                  6.0f, 0.03f, 30.0f); //	
-//  PID_struct_init(&pid_yaw_jy61_spd, POSITION_PID, 5000, 100,
-//                  2.5f, 0.0f, 0.0f );
-/*‘› ±Œ»∂®∞Ê*/
+#define YAW_JY 0
+#define PIT_JY 0
+
+#if PIT_JY
+/*pitÕ”¬›“«∑¥¿°*/
+  PID_struct_init(&pid_pit_jy61, POSITION_PID, 5000, 1000,
+                  6.0f, 0.05f, 28.0f); //	
+  PID_struct_init(&pid_pit_jy61_spd, POSITION_PID, 5000, 1000,
+                  2.2f, 0.0f, 0.0f );
+#else
+/*pit±‡¬Î∆˜∑¥¿°*/
   PID_struct_init(&pid_pit_jy61, POSITION_PID, 5000, 1000,
                   7.0f, 0.03f, 10.5f); //	
   PID_struct_init(&pid_pit_jy61_spd, POSITION_PID, 5000, 1000,
                   2.5f, 0.0f, 0.0f ); 
-  
+#endif
+#if YAW_JY
+/*yawÕ”¬›“«∑¥¿°*/
   PID_struct_init(&pid_yaw_jy61, POSITION_PID, 5000, 300,
                   6.0f, 0.03f, 30.0f); //	
   PID_struct_init(&pid_yaw_jy61_spd, POSITION_PID, 5000, 100,
                   2.5f, 0.0f, 0.0f );
+#else
+/*yaw±‡¬Î∆˜∑¥¿°*/
+PID_struct_init(&pid_yaw_jy61, POSITION_PID, 5000, 300,
+                  10.0f, 0.1f, 4.0f); //	
+  PID_struct_init(&pid_yaw_jy61_spd, POSITION_PID, 5000, 100,
+                  2.5f, 0.0f, 0.0f );
+#endif
   #endif
 
 	
@@ -142,14 +152,24 @@ void Gimbal_Contrl_Task(void const * argument)
         pit_set.expect = minipc_rx.angle_pit + pit_set.expect;
         minipc_rx.angle_yaw = 0;
         minipc_rx.angle_pit = 0;
-        //yaw÷·
+        #if YAW_JY
+        //yaw÷·JY61
         pid_calc(&pid_yaw_jy61,(ptr_jy61_t_yaw.final_angle),yaw_set.expect);
         pid_calc(&pid_yaw_jy61_spd,(ptr_jy61_t_angular_velocity.vz), pid_yaw_jy61.pos_out);
-        //pit÷·
-        //pit_set.expect = 0;
+        #else
+        //yaw÷·Õ”¬›“«
+        pid_calc(&pid_yaw_jy61,(yaw_get.total_angle),yaw_set.expect);
+        pid_calc(&pid_yaw_jy61_spd,(ptr_jy61_t_angular_velocity.vz), pid_yaw_jy61.pos_out);
+        #endif
+        #if PIT_JY
+        //pit÷·Õ”¬›“«
+        pid_calc(&pid_pit_jy61, (ptr_jy61_t_pit.final_angle*22.76), pit_set.expect);
+        pid_calc(&pid_pit_jy61_spd,(ptr_jy61_t_angular_velocity.vy), pid_pit_jy61.pos_out);
+        #else
+        //pit÷·±‡¬Î∆˜
         pid_calc(&pid_pit_jy61, pit_get.total_angle, pit_set.expect);
         pid_calc(&pid_pit_jy61_spd,(ptr_jy61_t_angular_velocity.vy), pid_pit_jy61.pos_out);
-      
+        #endif
         Pitch_Current_Value=(-pid_pit_jy61_spd.pos_out); 
 		    Yaw_Current_Value= (-pid_yaw_jy61_spd.pos_out);
       #endif

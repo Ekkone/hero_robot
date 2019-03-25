@@ -45,7 +45,7 @@ void Gun_Pid_Init()
 									1.5f,	0.0f,	0.15f	);  
 		/*拨盘电机*/
 		PID_struct_init(&pid_stir_spd, POSITION_PID, 6000, 5000,
-									1.5f,	0.0f,	0.0f	); 	
+									3.0f,	0.0f,	0.0f	); 	
 }
 /* 任务主体部分 -------------------------------------------------------------*/
 
@@ -113,7 +113,7 @@ void Gun_Task(void const * argument)
         /*进入位置环*/
         ptr_heat_gun_t.sht_flg = 11;
         /*搅拌电机*/
-        set_stir_speed = 700;
+        set_stir_speed = -700;
         contiue_flag = 0;
       }break;
       case 11:
@@ -135,14 +135,14 @@ void Gun_Task(void const * argument)
         /*进入位置环*/
         ptr_heat_gun_t.sht_flg = 11;
         /*搅拌电机*/
-        set_stir_speed = 700;
+        set_stir_speed = -700;
         contiue_flag = 0;
       }break;
       case 3://连发模式
       { 
 				moto_dial_get.cmd_time=GetSystemTimer();
         set_speed = 5000;
-        set_stir_speed = 700;
+        set_stir_speed = -700;
         set_cnt=1;
 				
       }break;

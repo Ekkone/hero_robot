@@ -44,29 +44,15 @@ void testTask(void const * argument)
 		static uint8_t count = 0;
 		RefreshTaskOutLineTime(testTask_ON);
     #if printf_speed
-		if(gate1_counter == gate2_counter)
-		{
+    
 			Golf_speed = (float)(GunLength / MicroTime / (Photoelectric_gate1 - Photoelectric_gate2));
 
 			if(counter_last != gate1_counter)
-			{
-//        if(count == 30)
-//          count = 0;
-//        speed[count] = Golf_speed;
-//        count++;
-        
+			{  
 				printf("Golf_speed = %4f\n",Golf_speed);
 			}
 			counter_last = gate1_counter;
-		}
-    if(HAL_GPIO_ReadPin(KEY_GPIO_Port,KEY_Pin) == 0)
-    {
-      printf("%4f\r\n",Golf_speed);
-//      for(uint8_t i = 0;i<30;i++)
-//      {
-//        printf("%d is %4f\r\n",i,speed[i]);
-//      }
-    }
+		
     #endif
 //		vTaskGetRunTimeStats(InfoBuffer);
 //		printf("%s\r\n",InfoBuffer);

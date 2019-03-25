@@ -22,7 +22,7 @@ Dialog DLL:      TCM.DLL V1.36.1.0
  
 <h2>Project:</h2>
 F:\Work\hero\4.1_show\MDK-ARM\2018.07.12-infantry.uvprojx
-Project File Date:  03/23/2019
+Project File Date:  03/24/2019
 
 <h2>Output:</h2>
 *** Using Compiler 'V5.06 update 6 (build 750)', folder: 'D:\Keil\ARM\ARMCC\Bin'
@@ -32,24 +32,26 @@ APP_task\test_task.h(26): warning:  #1-D: last line of file ends without a newli
   /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
 APP_task\test_task.c(44): warning:  #177-D: variable "count"  was declared but never referenced
   		static uint8_t count = 0;
-APP_task\test_task.c(77): warning:  #177-D: variable "p1"  was declared but never referenced
-        int16_t  *p1  = &speed_set;
 APP_task\test_task.c(29): warning:  #177-D: variable "micro_timenow"  was declared but never referenced
   	static double micro_timenow = 0;
 APP_task\test_task.c(30): warning:  #177-D: variable "micro_timelast"  was declared but never referenced
   	static double micro_timelast = 0;
 APP_task\test_task.c(31): warning:  #177-D: variable "micro_time"  was declared but never referenced
   	static double micro_time = 0;
+APP_task\test_task.c(32): warning:  #177-D: variable "angle"  was declared but never referenced
+  	int16_t angle = 0;
 APP_task\test_task.c(33): warning:  #177-D: variable "angle_yaw"  was declared but never referenced
     int16_t angle_yaw = 0;
+APP_task\test_task.c(34): warning:  #177-D: variable "speed_set"  was declared but never referenced
+    int16_t speed_set = 0;
 APP_task\test_task.c(38): warning:  #177-D: variable "speed"  was declared but never referenced
     float speed[30];
-APP_task\test_task.c(90): warning:  #1-D: last line of file ends without a newline
+APP_task\test_task.c(76): warning:  #1-D: last line of file ends without a newline
   /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
-APP_task\test_task.c: 9 warnings, 0 errors
+APP_task\test_task.c: 10 warnings, 0 errors
 linking...
-Program Size: Code=29752 RO-data=692 RW-data=344 ZI-data=21392  
-"2018.07.12-infantry\2018.07.12-infantry" - 0 Error(s), 9 Warning(s).
+Program Size: Code=29544 RO-data=692 RW-data=344 ZI-data=21392  
+"2018.07.12-infantry\2018.07.12-infantry" - 0 Error(s), 10 Warning(s).
 
 <h2>Software Packages used:</h2>
 
