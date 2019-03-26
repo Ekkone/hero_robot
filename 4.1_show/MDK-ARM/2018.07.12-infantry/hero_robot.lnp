@@ -61,7 +61,7 @@
 "2018.07.12-infantry\stm32f4xx_hal_spi.o"
 "2018.07.12-infantry\stm32f4xx_hal_adc.o"
 "2018.07.12-infantry\stm32f4xx_hal_adc_ex.o"
---library_type=microlib --strict --scatter "2018.07.12-infantry\2018.07.sct"
+--library_type=microlib --strict --scatter "2018.07.12-infantry\hero_robot.sct"
 --diag_suppress=L6329 --summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
 --info sizes --info totals --info unused --info veneers
---list "2018.07.map" -o 2018.07.12-infantry\2018.07.12-infantry
+--list "hero_robot.map" -o 2018.07.12-infantry\hero_robot.axf
