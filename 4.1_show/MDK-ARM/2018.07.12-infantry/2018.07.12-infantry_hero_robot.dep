@@ -1,5 +1,5 @@
 Dependencies for Project '2018.07.12-infantry', Target 'hero_robot': (DO NOT MODIFY !)
-F (../Src/main.c)(0x5C9A2CA6)(-c --cpu Cortex-M4.fp -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS -I ../Drivers/CMSIS/Include -I .\app -I .\MotorDriver -I .\Algorithm -I .\APP_task -I ..\DSP_LIB -I ..\DSP_LIB\include -I .\Communication --C99-I.\RTE\_hero_robot-ID:\Keil\Packs\ARM\CMSIS\5.5.1\CMSIS\Core\Include-ID:\Keil\Packs\Keil\STM32F4xx_DFP\2.9.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="527" -D_RTE_ -DSTM32F427xx -DUSE_HAL_DRIVER -DSTM32F427xx -DARM_MATH_CM4 -D__CC_ARM -DARM_MATH_MATRIX_CHECK -DARM_MATH_ROUNDING --C99-o 2018.07.12-infantry\main.o --omf_browse 2018.07.12-infantry\main.crf --depend 2018.07.12-infantry\main.d)
+F (../Src/main.c)(0x5C9B1F53)(-c --cpu Cortex-M4.fp -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS -I ../Drivers/CMSIS/Include -I .\app -I .\MotorDriver -I .\Algorithm -I .\APP_task -I ..\DSP_LIB -I ..\DSP_LIB\include -I .\Communication --C99-I.\RTE\_hero_robot-ID:\Keil\Packs\ARM\CMSIS\5.5.1\CMSIS\Core\Include-ID:\Keil\Packs\Keil\STM32F4xx_DFP\2.9.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="527" -D_RTE_ -DSTM32F427xx -DUSE_HAL_DRIVER -DSTM32F427xx -DARM_MATH_CM4 -D__CC_ARM -DARM_MATH_MATRIX_CHECK -DARM_MATH_ROUNDING --C99-o 2018.07.12-infantry\main.o --omf_browse 2018.07.12-infantry\main.crf --depend 2018.07.12-infantry\main.d)
 I (../Inc/main.h)(0x5C99C447)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h)(0x5C976A82)
 I (../Inc/stm32f4xx_hal_conf.h)(0x5C976A82)
@@ -69,7 +69,7 @@ I (.\APP_task\data_pro_task.h)(0x5C976A8B)
 I (.\Algorithm\pid.h)(0x5C976A8B)
 I (.\Algorithm\protocol.h)(0x5C976A8B)
 I (.\APP_task\gun_task.h)(0x5C976A8B)
-I (.\APP_task\gimbal_task.h)(0x5C9B1937)
+I (.\APP_task\gimbal_task.h)(0x5C9B1F53)
 I (.\APP_task\chassis_task.h)(0x5C976A8B)
 I (.\Algorithm\mecanum_calc.h)(0x5C976A8B)
 I (D:\Keil\ARM\ARMCC\include\stdlib.h)(0x599ECD2C)
@@ -132,7 +132,7 @@ I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h)(0x5C976A82)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h)(0x5C976A82)
 I (.\APP_task\chassis_task.h)(0x5C976A8B)
 I (.\Algorithm\pid.h)(0x5C976A8B)
-I (.\APP_task\gimbal_task.h)(0x5C9B1937)
+I (.\APP_task\gimbal_task.h)(0x5C9B1F53)
 I (.\Communication\communication.h )(0x5C976A8B)
 I (../Inc/spi.h)(0x5C976A82)
 I (../Inc/usart.h)(0x5C976A82)
@@ -322,8 +322,8 @@ I (../Inc/spi.h)(0x5C976A82)
 I (../Inc/usart.h)(0x5C976A82)
 I (.\Algorithm\SystemState.h)(0x5C976A8B)
 I (.\Algorithm\user_lib.h)(0x5C976A8B)
-F (.\APP_task\gimbal_task.c)(0x5C9B19B4)(-c --cpu Cortex-M4.fp -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS -I ../Drivers/CMSIS/Include -I .\app -I .\MotorDriver -I .\Algorithm -I .\APP_task -I ..\DSP_LIB -I ..\DSP_LIB\include -I .\Communication --C99-I.\RTE\_hero_robot-ID:\Keil\Packs\ARM\CMSIS\5.5.1\CMSIS\Core\Include-ID:\Keil\Packs\Keil\STM32F4xx_DFP\2.9.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="527" -D_RTE_ -DSTM32F427xx -DUSE_HAL_DRIVER -DSTM32F427xx -DARM_MATH_CM4 -D__CC_ARM -DARM_MATH_MATRIX_CHECK -DARM_MATH_ROUNDING --C99-o 2018.07.12-infantry\gimbal_task.o --omf_browse 2018.07.12-infantry\gimbal_task.crf --depend 2018.07.12-infantry\gimbal_task.d)
-I (APP_task\gimbal_task.h)(0x5C9B1937)
+F (.\APP_task\gimbal_task.c)(0x5C9B212C)(-c --cpu Cortex-M4.fp -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS -I ../Drivers/CMSIS/Include -I .\app -I .\MotorDriver -I .\Algorithm -I .\APP_task -I ..\DSP_LIB -I ..\DSP_LIB\include -I .\Communication --C99-I.\RTE\_hero_robot-ID:\Keil\Packs\ARM\CMSIS\5.5.1\CMSIS\Core\Include-ID:\Keil\Packs\Keil\STM32F4xx_DFP\2.9.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="527" -D_RTE_ -DSTM32F427xx -DUSE_HAL_DRIVER -DSTM32F427xx -DARM_MATH_CM4 -D__CC_ARM -DARM_MATH_MATRIX_CHECK -DARM_MATH_ROUNDING --C99-o 2018.07.12-infantry\gimbal_task.o --omf_browse 2018.07.12-infantry\gimbal_task.crf --depend 2018.07.12-infantry\gimbal_task.d)
+I (APP_task\gimbal_task.h)(0x5C9B1F53)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h)(0x5C976A82)
 I (../Inc/stm32f4xx_hal_conf.h)(0x5C976A82)
 I (../Inc/main.h)(0x5C99C447)
@@ -453,7 +453,7 @@ I (../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h)(0x5C976A8B)
 I (../Middlewares/Third_Party/FreeRTOS/Source/include/semphr.h)(0x5C976A8B)
 I (../Middlewares/Third_Party/FreeRTOS/Source/include/event_groups.h)(0x5C976A8B)
 I (.\Algorithm\pid.h)(0x5C976A8B)
-I (APP_task\gimbal_task.h)(0x5C9B1937)
+I (APP_task\gimbal_task.h)(0x5C9B1F53)
 I (.\Communication\communication.h )(0x5C976A8B)
 I (../Inc/spi.h)(0x5C976A82)
 I (../Inc/usart.h)(0x5C976A82)
@@ -473,7 +473,7 @@ I (.\MotorDriver\Motor_USE_TIM.h)(0x5C976A8B)
 I (../Inc/tim.h)(0x5C976A82)
 I (.\Communication\communication.h)(0x5C976A8B)
 I (.\Algorithm\SystemState.h)(0x5C976A8B)
-F (.\APP_task\data_pro_task.c)(0x5C9B19B4)(-c --cpu Cortex-M4.fp -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS -I ../Drivers/CMSIS/Include -I .\app -I .\MotorDriver -I .\Algorithm -I .\APP_task -I ..\DSP_LIB -I ..\DSP_LIB\include -I .\Communication --C99-I.\RTE\_hero_robot-ID:\Keil\Packs\ARM\CMSIS\5.5.1\CMSIS\Core\Include-ID:\Keil\Packs\Keil\STM32F4xx_DFP\2.9.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="527" -D_RTE_ -DSTM32F427xx -DUSE_HAL_DRIVER -DSTM32F427xx -DARM_MATH_CM4 -D__CC_ARM -DARM_MATH_MATRIX_CHECK -DARM_MATH_ROUNDING --C99-o 2018.07.12-infantry\data_pro_task.o --omf_browse 2018.07.12-infantry\data_pro_task.crf --depend 2018.07.12-infantry\data_pro_task.d)
+F (.\APP_task\data_pro_task.c)(0x5C9B1F78)(-c --cpu Cortex-M4.fp -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS -I ../Drivers/CMSIS/Include -I .\app -I .\MotorDriver -I .\Algorithm -I .\APP_task -I ..\DSP_LIB -I ..\DSP_LIB\include -I .\Communication --C99-I.\RTE\_hero_robot-ID:\Keil\Packs\ARM\CMSIS\5.5.1\CMSIS\Core\Include-ID:\Keil\Packs\Keil\STM32F4xx_DFP\2.9.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="527" -D_RTE_ -DSTM32F427xx -DUSE_HAL_DRIVER -DSTM32F427xx -DARM_MATH_CM4 -D__CC_ARM -DARM_MATH_MATRIX_CHECK -DARM_MATH_ROUNDING --C99-o 2018.07.12-infantry\data_pro_task.o --omf_browse 2018.07.12-infantry\data_pro_task.crf --depend 2018.07.12-infantry\data_pro_task.d)
 I (APP_task\data_pro_task.h)(0x5C976A8B)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h)(0x5C976A82)
 I (../Inc/stm32f4xx_hal_conf.h)(0x5C976A82)
@@ -538,7 +538,7 @@ I (.\MotorDriver\Motor_USE_CAN.h)(0x5C976A8B)
 I (../Inc/can.h)(0x5C976A82)
 I (.\MotorDriver\Motor_USE_TIM.h)(0x5C976A8B)
 I (../Inc/tim.h)(0x5C976A82)
-I (APP_task\gimbal_task.h)(0x5C9B1937)
+I (APP_task\gimbal_task.h)(0x5C9B1F53)
 I (APP_task\chassis_task.h)(0x5C976A8B)
 I (.\Algorithm\mecanum_calc.h)(0x5C976A8B)
 I (D:\Keil\ARM\ARMCC\include\stdlib.h)(0x599ECD2C)
@@ -681,7 +681,7 @@ I (.\APP_task\data_pro_task.h)(0x5C976A8B)
 I (.\Algorithm\pid.h)(0x5C976A8B)
 I (.\Algorithm\protocol.h)(0x5C976A8B)
 I (.\APP_task\gun_task.h)(0x5C976A8B)
-I (.\APP_task\gimbal_task.h)(0x5C9B1937)
+I (.\APP_task\gimbal_task.h)(0x5C9B1F53)
 I (.\APP_task\chassis_task.h)(0x5C976A8B)
 I (.\Algorithm\mecanum_calc.h)(0x5C976A8B)
 I (D:\Keil\ARM\ARMCC\include\stdlib.h)(0x599ECD2C)
@@ -759,7 +759,7 @@ I (../Middlewares/Third_Party/FreeRTOS/Source/include/event_groups.h)(0x5C976A8B
 I (.\Algorithm\pid.h)(0x5C976A8B)
 I (.\Algorithm\protocol.h)(0x5C976A8B)
 I (.\APP_task\gun_task.h)(0x5C976A8B)
-I (.\APP_task\gimbal_task.h)(0x5C9B1937)
+I (.\APP_task\gimbal_task.h)(0x5C9B1F53)
 I (.\APP_task\chassis_task.h)(0x5C976A8B)
 I (.\Algorithm\mecanum_calc.h)(0x5C976A8B)
 I (D:\Keil\ARM\ARMCC\include\stdlib.h)(0x599ECD2C)
@@ -1189,7 +1189,7 @@ I (.\MotorDriver\Motor_USE_CAN.h)(0x5C976A8B)
 I (../Inc/can.h)(0x5C976A82)
 I (.\MotorDriver\Motor_USE_TIM.h)(0x5C976A8B)
 I (../Inc/tim.h)(0x5C976A82)
-I (.\APP_task\gimbal_task.h)(0x5C9B1937)
+I (.\APP_task\gimbal_task.h)(0x5C9B1F53)
 I (.\APP_task\chassis_task.h)(0x5C976A8B)
 I (.\Algorithm\mecanum_calc.h)(0x5C976A8B)
 I (D:\Keil\ARM\ARMCC\include\stdlib.h)(0x599ECD2C)
@@ -1304,7 +1304,7 @@ I (.\MotorDriver\Motor_USE_CAN.h)(0x5C976A8B)
 I (../Inc/can.h)(0x5C976A82)
 I (.\MotorDriver\Motor_USE_TIM.h)(0x5C976A8B)
 I (../Inc/tim.h)(0x5C976A82)
-I (.\APP_task\gimbal_task.h)(0x5C9B1937)
+I (.\APP_task\gimbal_task.h)(0x5C9B1F53)
 I (.\APP_task\chassis_task.h)(0x5C976A8B)
 I (.\Algorithm\mecanum_calc.h)(0x5C976A8B)
 I (D:\Keil\ARM\ARMCC\include\stdlib.h)(0x599ECD2C)
@@ -1476,7 +1476,7 @@ I (.\MotorDriver\Motor_USE_CAN.h)(0x5C976A8B)
 I (../Inc/can.h)(0x5C976A82)
 I (.\MotorDriver\Motor_USE_TIM.h)(0x5C976A8B)
 I (../Inc/tim.h)(0x5C976A82)
-I (.\APP_task\gimbal_task.h)(0x5C9B1937)
+I (.\APP_task\gimbal_task.h)(0x5C9B1F53)
 I (.\APP_task\chassis_task.h)(0x5C976A8B)
 I (.\Algorithm\mecanum_calc.h)(0x5C976A8B)
 I (D:\Keil\ARM\ARMCC\include\stdlib.h)(0x599ECD2C)

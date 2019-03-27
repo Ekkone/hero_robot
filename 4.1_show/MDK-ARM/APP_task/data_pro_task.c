@@ -84,7 +84,7 @@ void RemoteControlProcess()
 							moto_3508_set.dstVmmps_W=((RC_Ctl.rc.ch0-0x400)*5);
 							moto_3508_set.dstVmmps_Y=-((RC_Ctl.rc.ch1-0x400)*5);
              
-             //yaw_set_follow.expect = ptr_jy61_t_yaw.final_angle;
+             yaw_set_follow.expect = ptr_jy61_t_yaw.final_angle;
 					 }
 
 			/*左按键数据处理*/	

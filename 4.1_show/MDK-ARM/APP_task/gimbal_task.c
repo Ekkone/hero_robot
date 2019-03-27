@@ -120,6 +120,8 @@ void Gimbal_Contrl_Task(void const * argument)
 	yaw_set.expect = 0; 
 	pit_set.expect = 0;
 	yaw_set.mode   = 0;
+  yaw_set_follow.expect = 0; 
+	yaw_set_follow.mode   = 0;
 	gimbal_disable_flg=0;
 	Pitch_Current_Value=0;
 	Yaw_Current_Value=0;
@@ -164,9 +166,9 @@ void Gimbal_Contrl_Task(void const * argument)
         }break;
         case 1://∏˙ÀÊ£¨yaw π”√Õ”¬›“«
         {
-//          pid_calc(&pid_yaw_jy61_follow,(ptr_jy61_t_yaw.final_angle),yaw_set_follow.expect);
-//          pid_calc(&pid_yaw_jy61_follow_spd,(ptr_jy61_t_angular_velocity.vz), pid_yaw_jy61.pos_out);
-//          Yaw_Current_Value= (-pid_yaw_jy61_follow_spd.pos_out);
+          pid_calc(&pid_yaw_jy61_follow,(ptr_jy61_t_yaw.final_angle),yaw_set_follow.expect);
+          pid_calc(&pid_yaw_jy61_follow_spd,(ptr_jy61_t_angular_velocity.vz), pid_yaw_jy61_follow.pos_out);
+          Yaw_Current_Value= (-pid_yaw_jy61_follow_spd.pos_out);
         }break;
       }
 
