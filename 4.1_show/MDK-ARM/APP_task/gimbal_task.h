@@ -28,6 +28,7 @@ typedef struct{
 /* 本模块向外部提供的接口常量声明--------------------------------------------*/
 
 extern Pos_Set  yaw_set;
+extern Pos_Set  yaw_set_follow;
 extern Pos_Set  pit_set;
 extern int8_t gimbal_disable_flg;
 

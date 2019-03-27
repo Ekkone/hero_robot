@@ -13,6 +13,7 @@ static  int16_t Pitch_Current_Value = 0;
 #define GIMBAL_PERIOD 5
 /* 外部变量声明--------------------------------------------------------------*/
 Pos_Set  yaw_set;
+Pos_Set  yaw_set_follow;
 Pos_Set  pit_set;
 int8_t gimbal_disable_flg;
 
@@ -163,9 +164,9 @@ void Gimbal_Contrl_Task(void const * argument)
         }break;
         case 1://跟随，yaw使用陀螺仪
         {
-          pid_calc(&pid_yaw_jy61_follow,(ptr_jy61_t_yaw.final_angle),yaw_set.expect);
-          pid_calc(&pid_yaw_jy61_follow_spd,(ptr_jy61_t_angular_velocity.vz), pid_yaw_jy61.pos_out);
-          Yaw_Current_Value= (-pid_yaw_jy61_follow_spd.pos_out);
+//          pid_calc(&pid_yaw_jy61_follow,(ptr_jy61_t_yaw.final_angle),yaw_set_follow.expect);
+//          pid_calc(&pid_yaw_jy61_follow_spd,(ptr_jy61_t_angular_velocity.vz), pid_yaw_jy61.pos_out);
+//          Yaw_Current_Value= (-pid_yaw_jy61_follow_spd.pos_out);
         }break;
       }
 

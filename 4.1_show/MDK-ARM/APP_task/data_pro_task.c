@@ -68,12 +68,14 @@ void Minipc_Pid_Init()
 void RemoteControlProcess()  
 {
       /*遥控杆数据处理*/
-	         if(chassis_gimble_Mode_flg==1) //左拨轮中，XY运动
+	         if(chassis_gimble_Mode_flg==1) //XY运动
 					 {
 						  pit_set.expect = pit_set.expect +(0x400-RC_Ctl.rc.ch3)/20;	
-							yaw_set.expect = yaw_set.expect +(0x400-RC_Ctl.rc.ch2)/20;	
+							yaw_set_follow.expect = yaw_set_follow.expect +(0x400-RC_Ctl.rc.ch2)/20;	
 							moto_3508_set.dstVmmps_X=-((RC_Ctl.rc.ch0-0x400)*5);
 							moto_3508_set.dstVmmps_Y=-((RC_Ctl.rc.ch1-0x400)*5);
+             
+             yaw_set.expect = yaw_get.total_angle;
 					 }
 					 else//WY运动
 					 {
@@ -81,6 +83,8 @@ void RemoteControlProcess()
 							yaw_set.expect = yaw_set.expect +(0x400-RC_Ctl.rc.ch2)/20;	
 							moto_3508_set.dstVmmps_W=((RC_Ctl.rc.ch0-0x400)*5);
 							moto_3508_set.dstVmmps_Y=-((RC_Ctl.rc.ch1-0x400)*5);
+             
+             //yaw_set_follow.expect = ptr_jy61_t_yaw.final_angle;
 					 }
 
 			/*左按键数据处理*/	
