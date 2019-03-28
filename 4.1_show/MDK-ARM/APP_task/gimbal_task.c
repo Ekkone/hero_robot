@@ -126,7 +126,19 @@ void Gimbal_Contrl_Task(void const * argument)
 	Pitch_Current_Value=0;
 	Yaw_Current_Value=0;
 	gimbal_pid_init();
-	
+  /*云台保护*/
+	uint16_t pit_protect_correct_1 = 0;
+	uint16_t pit_protect_correct_2 = 0;
+  if(pit_get.offset_angle < 5000)
+  {
+    pit_protect_correct_1 = 8192;
+    pit_protect_correct_2 = 0;
+  }
+  else
+  {
+    pit_protect_correct_1 = 0;
+    pit_protect_correct_2 = 8192;
+  }
 	osDelay(200);//延时200ms
 	portTickType xLastWakeTime;
   xLastWakeTime = xTaskGetTickCount();	
@@ -155,18 +167,54 @@ void Gimbal_Contrl_Task(void const * argument)
       pit_set.expect = minipc_rx.angle_pit + pit_set.expect;
       minipc_rx.angle_yaw = 0;
       minipc_rx.angle_pit = 0;
-      
+      /*云台限位保护*/
+      /*pit正常0-670，7450-8192*/
+      if((pit_set.expect + pit_get.offset_angle) > (630 + pit_protect_correct_2) &&\
+          (pit_set.expect + pit_get.offset_angle) < (2000 + pit_protect_correct_2))
+      {
+        pit_set.expect = (630 + pit_protect_correct_2) - pit_get.offset_angle;
+      }
+      if((pit_set.expect + pit_get.offset_angle) > (6500 - pit_protect_correct_1) &&\
+          (pit_set.expect + pit_get.offset_angle) < (7500 - pit_protect_correct_1))
+      {
+        pit_set.expect = (7500 - pit_protect_correct_1) - pit_get.offset_angle;
+      }
+      /*yaw轴模式判断*/
       switch(chassis_gimble_Mode_flg)
       {
         case 0://分离，yaw使用编码器
         {
+          /*yaw轴云台保护*/
+          if((yaw_set.expect + yaw_get.offset_angle) > 2400)
+          {
+            yaw_set.expect = 2380 - yaw_get.offset_angle;
+          }
+          if((yaw_set.expect + yaw_get.offset_angle) < 1100)
+          {
+            yaw_set.expect = 1115 - yaw_get.offset_angle;
+          }
           pid_calc(&pid_yaw_jy61,(yaw_get.total_angle),yaw_set.expect);
           pid_calc(&pid_yaw_jy61_spd,(ptr_jy61_t_angular_velocity.vz), pid_yaw_jy61.pos_out);
           Yaw_Current_Value= (-pid_yaw_jy61_spd.pos_out);
         }break;
         case 1://跟随，yaw使用陀螺仪
         {
-          pid_calc(&pid_yaw_jy61_follow,(ptr_jy61_t_yaw.final_angle),yaw_set_follow.expect);
+          /*yaw轴云台保护*/
+          
+          if(yaw_get.angle > 2400)
+          {
+            if(yaw_set_follow.expect <= yaw_set_follow.expect_last)
+            goto last;
+            yaw_set_follow.expect = ptr_jy61_t_yaw.final_angle-5;
+          }
+
+          if(yaw_get.angle < 1100)
+          {
+            if(yaw_set_follow.expect >= yaw_set_follow.expect_last)
+            goto last;
+            yaw_set_follow.expect = ptr_jy61_t_yaw.final_angle;
+          }
+      last:pid_calc(&pid_yaw_jy61_follow,(ptr_jy61_t_yaw.final_angle),yaw_set_follow.expect);
           pid_calc(&pid_yaw_jy61_follow_spd,(ptr_jy61_t_angular_velocity.vz), pid_yaw_jy61_follow.pos_out);
           Yaw_Current_Value= (-pid_yaw_jy61_follow_spd.pos_out);
         }break;
@@ -184,13 +232,15 @@ void Gimbal_Contrl_Task(void const * argument)
         Pitch_Current_Value=(-pid_pit_jy61_spd.pos_out); 
 		    
       #endif
-
+//        Pitch_Current_Value = 0;
+//        Yaw_Current_Value = 0;
         /*驱动电机*/
 				if(gimbal_disable_flg==1)//失能
 				{
 					Cloud_Platform_Motor_Disable(&hcan1);
 				}
 				else Cloud_Platform_Motor(&hcan1,Yaw_Current_Value,Pitch_Current_Value);
+        yaw_set_follow.expect_last = yaw_set_follow.expect;
 
 			osDelayUntil(&xLastWakeTime, GIMBAL_PERIOD);
 			

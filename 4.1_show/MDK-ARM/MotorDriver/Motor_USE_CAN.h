@@ -42,6 +42,7 @@ typedef struct{
 	uint16_t			offset_angle;
 	int32_t				round_cnt;
 	int32_t				total_angle;
+  int32_t       total_ture_angle;
 	uint8_t				buf_idx;
 	uint16_t			angle_buf[FILTER_BUF_LEN];
 	uint16_t			fited_angle;	

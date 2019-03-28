@@ -174,11 +174,11 @@ void StartDefaultTask(void const * argument)
 			}
 			break;
 	}
-	if(key_cnt>9)
+	if(key_cnt>5)
 		key_cnt = 0;
 #if defined CAN_CONTROL
-	set_spd[1] = key_cnt * 1000;
-  set_spd[2] = key_cnt * (-1000);
+	set_spd[1] = 4500+key_cnt * 100;
+  set_spd[2] = -4500+key_cnt * (-100);
 #elif defined PWM_CONTROL
     set_spd[0] = set_spd[1] = set_spd[2] = set_spd[3] = key_cnt*50;
 #endif    

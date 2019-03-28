@@ -16,6 +16,8 @@
 typedef struct{
 		//int16_t expect;
 		float expect;
+    float expect_last;
+    float ture_value;
 		uint8_t	step;
 		uint8_t mode;
 		int16_t expect_pc;
