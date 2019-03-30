@@ -45,7 +45,7 @@ void Gun_Pid_Init()
 									1.5f,	0.0f,	0.15f	);  
 		/*拨盘电机*/
 		PID_struct_init(&pid_stir_spd, POSITION_PID, 6000, 5000,
-									3.0f,	0.0f,	0.0f	); 	
+									5.0f,	0.0f,	0.0f	); 	
 }
 /* 任务主体部分 -------------------------------------------------------------*/
 
@@ -113,7 +113,7 @@ void Gun_Task(void const * argument)
         /*进入位置环*/
         ptr_heat_gun_t.sht_flg = 11;
         /*搅拌电机*/
-        set_stir_speed = -700;
+        set_stir_speed = -400;
         contiue_flag = 0;
       }break;
       case 11:
@@ -124,10 +124,10 @@ void Gun_Task(void const * argument)
       }break;
       case 2://3连发模式
       {
-				moto_dial_get.cmd_time=GetSystemTimer();
-				set_cnt=3;
-				set_angle=58982*set_cnt;
-        set_stir_speed = 1000;
+//				moto_dial_get.cmd_time=GetSystemTimer();
+//				set_cnt=3;
+//				set_angle=58982*set_cnt;
+        //set_stir_speed = 1000;
         /*清零*/
 				moto_dial_get.round_cnt=0;
 				moto_dial_get.offset_angle=moto_dial_get.angle;
@@ -135,7 +135,7 @@ void Gun_Task(void const * argument)
         /*进入位置环*/
         ptr_heat_gun_t.sht_flg = 11;
         /*搅拌电机*/
-        set_stir_speed = -700;
+        set_stir_speed = 400;
         contiue_flag = 0;
       }break;
       case 3://连发模式

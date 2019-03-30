@@ -358,53 +358,7 @@ void power_limit(float  Current_get[4])
 		
 		/*功率限制*/
 
-		/*100 ms作为一个时间块进行，仅在预测功率小于一定值的时候才开始计算*/
-		if((limit.PowerRemain_Calculat - (limit.Power_Calculat * 0.26f)) < 10)
-		{
-				/*采集时间*/
-				MyTime_statistics(&time_for_limit);
-				
-				/*方便书写*/
-				T0 = time_for_limit.time * 0.001f;
-				P0 = limit.Power_Calculat;
-				RE = limit.PowerRemain_Calculat;
-				if(current_get.Current_Referee != 0)//防止裁判系统失效
-				{
-					V0 = current_get.Current_Referee;
-				}else
-				{
-					V0 = 24.0f;
-				}
-				/*预测电流值*/
-				limit.PowerLimit = 0.15f * RE / V0 + 0.1f;
-				//(P0-60.0f+600.0f*T0 * 0.001f)/(24.0f*(T0 * 0.001f+0.001f)) + 2.0f*80.0f/24.0f - P0/24.0f;
-				//limit.PowerRemain_Calculat * 0.15f + 0.1f;  //	//(1.0f + (5.0f * RE) / 80.0f);
-				//(limit.Power_Calculat-60.0f+600.0f*time_for_limit.time * 0.001f)/(24.0f*(time_for_limit.time * 0.001f+0.001f)) +\
-																																								2.0f*80.0f/24.0f - limit.Power_Calculat/24.0f;   
-				/*与满功率电流值比较(x/（80/24）)*/
-//			limit.PowerLimit = limit.PowerLimit * 0.3f;
-				
-				/*调节超时(100ms)，已经扣血*/
-				if(time_for_limit.total_time_s >= 0.1f)
-				{
-					limit.PowerLimit = 75.0; //这里的值有待更改
-					/*转化成电流值并比较*/
-					limit.PowerLimit = limit.PowerLimit * 0.0125f;
-				}
-				if(limit.PowerLimit != 0)
-				{
-					/*电流限制*/
-					Current_get[0] = (Current_get[0]/(total_current + 1.0f)) * limit.PowerLimit * 3000.0f; //用蓝牙测一下满功率的时候的总的电调值 5000.0f
-					Current_get[1] = (Current_get[1]/(total_current + 1.0f)) * limit.PowerLimit * 3000.0f;  
-					Current_get[2] = (Current_get[2]/(total_current + 1.0f)) * limit.PowerLimit * 3000.0f;  
-					Current_get[3] = (Current_get[3]/(total_current + 1.0f)) * limit.PowerLimit * 3000.0f;  
-				}
-			}
-			else/*未达到功率限制要求，不计时*/
-			{
-				MyTime_memset(&time_for_limit,2);
-			}	
-					
+	
 //			printf("\n power:%4f .\n",limit.Power_Calculat);
 }
 

@@ -74,6 +74,7 @@ void Chassis_Contrl_Task(void const * argument)
   xLastWakeTime = xTaskGetTickCount();
   chassis_disable_flg=0;
   
+  float real_cur = 0;
   /*功能初始化*/
 	Chassis_pid_init();
   
@@ -109,8 +110,10 @@ void Chassis_Contrl_Task(void const * argument)
 		for(int i=0; i<4; i++)
 			{		
 				pid_calc(&pid_3508_spd[i], moto_chassis_get[i].speed_rpm, wheel[i]);
+//        real_cur += moto_chassis_get[i].real_current;
 			}
-		
+//		printf("%4f\r\n",real_cur*24);
+//      real_cur = 0;
 		/**********功率限制*********/
 
 //			Current_set[0] = pid_3508_spd[0].pos_out;

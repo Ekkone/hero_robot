@@ -43,6 +43,9 @@ void testTask(void const * argument)
 		static uint16_t counter_last;
 		static uint8_t count = 0;
 		RefreshTaskOutLineTime(testTask_ON);
+    #if printf_power
+    printf("%4f\r\n",limit.Power_Calculat);
+    #endif
     #if printf_speed
     
 			Golf_speed = (float)(GunLength / MicroTime / (Photoelectric_gate1 - Photoelectric_gate2));
@@ -61,9 +64,10 @@ void testTask(void const * argument)
   #if printf_sendware
 		  int16_t  *ptr = &angle; //初始化指针
       int16_t  *p1  = &speed_set;
+      float  *p2  = &(limit.Power_Calculat);
 			angle	= (pit_get.total_angle);
 			/*用虚拟示波器，发送数据*/
-			vcan_sendware((uint8_t *)ptr,sizeof(angle));
+			vcan_sendware((uint8_t *)p2,sizeof(limit.Power_Calculat));
 		
 //		printf("  pit=%d \n\t",pit_get.total_angle);
 //	  printf("  yaw=%d \n\t",yaw_get.angle);
