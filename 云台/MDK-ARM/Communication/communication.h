@@ -14,7 +14,7 @@
 #define SizeofMinipc  9
 extern uint8_t USART1_RX_DATA[(SizeofRemote)];//遥控
 extern uint16_t USART1_RX_NUM;
-extern uint8_t USART6_RX_DATA[(SizeofReferee)];//裁判系统
+extern uint8_t USART6_RX_DATA[(SizeofJY61)];//裁判系统
 extern uint16_t USART6_RX_NUM;
 extern uint8_t UART8_RX_DATA[(SizeofJY61)];//外接陀螺仪
 extern uint16_t UART8_RX_NUM;

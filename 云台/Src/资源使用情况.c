@@ -22,17 +22,16 @@ GPIO：
 	PE7 		绿灯
 	PD10		按键
     
-	PH5			 ？？？？？
+	PH5			
 	PI0			定时器5通道4	
 
 -串口：			-  引脚		  	功能/备注				         DMA_request        DMA-stream           波特率              	优先级
 
 -USART1   -  PB9/PB7  UART1_TX/UART1_RX（遥控器）   USART1_RX        DMA2-Stream2          100000   				  (5，0)/dma对应相同
--USART2   -  PD5/PD6  UART2_TX/UART2_Rx(蓝牙) USART2_RX				 DMA1_Stream5					 115200
+-USART2   -  PD5/PD6  UART2_TX/UART2_Rx(蓝牙)       USART2_RX				 DMA1_Stream5					 115200
 -USART3   -  PD9/PD8	UART3_TX/UART3_RX（串口）	    USART3_RX        DMA1-Stream1          115200					    NULL	
--UART4    -  PA0/PA1  UART4_TX/UART4_Rx（JY61）     UART4_RX         DMA1-Stream2          115200
+//-UART4    -  PA0/PA1  UART4_TX/UART4_Rx            UART4_RX         DMA1-Stream2          115200
 -USART6   -  PG14/PG9	UART6_TX/UART6_RX（JY61）     USART6_RX				 DMA2-Stream1          115200				   	 (6,0) /
-//-USRT8    -  PE1/PE0	UART8_TX/UART8_RX（JY61）	    UART8_RX				 DMA1_Stream6					 115200					    (6,0) /
 
 -spi5：
 	PF7     ------> SPI5_SCK
@@ -42,7 +41,7 @@ GPIO：
 
 -定时器             引脚       		                 功能/备注  			  模式			         分频系数			   重载系数		  	   计数模式
   
-  -TIM5	   	    -PH11/PH10		TIM5_CH2/TIM5_CH1  	摩擦轮电调         PWM输出模式             	83+1				1999+1			     UP
+  //-TIM5	   	    -PH11/PH10		TIM5_CH2/TIM5_CH1  	摩擦轮电调         PWM输出模式             	83+1				1999+1			     UP
   
 -CAN：
     PD0     ------> CAN1_RX																															(6,0)

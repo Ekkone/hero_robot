@@ -73,7 +73,7 @@
 2018.07.12-infantry\freertos.o: .\Algorithm\mecanum_calc.h
 2018.07.12-infantry\freertos.o: D:\Keil\ARM\ARMCC\Bin\..\include\stdlib.h
 2018.07.12-infantry\freertos.o: .\Algorithm\Power_restriction.h
-2018.07.12-infantry\freertos.o: .\APP_task\data_pro_task.h
+2018.07.12-infantry\freertos.o: .\APP_task\remote_task.h
 2018.07.12-infantry\freertos.o: ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.h
 2018.07.12-infantry\freertos.o: ../Drivers/CMSIS/Include/core_cmFunc.h
 2018.07.12-infantry\freertos.o: .\Communication\minipc.h

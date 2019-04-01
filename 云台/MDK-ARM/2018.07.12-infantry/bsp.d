@@ -51,7 +51,7 @@
 2018.07.12-infantry\bsp.o: .\MotorDriver\Motor_USE_CAN.h
 2018.07.12-infantry\bsp.o: .\Communication\minipc.h
 2018.07.12-infantry\bsp.o: .\Algorithm\Power_restriction.h
-2018.07.12-infantry\bsp.o: .\APP_task\data_pro_task.h
+2018.07.12-infantry\bsp.o: .\APP_task\remote_task.h
 2018.07.12-infantry\bsp.o: ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.h
 2018.07.12-infantry\bsp.o: D:\Keil\ARM\ARMCC\Bin\..\include\stddef.h
 2018.07.12-infantry\bsp.o: ../Drivers/CMSIS/Include/core_cmFunc.h
@@ -83,7 +83,7 @@
 2018.07.12-infantry\bsp.o: .\Algorithm\mecanum_calc.h
 2018.07.12-infantry\bsp.o: D:\Keil\ARM\ARMCC\Bin\..\include\stdlib.h
 2018.07.12-infantry\bsp.o: .\Algorithm\Power_restriction.h
-2018.07.12-infantry\bsp.o: .\APP_task\data_pro_task.h
+2018.07.12-infantry\bsp.o: .\APP_task\remote_task.h
 2018.07.12-infantry\bsp.o: .\Communication\atom_imu.h
 2018.07.12-infantry\bsp.o: .\Communication\decode.h
 2018.07.12-infantry\bsp.o: .\Communication\communication.h

@@ -1,5 +1,5 @@
 /* 包含头文件----------------------------------------------------------------*/
-#include "data_pro_task.h"
+#include "remote_task.h"
 #include "SystemState.h"
 /* 内部宏定义----------------------------------------------------------------*/
 #define press_times  20
@@ -14,7 +14,7 @@ else if(val>=max)\
 }\
 //extern osSemaphoreId Dubs_BinarySemHandle;
 /* 内部自定义数据类型--------------------------------------------------------*/
-moto3508_type  moto_3508_set = {.flag = 0};
+//moto3508_type  moto_3508_set = {.flag = 0};
 /* 任务相关信息定义----------------------------------------------------------*/
 //extern osMessageQId JSYS_QueueHandle;
 /* 内部常量定义--------------------------------------------------------------*/
@@ -72,8 +72,6 @@ void RemoteControlProcess()
 					 {
 						  pit_set.expect = pit_set.expect +(0x400-RC_Ctl.rc.ch3)/20;	
 							yaw_set_follow.expect = yaw_set_follow.expect +(0x400-RC_Ctl.rc.ch2)/20;	
-							moto_3508_set.dstVmmps_X=-((RC_Ctl.rc.ch0-0x400)*5);
-							moto_3508_set.dstVmmps_Y=-((RC_Ctl.rc.ch1-0x400)*5);
              
              yaw_set.expect = yaw_get.total_angle;//更新分离编码器期望
 					 }
@@ -81,8 +79,6 @@ void RemoteControlProcess()
 					 {
 						  pit_set.expect = pit_set.expect +(0x400-RC_Ctl.rc.ch3)/20;	
 							yaw_set.expect = yaw_set.expect +(0x400-RC_Ctl.rc.ch2)/20;	
-							moto_3508_set.dstVmmps_W=((RC_Ctl.rc.ch0-0x400)*5);
-							moto_3508_set.dstVmmps_Y=-((RC_Ctl.rc.ch1-0x400)*5);
              
              yaw_set_follow.expect = ptr_jy61_t_yaw.final_angle;//更新跟随陀螺仪期望
 					 }
@@ -128,6 +124,7 @@ void RemoteControlProcess()
             }
 
 					}
+          CAN_Send_YK(&hcan1,RC_Ctl.key.v,RC_Ctl.rc.ch0,RC_Ctl.rc.ch1,RC_Ctl.rc.s1,RC_Ctl.rc.s2);
 }
 
 /***************************************************************************************
@@ -140,82 +137,63 @@ void RemoteControlProcess()
 void MouseKeyControlProcess()
 {
 	
-	if(RC_Ctl.key.v & 0x10 )//设置速度档位，每档速度增加550
-					{
-							//p++;//shift正常挡位
-						XY_speed_max = 3000;//(NORMAL_SPEED_MAX)*3.5;
-						XY_speed_min = -3000;//(NORMAL_SPEED_MIN)*3.5;
-					}
-			
-					if(RC_Ctl.key.v & 0x01)                       moto_3508_set.dstVmmps_Y -= ACC_SPEED;//按下W键
-					else if(RC_Ctl.key.v & 0x02)                  moto_3508_set.dstVmmps_Y += ACC_SPEED;//按下S键
-					else{  
-							 	if(moto_3508_set.dstVmmps_Y>-DEC_SPEED&&moto_3508_set.dstVmmps_Y<DEC_SPEED) 	 moto_3508_set.dstVmmps_Y = 0;
-								if(moto_3508_set.dstVmmps_Y>0) 	                   moto_3508_set.dstVmmps_Y -= DEC_SPEED;
-								if(moto_3508_set.dstVmmps_Y<0) 		                 moto_3508_set.dstVmmps_Y += DEC_SPEED;
-					}
+//	if(RC_Ctl.key.v & 0x10 )//设置速度档位，每档速度增加550
+//					{
+//							//p++;//shift正常挡位
+//						XY_speed_max = 3000;//(NORMAL_SPEED_MAX)*3.5;
+//						XY_speed_min = -3000;//(NORMAL_SPEED_MIN)*3.5;
+//					}
+//			
+//					if(RC_Ctl.key.v & 0x01)                       moto_3508_set.dstVmmps_Y -= ACC_SPEED;//按下W键
+//					else if(RC_Ctl.key.v & 0x02)                  moto_3508_set.dstVmmps_Y += ACC_SPEED;//按下S键
+//					else{  
+//							 	if(moto_3508_set.dstVmmps_Y>-DEC_SPEED&&moto_3508_set.dstVmmps_Y<DEC_SPEED) 	 moto_3508_set.dstVmmps_Y = 0;
+//								if(moto_3508_set.dstVmmps_Y>0) 	                   moto_3508_set.dstVmmps_Y -= DEC_SPEED;
+//								if(moto_3508_set.dstVmmps_Y<0) 		                 moto_3508_set.dstVmmps_Y += DEC_SPEED;
+//					}
 
 
-					if(RC_Ctl.key.v & 0x04)                        moto_3508_set.dstVmmps_X += ACC_SPEED; //按下D键
-					else if(RC_Ctl.key.v & 0x08)    		           moto_3508_set.dstVmmps_X -= ACC_SPEED;//按下A键
-					else{
-									if(moto_3508_set.dstVmmps_X>-DEC_SPEED&&moto_3508_set.dstVmmps_X<DEC_SPEED) 		moto_3508_set.dstVmmps_X = 0;		
-									if(moto_3508_set.dstVmmps_X>0) 	                   moto_3508_set.dstVmmps_X -= DEC_SPEED;
-									if(moto_3508_set.dstVmmps_X<0) 		                 moto_3508_set.dstVmmps_X += DEC_SPEED;
-					}
+//					if(RC_Ctl.key.v & 0x04)                        moto_3508_set.dstVmmps_X += ACC_SPEED; //按下D键
+//					else if(RC_Ctl.key.v & 0x08)    		           moto_3508_set.dstVmmps_X -= ACC_SPEED;//按下A键
+//					else{
+//									if(moto_3508_set.dstVmmps_X>-DEC_SPEED&&moto_3508_set.dstVmmps_X<DEC_SPEED) 		moto_3508_set.dstVmmps_X = 0;		
+//									if(moto_3508_set.dstVmmps_X>0) 	                   moto_3508_set.dstVmmps_X -= DEC_SPEED;
+//									if(moto_3508_set.dstVmmps_X<0) 		                 moto_3508_set.dstVmmps_X += DEC_SPEED;
+//					}
 
 
-					//鼠标（移动速度*1000/50）
-					pit_set.expect = pit_set.expect+RC_Ctl.mouse.y/2;	
-					
-					
-					//云台跟随底盘 c键 
-					if(RC_Ctl.key.v & 0x2000)
-					{
-						moto_3508_set.flag = !moto_3508_set.flag;
-					}
-					
-					if(RC_Ctl.mouse.press_l==1)        //鼠标左键单发
-					{
-						press_counter++;
-							if(press_counter>=10)
-			    	{
-							press_counter=10+1;
-							ptr_heat_gun_t.sht_flg=1;
-							press_counter=0;
-			    	}
-					}
-					else 	if(RC_Ctl.key.v & 0x100)     //r键3连发
-					{
-						press_counter++;
-						if(press_counter>=5)
-			    	{
-							press_counter=5+1;
-							ptr_heat_gun_t.sht_flg=2;
-							press_counter=0; 
-						}
-					}
-				
+//					//鼠标（移动速度*1000/50）
+//					pit_set.expect = pit_set.expect+RC_Ctl.mouse.y/2;	
+//					
+//					
+//					//云台跟随底盘 c键 
+//					if(RC_Ctl.key.v & 0x2000)
+//					{
+//						moto_3508_set.flag = !moto_3508_set.flag;
+//					}
+//					
+//					if(RC_Ctl.mouse.press_l==1)        //鼠标左键单发
+//					{
+//						press_counter++;
+//							if(press_counter>=10)
+//			    	{
+//							press_counter=10+1;
+//							ptr_heat_gun_t.sht_flg=1;
+//							press_counter=0;
+//			    	}
+//					}
+//					else 	if(RC_Ctl.key.v & 0x100)     //r键3连发
+//					{
+//						press_counter++;
+//						if(press_counter>=5)
+//			    	{
+//							press_counter=5+1;
+//							ptr_heat_gun_t.sht_flg=2;
+//							press_counter=0; 
+//						}
+//					}
+				CAN_Send_YK(&hcan1,RC_Ctl.key.v,RC_Ctl.rc.ch0,RC_Ctl.rc.ch1,RC_Ctl.rc.s1,RC_Ctl.rc.s2);
 }
-
-
-/***************************************************************************************
-**
-	*	@brief	hard_brak()
-	*	@param
-	*	@supplement	紧急停止函数
-	*	@retval	
-****************************************************************************************/
-void hard_brak()
-{
-	  pit_set.expect=0;
-	  yaw_set.expect=0;
-	
-		moto_3508_set.dstVmmps_X=0;
-		moto_3508_set.dstVmmps_Y=0;
-		moto_3508_set.dstVmmps_W=0;
-}
-
 
 /* 任务主体部分 -------------------------------------------------------------*/
 /***************************************************************************************
@@ -251,7 +229,7 @@ void Remote_Data_Task(void const * argument)
           /*上*/
 					case 1: RemoteControlProcess();break; 
           /*下*/
-					case 2: hard_brak();break;
+					case 2: break;
           /*中*/
 					case 3: MouseKeyControlProcess();break;
 					default :break;

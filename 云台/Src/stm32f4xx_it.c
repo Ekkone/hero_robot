@@ -422,6 +422,31 @@ void UART4_IRQHandler(void)
 
   /* USER CODE END UART8_IRQn 1 */
 }
+void USART6_IRQHandler(void)
+{
+	uint8_t tmp1,tmp2;
+	tmp1 = __HAL_UART_GET_FLAG(&huart6, UART_FLAG_IDLE);   //空闲中断中将已收字节数取出后，停止DMA
+  tmp2 = __HAL_UART_GET_IT_SOURCE(&huart6, UART_IT_IDLE);
+	
+   if((tmp1 != RESET)&&(tmp2 != RESET))
+	{
+		
+		RefreshDeviceOutLineTime(JY61_NO);
+		
+		__HAL_DMA_DISABLE(&hdma_usart6_rx);
+		__HAL_UART_CLEAR_IDLEFLAG(&huart6);
+		
+		USART6_RX_NUM=(SizeofJY61)-(hdma_usart6_rx.Instance->NDTR);
+		
+		JY61_Data_Pro();
+		__HAL_DMA_SET_COUNTER(&hdma_usart6_rx,SizeofJY61);
+    __HAL_DMA_ENABLE(&hdma_usart6_rx);
+	}
+  HAL_UART_IRQHandler(&huart6);
+  /* USER CODE BEGIN UART8_IRQn 1 */
+
+  /* USER CODE END UART8_IRQn 1 */
+}
 void UART8_IRQHandler(void)
 {
 	uint8_t tmp1,tmp2;

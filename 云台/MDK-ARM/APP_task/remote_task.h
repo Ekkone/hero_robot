@@ -1,5 +1,5 @@
-#ifndef  __data_pro_task_H
-#define  __data_pro_task_H
+#ifndef  __remote_task_H
+#define  __remote_task_H
 #ifdef __cplusplus
  extern "C" {
 #endif
@@ -38,7 +38,7 @@ extern float power; 				 //底盘功率 _测试
 extern int8_t chassis_gimble_Mode_flg;
 extern float chassis_Current; 
 extern float	 chassis_Volt; 
-extern moto3508_type  moto_3508_set; 
+//extern moto3508_type  moto_3508_set; 
 /* 本模块向外部提供的接口函数原型声明----------------------------------------*/		 
 void Referee_Data_Task(void const * argument);
 void Remote_Data_Task(void const * argument); 

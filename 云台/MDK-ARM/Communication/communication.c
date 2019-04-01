@@ -17,7 +17,7 @@
 /* 内部自定义数据类型 --------------------------------------------------------*/
  uint8_t USART1_RX_DATA[(SizeofRemote)];//遥控
  uint16_t USART1_RX_NUM;
- uint8_t USART6_RX_DATA[(SizeofReferee)];//裁判系统
+ uint8_t USART6_RX_DATA[(SizeofJY61)];//裁判系统
  uint16_t USART6_RX_NUM;
  uint8_t UART8_RX_DATA[(SizeofJY61)];//外接陀螺仪
  uint16_t UART8_RX_NUM;
@@ -100,7 +100,7 @@ void JY61_Data_Pro()
 	
   int16_t data_sum=0;
 	static int16_t i=0;
-	uint8_t  * buff = UART4_RX_DATA;//串口4
+	uint8_t  * buff = USART6_RX_DATA;//串口6
 	
 	uint8_t JY_NUM = 0;
 	static uint8_t buff_last[11] = {0};  	 //上一帧的残余数据

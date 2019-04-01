@@ -232,8 +232,8 @@ void Gimbal_Contrl_Task(void const * argument)
         Pitch_Current_Value=(-pid_pit_jy61_spd.pos_out); 
 		    
       #endif
-        Pitch_Current_Value = 0;
-        Yaw_Current_Value = 0;
+//        Pitch_Current_Value = 0;
+//        Yaw_Current_Value = 0;
         /*驱动电机*/
 				if(gimbal_disable_flg==1)//失能
 				{

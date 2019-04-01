@@ -21,183 +21,13 @@ Target DLL:      Segger\JL2CM3.dll V2.99.35.0
 Dialog DLL:      TCM.DLL V1.36.1.0
  
 <h2>Project:</h2>
-F:\Work\hero\master\MDK-ARM\2018.07.12-infantry.uvprojx
-Project File Date:  03/31/2019
+F:\Work\hero\云台\MDK-ARM\2018.07.12-infantry.uvprojx
+Project File Date:  04/01/2019
 
 <h2>Output:</h2>
 *** Using Compiler 'V5.06 update 6 (build 750)', folder: 'D:\Keil\ARM\ARMCC\Bin'
-Rebuild target 'hero_robot'
-compiling stm32f4xx_hal_msp.c...
-compiling freertos.c...
-../Drivers/CMSIS/Include/arm_math.h(4889): warning:  #223-D: function "__SMUAD" declared implicitly
-      acc = (q31_t) __SMUAD((uint32_t)S->A0, (uint32_t)in);
-../Drivers/CMSIS/Include/arm_math.h(4893): warning:  #223-D: function "__SMLALD" declared implicitly
-      acc = (q63_t)__SMLALD((uint32_t)S->A1, (uint32_t)*vstate, (uint64_t)acc);
-../Drivers/CMSIS/Include/arm_math.h(4907): warning:  #223-D: function "__SSAT" declared implicitly
-      out = (q15_t) (__SSAT((acc >> 15), 16));
-../Drivers/CMSIS/Include/arm_math.h(5032): warning:  #223-D: function "__QADD" declared implicitly
-      *pIbeta = __QADD(product1, product2);
-../Drivers/CMSIS/Include/arm_math.h(5129): warning:  #223-D: function "__QSUB" declared implicitly
-      *pIb = __QSUB(product2, product1);
-../Drivers/CMSIS/Include/arm_math.h(5250): warning:  #223-D: function "__QADD" declared implicitly
-      *pId = __QADD(product1, product2);
-../Drivers/CMSIS/Include/arm_math.h(5253): warning:  #223-D: function "__QSUB" declared implicitly
-      *pIq = __QSUB(product4, product3);
-../Drivers/CMSIS/Include/arm_math.h(5363): warning:  #223-D: function "__QSUB" declared implicitly
-      *pIalpha = __QSUB(product1, product2);
-../Drivers/CMSIS/Include/arm_math.h(5366): warning:  #223-D: function "__QADD" declared implicitly
-      *pIbeta = __QADD(product4, product3);
-../Src/freertos.c: 9 warnings, 0 errors
-compiling stm32f4xx_it.c...
-../Src/stm32f4xx_it.c(513): warning:  #177-D: variable "pxHigherPriorityTaskWoken"  was declared but never referenced
-  	 static  BaseType_t  pxHigherPriorityTaskWoken;
-../Src/stm32f4xx_it.c: 1 warning, 0 errors
-compiling main.c...
-compiling gun_task.c...
-../Drivers/CMSIS/Include/arm_math.h(4889): warning:  #223-D: function "__SMUAD" declared implicitly
-      acc = (q31_t) __SMUAD((uint32_t)S->A0, (uint32_t)in);
-../Drivers/CMSIS/Include/arm_math.h(4893): warning:  #223-D: function "__SMLALD" declared implicitly
-      acc = (q63_t)__SMLALD((uint32_t)S->A1, (uint32_t)*vstate, (uint64_t)acc);
-../Drivers/CMSIS/Include/arm_math.h(4907): warning:  #223-D: function "__SSAT" declared implicitly
-      out = (q15_t) (__SSAT((acc >> 15), 16));
-../Drivers/CMSIS/Include/arm_math.h(5032): warning:  #223-D: function "__QADD" declared implicitly
-      *pIbeta = __QADD(product1, product2);
-../Drivers/CMSIS/Include/arm_math.h(5129): warning:  #223-D: function "__QSUB" declared implicitly
-      *pIb = __QSUB(product2, product1);
-../Drivers/CMSIS/Include/arm_math.h(5250): warning:  #223-D: function "__QADD" declared implicitly
-      *pId = __QADD(product1, product2);
-../Drivers/CMSIS/Include/arm_math.h(5253): warning:  #223-D: function "__QSUB" declared implicitly
-      *pIq = __QSUB(product4, product3);
-../Drivers/CMSIS/Include/arm_math.h(5363): warning:  #223-D: function "__QSUB" declared implicitly
-      *pIalpha = __QSUB(product1, product2);
-../Drivers/CMSIS/Include/arm_math.h(5366): warning:  #223-D: function "__QADD" declared implicitly
-      *pIbeta = __QADD(product4, product3);
-APP_task\gun_task.c(101): warning:  #111-D: statement is unreachable
-            }break;
-APP_task\gun_task.c(70): warning:  #177-D: variable "motor_stop_flag"  was declared but never referenced
-    uint8_t motor_stop_flag=0;
-APP_task\gun_task.c(75): warning:  #177-D: variable "block_flag"  was declared but never referenced
-    static uint8_t block_flag;
-APP_task\gun_task.c: 12 warnings, 0 errors
-compiling gimbal_task.c...
-compiling test_task.c...
-APP_task\test_task.h(27): warning:  #1-D: last line of file ends without a newline
-  /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
-APP_task\test_task.c(45): warning:  #177-D: variable "count"  was declared but never referenced
-  		static uint8_t count = 0;
-APP_task\test_task.c(66): warning:  #177-D: variable "ptr"  was declared but never referenced
-  		  int16_t  *ptr = &angle; //初始化指针
-APP_task\test_task.c(67): warning:  #177-D: variable "p1"  was declared but never referenced
-        int16_t  *p1  = &speed_set;
-APP_task\test_task.c(30): warning:  #177-D: variable "micro_timenow"  was declared but never referenced
-  	static double micro_timenow = 0;
-APP_task\test_task.c(31): warning:  #177-D: variable "micro_timelast"  was declared but never referenced
-  	static double micro_timelast = 0;
-APP_task\test_task.c(32): warning:  #177-D: variable "micro_time"  was declared but never referenced
-  	static double micro_time = 0;
-APP_task\test_task.c(34): warning:  #177-D: variable "angle_yaw"  was declared but never referenced
-    int16_t angle_yaw = 0;
-APP_task\test_task.c(39): warning:  #177-D: variable "speed"  was declared but never referenced
-    float speed[30];
-APP_task\test_task.c(145): warning:  #1-D: last line of file ends without a newline
-  /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
-APP_task\test_task.c: 10 warnings, 0 errors
-compiling data_pro_task.c...
-APP_task\data_pro_task.c(231): warning:  #550-D: variable "NotifyValue"  was set but never used
-  	uint32_t NotifyValue;
-APP_task\data_pro_task.c: 1 warning, 0 errors
-compiling BSP.c...
-compiling adc.c...
-compiling spi.c...
-compiling tim.c...
-compiling can.c...
-compiling dma.c...
-compiling gpio.c...
-compiling usart.c...
-compiling mecanum_calc.c...
-compiling Motor_USE_TIM.c...
-compiling Motor_USE_CAN.c...
-MotorDriver\Motor_USE_CAN.c(399): warning:  #1-D: last line of file ends without a newline
-  }	
-MotorDriver\Motor_USE_CAN.c: 1 warning, 0 errors
-compiling Caloric_restriction.c...
-compiling pid.c...
-compiling protocol.c...
-compiling SystemState.c...
-compiling Power_restriction.c...
-Algorithm\Power_restriction.c(334): warning:  #550-D: variable "total_current"  was set but never used
-  		float total_current = 0;
-Algorithm\Power_restriction.c(335): warning:  #177-D: variable "T0"  was declared but never referenced
-  		float T0 = 0;
-Algorithm\Power_restriction.c(336): warning:  #177-D: variable "P0"  was declared but never referenced
-  		float P0 = 0;
-Algorithm\Power_restriction.c(337): warning:  #177-D: variable "RE"  was declared but never referenced
-  		float RE = 0;
-Algorithm\Power_restriction.c(338): warning:  #177-D: variable "V0"  was declared but never referenced
-  		float V0 = 0;
-Algorithm\Power_restriction.c: 5 warnings, 0 errors
-compiling communication.c...
-Communication\communication.c(101): warning:  #177-D: variable "data_sum"  was declared but never referenced
-    int16_t data_sum=0;
-Communication\communication.c(102): warning:  #550-D: variable "i"  was set but never used
-  	static int16_t i=0;
-Communication\communication.c(105): warning:  #177-D: variable "JY_NUM"  was declared but never referenced
-  	uint8_t JY_NUM = 0;
-Communication\communication.c(106): warning:  #177-D: variable "buff_last"  was declared but never referenced
-  	static uint8_t buff_last[11] = {0};  	 //上一帧的残余数据
-Communication\communication.c(107): warning:  #177-D: variable "index"  was declared but never referenced
-  	static uint8_t index = 0;		
-Communication\communication.c(71): warning:  #177-D: variable "ucRxCnt"  was declared but never referenced
-  static unsigned char ucRxCnt = 0;
-Communication\communication.c(72): warning:  #177-D: variable "buff_transition"  was declared but never referenced
-  static unsigned char buff_transition[11] = {0}; //过渡段缓存
-Communication\communication.c(73): warning:  #177-D: variable "buff_last"  was declared but never referenced
-  static unsigned char buff_last[SizeofJY61] = {0};
-Communication\communication.c: 8 warnings, 0 errors
-compiling cmsis_os.c...
-compiling tasks.c...
-compiling minipc.c...
-compiling queue.c...
-compiling decode.c...
-compiling timers.c...
-compiling atom_imu.c...
-compiling heap_4.c...
-compiling croutine.c...
-compiling event_groups.c...
-compiling list.c...
-assembling startup_stm32f427xx.s...
-compiling port.c...
-compiling system_stm32f4xx.c...
-compiling stm32f4xx_hal_flash_ramfunc.c...
-compiling stm32f4xx_hal_rcc_ex.c...
-compiling stm32f4xx_hal_tim.c...
-compiling stm32f4xx_hal_gpio.c...
-compiling stm32f4xx_hal_can.c...
-../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_can.c(1080): warning:  #177-D: variable "tmp3"  was declared but never referenced
-    uint32_t tmp1 = 0U, tmp2 = 0U, tmp3 = 0U;
-../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_can.c(1293): warning:  #177-D: function "CAN_Transmit_IT"  was declared but never referenced
-  static HAL_StatusTypeDef CAN_Transmit_IT(CAN_HandleTypeDef* hcan)
-../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_can.c: 2 warnings, 0 errors
-compiling stm32f4xx_hal_pwr_ex.c...
-compiling stm32f4xx_hal_dma_ex.c...
-compiling stm32f4xx_hal_cortex.c...
-compiling stm32f4xx_hal.c...
-compiling stm32f4xx_hal_flash_ex.c...
-compiling stm32f4xx_hal_uart.c...
-../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.c(1611): warning:  #177-D: function "UART_DMARxHalfCplt"  was declared but never referenced
-  static void UART_DMARxHalfCplt(DMA_HandleTypeDef *hdma)
-../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.c: 1 warning, 0 errors
-compiling stm32f4xx_hal_pwr.c...
-compiling stm32f4xx_hal_flash.c...
-compiling stm32f4xx_hal_tim_ex.c...
-compiling stm32f4xx_hal_rcc.c...
-compiling stm32f4xx_hal_dma.c...
-compiling stm32f4xx_hal_adc_ex.c...
-compiling stm32f4xx_hal_adc.c...
-compiling stm32f4xx_hal_spi.c...
-linking...
-Program Size: Code=28096 RO-data=660 RW-data=316 ZI-data=21236  
-"2018.07.12-infantry\hero_robot.axf" - 0 Error(s), 50 Warning(s).
+Build target 'hero_robot'
+"2018.07.12-infantry\hero_robot.axf" - 0 Error(s), 0 Warning(s).
 
 <h2>Software Packages used:</h2>
 
@@ -220,7 +50,7 @@ Package Vendor: Keil
 <h2>Collection of Component Files used:</h2>
 
    * Component: ARM::CMSIS:CORE:5.2.0
-Build Time Elapsed:  00:01:06
+Build Time Elapsed:  00:00:02
 </pre>
 </body>
 </html>

@@ -39,7 +39,7 @@
 2018.07.12-infantry\power_restriction.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h
 2018.07.12-infantry\power_restriction.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h
 2018.07.12-infantry\power_restriction.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h
-2018.07.12-infantry\power_restriction.o: .\APP_task\data_pro_task.h
+2018.07.12-infantry\power_restriction.o: .\APP_task\remote_task.h
 2018.07.12-infantry\power_restriction.o: ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.h
 2018.07.12-infantry\power_restriction.o: D:\Keil\ARM\ARMCC\Bin\..\include\stddef.h
 2018.07.12-infantry\power_restriction.o: ../Drivers/CMSIS/Include/core_cmFunc.h
@@ -79,7 +79,7 @@
 2018.07.12-infantry\power_restriction.o: .\Algorithm\mecanum_calc.h
 2018.07.12-infantry\power_restriction.o: D:\Keil\ARM\ARMCC\Bin\..\include\stdlib.h
 2018.07.12-infantry\power_restriction.o: .\Algorithm\Power_restriction.h
-2018.07.12-infantry\power_restriction.o: .\APP_task\data_pro_task.h
+2018.07.12-infantry\power_restriction.o: .\APP_task\remote_task.h
 2018.07.12-infantry\power_restriction.o: .\Communication\atom_imu.h
 2018.07.12-infantry\power_restriction.o: ../Inc/gpio.h
 2018.07.12-infantry\power_restriction.o: .\Communication\decode.h

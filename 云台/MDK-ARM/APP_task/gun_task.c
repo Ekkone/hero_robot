@@ -11,7 +11,6 @@
 //extern osMessageQId JSYS_QueueHandle;
 /* 内部常量定义--------------------------------------------------------------*/
 #define GUN_PERIOD  10
-#define Mocha_PERIOD  1
 #define BLOCK_TIME 5000
 #define REVERSE_TIME 2000
 #define prepare_flag HAL_GPIO_ReadPin(GPIOF,GPIO_PIN_0)
@@ -129,8 +128,9 @@ void Gun_Task(void const * argument)
 				moto_dial_get.total_angle=0;
         /*进入位置环*/
         ptr_heat_gun_t.sht_flg = 11;
-        /*搅拌电机*/
         contiue_flag = 0;
+        /*摩擦轮速度*/
+        set_M_speed = 7000;
       }break;
       case 11:
       {
@@ -149,7 +149,7 @@ void Gun_Task(void const * argument)
      /*驱动拨弹电机,摩擦轮*/
 		 Shot_Motor(&hcan2,pid_dial_spd.pos_out,pid_shot_spd[0].pos_out,pid_shot_spd[1].pos_out);
 		 minipc_rx.state_flag=0;
-		 set_speed=0;	   
+		 set_speed = 0;	   
     
         osDelayUntil(&xLastWakeTime,GUN_PERIOD);
 	}

@@ -13,7 +13,7 @@
 #include "mecanum_calc.h"
 #include "Motor_USE_CAN.h"
 #include "Power_restriction.h"
-#include "data_pro_task.h"
+#include "remote_task.h"
 /* 本模块向外部提供的数据类型定义--------------------------------------------*/	
 
 

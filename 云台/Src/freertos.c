@@ -47,7 +47,7 @@
 #include "cmsis_os.h"
 #include "stm32f4xx.h"
 #include "chassis_task.h"
-#include "data_pro_task.h"
+#include "remote_task.h"
 #include "gimbal_task.h"
 #include "gun_task.h"
 /* USER CODE BEGIN Includes */     
@@ -121,12 +121,6 @@ void MX_FREERTOS_Init(void) {
 	
 	osThreadDef(RemoteDataTask, Remote_Data_Task, osPriorityHigh, 0, 256);
 	RemoteDataTaskHandle = osThreadCreate(osThread(RemoteDataTask), NULL);
-	
-//	osThreadDef(RefereeDataTask, Referee_Data_Task, osPriorityAboveNormal, 0, 128);
-//	RefereeDataTaskHandle = osThreadCreate(osThread(RefereeDataTask), NULL);
-
-//	osThreadDef(MiniPCDataTask, MiniPC_Data_task, osPriorityAboveNormal, 0, 128);
-//	MiniPCDataTaskHandle = osThreadCreate(osThread(MiniPCDataTask), NULL);
 
 	osThreadDef(GimbalTask, Gimbal_Contrl_Task, osPriorityNormal, 0, 256);
 	GimbalTaskHandle = osThreadCreate(osThread(GimbalTask), NULL);

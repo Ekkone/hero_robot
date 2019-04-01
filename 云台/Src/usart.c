@@ -63,7 +63,6 @@ DMA_HandleTypeDef hdma_usart3_rx;
 DMA_HandleTypeDef hdma_uart4_rx;
 DMA_HandleTypeDef hdma_usart6_rx;
 DMA_HandleTypeDef hdma_uart8_rx;
-//DMA_HandleTypeDef hdma_usart6_tx;  //暂用普通发送函数
 
 /*
 ********************************
