@@ -168,7 +168,7 @@ void Gimbal_Contrl_Task(void const * argument)
       minipc_rx.angle_yaw = 0;
       minipc_rx.angle_pit = 0;
       /*云台限位保护*/
-      /*pit正常0-670，7450-8192*/
+      /*pit正常0-670（前），7500（后）-8192*/
       if((pit_set.expect + pit_get.offset_angle) > (630 + pit_protect_correct_2) &&\
           (pit_set.expect + pit_get.offset_angle) < (2000 + pit_protect_correct_2))
       {

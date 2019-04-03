@@ -73,13 +73,10 @@
 /* Function prototypes -------------------------------------------------------*/
 void  StartDefaultTask(void const * argument);
 extern void testTask(void const * argument);
-extern void Chassis_Contrl_Task(void const * argument);
 extern void Remote_Data_Task(void const * argument);
-extern void Referee_Data_Task(void const * argument);
 extern void Gimbal_Contrl_Task(void const * argument);
 extern void Gun_Task(void const * argument);
-extern void MiniPC_Data_task(void const * argument);
-extern void Led_Task(void const * argument);
+
 //extern void vOutLineCheck_Task(void const *argument);
 extern void Check_Task(void const *argument);
 

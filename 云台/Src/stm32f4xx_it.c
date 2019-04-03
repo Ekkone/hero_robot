@@ -49,8 +49,7 @@
 #include "SystemState.h"
 /* USER CODE END 0 */
 extern  osThreadId RemoteDataTaskHandle;
-extern  osThreadId RefereeDataTaskHandle;
-extern  osThreadId	MiniPCDataTaskHandle;
+
 /* External variables --------------------------------------------------------*/
 extern CAN_HandleTypeDef hcan1;
 extern CAN_HandleTypeDef hcan2;
@@ -68,12 +67,6 @@ extern DMA_HandleTypeDef hdma_usart3_rx;
 extern DMA_HandleTypeDef hdma_uart4_rx;
 extern DMA_HandleTypeDef hdma_usart6_rx;
 extern DMA_HandleTypeDef hdma_uart8_rx;
-
-extern xQueueHandle UART1_RX_QueHandle;//串口1接收队列
-extern xQueueHandle UART2_RX_QueHandle;//串口2接收队列
-extern xQueueHandle UART4_RX_QueHandle;//串口2接收队列
-extern xQueueHandle UART6_RX_QueHandle;//串口6接收队列
-extern xQueueHandle UART8_RX_QueHandle;//串口8接收队列
 
 //测速模块
 extern uint32_t Micro_Tick;
@@ -374,7 +367,7 @@ void USART2_IRQHandler (void)
 		
   HAL_UART_IRQHandler(&huart2);
   /* USER CODE BEGIN UART8_IRQn 1 */
-   vTaskNotifyGiveFromISR(MiniPCDataTaskHandle,&pxHigherPriorityTaskWoken);
+   //vTaskNotifyGiveFromISR(MiniPCDataTaskHandle,&pxHigherPriorityTaskWoken);
 		portYIELD_FROM_ISR(pxHigherPriorityTaskWoken);			
 	}
   /* USER CODE END UART8_IRQn 1 */
@@ -535,7 +528,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 /* USER CODE BEGIN 1 */
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)  //接收完成            暂时不加任务通知，后续讨论　　_待续
 {
-	 static  BaseType_t  pxHigherPriorityTaskWoken;
+
 		if(huart == &huart1)
 	{
   	
