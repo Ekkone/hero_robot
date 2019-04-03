@@ -58,6 +58,94 @@ void Minipc_Pid_Init()
 	
 //    HAL_GPIO_WritePin(GPIOH, GPIO_PIN_5, GPIO_PIN_SET);   //电源引脚 _待续
 }
+void ChassisModeProcess()
+{
+   if(chassis_gimble_Mode_flg==1) //XY运动，底盘跟随云台
+   {
+      pit_set.expect = pit_set.expect +(0x400-RC_Ctl.rc.ch3)/20;	
+      yaw_set_follow.expect = yaw_set_follow.expect +(0x400-RC_Ctl.rc.ch2)/20;	
+     
+     yaw_set.expect = yaw_get.total_angle;//更新分离编码器期望
+   }
+   else//WY运动，底盘云台分离
+   {
+      pit_set.expect = pit_set.expect +(0x400-RC_Ctl.rc.ch3)/20;	
+      yaw_set.expect = yaw_set.expect +(0x400-RC_Ctl.rc.ch2)/20;	
+     
+     yaw_set_follow.expect = ptr_jy61_t_yaw.final_angle;//更新跟随陀螺仪期望
+   }
+   if(press_counter >= press_times)//左按键延迟，时间由press_time控制
+	{
+		press_counter=press_times+1;
+   switch(RC_Ctl.rc.s1)
+    {
+      case 1://上,急停
+      {
+        /*底盘急停*/
+        CAN_Send_YK(&hcan1,0,0,0,RC_Ctl.rc.s1,RC_Ctl.rc.s2);
+      }break;
+      case 2://下，底盘跟随
+      {
+        chassis_gimble_Mode_flg = 1;
+        CAN_Send_YK(&hcan1,RC_Ctl.key.v,RC_Ctl.rc.ch0,RC_Ctl.rc.ch1,RC_Ctl.rc.s1,RC_Ctl.rc.s2);
+      }break;
+      case 3://中,底盘分离
+      {
+        chassis_gimble_Mode_flg = 0;  
+        CAN_Send_YK(&hcan1,RC_Ctl.key.v,RC_Ctl.rc.ch0,RC_Ctl.rc.ch1,RC_Ctl.rc.s1,RC_Ctl.rc.s2);        
+      }break;
+      default:break;
+    }
+  }
+}
+void ShotProcess()
+{
+  /*底盘模式默认分离*/
+  chassis_gimble_Mode_flg = 0;
+  pit_set.expect = pit_set.expect +(0x400-RC_Ctl.rc.ch3)/20;	
+  yaw_set.expect = yaw_set.expect +(0x400-RC_Ctl.rc.ch2)/20;	
+     
+  yaw_set_follow.expect = ptr_jy61_t_yaw.final_angle;//更新跟随陀螺仪期望
+  
+  if(press_counter >= press_times)//左按键延迟，时间由press_time控制
+	{
+		press_counter=press_times+1;
+    switch(RC_Ctl.rc.s1)
+      {
+        case 1://上,只传送电机开
+        {
+          
+        }break;
+        case 3://中,只拨盘单发
+        {
+          /*拨盘单发*/
+           shot_anjian_counter++;
+            if(shot_anjian_counter > shot_frequency)//非连续触发信号
+            {
+              ptr_heat_gun_t.sht_flg=1;//单发
+              press_counter=0;
+              shot_anjian_counter=0;
+            }  
+        }break;
+        case 2://下，传送电机和拨盘一起
+        {
+          /*拨盘单发*/
+          shot_anjian_counter++;
+            if(shot_anjian_counter > shot_frequency)//非连续触发信号
+            {
+              ptr_heat_gun_t.sht_flg=1;//单发
+              press_counter=0;
+              shot_anjian_counter=0;
+            }
+           /*拨盘电机*/
+        }break;
+        
+        default:break;
+    }
+  }
+  /**/
+  CAN_Send_YK(&hcan1,RC_Ctl.key.v,RC_Ctl.rc.ch0,RC_Ctl.rc.ch1,RC_Ctl.rc.s1,RC_Ctl.rc.s2);
+}
 /***************************************************************************************
 **
 	*	@brief	RemoteControlProcess()
@@ -223,15 +311,16 @@ void Remote_Data_Task(void const * argument)
 			HAL_GPIO_TogglePin(GPIOF,GPIO_PIN_14); //GRE_main
 			
 //			RefreshTaskOutLineTime(RemoteDataTask_ON);
-			Remote_Ctrl();
+			Remote_Ctrl();//遥控数据接收
 				switch(RC_Ctl.rc.s2)
 				{
           /*上*/
-					case 1: RemoteControlProcess();break; 
-          /*下*/
-					case 2: break;
+					case 1: ChassisModeProcess();break; 
           /*中*/
 					case 3: MouseKeyControlProcess();break;
+          /*下*/
+					case 2: ShotProcess();break;
+          
 					default :break;
 				}					
 				

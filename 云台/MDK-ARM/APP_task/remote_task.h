@@ -44,6 +44,7 @@ void Referee_Data_Task(void const * argument);
 void Remote_Data_Task(void const * argument); 
 void MiniPC_Data_task(void const * argument);
 void RemoteControlProcess(void);
+void ChassisModeProcess(void);
 void MouseKeyControlProcess(void);
 void hard_brak(void);
 void Remote_Ctrl(void);
