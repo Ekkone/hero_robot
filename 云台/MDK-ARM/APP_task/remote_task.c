@@ -87,7 +87,7 @@ void ChassisModeProcess()
       case 2://下，底盘跟随
       {
         chassis_gimble_Mode_flg = 1;
-        CAN_Send_YK(&hcan1,RC_Ctl.key.v,RC_Ctl.rc.ch0,RC_Ctl.rc.ch1,RC_Ctl.rc.s1,RC_Ctl.rc.s2);
+        CAN_Send_YK(&hcan1,RC_Ctl.key.v,RC_Ctl.rc.ch0,RC_Ctl.rc.ch1,RC_Ctl.rc.s1,RC_Ctl.rc. s2);
       }break;
       case 3://中,底盘分离
       {
@@ -95,7 +95,9 @@ void ChassisModeProcess()
         CAN_Send_YK(&hcan1,RC_Ctl.key.v,RC_Ctl.rc.ch0,RC_Ctl.rc.ch1,RC_Ctl.rc.s1,RC_Ctl.rc.s2);        
       }break;
       default:break;
+    
     }
+    ptr_heat_gun_t.sht_flg=0;
   }
 }
 void ShotProcess()
@@ -224,7 +226,7 @@ void RemoteControlProcess()
 ****************************************************************************************/
 void MouseKeyControlProcess()
 {
-	
+
 //	if(RC_Ctl.key.v & 0x10 )//设置速度档位，每档速度增加550
 //					{
 //							//p++;//shift正常挡位
@@ -280,7 +282,7 @@ void MouseKeyControlProcess()
 //							press_counter=0; 
 //						}
 //					}
-				CAN_Send_YK(&hcan1,RC_Ctl.key.v,RC_Ctl.rc.ch0,RC_Ctl.rc.ch1,RC_Ctl.rc.s1,RC_Ctl.rc.s2);
+				CAN_Send_YK(&hcan1,RC_Ctl.key.v,0,0,RC_Ctl.rc.s1,RC_Ctl.rc.s2);
 }
 
 /* 任务主体部分 -------------------------------------------------------------*/

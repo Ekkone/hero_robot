@@ -148,14 +148,14 @@ void JY61_Frame(void)
 	static uint8_t JY61_Frame_flag = 0;
 	static	uint8_t JY61_Frame_Num = 0;
 	
-while( UART4_RX_DATA[0] != 0x55 ||  JY61_Frame_flag == 1)
+while( USART6_RX_DATA[0] != 0x55 ||  JY61_Frame_flag == 1)
 {
 	
-	if(UART4_RX_DATA[0] != 0x55 && JY61_Frame_flag == 0)
+	if(USART6_RX_DATA[0] != 0x55 && JY61_Frame_flag == 0)
 	{
 				
-				HAL_UART_DMAPause(&huart4);
-				*UART4_RX_DATA = 0;
+				HAL_UART_DMAPause(&huart6);
+				*USART6_RX_DATA = 0;
 				JY61_Frame_flag = 1;
 				
 	}
@@ -170,11 +170,11 @@ while( UART4_RX_DATA[0] != 0x55 ||  JY61_Frame_flag == 1)
 //								JY61_Frame_flag = 0;
 //								JY61_Frame_Num = 0;
 							
-								HAL_UART_Receive_DMA(&huart4,UART4_RX_DATA,SizeofJY61);	//陀螺仪接收
+								HAL_UART_Receive_DMA(&huart6,USART6_RX_DATA,SizeofJY61);	//陀螺仪接收
 
 				   } else if(JY61_Frame_Num == 50)
 							 {
-								   HAL_UART_DMAResume(&huart4);
+								   HAL_UART_DMAResume(&huart6);
 							 } else if(JY61_Frame_Num > 100  )
 									 {
 										 JY61_Frame_flag = 0;
@@ -300,7 +300,7 @@ void BSP_Init(void)
   HAL_CAN_Receive_IT(&hcan1, CAN_FIFO0); 
   HAL_CAN_Receive_IT(&hcan2, CAN_FIFO0);
 	#if jy61
-	//JY61_Frame();  
+	JY61_Frame();  
   #endif
 	HAL_Delay(1000);
 

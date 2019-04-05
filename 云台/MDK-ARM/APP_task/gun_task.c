@@ -92,7 +92,7 @@ void Gun_Task(void const * argument)
             set_angle=moto_dial_get.total_angle;	
             contiue_flag = 1;
             /*摩擦轮速度*/
-            set_M_speed = 3000;
+            set_M_speed = 000;
           }break;
           case 1:
           {
@@ -115,7 +115,7 @@ void Gun_Task(void const * argument)
         ptr_heat_gun_t.sht_flg = 11;
         contiue_flag = 0;
         /*摩擦轮速度*/
-        set_M_speed = 7000;
+        set_M_speed = 3000;
       }break;
       case 2://3连发模式
       {
@@ -130,7 +130,7 @@ void Gun_Task(void const * argument)
         ptr_heat_gun_t.sht_flg = 11;
         contiue_flag = 0;
         /*摩擦轮速度*/
-        set_M_speed = 7000;
+        set_M_speed = 3000;
       }break;
       case 11:
       {

@@ -555,14 +555,14 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)  //½ÓÊÕÍê³É            Ô
 //		  /*ÎÞÏßµ÷²ÎµÄ´¦Àíº¯Êý*/
 //			PID_UART_IRQHandler(&huart3, Res);
 	}
-//	else if(huart == &huart6)
-//	{
+	else if(huart == &huart6)
+	{
 //			__HAL_DMA_SET_COUNTER(&hdma_usart6_rx,SizeofReferee);
 //			__HAL_DMA_ENABLE(&hdma_usart6_rx);
-////			vTaskNotifyGiveFromISR(RefereeDataTaskHandle,&pxHigherPriorityTaskWoken);
-////			portYIELD_FROM_ISR(pxHigherPriorityTaskWoken);	
-//		
-//	}
+//			vTaskNotifyGiveFromISR(RefereeDataTaskHandle,&pxHigherPriorityTaskWoken);
+//			portYIELD_FROM_ISR(pxHigherPriorityTaskWoken);	
+		
+	}
 	else if(huart == &huart8)
 	{
 		

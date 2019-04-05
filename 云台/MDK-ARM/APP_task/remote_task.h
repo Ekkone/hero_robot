@@ -46,6 +46,7 @@ void MiniPC_Data_task(void const * argument);
 void RemoteControlProcess(void);
 void ChassisModeProcess(void);
 void MouseKeyControlProcess(void);
+void ShotProcess(void);
 void hard_brak(void);
 void Remote_Ctrl(void);
 void Minipc_Pid_Init(void);

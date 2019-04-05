@@ -86,20 +86,20 @@ void gimbal_pid_init(void)
 #else
 /*pit±àÂëÆ÷·´À¡*/
   PID_struct_init(&pid_pit_jy61, POSITION_PID, 5000, 1000,
-                  7.0f, 0.03f, 10.5f); //	
+                  10.0f, 0.05f, 0.0f); //	
   PID_struct_init(&pid_pit_jy61_spd, POSITION_PID, 5000, 1000,
                   2.5f, 0.0f, 0.0f ); 
 #endif
 
 /*yawÍÓÂÝÒÇ·´À¡*/
   PID_struct_init(&pid_yaw_jy61_follow, POSITION_PID, 5000, 300,
-                  6.0f, 0.03f, 30.0f); //	
+                  9.0f, 0.05f, 45.0f); //	
   PID_struct_init(&pid_yaw_jy61_follow_spd, POSITION_PID, 5000, 100,
                   2.5f, 0.0f, 0.0f );
 
 /*yaw±àÂëÆ÷·´À¡*/
   PID_struct_init(&pid_yaw_jy61, POSITION_PID, 5000, 300,
-                  10.0f, 0.1f, 4.0f); //	
+                  12.0f, 0.1f, 4.0f); //	
   PID_struct_init(&pid_yaw_jy61_spd, POSITION_PID, 5000, 100,
                   2.5f, 0.0f, 0.0f );
   #endif
@@ -227,7 +227,7 @@ void Gimbal_Contrl_Task(void const * argument)
         #else
         //pitÖá±àÂëÆ÷
         pid_calc(&pid_pit_jy61, pit_get.total_angle, pit_set.expect);
-        pid_calc(&pid_pit_jy61_spd,(ptr_jy61_t_angular_velocity.vy), pid_pit_jy61.pos_out);
+        pid_calc(&pid_pit_jy61_spd,(-ptr_jy61_t_angular_velocity.vy), pid_pit_jy61.pos_out);
         #endif
         Pitch_Current_Value=(-pid_pit_jy61_spd.pos_out); 
 		    
