@@ -93,13 +93,13 @@ void gimbal_pid_init(void)
 
 /*yawÍÓÂÝÒÇ·´À¡*/
   PID_struct_init(&pid_yaw_jy61_follow, POSITION_PID, 5000, 300,
-                  9.0f, 0.05f, 45.0f); //	
+                  7.0f, 0.1f, 40.0f); //	
   PID_struct_init(&pid_yaw_jy61_follow_spd, POSITION_PID, 5000, 100,
-                  2.5f, 0.0f, 0.0f );
+                  2.0f, 0.0f, 0.0f );
 
 /*yaw±àÂëÆ÷·´À¡*/
   PID_struct_init(&pid_yaw_jy61, POSITION_PID, 5000, 300,
-                  12.0f, 0.1f, 4.0f); //	
+                  12.0f, 0.1f, 12.0f); //	
   PID_struct_init(&pid_yaw_jy61_spd, POSITION_PID, 5000, 100,
                   2.5f, 0.0f, 0.0f );
   #endif

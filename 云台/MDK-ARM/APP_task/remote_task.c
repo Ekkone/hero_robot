@@ -98,7 +98,7 @@ void ChassisModeProcess()
       default:break;
     
     }
-    ptr_heat_gun_t.sht_flg=0;
+    MoCa_Flag = 0; 
   }
 }
 void ShotProcess()
@@ -117,7 +117,7 @@ void ShotProcess()
       {
         case 1://上,只传送电机开
         {
-          
+          MoCa_Flag = 1; 
         }break;
         case 3://中,只拨盘单发
         {
@@ -128,7 +128,8 @@ void ShotProcess()
               ptr_heat_gun_t.sht_flg=1;//单发
               press_counter=0;
               shot_anjian_counter=0;
-            }  
+            }
+            MoCa_Flag = 1;            
         }break;
         case 2://下，传送电机和拨盘一起
         {
@@ -140,6 +141,7 @@ void ShotProcess()
               press_counter=0;
               shot_anjian_counter=0;
             }
+            MoCa_Flag = 1; 
            /*拨盘电机*/
         }break;
         
@@ -227,26 +229,62 @@ void RemoteControlProcess()
 ****************************************************************************************/
 void MouseKeyControlProcess()
 {
-  /*云台控制*/
+  static uint16_t delay = 0;
+  CAN_Send_YK(&hcan1,RC_Ctl.key.v,0,0,RC_Ctl.rc.s1,RC_Ctl.rc.s2);
+  /*鼠标云台控制*/
+  if(chassis_gimble_Mode_flg==1) //XY运动，底盘跟随云台
+   {
+      yaw_set_follow.expect = yaw_set_follow.expect-RC_Ctl.mouse.x/2;	
+    
+     yaw_set.expect = yaw_get.total_angle;//更新分离编码器期望
+   }
+   else//WY运动，底盘云台分离
+   {	
+      yaw_set.expect = yaw_set.expect-RC_Ctl.mouse.x/2;
+     
+     yaw_set_follow.expect = ptr_jy61_t_yaw.final_angle;//更新跟随陀螺仪期望
+   }
   pit_set.expect = pit_set.expect+RC_Ctl.mouse.y/2;	//鼠标（移动速度*1000/50）
-  yaw_set.expect = yaw_set.expect-RC_Ctl.mouse.x/2;
-  /*底盘模式切换*/ 
-  if(RC_Ctl.key.v & 0x2000)
+   /*鼠标右键开启/关闭摩擦轮*/
+   if(Right_Press)
   {
-    chassis_gimble_Mode_flg = !chassis_gimble_Mode_flg;
-  }
-  /*发弹控制*/
-  if(RC_Ctl.mouse.press_l==1)        //鼠标左键单发
-  {
-    press_counter++;
-      if(press_counter>=10)
+    if(delay > PRESS_DELAY)
     {
-      press_counter=10+1;
-      ptr_heat_gun_t.sht_flg=1;
-      press_counter=0;
+      if(Right_Press)
+      {
+        MoCa_Flag = !MoCa_Flag;
+        delay = 0;
+      }
     }
+    delay++;
   }
   
+  /*底盘模式切换-*/ 
+  if(R_Press) //r
+  {
+    if(delay > PRESS_DELAY && R_Press)
+    {
+      chassis_gimble_Mode_flg = !chassis_gimble_Mode_flg;
+      delay = 0;
+    }
+    delay++;
+  }
+  /*摩擦轮开启时*/
+  if(MoCa_Flag == 1)
+  {
+    /*发弹控制*/
+    if(Left_Press)        //鼠标左键单发
+    {
+        press_counter++;
+        if(press_counter>=10)
+        {
+          press_counter=10+1;
+          ptr_heat_gun_t.sht_flg=1;
+          press_counter=0;
+        }
+    }
+  }
+
 //  else 	if(RC_Ctl.key.v & 0x100)     //r键3连发
 //  {
 //    press_counter++;
@@ -257,7 +295,7 @@ void MouseKeyControlProcess()
 //      press_counter=0; 
 //    }
 //  }
-  CAN_Send_YK(&hcan1,RC_Ctl.key.v,0,0,RC_Ctl.rc.s1,RC_Ctl.rc.s2);
+  
 //	if(RC_Ctl.key.v & 0x10 )//设置速度档位，每档速度增加550
 //					{
 //							//p++;//shift正常挡位

@@ -36,6 +36,7 @@ volatile typedef struct
 extern volatile Power_Heat * ptr_power_heat;
 extern Heat_Gun_t  ptr_heat_gun_t;
 extern volatile float remain_power;
+extern uint8_t MoCa_Flag ;
 
 /* 本模块向外部提供的接口函数原型声明----------------------------------------*/
 void Gun_Task(void const * argument);

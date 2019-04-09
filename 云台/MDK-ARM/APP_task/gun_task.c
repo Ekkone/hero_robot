@@ -18,6 +18,7 @@
 #define NO_READY 0
 /* 外部变量声明--------------------------------------------------------------*/
 Heat_Gun_t  ptr_heat_gun_t;
+uint8_t MoCa_Flag = 0;
 extern uint8_t shot_frequency;
 extern float Golf_speed;
 //Power_Heat * power_heat;
@@ -77,7 +78,20 @@ void Gun_Task(void const * argument)
 	for(;;)
 	{
 		RefreshTaskOutLineTime(GunTask_ON);
-
+    switch(MoCa_Flag)
+    {
+      case 0:
+      {
+        /*摩擦轮速度*/
+        set_M_speed = 000;
+        ptr_heat_gun_t.sht_flg = 11;
+      }break;
+      case 1:
+      {
+        /*摩擦轮速度*/
+        set_M_speed = 3000;
+      }break;
+    }
  /*判断发射模式*/
     switch(ptr_heat_gun_t.sht_flg)
     {
@@ -91,8 +105,7 @@ void Gun_Task(void const * argument)
             /*设定角度*/
             set_angle=moto_dial_get.total_angle;	
             contiue_flag = 1;
-            /*摩擦轮速度*/
-            set_M_speed = 000;
+            
           }break;
           case 1:
           {
@@ -114,8 +127,7 @@ void Gun_Task(void const * argument)
         /*进入位置环*/
         ptr_heat_gun_t.sht_flg = 11;
         contiue_flag = 0;
-        /*摩擦轮速度*/
-        set_M_speed = 3000;
+        
       }break;
       case 2://3连发模式
       {
@@ -129,8 +141,6 @@ void Gun_Task(void const * argument)
         /*进入位置环*/
         ptr_heat_gun_t.sht_flg = 11;
         contiue_flag = 0;
-        /*摩擦轮速度*/
-        set_M_speed = 3000;
       }break;
       case 11:
       {
