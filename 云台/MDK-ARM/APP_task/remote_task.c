@@ -87,6 +87,7 @@ void ChassisModeProcess()
       case 2://下，底盘跟随
       {
         chassis_gimble_Mode_flg = 1;
+        
         CAN_Send_YK(&hcan1,RC_Ctl.key.v,RC_Ctl.rc.ch0,RC_Ctl.rc.ch1,RC_Ctl.rc.s1,RC_Ctl.rc. s2);
       }break;
       case 3://中,底盘分离
@@ -226,7 +227,37 @@ void RemoteControlProcess()
 ****************************************************************************************/
 void MouseKeyControlProcess()
 {
-
+  /*云台控制*/
+  pit_set.expect = pit_set.expect+RC_Ctl.mouse.y/2;	//鼠标（移动速度*1000/50）
+  yaw_set.expect = yaw_set.expect-RC_Ctl.mouse.x/2;
+  /*底盘模式切换*/ 
+  if(RC_Ctl.key.v & 0x2000)
+  {
+    chassis_gimble_Mode_flg = !chassis_gimble_Mode_flg;
+  }
+  /*发弹控制*/
+  if(RC_Ctl.mouse.press_l==1)        //鼠标左键单发
+  {
+    press_counter++;
+      if(press_counter>=10)
+    {
+      press_counter=10+1;
+      ptr_heat_gun_t.sht_flg=1;
+      press_counter=0;
+    }
+  }
+  
+//  else 	if(RC_Ctl.key.v & 0x100)     //r键3连发
+//  {
+//    press_counter++;
+//    if(press_counter>=5)
+//    {
+//      press_counter=5+1;
+//      ptr_heat_gun_t.sht_flg=2;
+//      press_counter=0; 
+//    }
+//  }
+  CAN_Send_YK(&hcan1,RC_Ctl.key.v,0,0,RC_Ctl.rc.s1,RC_Ctl.rc.s2);
 //	if(RC_Ctl.key.v & 0x10 )//设置速度档位，每档速度增加550
 //					{
 //							//p++;//shift正常挡位
@@ -252,37 +283,12 @@ void MouseKeyControlProcess()
 //					}
 
 
-//					//鼠标（移动速度*1000/50）
-//					pit_set.expect = pit_set.expect+RC_Ctl.mouse.y/2;	
+					
+					
+					
 //					
-//					
-//					//云台跟随底盘 c键 
-//					if(RC_Ctl.key.v & 0x2000)
-//					{
-//						moto_3508_set.flag = !moto_3508_set.flag;
-//					}
-//					
-//					if(RC_Ctl.mouse.press_l==1)        //鼠标左键单发
-//					{
-//						press_counter++;
-//							if(press_counter>=10)
-//			    	{
-//							press_counter=10+1;
-//							ptr_heat_gun_t.sht_flg=1;
-//							press_counter=0;
-//			    	}
-//					}
-//					else 	if(RC_Ctl.key.v & 0x100)     //r键3连发
-//					{
-//						press_counter++;
-//						if(press_counter>=5)
-//			    	{
-//							press_counter=5+1;
-//							ptr_heat_gun_t.sht_flg=2;
-//							press_counter=0; 
-//						}
-//					}
-				CAN_Send_YK(&hcan1,RC_Ctl.key.v,0,0,RC_Ctl.rc.s1,RC_Ctl.rc.s2);
+
+				
 }
 
 /* 任务主体部分 -------------------------------------------------------------*/

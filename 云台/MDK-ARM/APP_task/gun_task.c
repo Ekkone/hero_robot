@@ -142,6 +142,7 @@ void Gun_Task(void const * argument)
 
 			default :break;
     }
+    ptr_heat_gun_t.sht_flg = 11;//默认位置环
      /*速度环*/
      pid_calc(&pid_dial_spd,moto_dial_get.speed_rpm ,set_speed);
      pid_calc(&pid_shot_spd[0],moto_M_get[0].speed_rpm ,set_M_speed);
