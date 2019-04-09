@@ -275,6 +275,8 @@ void MouseKeyControlProcess()
     /*发弹控制*/
     if(Left_Press)        //鼠标左键单发
     {
+      if(delay > PRESS_DELAY && Left_Press)
+      {
         press_counter++;
         if(press_counter>=10)
         {
@@ -282,6 +284,9 @@ void MouseKeyControlProcess()
           ptr_heat_gun_t.sht_flg=1;
           press_counter=0;
         }
+        delay = 0;
+      }
+      delay++; 
     }
   }
 
