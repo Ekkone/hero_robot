@@ -54,15 +54,13 @@ typedef enum
 
 typedef enum
 {
-	testTask_ON,
-	ChassisContrlTask_ON,
-	RemoteDataTask_ON,
-	GimbalContrlTask_ON,
-	GunTask_ON,
-	LedTask_ON,
-	vOutLineCheckTask_ON,
-	
-	TASKTotal_No	
+	testTask_ON,//0x01
+	ChassisContrlTask_ON,//0x02
+	RemoteDataTask_ON,//0x04
+	GimbalContrlTask_ON,//0x08
+	GunTask_ON,//0x10
+	vOutLineCheckTask_ON,//0x20
+	TASKTotal_No	//0x40
 }TASK_NoDEF;
 
 /* Exported constants --------------------------------------------------------*/

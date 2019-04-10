@@ -16,6 +16,8 @@
 "2018.07.12-infantry\dma.o"
 "2018.07.12-infantry\usart.o"
 "2018.07.12-infantry\motor_use_can.o"
+"2018.07.12-infantry\ax-12a.o"
+"2018.07.12-infantry\motor_use_tim.o"
 "2018.07.12-infantry\pid.o"
 "2018.07.12-infantry\mecanum_calc.o"
 "2018.07.12-infantry\power_restriction.o"

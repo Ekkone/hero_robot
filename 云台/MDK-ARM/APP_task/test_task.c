@@ -43,6 +43,7 @@ void testTask(void const * argument)
 	{ 				
 		static uint16_t counter_last;
 		static uint8_t count = 0;
+    /*刷新断线时间*/
 		RefreshTaskOutLineTime(testTask_ON);
     #if printf_power
     printf("%4f\r\n",limit.Power_Calculat);
@@ -86,54 +87,45 @@ void Check_Task(void const * argument)
 	
 	for(;;)
 	{
-	if((SystemState.task_OutLine_Flag&0x01))
+        if((SystemState.task_OutLine_Flag&0x01))
 				{
 					printf("testTask GG \n\t");
 					osDelayUntil(&xLastWakeTime,100);
 				}
-				
-				
 //				if((SystemState.task_OutLine_Flag&0x02))
 //				{
 //					printf("ChassisContrlTask GG \n\t");
-//					Chassis_Motor_Disable(&hcan2);
+//					//Chassis_Motor_Disable(&hcan2);
 //					osDelayUntil(&xLastWakeTime,100);
 //				} 
 //				
 //				
-//				if((SystemState.task_OutLine_Flag&0x04))
-//				{
-//						printf("RemoteDataTask GG \n\t");
-//						HAL_UART_DMAPause(&huart1);
-//				    *USART1_RX_DATA = 0;
-//						osDelayUntil(&xLastWakeTime,100);
-//				} 
-//				
-//				if((SystemState.task_OutLine_Flag&0x08))
-//				{
-//						printf("GimbalContrlTask GG \n\t");
-//					  Cloud_Platform_Motor_Disable(&hcan1);
-//						osDelayUntil(&xLastWakeTime,100);
-//				} 
-//				
-//				if((SystemState.task_OutLine_Flag&0x10))
-//				{
-//						printf("GunTask GG \n\t");
-//						osDelayUntil(&xLastWakeTime,100);
-//				} 
-//				
-//				if((SystemState.task_OutLine_Flag&0x20))
-//				{
-//						printf("LedTask GG \n\t");
-//						osDelayUntil(&xLastWakeTime,100);
-//				} 
-
-
-//				if((SystemState.task_OutLine_Flag&0x40))
-//				{
-//						printf("vOutLineCheckTask GG \n\t");
-//						osDelayUntil(&xLastWakeTime,100);
-//				} 
+				if((SystemState.task_OutLine_Flag&0x04))
+				{
+						printf("RemoteDataTask GG \n\t");
+						HAL_UART_DMAPause(&huart1);
+				    *USART1_RX_DATA = 0;
+						osDelayUntil(&xLastWakeTime,100);
+				} 
+				
+				if((SystemState.task_OutLine_Flag&0x08))
+				{
+						printf("GimbalContrlTask GG \n\t");
+					  Cloud_Platform_Motor_Disable(&hcan1);
+						osDelayUntil(&xLastWakeTime,100);
+				} 
+				
+				if((SystemState.task_OutLine_Flag&0x10))
+				{
+						printf("GunTask GG \n\t");
+						osDelayUntil(&xLastWakeTime,100);
+				} 
+				
+				if((SystemState.task_OutLine_Flag&0x20))
+				{
+						printf("vOutLineCheckTask GG \n\t");
+						osDelayUntil(&xLastWakeTime,100);
+				} 
 
 		
 				osDelayUntil(&xLastWakeTime,Check_PERIOD);

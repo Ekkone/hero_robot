@@ -353,7 +353,8 @@ void Remote_Data_Task(void const * argument)
 	
 	for(;;)
 	{
-		
+		/*刷新断线时间*/
+    RefreshTaskOutLineTime(RemoteDataTask_ON);
 		   //NotifyValue=ulTaskNotifyTake(pdTRUE,portMAX_DELAY);
     if(RemoteData_flag==1)
 		{
