@@ -48,13 +48,13 @@ void testTask(void const * argument)
 		static uint16_t counter_last;
 		static uint8_t count = 0;
 		RefreshTaskOutLineTime(testTask_ON);
-    
-    HAL_GPIO_WritePin(GPIOF,GPIO_PIN_0,GPIO_PIN_SET);
-    HAL_GPIO_WritePin(GPIOF,GPIO_PIN_1,GPIO_PIN_SET);
-    HAL_GPIO_WritePin(GPIOF,GPIO_PIN_2,GPIO_PIN_SET);
-    HAL_GPIO_WritePin(GPIOF,GPIO_PIN_3,GPIO_PIN_SET);
-    HAL_GPIO_WritePin(GPIOF,GPIO_PIN_4,GPIO_PIN_SET);
-    HAL_GPIO_WritePin(GPIOF,GPIO_PIN_5,GPIO_PIN_SET);
+    HAL_GPIO_TogglePin(GPIOF,GPIO_PIN_0);
+//    HAL_GPIO_WritePin(GPIOF,GPIO_PIN_0,GPIO_PIN_SET);
+//    HAL_GPIO_WritePin(GPIOF,GPIO_PIN_1,GPIO_PIN_SET);
+//    HAL_GPIO_WritePin(GPIOF,GPIO_PIN_2,GPIO_PIN_SET);
+//    HAL_GPIO_WritePin(GPIOF,GPIO_PIN_3,GPIO_PIN_SET);
+//    HAL_GPIO_WritePin(GPIOF,GPIO_PIN_4,GPIO_PIN_SET);
+//    HAL_GPIO_WritePin(GPIOF,GPIO_PIN_5,GPIO_PIN_SET);
     #if printf_speed
     
 			Golf_speed = (float)(GunLength / MicroTime / (Photoelectric_gate1 - Photoelectric_gate2));
@@ -84,7 +84,7 @@ void testTask(void const * argument)
 		
 		HAL_GPIO_TogglePin(LED_RED_GPIO_Port,LED_RED_Pin); //Red
 	#endif
-		osDelayUntil(&xLastWakeTime,100);
+		osDelayUntil(&xLastWakeTime,500);
 	}
 }
 void Check_Task(void const * argument)

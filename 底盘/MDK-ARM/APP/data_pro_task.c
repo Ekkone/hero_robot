@@ -32,10 +32,10 @@ pid_t pid_minipc_pit={0};
 ------------------------------------------------------------------------------
 */
 /* 内部变量------------------------------------------------------------------*/
-int16_t XY_speed_max = 6000;
-int16_t XY_speed_min = -6000; 
-int16_t W_speed_max = 3000;
-int16_t W_speed_min = -3000; 
+int16_t XY_speed_max = 3000;
+int16_t XY_speed_min = -3000; 
+int16_t W_speed_max = 2000;
+int16_t W_speed_min = -2000; 
 uint8_t press_counter;
 uint8_t shot_anjian_counter=0;
 uint8_t shot_frequency = 100;
@@ -73,20 +73,13 @@ void ChassisModeProcess()
   /*遥控杆数据处理*/
 	         if(chassis_gimble_Mode_flg==1) //XY运动，底盘跟随云台
 					 {
-//						  pit_set.expect = pit_set.expect +(0x400-RC_Ctl.rc.ch3)/20;	
-	
 							moto_3508_set.dstVmmps_X=-((RC_Ctl.rc.ch0-0x400)*5);
 							moto_3508_set.dstVmmps_Y=-((RC_Ctl.rc.ch1-0x400)*5);
-
 					 }
 					 else//WY运动，底盘云台分离
 					 {
-//						  pit_set.expect = pit_set.expect +(0x400-RC_Ctl.rc.ch3)/20;	
-//							yaw_set.expect = yaw_set.expect +(0x400-RC_Ctl.rc.ch2)/20;	
 							moto_3508_set.dstVmmps_W=((RC_Ctl.rc.ch0-0x400)*5);
 							moto_3508_set.dstVmmps_Y=-((RC_Ctl.rc.ch1-0x400)*5);
-             
-//             yaw_set_follow.expect = ptr_jy61_t_yaw.final_angle;//更新跟随陀螺仪期望
 					 }
    if(press_counter >= press_times)//左按键延迟，时间由press_time控制
 	{
@@ -152,24 +145,35 @@ void MouseKeyControlProcess()
 						XY_speed_max = 3000;//(NORMAL_SPEED_MAX)*3.5;
 						XY_speed_min = -3000;//(NORMAL_SPEED_MIN)*3.5;
 					}
-			
-					if(W_Press)                       moto_3508_set.dstVmmps_Y -= ACC_SPEED;//按下W键
-					else if(S_Press)                  moto_3508_set.dstVmmps_Y += ACC_SPEED;//按下S键
-					else{  
-							 	if(moto_3508_set.dstVmmps_Y>-DEC_SPEED&&moto_3508_set.dstVmmps_Y<DEC_SPEED) 	 moto_3508_set.dstVmmps_Y = 0;
-								if(moto_3508_set.dstVmmps_Y>0) 	                   moto_3508_set.dstVmmps_Y -= DEC_SPEED;
-								if(moto_3508_set.dstVmmps_Y<0) 		                 moto_3508_set.dstVmmps_Y += DEC_SPEED;
-					}
+	/*Y向速度*/
+  if(W_Press)                       moto_3508_set.dstVmmps_Y -= ACC_SPEED;//按下W键
+  else if(S_Press)                  moto_3508_set.dstVmmps_Y += ACC_SPEED;//按下S键
+  else{  
+        if(moto_3508_set.dstVmmps_Y>-DEC_SPEED&&moto_3508_set.dstVmmps_Y<DEC_SPEED) 	 moto_3508_set.dstVmmps_Y = 0;
+        if(moto_3508_set.dstVmmps_Y>0) 	                   moto_3508_set.dstVmmps_Y -= DEC_SPEED;
+        if(moto_3508_set.dstVmmps_Y<0) 		                 moto_3508_set.dstVmmps_Y += DEC_SPEED;
+  }
 
-
-					if(D_Press)                        moto_3508_set.dstVmmps_X += ACC_SPEED; //按下D键
-					else if(A_Press)    		           moto_3508_set.dstVmmps_X -= ACC_SPEED;//按下A键
-					else{
-									if(moto_3508_set.dstVmmps_X>-DEC_SPEED&&moto_3508_set.dstVmmps_X<DEC_SPEED) 		moto_3508_set.dstVmmps_X = 0;		
-									if(moto_3508_set.dstVmmps_X>0) 	                   moto_3508_set.dstVmmps_X -= DEC_SPEED;
-									if(moto_3508_set.dstVmmps_X<0) 		                 moto_3508_set.dstVmmps_X += DEC_SPEED;
-					}
-				
+  /*X向速度*/
+  if(D_Press)                        moto_3508_set.dstVmmps_X -= ACC_SPEED; //按下D键
+  else if(A_Press)    		           moto_3508_set.dstVmmps_X += ACC_SPEED;//按下A键
+  else{
+          if(moto_3508_set.dstVmmps_X>-DEC_SPEED&&moto_3508_set.dstVmmps_X<DEC_SPEED) 		moto_3508_set.dstVmmps_X = 0;		
+          if(moto_3508_set.dstVmmps_X>0) 	                   moto_3508_set.dstVmmps_X -= DEC_SPEED;
+          if(moto_3508_set.dstVmmps_X<0) 		                 moto_3508_set.dstVmmps_X += DEC_SPEED;
+  }
+  /*分离时*/
+	if(chassis_gimble_Mode_flg == 0)
+  {
+    /*W向速度*/
+    if(Q_Press)                       moto_3508_set.dstVmmps_W -= ACC_SPEED;//按下W键
+    else if(E_Press)                  moto_3508_set.dstVmmps_W += ACC_SPEED;//按下S键
+    else{  
+          if(moto_3508_set.dstVmmps_W>-DEC_SPEED&&moto_3508_set.dstVmmps_W<DEC_SPEED) 	 moto_3508_set.dstVmmps_W = 0;
+          if(moto_3508_set.dstVmmps_W>0) 	                   moto_3508_set.dstVmmps_W -= DEC_SPEED;
+          if(moto_3508_set.dstVmmps_W<0) 		                 moto_3508_set.dstVmmps_W += DEC_SPEED;
+    }
+  }
 }
 
 

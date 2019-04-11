@@ -100,6 +100,7 @@ void ChassisModeProcess()
     }
     MoCa_Flag = 0; 
   }
+  chassis_gimble_Mode_flg = 0; 
 }
 void ShotProcess()
 {
@@ -230,6 +231,7 @@ void RemoteControlProcess()
 void MouseKeyControlProcess()
 {
   static uint16_t delay = 0;
+  chassis_gimble_Mode_flg = 0;
   CAN_Send_YK(&hcan1,RC_Ctl.key.v,0,0,RC_Ctl.rc.s1,RC_Ctl.rc.s2);
   /*鼠标云台控制*/
   if(chassis_gimble_Mode_flg==1) //XY运动，底盘跟随云台
@@ -260,9 +262,9 @@ void MouseKeyControlProcess()
   }
   
   /*底盘模式切换-*/ 
-  if(R_Press) //r
+  if(C_Press) 
   {
-    if(delay > PRESS_DELAY && R_Press)
+    if(delay > PRESS_DELAY && C_Press)
     {
       chassis_gimble_Mode_flg = !chassis_gimble_Mode_flg;
       delay = 0;
@@ -289,48 +291,6 @@ void MouseKeyControlProcess()
       delay++; 
     }
   }
-
-//  else 	if(RC_Ctl.key.v & 0x100)     //r键3连发
-//  {
-//    press_counter++;
-//    if(press_counter>=5)
-//    {
-//      press_counter=5+1;
-//      ptr_heat_gun_t.sht_flg=2;
-//      press_counter=0; 
-//    }
-//  }
-  
-//	if(RC_Ctl.key.v & 0x10 )//设置速度档位，每档速度增加550
-//					{
-//							//p++;//shift正常挡位
-//						XY_speed_max = 3000;//(NORMAL_SPEED_MAX)*3.5;
-//						XY_speed_min = -3000;//(NORMAL_SPEED_MIN)*3.5;
-//					}
-//			
-//					if(RC_Ctl.key.v & 0x01)                       moto_3508_set.dstVmmps_Y -= ACC_SPEED;//按下W键
-//					else if(RC_Ctl.key.v & 0x02)                  moto_3508_set.dstVmmps_Y += ACC_SPEED;//按下S键
-//					else{  
-//							 	if(moto_3508_set.dstVmmps_Y>-DEC_SPEED&&moto_3508_set.dstVmmps_Y<DEC_SPEED) 	 moto_3508_set.dstVmmps_Y = 0;
-//								if(moto_3508_set.dstVmmps_Y>0) 	                   moto_3508_set.dstVmmps_Y -= DEC_SPEED;
-//								if(moto_3508_set.dstVmmps_Y<0) 		                 moto_3508_set.dstVmmps_Y += DEC_SPEED;
-//					}
-
-
-//					if(RC_Ctl.key.v & 0x04)                        moto_3508_set.dstVmmps_X += ACC_SPEED; //按下D键
-//					else if(RC_Ctl.key.v & 0x08)    		           moto_3508_set.dstVmmps_X -= ACC_SPEED;//按下A键
-//					else{
-//									if(moto_3508_set.dstVmmps_X>-DEC_SPEED&&moto_3508_set.dstVmmps_X<DEC_SPEED) 		moto_3508_set.dstVmmps_X = 0;		
-//									if(moto_3508_set.dstVmmps_X>0) 	                   moto_3508_set.dstVmmps_X -= DEC_SPEED;
-//									if(moto_3508_set.dstVmmps_X<0) 		                 moto_3508_set.dstVmmps_X += DEC_SPEED;
-//					}
-
-
-					
-					
-					
-//					
-
 				
 }
 
