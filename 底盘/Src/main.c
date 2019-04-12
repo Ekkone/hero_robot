@@ -50,13 +50,7 @@
 #include "main.h"
 #include "stm32f4xx_hal.h"
 #include "cmsis_os.h"
-#include "adc.h"
-#include "can.h"
-#include "dma.h"
-#include "tim.h"
-#include "usart.h"
-#include "gpio.h"
-
+#include "BSP.h"
 /* USER CODE BEGIN Includes */
 #include "board_test.h"
 /* USER CODE END Includes */
@@ -74,14 +68,7 @@ void MX_FREERTOS_Init(void);
 
 /* USER CODE BEGIN PFP */
 /* Private function prototypes -----------------------------------------------*/
-extern CAN_HandleTypeDef hcan1;
-/* USER CODE END PFP */
 
-/* USER CODE BEGIN 0 */
-int count=28;
-uint8_t kkk[10]="asdfghjk";
-uint8_t usart_date[32];
-uint32_t value_ad;
 
 /* USER CODE END 0 */
 
@@ -113,34 +100,7 @@ int main(void)
   /* USER CODE END SysInit */
 
   /* Initialize all configured peripherals */
-  MX_GPIO_Init();
-  MX_DMA_Init();
-  MX_CAN2_Init();
-  MX_CAN1_Init();
-  MX_USART1_UART_Init();
-  MX_USART2_UART_Init();
-  MX_USART3_UART_Init();
-  MX_UART4_Init();
-  MX_UART5_Init();
-  MX_USART6_UART_Init();
-  MX_ADC1_Init();
-  MX_ADC2_Init();
-  MX_ADC3_Init();
-  MX_TIM4_Init();
-  MX_TIM2_Init();
-  /* USER CODE BEGIN 2 */
-  HAL_CAN_Start(&hcan1);
-	HAL_CAN_Start(&hcan2);
-	 
-	 HAL_ADC_Start(&hadc1);
-//	 HAL_ADC_Start(&hadc2);
-//	 HAL_ADC_Start(&hadc3);
-	 
-	CanFilter_Init(&hcan1);
-	CanFilter_Init(&hcan2);
-	HAL_CAN_ActivateNotification(&hcan1,CAN_IT_RX_FIFO0_MSG_PENDING);
-	HAL_CAN_ActivateNotification(&hcan2,CAN_IT_RX_FIFO0_MSG_PENDING);
-	HAL_UART_Receive_IT(&huart1,usart_date,10);
+  BSP_Init();
   /* USER CODE END 2 */
 
   /* Call init function for freertos objects (in freertos.c) */

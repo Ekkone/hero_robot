@@ -55,6 +55,7 @@
 #include "data_pro_task.h"
 #include "gimbal_task.h"
 #include "gun_task.h"
+#include "status_task.h"
 /* USER CODE BEGIN Includes */     
 
 /* USER CODE END Includes */
@@ -62,8 +63,9 @@
 /* Variables -----------------------------------------------------------------*/
 osThreadId defaultTaskHandle;
 osThreadId testTaskHandle; 				
- osThreadId ChassisTaskHandle;		
- osThreadId RemoteDataTaskHandle;  
+osThreadId ChassisTaskHandle;		
+osThreadId RemoteDataTaskHandle;  
+osThreadId StatusTaskHandle; 
 /* USER CODE BEGIN Variables */
 
 /* USER CODE END Variables */
@@ -73,7 +75,9 @@ void StartDefaultTask(void const * argument);
 extern void testTask(void const * argument);
 extern void Chassis_Contrl_Task(void const * argument);
 extern void Remote_Data_Task(void const * argument);
-
+extern void Status_Task(void const * argument);
+extern void vOutLineCheck_Task(void const *argument);
+extern void Check_Task(void const *argument);
 void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
 
 /* USER CODE BEGIN FunctionPrototypes */
@@ -116,6 +120,9 @@ void MX_FREERTOS_Init(void) {
 	
 	osThreadDef(RemoteDataTask, Remote_Data_Task, osPriorityHigh, 0, 256);    //改为云台通信任务
 	RemoteDataTaskHandle = osThreadCreate(osThread(RemoteDataTask), NULL);
+  
+  osThreadDef(StatusTask, Status_Task, osPriorityAboveNormal, 0, 128);
+	StatusTaskHandle = osThreadCreate(osThread(StatusTask), NULL);
   /* USER CODE BEGIN RTOS_QUEUES */
   /* add queues, ... */
   /* USER CODE END RTOS_QUEUES */

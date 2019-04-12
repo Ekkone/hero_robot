@@ -397,10 +397,15 @@
               <FileType>1</FileType>
               <FilePath>../Src/stm32f4xx_it.c</FilePath>
             </File>
+            <File>
+              <FileName>资源使用情况.c</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\Src\资源使用情况.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>app</GroupName>
+          <GroupName>APP</GroupName>
           <Files>
             <File>
               <FileName>chassis_task.c</FileName>
@@ -422,20 +427,20 @@
               <FileType>1</FileType>
               <FilePath>.\APP\test_task.c</FilePath>
             </File>
+            <File>
+              <FileName>status_task.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\APP\status_task.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
           <GroupName>BSP</GroupName>
           <Files>
             <File>
-              <FileName>stm32f4xx_hal_timebase_TIM.c</FileName>
+              <FileName>BSP.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../Src/stm32f4xx_hal_timebase_TIM.c</FilePath>
-            </File>
-            <File>
-              <FileName>stm32f4xx_hal_msp.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../Src/stm32f4xx_hal_msp.c</FilePath>
+              <FilePath>..\Src\BSP.c</FilePath>
             </File>
             <File>
               <FileName>usart.c</FileName>
@@ -467,6 +472,16 @@
               <FileType>1</FileType>
               <FilePath>../Src/gpio.c</FilePath>
             </File>
+            <File>
+              <FileName>stm32f4xx_hal_msp.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../Src/stm32f4xx_hal_msp.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f4xx_hal_timebase_TIM.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../Src/stm32f4xx_hal_timebase_TIM.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -477,10 +492,65 @@
               <FileType>1</FileType>
               <FilePath>.\MotorDriver\Motor_USE_CAN.c</FilePath>
             </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>Communication</GroupName>
+          <Files>
             <File>
-              <FileName>Motor_USE_TIM.c</FileName>
+              <FileName>atom_imu.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\MotorDriver\Motor_USE_TIM.c</FilePath>
+              <FilePath>.\Communication\atom_imu.c</FilePath>
+            </File>
+            <File>
+              <FileName>communication.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Communication\communication.c</FilePath>
+            </File>
+            <File>
+              <FileName>decode.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Communication\decode.c</FilePath>
+            </File>
+            <File>
+              <FileName>minipc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Communication\minipc.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>Algorithm</GroupName>
+          <Files>
+            <File>
+              <FileName>Caloric_restriction.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Algorithm\Caloric_restriction.c</FilePath>
+            </File>
+            <File>
+              <FileName>mecanum_calc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Algorithm\mecanum_calc.c</FilePath>
+            </File>
+            <File>
+              <FileName>pid.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Algorithm\pid.c</FilePath>
+            </File>
+            <File>
+              <FileName>Power_restriction.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Algorithm\Power_restriction.c</FilePath>
+            </File>
+            <File>
+              <FileName>protocol.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Algorithm\protocol.c</FilePath>
+            </File>
+            <File>
+              <FileName>SystemState.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Algorithm\SystemState.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -646,66 +716,6 @@
               <FileName>cmsis_os.c</FileName>
               <FileType>1</FileType>
               <FilePath>../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>Communication</GroupName>
-          <Files>
-            <File>
-              <FileName>atom_imu.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\Communication\atom_imu.c</FilePath>
-            </File>
-            <File>
-              <FileName>communication.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\Communication\communication.c</FilePath>
-            </File>
-            <File>
-              <FileName>decode.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\Communication\decode.c</FilePath>
-            </File>
-            <File>
-              <FileName>minipc.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\Communication\minipc.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>Algorithm</GroupName>
-          <Files>
-            <File>
-              <FileName>Caloric_restriction.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\Algorithm\Caloric_restriction.c</FilePath>
-            </File>
-            <File>
-              <FileName>mecanum_calc.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\Algorithm\mecanum_calc.c</FilePath>
-            </File>
-            <File>
-              <FileName>pid.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\Algorithm\pid.c</FilePath>
-            </File>
-            <File>
-              <FileName>Power_restriction.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\Algorithm\Power_restriction.c</FilePath>
-            </File>
-            <File>
-              <FileName>protocol.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\Algorithm\protocol.c</FilePath>
-            </File>
-            <File>
-              <FileName>SystemState.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\Algorithm\SystemState.c</FilePath>
             </File>
           </Files>
         </Group>

@@ -90,7 +90,7 @@ void Gun_Task(void const * argument)
       case 1:
       {
         /*摩擦轮速度*/
-        set_M_speed = 6000;
+        set_M_speed = 7000;
       }break;
     }
  /*判断发射模式*/

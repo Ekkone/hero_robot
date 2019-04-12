@@ -54,6 +54,17 @@
 #include "main.h"
 
 /***************Òý½Åºê***************/
+#define GREEN_LED(a)	if (a)	\
+					HAL_GPIO_WritePin(	LED_GREEN_GPIO_Port,LED_GREEN_Pin,GPIO_PIN_RESET);\
+					else		\
+					HAL_GPIO_WritePin(	LED_GREEN_GPIO_Port,LED_GREEN_Pin,GPIO_PIN_SET)
+#define RED_LED(a)	if (a)	\
+					HAL_GPIO_WritePin(	LED_RED_GPIO_Port,LED_RED_Pin,GPIO_PIN_RESET);\
+					else		\
+					HAL_GPIO_WritePin(	LED_RED_GPIO_Port,LED_RED_Pin,GPIO_PIN_SET)
+#define GREEN_Blink()  HAL_GPIO_TogglePin(LED_GREEN_GPIO_Port,LED_GREEN_Pin)
+#define RED_Blink()    HAL_GPIO_TogglePin(LED_RED_GPIO_Port,LED_RED_Pin)
+#define KEY  HAL_GPIO_ReadPin(KEY_GPIO_Port,KEY_Pin)
 #define IST_INT_Pin GPIO_PIN_3
 #define IST_INT_GPIO_Port GPIOE
 #define IST_RST_Pin GPIO_PIN_2

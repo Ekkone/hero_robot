@@ -139,12 +139,20 @@ void ShotProcess()
 void MouseKeyControlProcess()
 {
 	
-	if(SHIFT_Press)//设置速度档位，每档速度增加550
-					{
-							//p++;//shift正常挡位
-						XY_speed_max = 3000;//(NORMAL_SPEED_MAX)*3.5;
-						XY_speed_min = -3000;//(NORMAL_SPEED_MIN)*3.5;
-					}
+	if(SHIFT_Press)//交接时要求调整速度低
+      {
+        XY_speed_max = 500;//(NORMAL_SPEED_MAX)*3.5;
+        XY_speed_min = -500;//(NORMAL_SPEED_MIN)*3.5;
+        W_speed_max = 500;
+        W_speed_min = -500; 
+      }
+  else//正常速度
+  {
+     XY_speed_max = 3000;//(NORMAL_SPEED_MAX)*3.5;
+     XY_speed_min = -3000;//(NORMAL_SPEED_MIN)*3.5;
+     W_speed_max = 2000;
+     W_speed_min = -2000;
+  }
 	/*Y向速度*/
   if(W_Press)                       moto_3508_set.dstVmmps_Y -= ACC_SPEED;//按下W键
   else if(S_Press)                  moto_3508_set.dstVmmps_Y += ACC_SPEED;//按下S键
@@ -153,25 +161,37 @@ void MouseKeyControlProcess()
         if(moto_3508_set.dstVmmps_Y>0) 	                   moto_3508_set.dstVmmps_Y -= DEC_SPEED;
         if(moto_3508_set.dstVmmps_Y<0) 		                 moto_3508_set.dstVmmps_Y += DEC_SPEED;
   }
-
-  /*X向速度*/
-  if(D_Press)                        moto_3508_set.dstVmmps_X -= ACC_SPEED; //按下D键
-  else if(A_Press)    		           moto_3508_set.dstVmmps_X += ACC_SPEED;//按下A键
-  else{
-          if(moto_3508_set.dstVmmps_X>-DEC_SPEED&&moto_3508_set.dstVmmps_X<DEC_SPEED) 		moto_3508_set.dstVmmps_X = 0;		
-          if(moto_3508_set.dstVmmps_X>0) 	                   moto_3508_set.dstVmmps_X -= DEC_SPEED;
-          if(moto_3508_set.dstVmmps_X<0) 		                 moto_3508_set.dstVmmps_X += DEC_SPEED;
-  }
   /*分离时*/
 	if(chassis_gimble_Mode_flg == 0)
   {
+    
     /*W向速度*/
-    if(Q_Press)                       moto_3508_set.dstVmmps_W -= ACC_SPEED;//按下W键
-    else if(E_Press)                  moto_3508_set.dstVmmps_W += ACC_SPEED;//按下S键
+    if(A_Press)                       moto_3508_set.dstVmmps_W -= ACC_SPEED;//按下A键
+    else if(D_Press)                  moto_3508_set.dstVmmps_W += ACC_SPEED;//按下D键
     else{  
           if(moto_3508_set.dstVmmps_W>-DEC_SPEED&&moto_3508_set.dstVmmps_W<DEC_SPEED) 	 moto_3508_set.dstVmmps_W = 0;
           if(moto_3508_set.dstVmmps_W>0) 	                   moto_3508_set.dstVmmps_W -= DEC_SPEED;
           if(moto_3508_set.dstVmmps_W<0) 		                 moto_3508_set.dstVmmps_W += DEC_SPEED;
+    }
+    /*X向速度*/
+    if(Q_Press)                        moto_3508_set.dstVmmps_X += ACC_SPEED; //按下Q键
+    else if(E_Press)    		           moto_3508_set.dstVmmps_X -= ACC_SPEED;//按下E键
+    else{
+            if(moto_3508_set.dstVmmps_X>-DEC_SPEED&&moto_3508_set.dstVmmps_X<DEC_SPEED) 		moto_3508_set.dstVmmps_X = 0;		
+            if(moto_3508_set.dstVmmps_X>0) 	                   moto_3508_set.dstVmmps_X -= DEC_SPEED;
+            if(moto_3508_set.dstVmmps_X<0) 		                 moto_3508_set.dstVmmps_X += DEC_SPEED;
+    }
+  }
+  /*跟随时*/
+  else
+  {
+    /*X向速度*/
+    if(D_Press)                        moto_3508_set.dstVmmps_X -= ACC_SPEED; //按下D键
+    else if(A_Press)    		           moto_3508_set.dstVmmps_X += ACC_SPEED;//按下A键
+    else{
+            if(moto_3508_set.dstVmmps_X>-DEC_SPEED&&moto_3508_set.dstVmmps_X<DEC_SPEED) 		moto_3508_set.dstVmmps_X = 0;		
+            if(moto_3508_set.dstVmmps_X>0) 	                   moto_3508_set.dstVmmps_X -= DEC_SPEED;
+            if(moto_3508_set.dstVmmps_X<0) 		                 moto_3508_set.dstVmmps_X += DEC_SPEED;
     }
   }
 }
@@ -211,7 +231,7 @@ void Remote_Data_Task(void const * argument)
 	
 	for(;;)
 	{
-		
+		LED3_Blink();
 		   //NotifyValue=ulTaskNotifyTake(pdTRUE,portMAX_DELAY);
     if(RemoteData_flag==1)
 		{

@@ -159,67 +159,7 @@ void ShotProcess()
 	*	@supplement	与遥控器进行对接，对遥控器的数据进行处理，实现对底盘、云台、发射机构的控制
 	*	@retval	
 ****************************************************************************************/
-void RemoteControlProcess()  
-{
-      /*遥控杆数据处理*/
-	         if(chassis_gimble_Mode_flg==1) //XY运动，底盘跟随云台
-					 {
-						  pit_set.expect = pit_set.expect +(0x400-RC_Ctl.rc.ch3)/20;	
-							yaw_set_follow.expect = yaw_set_follow.expect +(0x400-RC_Ctl.rc.ch2)/20;	
-             
-             yaw_set.expect = yaw_get.total_angle;//更新分离编码器期望
-					 }
-					 else//WY运动，底盘云台分离
-					 {
-						  pit_set.expect = pit_set.expect +(0x400-RC_Ctl.rc.ch3)/20;	
-							yaw_set.expect = yaw_set.expect +(0x400-RC_Ctl.rc.ch2)/20;	
-             
-             yaw_set_follow.expect = ptr_jy61_t_yaw.final_angle;//更新跟随陀螺仪期望
-					 }
 
-			/*左按键数据处理*/	
-					if(press_counter >= press_times)//左按键延迟，时间由press_time控制
-					{
-						press_counter=press_times+1;
-            /*按键检查*/
-            switch(RC_Ctl.rc.s1)
-            {
-              case 1://上
-              {
-                /*发射*/
-                shot_anjian_counter++;
-                if(shot_anjian_counter > shot_frequency)//非连续触发信号
-                {
-                  ptr_heat_gun_t.sht_flg=1;//单发
-                  press_counter=0;
-                  shot_anjian_counter=0;
-                }
-              }break;
-              case 2://下
-              {
-                /*发射*/
-                shot_anjian_counter++;
-                if(shot_anjian_counter > shot_frequency)//非连续触发信号
-                {
-                  ptr_heat_gun_t.sht_flg=2;//3发
-                  press_counter=0;
-                  shot_anjian_counter=0;
-                }
-                /**/
-                HAL_GPIO_WritePin(GPIOG, GPIO_PIN_13, GPIO_PIN_SET);
-              }break;
-              case 3://中
-              {
-                /*发射*/
-                ptr_heat_gun_t.sht_flg=0;
-                    
-              }break;
-              default:break;
-            }
-
-					}
-          CAN_Send_YK(&hcan1,RC_Ctl.key.v,RC_Ctl.rc.ch0,RC_Ctl.rc.ch1,RC_Ctl.rc.s1,RC_Ctl.rc.s2);
-}
 
 /***************************************************************************************
 **
@@ -247,29 +187,26 @@ void MouseKeyControlProcess()
      yaw_set_follow.expect = ptr_jy61_t_yaw.final_angle;//更新跟随陀螺仪期望
    }
   pit_set.expect = pit_set.expect+RC_Ctl.mouse.y/2;	//鼠标（移动速度*1000/50）
-   /*鼠标右键开启/关闭摩擦轮*/
-   if(Right_Press)
-  {
-    if(delay > PRESS_DELAY)
-    {
-      if(Right_Press)
-      {
-        MoCa_Flag = !MoCa_Flag;
-        delay = 0;
-      }
-    }
-    delay++;
-  }
+   /*CTRL+鼠标右键关闭摩擦轮*/
+   if(CTRL_Press&&Right_Press)
+   {
+     MoCa_Flag = 0;
+   }
+   /*鼠标右键开启摩擦轮*/
+   else if(Right_Press)
+   {
+     MoCa_Flag = 1;
+   }
   
-  /*底盘模式切换-*/ 
-  if(C_Press) 
+  /*CTRL+C键底盘跟随*/ 
+  if(CTRL_Press&&C_Press)
   {
-    if(delay > PRESS_DELAY && C_Press)
-    {
-      chassis_gimble_Mode_flg = !chassis_gimble_Mode_flg;
-      delay = 0;
-    }
-    delay++;
+    chassis_gimble_Mode_flg = 1;
+  }
+  /*C键底盘分离*/
+  else if(C_Press) 
+  {
+    chassis_gimble_Mode_flg = 0;
   }
   /*摩擦轮开启时*/
   if(MoCa_Flag == 1)
@@ -279,13 +216,7 @@ void MouseKeyControlProcess()
     {
       if(delay > PRESS_DELAY && Left_Press)
       {
-        press_counter++;
-        if(press_counter>=10)
-        {
-          press_counter=10+1;
-          ptr_heat_gun_t.sht_flg=1;
-          press_counter=0;
-        }
+        ptr_heat_gun_t.sht_flg=1;
         delay = 0;
       }
       delay++; 
@@ -305,12 +236,9 @@ void MouseKeyControlProcess()
 extern volatile uint8_t RemoteData_flag;
 void Remote_Data_Task(void const * argument)
 {
-	uint32_t NotifyValue;
-	
+    uint32_t NotifyValue;
 		portTickType xLastWakeTime;
 		xLastWakeTime = xTaskGetTickCount();
-	
-	
 	for(;;)
 	{
 		/*刷新断线时间*/
@@ -319,10 +247,7 @@ void Remote_Data_Task(void const * argument)
     if(RemoteData_flag==1)
 		{
 			RemoteData_flag = 0;
-			NotifyValue=0;
-			HAL_GPIO_TogglePin(GPIOF,GPIO_PIN_14); //GRE_main
-			
-//			RefreshTaskOutLineTime(RemoteDataTask_ON);
+			//NotifyValue=0;
 			Remote_Ctrl();//遥控数据接收
 				switch(RC_Ctl.rc.s2)
 				{
@@ -335,14 +260,6 @@ void Remote_Data_Task(void const * argument)
           
 					default :break;
 				}					
-				
-//			VAL_LIMIT(moto_3508_set.dstVmmps_X, XY_speed_min, XY_speed_max);
-//			VAL_LIMIT(moto_3508_set.dstVmmps_Y, XY_speed_min, XY_speed_max);	
-//			VAL_LIMIT(moto_3508_set.dstVmmps_W, W_speed_min, W_speed_max);
-				
-//					if(pit_set.expect>1000) pit_set.expect=1000;
-//					if(pit_set.expect<-500) pit_set.expect=-500;
-
             press_counter++;
 		}
 			osDelayUntil(&xLastWakeTime, REMOTE_PERIOD);

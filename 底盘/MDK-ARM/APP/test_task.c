@@ -6,8 +6,7 @@
 * @brief		NONE
 *************************************************************************************//* Includes ------------------------------------------------------------------------*/
 #include "test_task.h"
-#include "SystemState.h"
-#include "Power_restriction.h"
+
 /* External variables --------------------------------------------------------------*/
 /* Internal variables --------------------------------------------------------------*/
 /* Private function prototypes ---------------------------------------------------*/
@@ -15,7 +14,7 @@
 /*测速模块*/
 #define GunLength 0.05
 #define MicroTime 0.000005
-#define Check_PERIOD  100
+
 
 extern Current_GET  current_get;
 
@@ -28,33 +27,13 @@ int16_t Golf_counter = 0;
 
 void testTask(void const * argument)
 {
-	
-//	char InfoBuffer[1000];
 
-	static double micro_timenow = 0;
-	static double micro_timelast = 0;
-	static double micro_time = 0;
-	int16_t angle = 0;
-  int16_t angle_yaw = 0;
-  int16_t speed_set = 0;
 	osDelay(200);//延时200ms
 	portTickType xLastWakeTime;
-  xLastWakeTime = xTaskGetTickCount();
-  float speed[30];
-	
-	
+  xLastWakeTime = xTaskGetTickCount();		
 	for(;;)
 	{ 				
-		static uint16_t counter_last;
-		static uint8_t count = 0;
 		RefreshTaskOutLineTime(testTask_ON);
-    HAL_GPIO_TogglePin(GPIOF,GPIO_PIN_0);
-//    HAL_GPIO_WritePin(GPIOF,GPIO_PIN_0,GPIO_PIN_SET);
-//    HAL_GPIO_WritePin(GPIOF,GPIO_PIN_1,GPIO_PIN_SET);
-//    HAL_GPIO_WritePin(GPIOF,GPIO_PIN_2,GPIO_PIN_SET);
-//    HAL_GPIO_WritePin(GPIOF,GPIO_PIN_3,GPIO_PIN_SET);
-//    HAL_GPIO_WritePin(GPIOF,GPIO_PIN_4,GPIO_PIN_SET);
-//    HAL_GPIO_WritePin(GPIOF,GPIO_PIN_5,GPIO_PIN_SET);
     #if printf_speed
     
 			Golf_speed = (float)(GunLength / MicroTime / (Photoelectric_gate1 - Photoelectric_gate2));
@@ -68,10 +47,6 @@ void testTask(void const * argument)
 		printf("ADC_current= %4f\n",current_get.CurrentCalculat);     //电流采集数据打印
 			
     #endif
-//		vTaskGetRunTimeStats(InfoBuffer);
-//		printf("%s\r\n",InfoBuffer);
-//		vTaskList(InfoBuffer);
-//		printf("%s\n\r",InfoBuffer);
   #if printf_sendware
 		  int16_t  *ptr = &angle; //初始化指针
       int16_t  *p1  = &speed_set;
@@ -82,73 +57,10 @@ void testTask(void const * argument)
 //		printf("  pit=%d \n\t",pit_get.total_angle);
 //	  printf("  yaw=%d \n\t",yaw_get.angle);
 		
-		HAL_GPIO_TogglePin(LED_RED_GPIO_Port,LED_RED_Pin); //Red
+//		HAL_GPIO_TogglePin(LED_RED_GPIO_Port,LED_RED_Pin); //Red
 	#endif
 		osDelayUntil(&xLastWakeTime,500);
 	}
 }
-void Check_Task(void const * argument)
-{
-	osDelay(100);
-	portTickType xLastWakeTime;
-  xLastWakeTime = xTaskGetTickCount();
-	
-	for(;;)
-	{
-	if((SystemState.task_OutLine_Flag&0x01))
-				{
-					printf("testTask GG \n\t");
-					osDelayUntil(&xLastWakeTime,100);
-				}
-				
-				
-				if((SystemState.task_OutLine_Flag&0x02))
-				{
-					printf("ChassisContrlTask GG \n\t");
-					Chassis_Motor_Disable(&hcan2);
-					osDelayUntil(&xLastWakeTime,100);
-				} 
-				
-				
-				if((SystemState.task_OutLine_Flag&0x04))
-				{
-						printf("RemoteDataTask GG \n\t");
-						HAL_UART_DMAPause(&huart1);
-				    *USART1_RX_DATA = 0;
-						osDelayUntil(&xLastWakeTime,100);
-				} 
-				
-				if((SystemState.task_OutLine_Flag&0x08))
-				{
-						printf("GimbalContrlTask GG \n\t");
-					  Cloud_Platform_Motor_Disable(&hcan1);
-						osDelayUntil(&xLastWakeTime,100);
-				} 
-				
-				if((SystemState.task_OutLine_Flag&0x10))
-				{
-						printf("GunTask GG \n\t");
-						osDelayUntil(&xLastWakeTime,100);
-				} 
-				
-				if((SystemState.task_OutLine_Flag&0x20))
-				{
-						printf("LedTask GG \n\t");
-						osDelayUntil(&xLastWakeTime,100);
-				} 
 
-
-				if((SystemState.task_OutLine_Flag&0x40))
-				{
-						printf("vOutLineCheckTask GG \n\t");
-						osDelayUntil(&xLastWakeTime,100);
-				} 
-
-		
-				osDelayUntil(&xLastWakeTime,Check_PERIOD);
-	
-	}
-	
-	
-}
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

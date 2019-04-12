@@ -59,7 +59,51 @@
 #include "main.h"
 
 /* USER CODE BEGIN Includes */
-
+#define LED1(a)	if (a)	\
+					HAL_GPIO_WritePin(	GPIOB,GPIO_PIN_14,GPIO_PIN_RESET);\
+					else		\
+					HAL_GPIO_WritePin(	GPIOB,GPIO_PIN_14,GPIO_PIN_SET)
+#define LED2(a)	if (a)	\
+					HAL_GPIO_WritePin(	GPIOE,GPIO_PIN_15,GPIO_PIN_RESET);\
+					else		\
+					HAL_GPIO_WritePin(	GPIOE,GPIO_PIN_15,GPIO_PIN_SET)
+#define LED3(a)	if (a)	\
+					HAL_GPIO_WritePin(	GPIOE,GPIO_PIN_14,GPIO_PIN_RESET);\
+					else		\
+					HAL_GPIO_WritePin(	GPIOE,GPIO_PIN_14,GPIO_PIN_SET)
+#define LED4(a)	if (a)	\
+					HAL_GPIO_WritePin(	GPIOF,GPIO_PIN_12,GPIO_PIN_RESET);\
+					else		\
+					HAL_GPIO_WritePin(	GPIOF,GPIO_PIN_12,GPIO_PIN_SET)
+#define LED5(a)	if (a)	\
+					HAL_GPIO_WritePin(	GPIOF,GPIO_PIN_11,GPIO_PIN_RESET);\
+					else		\
+					HAL_GPIO_WritePin(	GPIOF,GPIO_PIN_11,GPIO_PIN_SET)
+#define LED6(a)	if (a)	\
+					HAL_GPIO_WritePin(	GPIOB,GPIO_PIN_2,GPIO_PIN_RESET);\
+					else		\
+					HAL_GPIO_WritePin(	GPIOB,GPIO_PIN_2,GPIO_PIN_SET)
+#define LED7(a)	if (a)	\
+					HAL_GPIO_WritePin(	GPIOB,GPIO_PIN_1,GPIO_PIN_RESET);\
+					else		\
+					HAL_GPIO_WritePin(	GPIOB,GPIO_PIN_1,GPIO_PIN_SET)
+#define LED8(a)	if (a)	\
+					HAL_GPIO_WritePin(	GPIOB,GPIO_PIN_0,GPIO_PIN_RESET);\
+					else		\
+					HAL_GPIO_WritePin(	GPIOB,GPIO_PIN_0,GPIO_PIN_SET)
+#define LED1_Blink()  HAL_GPIO_TogglePin(GPIOB,GPIO_PIN_14)
+#define LED2_Blink()  HAL_GPIO_TogglePin(GPIOE,GPIO_PIN_15)
+#define LED3_Blink()  HAL_GPIO_TogglePin(GPIOE,GPIO_PIN_14)
+#define LED4_Blink()  HAL_GPIO_TogglePin(GPIOF,GPIO_PIN_12)
+#define LED5_Blink()  HAL_GPIO_TogglePin(GPIOF,GPIO_PIN_11)
+#define LED6_Blink()  HAL_GPIO_TogglePin(GPIOB,GPIO_PIN_2)
+#define LED7_Blink()  HAL_GPIO_TogglePin(GPIOB,GPIO_PIN_1)  
+#define LED8_Blink()  HAL_GPIO_TogglePin(GPIOB,GPIO_PIN_0)  
+          
+#define KEY1 HAL_GPIO_ReadPin(GPIOC,GPIO_PIN_1)
+#define KEY2 HAL_GPIO_ReadPin(GPIOC,GPIO_PIN_2)
+#define KEY3 HAL_GPIO_ReadPin(GPIOA,GPIO_PIN_6)
+#define KEY4 HAL_GPIO_ReadPin(GPIOA,GPIO_PIN_5)
 /* USER CODE END Includes */
 
 /* USER CODE BEGIN Private defines */

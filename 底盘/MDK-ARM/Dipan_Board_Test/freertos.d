@@ -75,3 +75,7 @@ dipan_board_test\freertos.o: .\MotorDriver\Motor_USE_TIM.h
 dipan_board_test\freertos.o: ../Inc/tim.h
 dipan_board_test\freertos.o: .\Communication\communication.h
 dipan_board_test\freertos.o: .\Algorithm\Power_restriction.h
+dipan_board_test\freertos.o: .\APP\status_task.h
+dipan_board_test\freertos.o: ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.h
+dipan_board_test\freertos.o: .\Algorithm\SystemState.h
+dipan_board_test\freertos.o: ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.h

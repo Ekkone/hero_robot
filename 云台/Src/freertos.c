@@ -57,13 +57,9 @@
 /* Variables -----------------------------------------------------------------*/
  osThreadId defaultTaskHandle;		  //= 0;
  osThreadId testTaskHandle; 				//= 0;
- osThreadId ChassisTaskHandle;		  //= 0;
  osThreadId RemoteDataTaskHandle;  //= 0;
- osThreadId RefereeDataTaskHandle; //= 0;
  osThreadId GimbalTaskHandle;		 	//= 0;
  osThreadId GunTaskHandle; 				//= 0;
- osThreadId MiniPCDataTaskHandle;
- osThreadId LedTaskHandle;
  osThreadId vOutLineCheckTaskHandle;
  osThreadId CheckTaskHandle;
 /* USER CODE BEGIN Variables */

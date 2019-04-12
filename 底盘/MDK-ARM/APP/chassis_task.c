@@ -80,10 +80,10 @@ void Chassis_Contrl_Task(void const * argument)
   
 	for(;;)
 	{
+    LED2_Blink();
 //	  IMU_Get_Data();
 //    RefreshTaskOutLineTime(ChassisContrlTask_ON);
     /*µ×ÅÌÄ£Ê½*/
-    chassis_gimble_Mode_flg = flag;
 		switch(chassis_gimble_Mode_flg)
 		{	
 			case 0:	{	//·ÖÀë	

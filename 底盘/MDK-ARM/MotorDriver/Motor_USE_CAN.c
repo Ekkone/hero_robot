@@ -48,8 +48,8 @@ extern uint8_t rx_date[8];
 uint8_t tx_date[8];
 /* 函数原型声明 ----------------------------------------------------------*/
 extern RC_Ctl_t RC_Ctl;
+extern uint8_t chassis_gimble_Mode_flg;
 int16_t yaw_speed;
-uint8_t flag ; 
 uint8_t flag1;
 int16_t OutLine_Flag;
 int16_t task_OutLine_Flag;
@@ -397,7 +397,7 @@ void CAN_RX_YT(CAN_HandleTypeDef * hcan)
 {
 	yaw_get.total_angle = (int16_t)(rx_date[0]<<8 |rx_date[1]) ;
 	yaw_speed = (int16_t) (rx_date[2]<<8 | rx_date[3]) ;
-	flag = (int16_t)(rx_date[4]<<8);
+	chassis_gimble_Mode_flg = (int16_t)(rx_date[4]<<8);
 	flag1 = (int16_t)(rx_date[5]<<8);
 	
 }

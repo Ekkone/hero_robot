@@ -74,8 +74,8 @@ void testTask(void const * argument)
 //		printf("  pit=%d \n\t",pit_get.total_angle);
 //	  printf("  yaw=%d \n\t",yaw_get.angle);
 		
-		HAL_GPIO_TogglePin(LED_RED_GPIO_Port,LED_RED_Pin); //Red
 	#endif
+      GREEN_Blink();
 		osDelayUntil(&xLastWakeTime,100);
 	}
 }
