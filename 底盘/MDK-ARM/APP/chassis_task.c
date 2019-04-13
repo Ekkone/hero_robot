@@ -80,9 +80,8 @@ void Chassis_Contrl_Task(void const * argument)
   
 	for(;;)
 	{
-    LED2_Blink();
-//	  IMU_Get_Data();
-//    RefreshTaskOutLineTime(ChassisContrlTask_ON);
+
+    RefreshTaskOutLineTime(ChassisContrlTask_ON);
     /*底盘模式*/
 		switch(chassis_gimble_Mode_flg)
 		{	
@@ -110,7 +109,8 @@ void Chassis_Contrl_Task(void const * argument)
     /*速度环计算*/
 		for(int i=0; i<4; i++)
 			{		
-				pid_calc(&pid_3508_spd[i], moto_chassis_get[i].speed_rpm, wheel[i]);
+				//pid_calc(&pid_3508_spd[i], moto_chassis_get[i].speed_rpm, wheel[i]);
+        pid_calc(&pid_3508_spd[i], moto_chassis_get[i].speed_rpm, 600);
 			}
 		
 		/**********功率限制*********/
@@ -143,9 +143,8 @@ void Chassis_Contrl_Task(void const * argument)
 												pid_3508_spd[0].pos_out,
 												pid_3508_spd[1].pos_out, 
 												pid_3508_spd[2].pos_out, 
-												pid_3508_spd[3].pos_out);       
-//        	Chassis_Motor(&hcan1,
-//												300,300,300,300);	
+												pid_3508_spd[3].pos_out);
+
       }        
 				
 			if(0){  //数据发送和任务检测   _待续

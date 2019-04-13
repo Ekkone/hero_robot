@@ -145,7 +145,7 @@ void Gimbal_Contrl_Task(void const * argument)
 			
 	for(;;)		
     {
-	
+      /*刷新断线时间*/
 	   RefreshTaskOutLineTime(GimbalContrlTask_ON);
       #if imu
         IMU_Get_Data();

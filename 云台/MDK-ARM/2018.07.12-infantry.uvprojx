@@ -432,6 +432,11 @@
               <FileType>1</FileType>
               <FilePath>.\APP_task\remote_task.c</FilePath>
             </File>
+            <File>
+              <FileName>status_task.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\APP_task\status_task.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

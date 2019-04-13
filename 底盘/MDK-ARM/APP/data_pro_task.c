@@ -24,6 +24,7 @@ pid_t pid_minipc_pit={0};
 
 #define REMOTE_PERIOD 5
 #define MINIPC_PERIOD 2
+#define REFEREE_PERIOD 5
 /* 外部变量声明--------------------------------------------------------------*/
 
 /* 调用的外部函数原型声明------------------------------------------------------
@@ -231,16 +232,8 @@ void Remote_Data_Task(void const * argument)
 	
 	for(;;)
 	{
-		LED3_Blink();
-		   //NotifyValue=ulTaskNotifyTake(pdTRUE,portMAX_DELAY);
-    if(RemoteData_flag==1)
-		{
-			RemoteData_flag = 0;
-			NotifyValue=0;
-			HAL_GPIO_TogglePin(GPIOF,GPIO_PIN_14); //GRE_main
 			
-//			RefreshTaskOutLineTime(RemoteDataTask_ON);
-//			Remote_Ctrl();
+			RefreshTaskOutLineTime(RemoteDataTask_ON);
 				switch(RC_Ctl.rc.s2)
 				{
           /*上*/
@@ -257,14 +250,11 @@ void Remote_Data_Task(void const * argument)
 			VAL_LIMIT(moto_3508_set.dstVmmps_Y, XY_speed_min, XY_speed_max);	
 			VAL_LIMIT(moto_3508_set.dstVmmps_W, W_speed_min, W_speed_max);
 				
-//					if(pit_set.expect>1000) pit_set.expect=1000;
-//					if(pit_set.expect<-500) pit_set.expect=-500;
 
             press_counter++;
+        osDelayUntil(&xLastWakeTime, REMOTE_PERIOD);
 		}
 
-			osDelayUntil(&xLastWakeTime, REMOTE_PERIOD);
-	}
 }
 
 /***************************************************************************************
@@ -277,17 +267,17 @@ void Remote_Data_Task(void const * argument)
 void Referee_Data_Task(void const * argument)
 {
 	    tFrame   *Frame;
-	
+    portTickType xLastWakeTime;
+		xLastWakeTime = xTaskGetTickCount();
 	    uint32_t NotifyValue;
 	for(;;)
 	{
-				   NotifyValue=ulTaskNotifyTake(pdTRUE,portMAX_DELAY);
+    RefreshTaskOutLineTime(RefereeTask_ON);
+    NotifyValue=ulTaskNotifyTake(pdTRUE,portMAX_DELAY);
     if(NotifyValue==1)
 		{
-//			printf("running!!!\n");
+        
 			  NotifyValue=0;
-			
-				HAL_GPIO_TogglePin(GPIOG,GPIO_PIN_1); //GRE_H
         uint8_t *buff=USART6_RX_DATA;
 			for(int8_t i=0;i<USART6_RX_NUM;i++)
 			{
@@ -327,7 +317,7 @@ void Referee_Data_Task(void const * argument)
 		}
 
 	 }
-
+    osDelayUntil(&xLastWakeTime, REFEREE_PERIOD);
  }
 }	
 /***************************************************************************************

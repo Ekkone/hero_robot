@@ -59,7 +59,7 @@ void testTask(void const * argument)
 		
 //		HAL_GPIO_TogglePin(LED_RED_GPIO_Port,LED_RED_Pin); //Red
 	#endif
-		osDelayUntil(&xLastWakeTime,500);
+		osDelayUntil(&xLastWakeTime,50);
 	}
 }
 

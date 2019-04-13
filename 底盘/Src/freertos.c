@@ -66,6 +66,10 @@ osThreadId testTaskHandle;
 osThreadId ChassisTaskHandle;		
 osThreadId RemoteDataTaskHandle;  
 osThreadId StatusTaskHandle; 
+osThreadId GunTaskHandle; 
+osThreadId vOutLineCheckTaskHandle;
+osThreadId CheckTaskHandle;
+osThreadId RefereeTaskHandle;
 /* USER CODE BEGIN Variables */
 
 /* USER CODE END Variables */
@@ -76,8 +80,10 @@ extern void testTask(void const * argument);
 extern void Chassis_Contrl_Task(void const * argument);
 extern void Remote_Data_Task(void const * argument);
 extern void Status_Task(void const * argument);
+extern void Gun_Task(void const * argument);
 extern void vOutLineCheck_Task(void const *argument);
 extern void Check_Task(void const *argument);
+extern void Referee_Data_Task(void const * argument);
 void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
 
 /* USER CODE BEGIN FunctionPrototypes */
@@ -123,6 +129,18 @@ void MX_FREERTOS_Init(void) {
   
   osThreadDef(StatusTask, Status_Task, osPriorityAboveNormal, 0, 128);
 	StatusTaskHandle = osThreadCreate(osThread(StatusTask), NULL);
+  
+  osThreadDef(GunTask, Gun_Task, osPriorityNormal, 0, 128);
+	GunTaskHandle = osThreadCreate(osThread(GunTask), NULL);
+  
+  osThreadDef(vOutLineCheckTask, vOutLineCheck_Task, osPriorityNormal, 0, 128);
+	vOutLineCheckTaskHandle = osThreadCreate(osThread(vOutLineCheckTask), NULL);
+  
+  osThreadDef(CheckTask, Check_Task, osPriorityNormal, 0, 128);
+	CheckTaskHandle = osThreadCreate(osThread(CheckTask), NULL);
+  
+  osThreadDef(RefereeTask, Referee_Data_Task, osPriorityAboveNormal, 0, 256);
+	RefereeTaskHandle = osThreadCreate(osThread(RefereeTask), NULL);
   /* USER CODE BEGIN RTOS_QUEUES */
   /* add queues, ... */
   /* USER CODE END RTOS_QUEUES */

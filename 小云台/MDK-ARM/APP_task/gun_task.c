@@ -77,6 +77,7 @@ void Gun_Task(void const * argument)
   static uint8_t contiue_flag = 0;
 	for(;;)
 	{
+    /*刷新断线时间*/
 		RefreshTaskOutLineTime(GunTask_ON);
     switch(MoCa_Flag)
     {
@@ -89,7 +90,7 @@ void Gun_Task(void const * argument)
       case 1:
       {
         /*摩擦轮速度*/
-        set_M_speed = 3000;
+        set_M_speed = 7000;
       }break;
     }
  /*判断发射模式*/
@@ -141,10 +142,6 @@ void Gun_Task(void const * argument)
         /*进入位置环*/
         ptr_heat_gun_t.sht_flg = 11;
         contiue_flag = 0;
-      }break;
-      case 3://连发模式
-      {
-        set_speed = 1000;
       }break;
       case 11:
       {

@@ -432,6 +432,11 @@
               <FileType>1</FileType>
               <FilePath>.\APP_task\remote_task.c</FilePath>
             </File>
+            <File>
+              <FileName>status_task.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\APP_task\status_task.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -486,16 +491,6 @@
               <FileName>Motor_USE_CAN.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\MotorDriver\Motor_USE_CAN.c</FilePath>
-            </File>
-            <File>
-              <FileName>Motor_USE_TIM.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\MotorDriver\Motor_USE_TIM.c</FilePath>
-            </File>
-            <File>
-              <FileName>AX-12A.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\MotorDriver\AX-12A.c</FilePath>
             </File>
           </Files>
         </Group>

@@ -12,7 +12,7 @@
 SystemStateDef SystemState={0};
 float g_TimePer[100]={0};
 float g_Time_DeviceOutLine[DeviceTotal_No]={0};//外设最近一次通信时间数组
-float g_Time_TASKOutLine[TASKTotal_No]={0};//外设最近一次通信时间数组
+float g_Time_TASKOutLine[TASKTotal_No]={0};    //外设最近一次通信时间数组
 /* Private function prototypes ---------------------------------------------------*/
 //断线检测检测
 void OutLine_Check()
@@ -68,8 +68,6 @@ void vOutLineCheck_Task(void const *argument)
 	while(1)
 	{
 		RefreshTaskOutLineTime(vOutLineCheckTask_ON);
-		
-		
 //		TASK_Check();//任务检测
 		OutLine_Check();//断线检测
 		osDelayUntil(&xLastWakeTime,20/ portTICK_RATE_MS);
@@ -99,9 +97,9 @@ int SystemState_Inite()
 
 
 //获得系统时间
-inline float GetSystemTimer()
+uint32_t GetSystemTimer()
 {
-	return SystemState.htim->Instance->CNT/100.0 +SystemState.Time;
+	return HAL_GetTick();
 }
 
 
@@ -119,7 +117,7 @@ void RefreshDeviceOutLineTime(DeviceX_NoDEF DevX_No)
 void RefreshTaskOutLineTime(TASK_NoDEF Task_No)
 {
 	
-	g_Time_DeviceOutLine[Task_No]=GetSystemTimer();
+	g_Time_TASKOutLine[Task_No]=GetSystemTimer();
 	
 }
 

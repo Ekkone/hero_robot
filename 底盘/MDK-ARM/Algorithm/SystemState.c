@@ -70,7 +70,7 @@ void vOutLineCheck_Task(void const *argument)
 		RefreshTaskOutLineTime(vOutLineCheckTask_ON);
 		
 		
-//		TASK_Check();//任务检测
+		TASK_Check();//任务检测
 		OutLine_Check();//断线检测
 		osDelayUntil(&xLastWakeTime,20/ portTICK_RATE_MS);
 		
@@ -99,9 +99,9 @@ int SystemState_Inite()
 
 
 //获得系统时间
-inline float GetSystemTimer()
+uint32_t GetSystemTimer()
 {
-	return SystemState.htim->Instance->CNT/100.0 +SystemState.Time;
+	return HAL_GetTick();
 }
 
 
@@ -119,7 +119,7 @@ void RefreshDeviceOutLineTime(DeviceX_NoDEF DevX_No)
 void RefreshTaskOutLineTime(TASK_NoDEF Task_No)
 {
 	
-	g_Time_DeviceOutLine[Task_No]=GetSystemTimer();
+	g_Time_TASKOutLine[Task_No]=GetSystemTimer();
 	
 }
 

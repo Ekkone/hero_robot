@@ -523,6 +523,11 @@
           <GroupName>Algorithm</GroupName>
           <Files>
             <File>
+              <FileName>SystemState.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Algorithm\SystemState.c</FilePath>
+            </File>
+            <File>
               <FileName>Caloric_restriction.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\Algorithm\Caloric_restriction.c</FilePath>
@@ -546,11 +551,6 @@
               <FileName>protocol.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\Algorithm\protocol.c</FilePath>
-            </File>
-            <File>
-              <FileName>SystemState.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\Algorithm\SystemState.c</FilePath>
             </File>
           </Files>
         </Group>

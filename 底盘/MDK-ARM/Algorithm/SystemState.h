@@ -13,7 +13,7 @@
 #include "FreeRTOS.h"
 #include "cmsis_os.h"
 /* Exported macro ------------------------------------------------------------*/
-#define OutLine_Time 50 //断线检测时间
+#define OutLine_Time 100 //断线检测时间
 #define Motor_Stall_Time 200
 #define Motor_Stall_Spd 5
 
@@ -36,19 +36,13 @@ typedef struct{
 
 typedef enum
 {
-		Remote_NO,
 		Motor1_NO,
 	  Motor2_NO,
 		Motor3_NO,
 		Motor4_NO,
-		MotorY_NO,
-		MotorP_NO,
-  	MotorB_NO,
-    MotorM1_NO,
-    MotorM2_NO,
-    Motor_bo_NO,
+    Remote_NO,
     MotorS_NO,
-	  JY61_NO,
+    
 	
 		DeviceTotal_No	
 }DeviceX_NoDEF;
@@ -58,10 +52,9 @@ typedef enum
 	testTask_ON,
 	ChassisContrlTask_ON,
 	RemoteDataTask_ON,
-	GimbalContrlTask_ON,
 	GunTask_ON,
-	LedTask_ON,
 	vOutLineCheckTask_ON,
+  RefereeTask_ON,
 	
 	TASKTotal_No	
 }TASK_NoDEF;
@@ -72,7 +65,7 @@ extern SystemStateDef SystemState;
 /* Exported functions ------------------------------------------------------- */
 int SystemState_Inite(void);//SystemState初始化
 void RefreshSysTime(void);//刷新系统时间（mm）
-float GetSystemTimer(void);//获取系统当前准确时间
+uint32_t GetSystemTimer(void);//获取系统当前准确时间
 
 
 void OutLine_Check(void);//断线检测检测

@@ -11,7 +11,6 @@
 //extern osMessageQId JSYS_QueueHandle;
 /* 内部常量定义--------------------------------------------------------------*/
 #define GUN_PERIOD  10
-#define Mocha_PERIOD  1
 #define BLOCK_TIME 5000
 #define REVERSE_TIME 2000
 #define prepare_flag HAL_GPIO_ReadPin(GPIOF,GPIO_PIN_0)
@@ -83,9 +82,8 @@ void Gun_Task(void const * argument)
      Stir_Motor(&hcan1,pid_stir_spd.pos_out);
 		 minipc_rx.state_flag=0;
 		 set_speed=0;	
-			
-     osDelayUntil(&xLastWakeTime,GUN_PERIOD);
 	  }
+    osDelayUntil(&xLastWakeTime,GUN_PERIOD);
   }
 }
 

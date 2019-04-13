@@ -7,6 +7,7 @@
 "2018.07.12-infantry\gimbal_task.o"
 "2018.07.12-infantry\test_task.o"
 "2018.07.12-infantry\remote_task.o"
+"2018.07.12-infantry\status_task.o"
 "2018.07.12-infantry\bsp.o"
 "2018.07.12-infantry\spi.o"
 "2018.07.12-infantry\adc.o"

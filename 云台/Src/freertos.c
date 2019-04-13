@@ -62,6 +62,7 @@
  osThreadId GunTaskHandle; 				//= 0;
  osThreadId vOutLineCheckTaskHandle;
  osThreadId CheckTaskHandle;
+ osThreadId StatusTaskHandle; 
 /* USER CODE BEGIN Variables */
 
 /* USER CODE END Variables */
@@ -74,6 +75,7 @@ extern void Gimbal_Contrl_Task(void const * argument);
 extern void Gun_Task(void const * argument);
 extern void vOutLineCheck_Task(void const *argument);
 extern void Check_Task(void const *argument);
+extern void Status_Task(void const * argument);
 
 void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
 
@@ -125,6 +127,9 @@ void MX_FREERTOS_Init(void) {
 	
 	osThreadDef(vOutLineCheckTask, vOutLineCheck_Task, osPriorityNormal, 0, 64);
 	vOutLineCheckTaskHandle = osThreadCreate(osThread(vOutLineCheckTask), NULL);
+  
+  osThreadDef(StatusTask, Status_Task, osPriorityAboveNormal, 0, 128);
+	StatusTaskHandle = osThreadCreate(osThread(StatusTask), NULL);
 
   /* USER CODE END RTOS_THREADS */
 

@@ -54,9 +54,15 @@ extern CAN_HandleTypeDef hcan1;
 extern CAN_HandleTypeDef hcan2;
 extern TIM_HandleTypeDef htim2;
 extern TIM_HandleTypeDef htim6;
-extern UART_HandleTypeDef huart1;
-
 extern TIM_HandleTypeDef htim1;
+
+//DMA
+extern DMA_HandleTypeDef hdma_usart1_rx;
+extern DMA_HandleTypeDef hdma_usart2_rx;
+extern DMA_HandleTypeDef hdma_usart3_rx;
+extern DMA_HandleTypeDef hdma_usart4_rx;
+extern DMA_HandleTypeDef hdma_usart5_rx;
+extern DMA_HandleTypeDef hdma_usart6_rx;
 
 /******************************************************************************/
 /*            Cortex-M4 Processor Interruption and Exception Handlers         */ 
@@ -271,19 +277,6 @@ void   TIM6_DAC_IRQHandler(void)
 {
 	    HAL_TIM_IRQHandler(&htim6);
 }
-/**
-* @brief This function handles USART1 global interrupt.
-*/
-void USART1_IRQHandler(void)
-{
-  /* USER CODE BEGIN USART1_IRQn 0 */
-
-  /* USER CODE END USART1_IRQn 0 */
-  HAL_UART_IRQHandler(&huart1);
-  /* USER CODE BEGIN USART1_IRQn 1 */
-
-  /* USER CODE END USART1_IRQn 1 */
-}
 
 /**
 * @brief This function handles DMA2 stream0 global interrupt.
@@ -321,7 +314,179 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 	
 	
 }
+void DMA2_Stream2_IRQHandler(void)
+{
+	/* USER CODE BEGIN DMA2_Stream2_IRQn 0 */
+	__HAL_DMA_DISABLE(&hdma_usart1_rx);
+  /* USER CODE END DMA2_Stream2_IRQn 0 */
+  HAL_DMA_IRQHandler(&hdma_usart1_rx);
+  /* USER CODE BEGIN DMA2_Stream2_IRQn 1 */
 
+  /* USER CODE END DMA2_Stream2_IRQn 1 */
+}
+/**
+* @brief This function handles DMA1 stream1 global interrupt.
+*/
+void DMA1_Stream0_IRQHandler(void)
+{
+  /* USER CODE BEGIN DMA2_Stream2_IRQn 0 */
+	__HAL_DMA_DISABLE(&hdma_usart5_rx);
+  /* USER CODE END DMA2_Stream2_IRQn 0 */
+  HAL_DMA_IRQHandler(&hdma_usart5_rx);
+  /* USER CODE BEGIN DMA2_Stream2_IRQn 1 */
+
+  /* USER CODE END DMA2_Stream2_IRQn 1 */
+}
+/**
+* @brief This function handles DMA1 stream1 global interrupt.
+*/
+void DMA1_Stream1_IRQHandler(void)
+{
+  /* USER CODE BEGIN DMA2_Stream2_IRQn 0 */
+	__HAL_DMA_DISABLE(&hdma_usart3_rx);
+  /* USER CODE END DMA2_Stream2_IRQn 0 */
+  HAL_DMA_IRQHandler(&hdma_usart3_rx);
+  /* USER CODE BEGIN DMA2_Stream2_IRQn 1 */
+
+  /* USER CODE END DMA2_Stream2_IRQn 1 */
+}
+/**
+* @brief This function handles DMA1 stream1 global interrupt.
+*/
+void DMA1_Stream2_IRQHandler(void)
+{
+  /* USER CODE BEGIN DMA2_Stream2_IRQn 0 */
+
+	__HAL_DMA_DISABLE(&hdma_usart4_rx);
+  /* USER CODE END DMA2_Stream2_IRQn 0 */
+  HAL_DMA_IRQHandler(&hdma_usart4_rx);
+  /* USER CODE BEGIN DMA2_Stream2_IRQn 1 */
+
+  /* USER CODE END DMA2_Stream2_IRQn 1 */
+}
+/**
+* @brief This function handles DMA1 stream1 global interrupt.
+*/
+void DMA1_Stream5_IRQHandler(void)
+{
+  /* USER CODE BEGIN DMA2_Stream2_IRQn 0 */
+	__HAL_DMA_DISABLE(&hdma_usart2_rx);
+  /* USER CODE END DMA2_Stream2_IRQn 0 */
+  HAL_DMA_IRQHandler(&hdma_usart2_rx);
+  /* USER CODE BEGIN DMA2_Stream2_IRQn 1 */
+
+  /* USER CODE END DMA2_Stream2_IRQn 1 */
+}
+
+
+
+/* USER CODE BEGIN 1 */
+void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
+{
+	static  BaseType_t  pxHigherPriorityTaskWoken;
+	
+	if(huart->Instance == USART1)				 //陀螺仪接收
+	{
+//		Data_Updata_flag[0] = 1;
+//		__HAL_DMA_SET_COUNTER(&hdma_usart1_rx,SizeofJY61);
+//		__HAL_DMA_ENABLE(&hdma_usart1_rx);
+//		vTaskNotifyGiveFromISR(test_taskHandle,&pxHigherPriorityTaskWoken);
+//		portYIELD_FROM_ISR(pxHigherPriorityTaskWoken);	
+	}
+  else if(huart->Instance == USART2)  //灯板1接收
+  {
+		
+//		Data_Updata_flag[1] = 1;
+//		__HAL_DMA_SET_COUNTER(&hdma_usart2_rx,sizeofLB);
+//		__HAL_DMA_ENABLE(&hdma_usart2_rx);
+//		vTaskNotifyGiveFromISR(test_taskHandle,&pxHigherPriorityTaskWoken);
+//		portYIELD_FROM_ISR(pxHigherPriorityTaskWoken);	
+				
+  }
+	else if(huart->Instance == USART3)  //灯板2接收
+	{
+		
+//		Data_Updata_flag[2] = 1;
+//		__HAL_DMA_SET_COUNTER(&hdma_usart3_rx,sizeofLB);
+//		__HAL_DMA_ENABLE(&hdma_usart3_rx);
+//		vTaskNotifyGiveFromISR(test_taskHandle,&pxHigherPriorityTaskWoken);
+//		portYIELD_FROM_ISR(pxHigherPriorityTaskWoken);
+		
+	}
+  else if(huart->Instance == UART4)  //激光数据接收
+  {
+//    for(uint8_t i = 0;i < 15;i++)
+//    {
+//      if((buff[i] == 0x5a) && (buff[i + 1] == 0x5a) && buff[i + 7] == ((0x5a + 0x5a + 0x18 + buff[i + 4] + buff[i +5] + buff[i +6]) & 0xff))
+//      {
+//        Distance = buff[i + 4] << 8 | buff[i + 5];
+//        mode = buff[i + 6];
+//      }
+//    }
+
+ }
+  else if(huart->Instance == UART5)  //二维码
+  {
+   
+//		Data_Updata_flag[4] = 1;
+//		__HAL_DMA_SET_COUNTER(&hdma_usart5_rx,10);
+//		__HAL_DMA_ENABLE(&hdma_usart5_rx);
+//		vTaskNotifyGiveFromISR(test_taskHandle,&pxHigherPriorityTaskWoken);
+//		portYIELD_FROM_ISR(pxHigherPriorityTaskWoken);
+		
+//    if(QR_Buff[0] == 0x02 && QR_Buff[1] == 0x00 && QR_Buff[2] == 0x00 && QR_Buff[3] == 0x01 &&
+//       QR_Buff[4] == 0x00 && QR_Buff[5] == 0x33 && QR_Buff[6] == 0x31)
+//    {
+//      way_color[0] = QR_Buff[7] - 30;
+//      way_color[1] = QR_Buff[8] - 30;
+//      way_color[2] = QR_Buff[9] - 30;
+//    }
+//    else
+//    {
+//      Get_QRcode();
+//    }
+//      HAL_UART_Receive_IT(&huart5,QR_Buff,11);      
+  }
+	else if(huart->Instance == USART6) //颜色传感器
+	{
+		
+//		Data_Updata_flag[5] = 1;
+//		__HAL_DMA_SET_COUNTER(&hdma_usart6_rx,54);
+//		__HAL_DMA_ENABLE(&hdma_usart6_rx);
+//		vTaskNotifyGiveFromISR(test_taskHandle,&pxHigherPriorityTaskWoken);
+//		portYIELD_FROM_ISR(pxHigherPriorityTaskWoken);	
+		
+	}
+   
+  
+}
+
+
+void HAL_UART_ErrorCallback(UART_HandleTypeDef *huart)
+{
+  if(huart->Instance == UART5)
+  {
+      /* Enable the UART Error Interrupt: (Frame error, noise error, overrun error) */
+    SET_BIT(huart->Instance->CR3, USART_CR3_EIE);
+
+    /* Enable the UART Parity Error and Data Register not empty Interrupts */
+    SET_BIT(huart->Instance->CR1, USART_CR1_PEIE | USART_CR1_RXNEIE);
+  }
+	else if(huart->Instance == USART2)
+  {
+      /* Enable the UART Error Interrupt: (Frame error, noise error, overrun error) */
+    SET_BIT(huart->Instance->CR3, USART_CR3_EIE);
+
+		
+
+    /* Enable the UART Parity Error and Data Register not empty Interrupts */
+    SET_BIT(huart->Instance->CR1, USART_CR1_PEIE | USART_CR1_RXNEIE);
+	
+//		    HAL_UART_Receive_IT(&huart2,LightBand,10);
+
+		
+	}
+}
 
 void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan)
 {
@@ -332,21 +497,21 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan)
 		{
 		 case CAN_YT: 
 			{
-//				RefreshDeviceOutLineTime(MotorB_NO);
+				RefreshDeviceOutLineTime(Remote_NO);
 				CAN_RX_YT(&hcan1);         //云台数据接收
 			}break;
 			
 			case CAN_YK: 
 			{
 				
-//				RefreshDeviceOutLineTime(MotorB_NO);
+				RefreshDeviceOutLineTime(Remote_NO);
 				CAN_RX_YK(&hcan1);         //遥控器数据接收
 				RemoteData_flag = 1;       //数据任务
 			}break;
 			
 			case CAN_ERROR: 
 			{
-//				RefreshDeviceOutLineTime(MotorB_NO);
+				RefreshDeviceOutLineTime(Remote_NO);
 				CAN_RX_ERROR(&hcan1);
 			}break;
 			
@@ -377,11 +542,13 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan)
 			HAL_CAN_GetRxMessage(hcan, CAN_RX_FIFO0,&Rx_Header,rx_date);
 		switch(Rx_Header.StdId)
 		{
-			case CAN_3510Moto1_ID:     RefreshDeviceOutLineTime(Motor1_NO);
-			case CAN_3510Moto2_ID:     RefreshDeviceOutLineTime(Motor2_NO);
-			case CAN_3510Moto3_ID:     RefreshDeviceOutLineTime(Motor3_NO);
-			case CAN_3510Moto4_ID:     RefreshDeviceOutLineTime(Motor4_NO);
-			{
+			case CAN_3510Moto1_ID:     RefreshDeviceOutLineTime(Motor1_NO);break;
+			case CAN_3510Moto2_ID:     RefreshDeviceOutLineTime(Motor2_NO);break;
+			case CAN_3510Moto3_ID:     RefreshDeviceOutLineTime(Motor3_NO);break;
+			case CAN_3510Moto4_ID:     RefreshDeviceOutLineTime(Motor4_NO);break;
+			
+		}
+    {
 				static uint8_t i;
 				i = Rx_Header.StdId - CAN_3510Moto1_ID;
 				if(moto_chassis_get[i].msg_cnt++ <= 50)	
@@ -393,7 +560,6 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan)
 					get_moto_measure_3508(&moto_chassis_get[i], &hcan2);
 				}
 			}
-		}
 //		if( HAL_BUSY == HAL_CAN_Receive_IT(&hcan2, CAN_FIFO0))//开启中断接收
 //		{
 //			/* Enable FIFO 0 overrun and message pending Interrupt */
@@ -402,12 +568,6 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan)
 	}
 }
 
-void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
-{
-
-
-	
-}
 
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 {

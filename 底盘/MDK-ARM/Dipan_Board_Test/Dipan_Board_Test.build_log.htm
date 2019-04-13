@@ -22,21 +22,19 @@ Dialog DLL:      TCM.DLL V1.36.1.0
  
 <h2>Project:</h2>
 F:\Work\hero\╣вел\MDK-ARM\Dipan_Board_Test.uvprojx
-Project File Date:  04/12/2019
+Project File Date:  04/13/2019
 
 <h2>Output:</h2>
 *** Using Compiler 'V5.06 update 6 (build 750)', folder: 'D:\Keil\ARM\ARMCC\Bin'
 Build target 'Dipan_Board_Test'
-compiling status_task.c...
-APP\status_task.h(27): warning:  #1-D: last line of file ends without a newline
-  /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
-APP\status_task.c(76): warning:  #1-D: last line of file ends without a newline
-  /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
-APP\status_task.c: 2 warnings, 0 errors
+compiling stm32f4xx_it.c...
+../Src/stm32f4xx_it.c(386): warning:  #177-D: variable "pxHigherPriorityTaskWoken"  was declared but never referenced
+  	static  BaseType_t  pxHigherPriorityTaskWoken;
+../Src/stm32f4xx_it.c: 1 warning, 0 errors
 linking...
-Program Size: Code=19568 RO-data=616 RW-data=208 ZI-data=19336  
+Program Size: Code=19920 RO-data=1528 RW-data=232 ZI-data=20376  
 FromELF: creating hex file...
-"Dipan_Board_Test\Dipan_Board_Test.axf" - 0 Error(s), 2 Warning(s).
+"Dipan_Board_Test\Dipan_Board_Test.axf" - 0 Error(s), 1 Warning(s).
 
 <h2>Software Packages used:</h2>
 
@@ -59,7 +57,7 @@ Package Vendor: Keil
 <h2>Collection of Component Files used:</h2>
 
    * Component: ARM::CMSIS:CORE:5.2.0
-Build Time Elapsed:  00:00:09
+Build Time Elapsed:  00:00:06
 </pre>
 </body>
 </html>

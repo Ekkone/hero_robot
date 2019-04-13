@@ -37,16 +37,11 @@ typedef struct{
 typedef enum
 {
 		Remote_NO,
-		Motor1_NO,
-	  Motor2_NO,
-		Motor3_NO,
-		Motor4_NO,
 		MotorY_NO,
 		MotorP_NO,
   	MotorB_NO,
     MotorM1_NO,
     MotorM2_NO,
-    MotorS_NO,
 	  JY61_NO,
 	
 		DeviceTotal_No	
@@ -54,15 +49,13 @@ typedef enum
 
 typedef enum
 {
-	testTask_ON,
-	ChassisContrlTask_ON,
-	RemoteDataTask_ON,
-	GimbalContrlTask_ON,
-	GunTask_ON,
-	LedTask_ON,
-	vOutLineCheckTask_ON,
-	
-	TASKTotal_No	
+	testTask_ON,//0x01
+	RemoteDataTask_ON,//0x04
+	GimbalContrlTask_ON,//0x08
+	GunTask_ON,//0x10
+	vOutLineCheckTask_ON,//0x20
+  
+	TASKTotal_No	//0x40
 }TASK_NoDEF;
 
 /* Exported constants --------------------------------------------------------*/
@@ -71,7 +64,7 @@ extern SystemStateDef SystemState;
 /* Exported functions ------------------------------------------------------- */
 int SystemState_Inite(void);//SystemState初始化
 void RefreshSysTime(void);//刷新系统时间（mm）
-float GetSystemTimer(void);//获取系统当前准确时间
+uint32_t GetSystemTimer(void);//获取系统当前准确时间
 
 
 void OutLine_Check(void);//断线检测检测
