@@ -47,29 +47,8 @@ void Status_Task(void const * argument)
       goto OFF;
     }
     
-    if((SystemState.OutLine_Flag&0x08))//MOTOR_M1
+    if((SystemState.OutLine_Flag&0x08))//MOTOR_B
     {
-      BLINK_RED();
-      BLINK_RED();
-      BLINK_RED();
-      BLINK_RED();
-      goto OFF;
-    }
-    
-    if((SystemState.OutLine_Flag&0x10))//REMOT_M2
-    {
-      BLINK_RED();
-      BLINK_RED();
-      BLINK_RED();
-      BLINK_RED();
-      BLINK_RED();
-      goto OFF;
-    }
-    
-    if((SystemState.OutLine_Flag&0x20))//JY61
-    {
-      BLINK_RED();
-      BLINK_RED();
       BLINK_RED();
       BLINK_RED();
       BLINK_RED();
@@ -133,7 +112,8 @@ void Check_Task(void const * argument)
     }
     else 
     {
-      GREEN_Blink();
+      GREEN_LED(1);
+      //GREEN_Blink();
       osDelayUntil(&xLastWakeTime,Check_PERIOD);
     }
     

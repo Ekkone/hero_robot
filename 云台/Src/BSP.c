@@ -142,7 +142,7 @@ void JY61_Init(void)
 		printf("JY61 Init save\n\r");
 	}
 }
-#endif
+#else
 void JY61_Frame(void)
 {
 	static uint8_t JY61_Frame_flag = 0;
@@ -224,6 +224,7 @@ void JY61_Init(void)
 		printf("JY61 Init save\n\r");
 	}
 }
+#endif
 /**
 	**************************************************************
 	** Descriptions:时间统计

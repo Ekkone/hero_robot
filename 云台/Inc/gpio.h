@@ -64,7 +64,8 @@
 					HAL_GPIO_WritePin(	LED_RED_GPIO_Port,LED_RED_Pin,GPIO_PIN_SET)
 #define GREEN_Blink()  HAL_GPIO_TogglePin(LED_GREEN_GPIO_Port,LED_GREEN_Pin)
 #define RED_Blink()    HAL_GPIO_TogglePin(LED_RED_GPIO_Port,LED_RED_Pin)
-#define KEY  HAL_GPIO_ReadPin(KEY_GPIO_Port,KEY_Pin)
+#define KEY()  HAL_GPIO_ReadPin(KEY_GPIO_Port,KEY_Pin)
+
 #define IST_INT_Pin GPIO_PIN_3
 #define IST_INT_GPIO_Port GPIOE
 #define IST_RST_Pin GPIO_PIN_2
@@ -99,6 +100,49 @@
 	#define LED6_Pin GPIO_PIN_6
 	#define LED7_Pin GPIO_PIN_7
 	#define LED8_Pin GPIO_PIN_8
+  #define LED_GPIO_Port GPIOG
+  
+  #define LED1(a)	if (a)	\
+					HAL_GPIO_WritePin(	LED_GPIO_Port,LED1_Pin,GPIO_PIN_RESET);\
+					else		\
+					HAL_GPIO_WritePin(	LED_GPIO_Port,LED1_Pin,GPIO_PIN_SET)
+#define LED2(a)	if (a)	\
+					HAL_GPIO_WritePin(	LED_GPIO_Port,LED2_Pin,GPIO_PIN_RESET);\
+					else		\
+					HAL_GPIO_WritePin(	LED_GPIO_Port,LED2_Pin,GPIO_PIN_SET)
+#define LED3(a)	if (a)	\
+					HAL_GPIO_WritePin(	LED_GPIO_Port,LED3_Pin,GPIO_PIN_RESET);\
+					else		\
+					HAL_GPIO_WritePin(	LED_GPIO_Port,LED3_Pin,GPIO_PIN_SET)
+#define LED4(a)	if (a)	\
+					HAL_GPIO_WritePin(	LED_GPIO_Port,LED4_Pin,GPIO_PIN_RESET);\
+					else		\
+					HAL_GPIO_WritePin(	LED_GPIO_Port,LED4_Pin,GPIO_PIN_SET)
+#define LED5(a)	if (a)	\
+					HAL_GPIO_WritePin(	LED_GPIO_Port,LED5_Pin,GPIO_PIN_RESET);\
+					else		\
+					HAL_GPIO_WritePin(	LED_GPIO_Port,LED5_Pin,GPIO_PIN_SET)
+#define LED6(a)	if (a)	\
+					HAL_GPIO_WritePin(	LED_GPIO_Port,LED6_Pin,GPIO_PIN_RESET);\
+					else		\
+					HAL_GPIO_WritePin(	LED_GPIO_Port,LED6_Pin,GPIO_PIN_SET)
+#define LED7(a)	if (a)	\
+					HAL_GPIO_WritePin(	LED_GPIO_Port,LED7_Pin,GPIO_PIN_RESET);\
+					else		\
+					HAL_GPIO_WritePin(	LED_GPIO_Port,LED7_Pin,GPIO_PIN_SET)
+#define LED8(a)	if (a)	\
+					HAL_GPIO_WritePin(	LED_GPIO_Port,LED8_Pin,GPIO_PIN_RESET);\
+					else		\
+					HAL_GPIO_WritePin(	LED_GPIO_Port,LED8_Pin,GPIO_PIN_SET)
+          
+#define LED1_Blink()  HAL_GPIO_TogglePin(LED_GPIO_Port,LED1_Pin)
+#define LED2_Blink()  HAL_GPIO_TogglePin(LED_GPIO_Port,LED2_Pin)
+#define LED3_Blink()  HAL_GPIO_TogglePin(LED_GPIO_Port,LED3_Pin)
+#define LED4_Blink()  HAL_GPIO_TogglePin(LED_GPIO_Port,LED4_Pin)
+#define LED5_Blink()  HAL_GPIO_TogglePin(LED_GPIO_Port,LED5_Pin)
+#define LED6_Blink()  HAL_GPIO_TogglePin(LED_GPIO_Port,LED6_Pin)
+#define LED7_Blink()  HAL_GPIO_TogglePin(LED_GPIO_Port,LED7_Pin)  
+#define LED8_Blink()  HAL_GPIO_TogglePin(LED_GPIO_Port,LED8_Pin) 
 #endif	 
 	
 //π‚µÁ√≈	

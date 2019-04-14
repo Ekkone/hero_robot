@@ -399,7 +399,7 @@ void UART4_IRQHandler(void)
    if((tmp1 != RESET)&&(tmp2 != RESET))
 	{
 		
-		RefreshDeviceOutLineTime(JY61_NO);
+		//RefreshDeviceOutLineTime(JY61_NO);
 		
 		__HAL_DMA_DISABLE(&hdma_uart4_rx);
 		__HAL_UART_CLEAR_IDLEFLAG(&huart4);
@@ -424,7 +424,7 @@ void USART6_IRQHandler(void)
    if((tmp1 != RESET)&&(tmp2 != RESET))
 	{
 		
-		RefreshDeviceOutLineTime(JY61_NO);
+		//RefreshDeviceOutLineTime(JY61_NO);
 		
 		__HAL_DMA_DISABLE(&hdma_usart6_rx);
 		__HAL_UART_CLEAR_IDLEFLAG(&huart6);
@@ -449,7 +449,7 @@ void UART8_IRQHandler(void)
    if((tmp1 != RESET)&&(tmp2 != RESET))
 	{
 		
-		RefreshDeviceOutLineTime(JY61_NO);
+		//RefreshDeviceOutLineTime(JY61_NO);
 		
 		__HAL_DMA_DISABLE(&hdma_uart8_rx);
 		__HAL_UART_CLEAR_IDLEFLAG(&huart8);
@@ -585,7 +585,21 @@ void HAL_CAN_RxCpltCallback(CAN_HandleTypeDef *hcan)
 	{
 		switch(hcan1.pRxMsg->StdId)
 		{
-			case CAN_6623_YAW:
+			case CAN_2006_B:
+			{
+				
+				RefreshDeviceOutLineTime(MotorB_NO);
+				
+				if(moto_dial_get.msg_cnt++ <= 50)	
+				{
+					get_moto_offset(&moto_dial_get,&hcan1);
+				}
+				else{	
+					moto_dial_get.msg_cnt=51;	
+					get_moto_measure_GM6020(&moto_dial_get, &hcan1);
+				}
+			}break;
+			case CAN_GM3510_YAW:
 			{
 				
        RefreshDeviceOutLineTime(MotorY_NO);
@@ -595,11 +609,10 @@ void HAL_CAN_RxCpltCallback(CAN_HandleTypeDef *hcan)
 					get_moto_offset(&yaw_get,&hcan1);
 				}else{
 					yaw_get.msg_cnt = 51;
-					get_moto_measure_6623(&yaw_get,&hcan1);
+					get_moto_measure_GM3510(&yaw_get,&hcan1);
 				}
-//				yaw_get.angle=(uint16_t)(hcan->pRxMsg->Data[0]<<8 |hcan->pRxMsg->Data[1]) ;
 			}break;
-			case CAN_6623_PIT:
+			case CAN_GM6020_PIT:
 			{
 				
 				RefreshDeviceOutLineTime(MotorP_NO);
@@ -609,16 +622,8 @@ void HAL_CAN_RxCpltCallback(CAN_HandleTypeDef *hcan)
 					get_moto_offset(&pit_get,&hcan1);
 				}else{
 					pit_get.msg_cnt = 51;
-					get_moto_measure_6623(&pit_get,&hcan1);
+					get_moto_measure_GM3510(&pit_get,&hcan1);
 				}
-			}break;
-			case CAN_Referee:
-			{
-				
-			}break;
-      case CAN_Chassis:
-			{
-				
 			}break;
 			default: break;
 		}
@@ -630,47 +635,47 @@ void HAL_CAN_RxCpltCallback(CAN_HandleTypeDef *hcan)
 	}else if(hcan == &hcan2)
 	{
 //		HAL_CAN_Receive(&hcan1,CAN_FIFO0,10);
-		switch(hcan->pRxMsg->StdId)
-		{
-			case CAN_2006_B:
-			{
-				
-				RefreshDeviceOutLineTime(MotorB_NO);
-				
-				if(moto_dial_get.msg_cnt++ <= 50)	
-				{
-					get_moto_offset(&moto_dial_get,&hcan2);
-				}
-				else{	
-					moto_dial_get.msg_cnt=51;	
-					get_moto_measure_6623(&moto_dial_get, &hcan2);
-				}
-			}break;
-      case CAN_3508_M1:
-      {
-        RefreshDeviceOutLineTime(MotorM1_NO);
-        if(moto_M_get[0].msg_cnt++ <= 50)	
-				{
-					get_moto_offset(&moto_M_get[0],&hcan2);
-				}
-				else{		
-					moto_M_get[0].msg_cnt=51;	
-					get_moto_measure_3508(&moto_M_get[0], &hcan2);
-				}
-      }break;
-      case CAN_3508_M2:
-      {
-        RefreshDeviceOutLineTime(MotorM2_NO);
-        if(moto_M_get[1].msg_cnt++ <= 50)	
-				{
-					get_moto_offset(&moto_M_get[1],&hcan2);
-				}
-				else{		
-					moto_M_get[1].msg_cnt=51;	
-					get_moto_measure_3508(&moto_M_get[1], &hcan2);
-				}
-      }break;
-		}
+//		switch(hcan->pRxMsg->StdId)
+//		{
+//			case CAN_2006_B:
+//			{
+//				
+//				RefreshDeviceOutLineTime(MotorB_NO);
+//				
+//				if(moto_dial_get.msg_cnt++ <= 50)	
+//				{
+//					get_moto_offset(&moto_dial_get,&hcan2);
+//				}
+//				else{	
+//					moto_dial_get.msg_cnt=51;	
+//					get_moto_measure_GM3510(&moto_dial_get, &hcan2);
+//				}
+//			}break;
+//      case CAN_3508_M1:
+//      {
+//        RefreshDeviceOutLineTime(MotorM1_NO);
+//        if(moto_M_get[0].msg_cnt++ <= 50)	
+//				{
+//					get_moto_offset(&moto_M_get[0],&hcan2);
+//				}
+//				else{		
+//					moto_M_get[0].msg_cnt=51;	
+//					get_moto_measure_GM6020(&moto_M_get[0], &hcan2);
+//				}
+//      }break;
+//      case CAN_3508_M2:
+//      {
+//        RefreshDeviceOutLineTime(MotorM2_NO);
+//        if(moto_M_get[1].msg_cnt++ <= 50)	
+//				{
+//					get_moto_offset(&moto_M_get[1],&hcan2);
+//				}
+//				else{		
+//					moto_M_get[1].msg_cnt=51;	
+//					get_moto_measure_GM6020(&moto_M_get[1], &hcan2);
+//				}
+//      }break;
+//		}
 		if( HAL_BUSY == HAL_CAN_Receive_IT(&hcan2, CAN_FIFO0))//开启中断接收
 		{
 			/* Enable FIFO 0 overrun and message pending Interrupt */

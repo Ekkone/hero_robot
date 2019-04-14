@@ -109,8 +109,8 @@ void Chassis_Contrl_Task(void const * argument)
     /*速度环计算*/
 		for(int i=0; i<4; i++)
 			{		
-				//pid_calc(&pid_3508_spd[i], moto_chassis_get[i].speed_rpm, wheel[i]);
-        pid_calc(&pid_3508_spd[i], moto_chassis_get[i].speed_rpm, 600);
+				pid_calc(&pid_3508_spd[i], moto_chassis_get[i].speed_rpm, wheel[i]);
+//        pid_calc(&pid_3508_spd[i], moto_chassis_get[i].speed_rpm, 600);
 			}
 		
 		/**********功率限制*********/

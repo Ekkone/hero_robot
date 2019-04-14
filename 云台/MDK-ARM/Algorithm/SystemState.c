@@ -68,7 +68,7 @@ void vOutLineCheck_Task(void const *argument)
 	while(1)
 	{
 		RefreshTaskOutLineTime(vOutLineCheckTask_ON);
-//		TASK_Check();//任务检测
+		TASK_Check();//任务检测
 		OutLine_Check();//断线检测
 		osDelayUntil(&xLastWakeTime,20/ portTICK_RATE_MS);
 		

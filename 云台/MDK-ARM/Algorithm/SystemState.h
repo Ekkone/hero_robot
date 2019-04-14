@@ -13,7 +13,7 @@
 #include "FreeRTOS.h"
 #include "cmsis_os.h"
 /* Exported macro ------------------------------------------------------------*/
-#define OutLine_Time 50 //断线检测时间
+#define OutLine_Time 150 //断线检测时间
 #define Motor_Stall_Time 200
 #define Motor_Stall_Spd 5
 

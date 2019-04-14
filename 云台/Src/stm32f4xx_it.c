@@ -643,7 +643,7 @@ void HAL_CAN_RxCpltCallback(CAN_HandleTypeDef *hcan)
 				}
 				else{	
 					moto_dial_get.msg_cnt=51;	
-					get_moto_measure_6623(&moto_dial_get, &hcan2);
+					get_moto_measure_3508(&moto_dial_get, &hcan2);
 				}
 			}break;
       case CAN_3508_M1:

@@ -245,6 +245,16 @@
           <WinNumber>1</WinNumber>
           <ItemText>SystemState.OutLine_Flag</ItemText>
         </Ww>
+        <Ww>
+          <count>18</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>SystemState.task_OutLine_Flag</ItemText>
+        </Ww>
+        <Ww>
+          <count>19</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>g_Time_TASKOutLine</ItemText>
+        </Ww>
       </WatchWindow1>
       <WatchWindow2>
         <Ww>

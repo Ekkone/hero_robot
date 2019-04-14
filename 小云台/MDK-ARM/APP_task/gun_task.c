@@ -32,7 +32,6 @@ void Allocate_Motor(CAN_HandleTypeDef * hcan,int16_t value);
 
 pid_t pid_dial_pos  = {0};  //拨盘电机位置环
 pid_t pid_dial_spd  = {0};	//拨盘电机速度环
-pid_t pid_shot_spd[2]  = {0};	//摩擦轮速度环
 /* 内部函数原型声明----------------------------------------------------------*/
 void Gun_Pid_Init()
 {
@@ -42,12 +41,6 @@ void Gun_Pid_Init()
 		//pid_dial_pos.deadband = 10;
 		PID_struct_init(&pid_dial_spd, POSITION_PID, 6000, 5000,
 									1.5f,	0.0f,	0.15f	);  
-   /*摩擦轮*/
-  for(uint8_t i = 0;i<2;i++)
-  {
-    PID_struct_init(&pid_shot_spd[i], POSITION_PID, 6000, 5000,
-									1.8f,	0.0f,	0.0f	); 
-  }
 }
 /* 任务主体部分 -------------------------------------------------------------*/
 
@@ -156,10 +149,8 @@ void Gun_Task(void const * argument)
     ptr_heat_gun_t.sht_flg = 11;//默认位置环
      /*速度环*/
      pid_calc(&pid_dial_spd,moto_dial_get.speed_rpm ,set_speed);
-     pid_calc(&pid_shot_spd[0],moto_M_get[0].speed_rpm ,set_M_speed);
-     pid_calc(&pid_shot_spd[1],moto_M_get[1].speed_rpm ,-set_M_speed);
      /*驱动拨弹电机,摩擦轮*/
-		 Shot_Motor(&hcan2,pid_dial_spd.pos_out,pid_shot_spd[0].pos_out,pid_shot_spd[1].pos_out);
+		 Shot_Motor(&hcan2,pid_dial_spd.pos_out);
 		 minipc_rx.state_flag=0;
 		 set_speed = 0;	   
     

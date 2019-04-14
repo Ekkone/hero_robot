@@ -1,5 +1,5 @@
-2018.07.12-infantry\motor_use_tim.o: MotorDriver\Motor_USE_TIM.c
-2018.07.12-infantry\motor_use_tim.o: MotorDriver\Motor_USE_TIM.h
+2018.07.12-infantry\motor_use_tim.o: ..\..\云台\MDK-ARM\MotorDriver\Motor_USE_TIM.c
+2018.07.12-infantry\motor_use_tim.o: ..\..\云台\MDK-ARM\MotorDriver\Motor_USE_TIM.h
 2018.07.12-infantry\motor_use_tim.o: ../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f4xx.h
 2018.07.12-infantry\motor_use_tim.o: ../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f427xx.h
 2018.07.12-infantry\motor_use_tim.o: ../Drivers/CMSIS/Include/core_cm4.h

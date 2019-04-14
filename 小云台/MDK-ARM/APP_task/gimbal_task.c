@@ -59,13 +59,6 @@ void gimbal_pid_init(void)
 	PID_struct_init(&pid_pit_spd, POSITION_PID, 5000, 1000,
                   2.0f, 0.0f, 0.0f );
   /*ÔÚµ÷°æ*/
-  /*35*/
-//  PID_struct_init(&pid_pit, POSITION_PID, 5000, 1000,
-//									4.0f, 0.05f, 15.5f); 
-//	PID_struct_init(&pid_pit_spd, POSITION_PID, 5000, 1000,
-//                  2.0f, 0.0f, 0.0f );
-
-	
   /* yaw axis motor pid parameter */
 	 PID_struct_init(&pid_yaw, POSITION_PID, 5000, 1000,
                   10.0f, 0.02f, 10.0f); 
@@ -155,8 +148,7 @@ void Gimbal_Contrl_Task(void const * argument)
         pid_calc(&pid_yaw_spd,(imu_data.gz), pid_yaw.pos_out);
         //pitÖá
         pid_calc(&pid_pit, pit_get.total_angle, pit_set.expect);
-        pid_calc(&pid_pit_spd,(imu_data.gy), pid_pit.pos_out);
-//        pid_calc(&pid_pit_spd,(imu_data.gy), 0);
+        pid_calc(&pid_pit_spd,pit_get.speed_rpm, pid_pit.pos_out);
       
         Pitch_Current_Value=(-pid_pit_spd.pos_out); 
 		    Yaw_Current_Value= (-pid_yaw_spd.pos_out);
@@ -243,8 +235,6 @@ void Gimbal_Contrl_Task(void const * argument)
 				}
 				else Cloud_Platform_Motor(&hcan1,Yaw_Current_Value,Pitch_Current_Value);
         yaw_set_follow.expect_last = yaw_set_follow.expect;
-        /*·¢ËÍµ×ÅÌ*/
-      CAN_Send_YT(&hcan1,yaw_get.total_angle,0,chassis_gimble_Mode_flg,0);
 			osDelayUntil(&xLastWakeTime, GIMBAL_PERIOD);
 			
    }

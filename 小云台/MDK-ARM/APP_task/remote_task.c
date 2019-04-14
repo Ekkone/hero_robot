@@ -82,18 +82,17 @@ void ChassisModeProcess()
       case 1://上,急停
       {
         /*底盘急停*/
-        CAN_Send_YK(&hcan1,0,0,0,RC_Ctl.rc.s1,RC_Ctl.rc.s2);
       }break;
       case 2://下，底盘跟随
       {
         chassis_gimble_Mode_flg = 1;
         
-        CAN_Send_YK(&hcan1,RC_Ctl.key.v,RC_Ctl.rc.ch0,RC_Ctl.rc.ch1,RC_Ctl.rc.s1,RC_Ctl.rc. s2);
+
       }break;
       case 3://中,底盘分离
       {
         chassis_gimble_Mode_flg = 0;  
-        CAN_Send_YK(&hcan1,RC_Ctl.key.v,RC_Ctl.rc.ch0,RC_Ctl.rc.ch1,RC_Ctl.rc.s1,RC_Ctl.rc.s2);        
+
       }break;
       default:break;
     
@@ -149,8 +148,6 @@ void ShotProcess()
         default:break;
     }
   }
-  /**/
-  CAN_Send_YK(&hcan1,RC_Ctl.key.v,RC_Ctl.rc.ch0,RC_Ctl.rc.ch1,RC_Ctl.rc.s1,RC_Ctl.rc.s2);
 }
 /***************************************************************************************
 **
@@ -172,7 +169,6 @@ void MouseKeyControlProcess()
 {
   static uint16_t delay = 0;
   chassis_gimble_Mode_flg = 0;
-  CAN_Send_YK(&hcan1,RC_Ctl.key.v,0,0,RC_Ctl.rc.s1,RC_Ctl.rc.s2);
   /*鼠标云台控制*/
   if(chassis_gimble_Mode_flg==1) //XY运动，底盘跟随云台
    {

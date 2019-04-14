@@ -21,21 +21,43 @@ Target DLL:      Segger\JL2CM3.dll V2.99.35.0
 Dialog DLL:      TCM.DLL V1.36.1.0
  
 <h2>Project:</h2>
-F:\Work\hero\ÔÆÌ¨\MDK-ARM\2018.07.12-infantry.uvprojx
-Project File Date:  04/13/2019
+F:\Work\hero\Ð¡ÔÆÌ¨\MDK-ARM\2018.07.12-infantry.uvprojx
+Project File Date:  04/14/2019
 
 <h2>Output:</h2>
 *** Using Compiler 'V5.06 update 6 (build 750)', folder: 'D:\Keil\ARM\ARMCC\Bin'
 Build target 'hero_robot'
-compiling status_task.c...
-APP_task\status_task.h(27): warning:  #1-D: last line of file ends without a newline
-  /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
-APP_task\status_task.c(145): warning:  #1-D: last line of file ends without a newline
-  /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
-APP_task\status_task.c: 2 warnings, 0 errors
+compiling gun_task.c...
+../Drivers/CMSIS/Include/arm_math.h(4889): warning:  #223-D: function "__SMUAD" declared implicitly
+      acc = (q31_t) __SMUAD((uint32_t)S->A0, (uint32_t)in);
+../Drivers/CMSIS/Include/arm_math.h(4893): warning:  #223-D: function "__SMLALD" declared implicitly
+      acc = (q63_t)__SMLALD((uint32_t)S->A1, (uint32_t)*vstate, (uint64_t)acc);
+../Drivers/CMSIS/Include/arm_math.h(4907): warning:  #223-D: function "__SSAT" declared implicitly
+      out = (q15_t) (__SSAT((acc >> 15), 16));
+../Drivers/CMSIS/Include/arm_math.h(5032): warning:  #223-D: function "__QADD" declared implicitly
+      *pIbeta = __QADD(product1, product2);
+../Drivers/CMSIS/Include/arm_math.h(5129): warning:  #223-D: function "__QSUB" declared implicitly
+      *pIb = __QSUB(product2, product1);
+../Drivers/CMSIS/Include/arm_math.h(5250): warning:  #223-D: function "__QADD" declared implicitly
+      *pId = __QADD(product1, product2);
+../Drivers/CMSIS/Include/arm_math.h(5253): warning:  #223-D: function "__QSUB" declared implicitly
+      *pIq = __QSUB(product4, product3);
+../Drivers/CMSIS/Include/arm_math.h(5363): warning:  #223-D: function "__QSUB" declared implicitly
+      *pIalpha = __QSUB(product1, product2);
+../Drivers/CMSIS/Include/arm_math.h(5366): warning:  #223-D: function "__QADD" declared implicitly
+      *pIbeta = __QADD(product4, product3);
+APP_task\gun_task.c(107): warning:  #111-D: statement is unreachable
+            }break;
+APP_task\gun_task.c(63): warning:  #177-D: variable "motor_stop_flag"  was declared but never referenced
+    uint8_t motor_stop_flag=0;
+APP_task\gun_task.c(66): warning:  #550-D: variable "set_M_speed"  was set but never used
+    int32_t set_M_speed = 0;
+APP_task\gun_task.c(68): warning:  #177-D: variable "block_flag"  was declared but never referenced
+    static uint8_t block_flag;
+APP_task\gun_task.c: 13 warnings, 0 errors
 linking...
-Program Size: Code=27548 RO-data=752 RW-data=292 ZI-data=20972  
-"2018.07.12-infantry\hero_robot.axf" - 0 Error(s), 2 Warning(s).
+Program Size: Code=26328 RO-data=752 RW-data=292 ZI-data=19972  
+"2018.07.12-infantry\hero_robot.axf" - 0 Error(s), 13 Warning(s).
 
 <h2>Software Packages used:</h2>
 
