@@ -67,9 +67,12 @@ void testTask(void const * argument)
 		  int16_t  *ptr = &angle; //初始化指针
       int16_t  *p1  = &speed_set;
       float  *p2  = &(limit.Power_Calculat);
+      float speed__= 0;
+      speed__ = moto_M_get[0].speed_rpm +  moto_M_get[1].speed_rpm;
+      float *p3 = &speed__;
 			angle	= (pit_get.total_angle);
 			/*用虚拟示波器，发送数据*/
-			vcan_sendware((uint8_t *)ptr,sizeof(angle));
+			vcan_sendware((uint8_t *)p3,sizeof(speed__));
 		
 //		printf("  pit=%d \n\t",pit_get.total_angle);
 //	  printf("  yaw=%d \n\t",yaw_get.angle);

@@ -63,6 +63,7 @@
  osThreadId vOutLineCheckTaskHandle;
  osThreadId CheckTaskHandle;
  osThreadId StatusTaskHandle; 
+ osThreadId MiniPCTaskHandle; 
 /* USER CODE BEGIN Variables */
 
 /* USER CODE END Variables */
@@ -76,7 +77,7 @@ extern void Gun_Task(void const * argument);
 extern void vOutLineCheck_Task(void const *argument);
 extern void Check_Task(void const *argument);
 extern void Status_Task(void const * argument);
-
+extern void MiniPC_Data_task(void const * argument);
 void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
 
 /* USER CODE BEGIN FunctionPrototypes */
@@ -130,6 +131,9 @@ void MX_FREERTOS_Init(void) {
   
   osThreadDef(StatusTask, Status_Task, osPriorityAboveNormal, 0, 128);
 	StatusTaskHandle = osThreadCreate(osThread(StatusTask), NULL);
+  
+  osThreadDef(MiniPCTask, MiniPC_Data_task, osPriorityAboveNormal, 0, 128);
+	MiniPCTaskHandle = osThreadCreate(osThread(MiniPCTask), NULL);
 
   /* USER CODE END RTOS_THREADS */
 

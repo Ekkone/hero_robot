@@ -130,7 +130,8 @@ void ShotProcess()
               press_counter=0;
               shot_anjian_counter=0;
             }
-            MoCa_Flag = 1;            
+            MoCa_Flag = 1; 
+              //ptr_heat_gun_t.sht_flg=4;          
         }break;
         case 2://下，传送电机和拨盘一起
         {
@@ -143,6 +144,7 @@ void ShotProcess()
               shot_anjian_counter=0;
             }
             MoCa_Flag = 1; 
+          //ptr_heat_gun_t.sht_flg=3;
            /*拨盘电机*/
         }break;
         

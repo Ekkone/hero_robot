@@ -110,10 +110,20 @@ void Check_Task(void const * argument)
       BLINK_GREEN();
       goto OFF;
     }
+    else if((SystemState.task_OutLine_Flag&0x20))//miniPCÈÎÎñ
+    {
+      BLINK_GREEN();
+      BLINK_GREEN();
+      BLINK_GREEN();
+      BLINK_GREEN();
+      BLINK_GREEN();
+      BLINK_GREEN();
+      goto OFF;
+    }
     else 
     {
-      GREEN_LED(1);
-      //GREEN_Blink();
+//      GREEN_LED(1);
+      GREEN_Blink();
       osDelayUntil(&xLastWakeTime,Check_PERIOD);
     }
     

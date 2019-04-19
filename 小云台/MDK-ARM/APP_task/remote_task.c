@@ -58,58 +58,19 @@ void Minipc_Pid_Init()
 	
 //    HAL_GPIO_WritePin(GPIOH, GPIO_PIN_5, GPIO_PIN_SET);   //电源引脚 _待续
 }
-void ChassisModeProcess()
-{
-   if(chassis_gimble_Mode_flg==1) //XY运动，底盘跟随云台
-   {
-      pit_set.expect = pit_set.expect +(0x400-RC_Ctl.rc.ch3)/20;	
-      yaw_set_follow.expect = yaw_set_follow.expect +(0x400-RC_Ctl.rc.ch2)/20;	
-     
-     yaw_set.expect = yaw_get.total_angle;//更新分离编码器期望
-   }
-   else//WY运动，底盘云台分离
-   {
-      pit_set.expect = pit_set.expect +(0x400-RC_Ctl.rc.ch3)/20;	
-      yaw_set.expect = yaw_set.expect +(0x400-RC_Ctl.rc.ch2)/20;	
-     
-     yaw_set_follow.expect = ptr_jy61_t_yaw.final_angle;//更新跟随陀螺仪期望
-   }
-   if(press_counter >= press_times)//左按键延迟，时间由press_time控制
-	{
-		press_counter=press_times+1;
-   switch(RC_Ctl.rc.s1)
-    {
-      case 1://上,急停
-      {
-        /*底盘急停*/
-      }break;
-      case 2://下，底盘跟随
-      {
-        chassis_gimble_Mode_flg = 1;
-        
 
-      }break;
-      case 3://中,底盘分离
-      {
-        chassis_gimble_Mode_flg = 0;  
-
-      }break;
-      default:break;
-    
-    }
-    MoCa_Flag = 0; 
-  }
-  chassis_gimble_Mode_flg = 0; 
-}
-void ShotProcess()
+/***************************************************************************************
+**
+	*	@brief	ManualMode()
+	*	@param
+	*	@supplement	手动调试模式
+	*	@retval	
+****************************************************************************************/
+void ManualMode()
 {
-  /*底盘模式默认分离*/
-  chassis_gimble_Mode_flg = 0;
-  pit_set.expect = pit_set.expect +(0x400-RC_Ctl.rc.ch3)/20;	
-  yaw_set.expect = yaw_set.expect +(0x400-RC_Ctl.rc.ch2)/20;	
-     
-  yaw_set_follow.expect = ptr_jy61_t_yaw.final_angle;//更新跟随陀螺仪期望
-  
+   pit_set.expect = pit_set.expect +(0x400-RC_Ctl.rc.ch3)/20;	
+   yaw_set.expect = yaw_set.expect +(0x400-RC_Ctl.rc.ch2)/20;	
+
   if(press_counter >= press_times)//左按键延迟，时间由press_time控制
 	{
 		press_counter=press_times+1;
@@ -149,75 +110,28 @@ void ShotProcess()
     }
   }
 }
-/***************************************************************************************
-**
-	*	@brief	RemoteControlProcess()
-	*	@param
-	*	@supplement	与遥控器进行对接，对遥控器的数据进行处理，实现对底盘、云台、发射机构的控制
-	*	@retval	
-****************************************************************************************/
-
 
 /***************************************************************************************
 **
-	*	@brief	MouseKeyControlProcess()
+	*	@brief	SleepMode()
 	*	@param
-	*	@supplement	对键鼠的数据进行处理
+	*	@supplement	睡眠模式
 	*	@retval	
 ****************************************************************************************/
-void MouseKeyControlProcess()
+void Sleep_Mode()
 {
-  static uint16_t delay = 0;
-  chassis_gimble_Mode_flg = 0;
-  /*鼠标云台控制*/
-  if(chassis_gimble_Mode_flg==1) //XY运动，底盘跟随云台
-   {
-      yaw_set_follow.expect = yaw_set_follow.expect-RC_Ctl.mouse.x/2;	
-    
-     yaw_set.expect = yaw_get.total_angle;//更新分离编码器期望
-   }
-   else//WY运动，底盘云台分离
-   {	
-      yaw_set.expect = yaw_set.expect-RC_Ctl.mouse.x/2;
-     
-     yaw_set_follow.expect = ptr_jy61_t_yaw.final_angle;//更新跟随陀螺仪期望
-   }
-  pit_set.expect = pit_set.expect+RC_Ctl.mouse.y/2;	//鼠标（移动速度*1000/50）
-   /*CTRL+鼠标右键关闭摩擦轮*/
-   if(CTRL_Press&&Right_Press)
-   {
-     MoCa_Flag = 0;
-   }
-   /*鼠标右键开启摩擦轮*/
-   else if(Right_Press)
-   {
-     MoCa_Flag = 1;
-   }
   
-  /*CTRL+C键底盘跟随*/ 
-  if(CTRL_Press&&C_Press)
-  {
-    chassis_gimble_Mode_flg = 1;
-  }
-  /*C键底盘分离*/
-  else if(C_Press) 
-  {
-    chassis_gimble_Mode_flg = 0;
-  }
-  /*摩擦轮开启时*/
-  if(MoCa_Flag == 1)
-  {
-    /*发弹控制*/
-    if(Left_Press)        //鼠标左键单发
-    {
-      if(delay > PRESS_DELAY && Left_Press)
-      {
-        ptr_heat_gun_t.sht_flg=1;
-        delay = 0;
-      }
-      delay++; 
-    }
-  }
+}
+
+/***************************************************************************************
+**
+	*	@brief	AutoMode()
+	*	@param
+	*	@supplement	自动模式
+	*	@retval	
+****************************************************************************************/
+void AutoMode()
+{
 				
 }
 
@@ -248,11 +162,11 @@ void Remote_Data_Task(void const * argument)
 				switch(RC_Ctl.rc.s2)
 				{
           /*上*/
-					case 1: ChassisModeProcess();break; 
+					case 1: ManualMode();break; 
           /*中*/
-					case 3: MouseKeyControlProcess();break;
+					case 3: Sleep_Mode();break;
           /*下*/
-					case 2: ShotProcess();break;
+					case 2: AutoMode();break;
           
 					default :break;
 				}					
@@ -261,70 +175,6 @@ void Remote_Data_Task(void const * argument)
 			osDelayUntil(&xLastWakeTime, REMOTE_PERIOD);
 	}
 }
-
-/***************************************************************************************
-**
-	*	@brief	JSYS_Task(void const * argument)
-	*	@param
-	*	@supplement	裁判系统数据处理任务
-	*	@retval	
-****************************************************************************************/
-void Referee_Data_Task(void const * argument)
-{
-	    tFrame   *Frame;
-	
-	    uint32_t NotifyValue;
-	for(;;)
-	{
-				   NotifyValue=ulTaskNotifyTake(pdTRUE,portMAX_DELAY);
-    if(NotifyValue==1)
-		{
-//			printf("running!!!\n");
-			  NotifyValue=0;
-			
-				HAL_GPIO_TogglePin(GPIOG,GPIO_PIN_1); //GRE_H
-        uint8_t *buff=USART6_RX_DATA;
-			for(int8_t i=0;i<USART6_RX_NUM;i++)
-			{
-					if(buff[i]==0xA5)
-					{
-					   Frame = (tFrame *)&buff[i];
-						
-					    if( verify_crc16_check_sum((uint8_t *)Frame, Frame->FrameHeader.DataLength + sizeof(tFrameHeader) + sizeof(tCmdID) + sizeof(Frame->CRC16))
-		             && verify_crc8_check_sum((uint8_t *)Frame,sizeof(tFrameHeader)))
-								 {
-									 if(Frame->CmdID==PowerANDHeat)
-									 {
-											current_get.Current_Referee = Frame->Data.PowerANDHeat.chassisCurrent;
-											limit.Volt_Referee = Frame->Data.PowerANDHeat.chassisVolt;
-											limit.PowerRemain_Referee=Frame->Data.PowerANDHeat.chassisPowerBuffer;
-											ptr_heat_gun_t.rel_heat = Frame->Data.PowerANDHeat.shootHeat0;
-											limit.Power_Referee = Frame->Data.PowerANDHeat.chassisPower;
-											
-									 }
-									 if(Frame->CmdID==GameInfo)
-									 {
-											ptr_heat_gun_t.roboLevel=Frame->Data.GameInfo.roboLevel;
-                      
-									 }
-									 if(Frame->CmdID==ShootData)
-									 {
-											ptr_heat_gun_t.shted_bullet++;
-									 }
-											 i=i+sizeof(Frame);
-								}
-					}
-				
-			}
-					if(printf_Referee){ 
-		printf("shootHeat0:%d\tchassisPowerBuffer:%f\n",
-						Frame->Data.PowerANDHeat.shootHeat0,Frame->Data.PowerANDHeat.chassisPowerBuffer);
-		}
-
-	 }
-
- }
-}	
 /***************************************************************************************
 **
 	*	@brief	MiniPC_Data_task(void const * argument)
@@ -339,12 +189,14 @@ void MiniPC_Data_task(void const * argument)
 	minipc_rx.angle_yaw  = 0;
   uint32_t NotifyValue;
 	Minipc_Pid_Init();
+  
+  portTickType xLastWakeTime;
+		 xLastWakeTime = xTaskGetTickCount();
 	for(;;)
 	{
 		
-		 portTickType xLastWakeTime;
-		 xLastWakeTime = xTaskGetTickCount();
-		
+		 
+		RefreshTaskOutLineTime(MiniPCTask_ON);
 	   NotifyValue=ulTaskNotifyTake(pdTRUE,portMAX_DELAY);
     if(NotifyValue==1)
 		{

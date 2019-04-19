@@ -7,6 +7,7 @@
 /* 内部自定义数据类型--------------------------------------------------------*/
 static  int16_t Yaw_Current_Value = 0;
 static  int16_t Pitch_Current_Value = 0;
+static  int8_t  Direction = 1;
 /* 任务相关信息定义----------------------------------------------------------*/
 
 /* 内部常量定义--------------------------------------------------------------*/
@@ -16,7 +17,7 @@ Pos_Set  yaw_set;
 Pos_Set  yaw_set_follow;
 Pos_Set  pit_set;
 int8_t gimbal_disable_flg;
-
+uint8_t gimbal_mode;
 /* 调用的外部函数原型声明------------------------------------------------------------
 void Cloud_Platform_Motor(CAN_HandleTypeDef * hcan,int16_t yaw,int16_t	pitch);
 float pid_calc(pid_t* pid, float get, float set);
@@ -112,9 +113,6 @@ void Gimbal_Contrl_Task(void const * argument)
 {
 	yaw_set.expect = 0; 
 	pit_set.expect = 0;
-	yaw_set.mode   = 0;
-  yaw_set_follow.expect = 0; 
-	yaw_set_follow.mode   = 0;
 	gimbal_disable_flg=0;
 	Pitch_Current_Value=0;
 	Yaw_Current_Value=0;
@@ -140,10 +138,55 @@ void Gimbal_Contrl_Task(void const * argument)
     {
       /*刷新断线时间*/
 	   RefreshTaskOutLineTime(GimbalContrlTask_ON);
-      #if imu
         IMU_Get_Data();
+      /*云台限位保护*/
+      /*pit正常0-670（前），7500（后）-8192*/
+//      if((pit_set.expect + pit_get.offset_angle) > (630 + pit_protect_correct_2) &&\
+//          (pit_set.expect + pit_get.offset_angle) < (2000 + pit_protect_correct_2))
+//      {
+//        pit_set.expect = (630 + pit_protect_correct_2) - pit_get.offset_angle;
+//      }
+//      if((pit_set.expect + pit_get.offset_angle) > (6500 - pit_protect_correct_1) &&\
+//          (pit_set.expect + pit_get.offset_angle) < (7500 - pit_protect_correct_1))
+//      {
+//        pit_set.expect = (7500 - pit_protect_correct_1) - pit_get.offset_angle;
+//      }
+//      /*yaw轴云台保护*/
+//      if((yaw_set.expect + yaw_get.offset_angle) > 2400)
+//      {
+//        yaw_set.expect = 2380 - yaw_get.offset_angle;
+//      }
+//      if((yaw_set.expect + yaw_get.offset_angle) < 1100)
+//      {
+//        yaw_set.expect = 1115 - yaw_get.offset_angle;
+//      }
+      /*云台模式判断*/
+      switch(gimbal_mode)
+      {
+        case SleepMode://休眠模式，保持
+        {
+
+        }break;
+        case PatrolMode://巡逻模式，yaw轴周期转动
+        {
+          if((yaw_set.expect + yaw_get.offset_angle) > 6000 \
+            || (yaw_set.expect + yaw_get.offset_angle) < 2400)
+            {
+              Direction = -Direction;
+            }
+          yaw_set.expect += Direction * 1;
+          
+        }break;
+        case SnipeMode://狙击模式
+        {
+          yaw_set.expect = minipc_rx.angle_yaw + yaw_set.expect;
+          pit_set.expect = minipc_rx.angle_pit + pit_set.expect;
+          minipc_rx.angle_yaw = 0;
+          minipc_rx.angle_pit = 0;
+        }break;
+      }
+        
         //yaw轴
-      
         pid_calc(&pid_yaw, yaw_get.total_angle,yaw_set.expect);
         pid_calc(&pid_yaw_spd,(imu_data.gz), pid_yaw.pos_out);
         //pit轴
@@ -152,7 +195,7 @@ void Gimbal_Contrl_Task(void const * argument)
       
         Pitch_Current_Value=(-pid_pit_spd.pos_out); 
 		    Yaw_Current_Value= (-pid_yaw_spd.pos_out);
-      #endif
+     
       #if jy61
       IMU_Get_Data();
       yaw_set.expect = minipc_rx.angle_yaw + yaw_set.expect;
@@ -234,9 +277,8 @@ void Gimbal_Contrl_Task(void const * argument)
 					Cloud_Platform_Motor_Disable(&hcan1);
 				}
 				else Cloud_Platform_Motor(&hcan1,Yaw_Current_Value,Pitch_Current_Value);
-        yaw_set_follow.expect_last = yaw_set_follow.expect;
 			osDelayUntil(&xLastWakeTime, GIMBAL_PERIOD);
 			
-   }
+      }
  
 }

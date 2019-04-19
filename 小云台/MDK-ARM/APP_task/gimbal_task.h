@@ -23,7 +23,12 @@ typedef struct{
 		int16_t expect_pc;
 } Pos_Set;
 
-
+typedef enum
+{
+  SleepMode = 0,//休眠模式
+  PatrolMode,//巡逻模式
+  SnipeMode//狙击模式
+}Gimbal_Mode;
 
 /* 本模块向外部提供的宏定义--------------------------------------------------*/
 

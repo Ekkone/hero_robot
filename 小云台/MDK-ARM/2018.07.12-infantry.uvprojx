@@ -508,26 +508,6 @@
               <FilePath>.\Algorithm\pid.c</FilePath>
             </File>
             <File>
-              <FileName>mecanum_calc.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\Algorithm\mecanum_calc.c</FilePath>
-            </File>
-            <File>
-              <FileName>Power_restriction.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\Algorithm\Power_restriction.c</FilePath>
-            </File>
-            <File>
-              <FileName>protocol.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\Algorithm\protocol.c</FilePath>
-            </File>
-            <File>
-              <FileName>Caloric_restriction.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\Algorithm\Caloric_restriction.c</FilePath>
-            </File>
-            <File>
               <FileName>SystemState.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\Algorithm\SystemState.c</FilePath>
@@ -546,16 +526,6 @@
               <FileName>minipc.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\Communication\minipc.c</FilePath>
-            </File>
-            <File>
-              <FileName>decode.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\Communication\decode.c</FilePath>
-            </File>
-            <File>
-              <FileName>atom_imu.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\Communication\atom_imu.c</FilePath>
             </File>
           </Files>
         </Group>

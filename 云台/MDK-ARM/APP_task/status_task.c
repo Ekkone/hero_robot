@@ -7,7 +7,7 @@
 *************************************************************************************//* Includes ------------------------------------------------------------------------*/
 #include "status_task.h"
 /* External variables --------------------------------------------------------------*/
-#define Check_PERIOD  13
+#define Check_PERIOD  16
 #define BLINK_PERIOD  100
 #define OFF_PERIOD    200
 
@@ -153,17 +153,22 @@ void Check_Task(void const * argument)
       LED3_Blink();
     else LED3(0);
     
-    if(!(SystemState.OutLine_Flag&0x08))//MOTOR_M1
+    if(!(SystemState.OutLine_Flag&0x08))//MOTOR_B
       LED4_Blink();
     else LED4(0);
     
-    if(!(SystemState.OutLine_Flag&0x10))//MOTOR_M2
+    if(!(SystemState.OutLine_Flag&0x10))//MOTOR_M1
       LED5_Blink();
     else LED5(0);
     
-    if(!(SystemState.OutLine_Flag&0x20))//JY61
-      LED5_Blink();
+    if(!(SystemState.OutLine_Flag&0x20))//MOTOR_M2
+      LED6_Blink();
     else LED6(0);
+    
+    if(!(SystemState.OutLine_Flag&0x40))//JY61
+      LED7_Blink();
+    else LED7(0);
+    osDelayUntil(&xLastWakeTime,200);
     #endif
     
     

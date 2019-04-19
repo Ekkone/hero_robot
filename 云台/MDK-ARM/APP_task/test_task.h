@@ -15,7 +15,7 @@
 #include "BSP.h"
 /* Exported macro ------------------------------------------------------------*/
 #define printf_sendware 1   //示波器打印
-#define printf_speed    1   //弹丸速度打印 
+#define printf_speed    0   //弹丸速度打印 
 #define printf_power    0   //弹丸速度打印 
 /* Exported types --------------------------------------------------------*/
 

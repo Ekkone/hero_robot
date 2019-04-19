@@ -69,28 +69,15 @@
 #define C_Press             (RC_Ctl.key.v & KEY_PRESSED_OFFSET_C)
 #define V_Press             (RC_Ctl.key.v & KEY_PRESSED_OFFSET_V)
 #define B_Press             (RC_Ctl.key.v & KEY_PRESSED_OFFSET_B)
-typedef struct
-{
-	float dstVmmps_Y;
-	float dstVmmps_X;
-	float dstVmmps_W;
-	char  flag;
-}moto3508_type;
+
 /* 本模块向外部提供的接口常量声明--------------------------------------------*/	
-extern float power; 				 //底盘功率 _测试
-extern int8_t chassis_gimble_Mode_flg;
-extern float chassis_Current; 
-extern float	 chassis_Volt; 
 //extern moto3508_type  moto_3508_set; 
 /* 本模块向外部提供的接口函数原型声明----------------------------------------*/		 
-void Referee_Data_Task(void const * argument);
 void Remote_Data_Task(void const * argument); 
 void MiniPC_Data_task(void const * argument);
-void RemoteControlProcess(void);
-void ChassisModeProcess(void);
-void MouseKeyControlProcess(void);
-void ShotProcess(void);
-void hard_brak(void);
+void Sleep_Mode(void);
+void ManualMode(void);
+void AutoMode(void);
 void Remote_Ctrl(void);
 void Minipc_Pid_Init(void);
 

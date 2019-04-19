@@ -406,7 +406,7 @@ void UART4_IRQHandler(void)
 		
 		UART4_RX_NUM=(SizeofJY61)-(hdma_uart4_rx.Instance->NDTR);
 		
-		JY61_Data_Pro();
+		//JY61_Data_Pro();
 		__HAL_DMA_SET_COUNTER(&hdma_uart4_rx,SizeofJY61);
     __HAL_DMA_ENABLE(&hdma_uart4_rx);
 	}
@@ -431,7 +431,7 @@ void USART6_IRQHandler(void)
 		
 		USART6_RX_NUM=(SizeofJY61)-(hdma_usart6_rx.Instance->NDTR);
 		
-		JY61_Data_Pro();
+		//JY61_Data_Pro();
 		__HAL_DMA_SET_COUNTER(&hdma_usart6_rx,SizeofJY61);
     __HAL_DMA_ENABLE(&hdma_usart6_rx);
 	}
@@ -456,7 +456,7 @@ void UART8_IRQHandler(void)
 		
 		UART8_RX_NUM=(SizeofJY61)-(hdma_uart8_rx.Instance->NDTR);
 		
-		JY61_Data_Pro();
+		//JY61_Data_Pro();
 		__HAL_DMA_SET_COUNTER(&hdma_uart8_rx,SizeofJY61);
     __HAL_DMA_ENABLE(&hdma_uart8_rx);
 	}

@@ -60,89 +60,7 @@ void JY61_SLEEPorUNSLEEP(UART_HandleTypeDef *huart)
 	** Output: NULL
 	**************************************************************
 **/
-#if BoardNew
-void JY61_Frame(void)
-{
-	static uint8_t JY61_Frame_flag = 0;
-	static	uint8_t JY61_Frame_Num = 0;
-	
-while( UART8_RX_DATA[0] != 0x55 ||  JY61_Frame_flag == 1)
-{
-	
-	if(UART8_RX_DATA[0] != 0x55 && JY61_Frame_flag == 0)
-	{
-				
-				HAL_UART_DMAPause(&huart8);
-				*UART8_RX_DATA = 0;
-				JY61_Frame_flag = 1;
-				
-	}
-	if(JY61_Frame_flag == 1)//休眠一次，必须解休眠
-	{
-			JY61_Frame_Num++;
-			
-					if(JY61_Frame_Num == 25)
-					 {
-						 
-//								JY61_SLEEPorUNSLEEP(&huart8);
-//								JY61_Frame_flag = 0;
-//								JY61_Frame_Num = 0;
-							
-								HAL_UART_Receive_DMA(&huart8,UART8_RX_DATA,SizeofJY61);	//陀螺仪接收
 
-				   } else if(JY61_Frame_Num == 50)
-							 {
-								   HAL_UART_DMAResume(&huart8);
-							 } else if(JY61_Frame_Num > 100  )
-									 {
-										 JY61_Frame_flag = 0;
-							       JY61_Frame_Num = 0;
-									 }
-
-	 }
-}
-	
-}
-
-
-
-/**
-	**************************************************************
-	** Descriptions:JY61初始化函数
-	** Input: 	
-  **						
-	**					
-	**					
-	** Output: NULL
-	**************************************************************
-**/
-void JY61_Init(void)
-{
-	uint8_t JY61[6][5] = {
-													{0xff,0xaa,0x24,0x01,0x00},//六轴算法
-													{0xff,0xaa,0x02,0x00,0x00},//开启自动校准
-													{0xff,0xaa,0x02,0x0c,0x00},//回传内容:0x0c是输出速度和角度//0x08是只输出角度
-													{0xff,0xaa,0x03,0x0b,0x00},//回传速率:200hz
-													{0xff,0xaa,0x00,0x00,0x00},//保存当前配置
-													{0xff,0xaa,0x04,0x06,0x00}//设置串口波特率:115200
-												};
-		
-	HAL_UART_Transmit_DMA(&huart8,JY61[2],5);
-	HAL_Delay(100);
-	HAL_UART_Transmit_DMA(&huart8,JY61[3],5);
-	HAL_Delay(100);
-	HAL_UART_Transmit_DMA(&huart8,JY61[4],5);	
-	HAL_Delay(100);
-	if(HAL_UART_Transmit_DMA(&huart8,JY61[2],5) == HAL_OK )	
-	{
-		printf("JY61 Init \n\r");
-	}
-		if(HAL_UART_Transmit_DMA(&huart8,JY61[4],5) == HAL_OK)	
-	{
-		printf("JY61 Init save\n\r");
-	}
-}
-#else
 void JY61_Frame(void)
 {
 	static uint8_t JY61_Frame_flag = 0;
@@ -224,7 +142,7 @@ void JY61_Init(void)
 		printf("JY61 Init save\n\r");
 	}
 }
-#endif
+
 /**
 	**************************************************************
 	** Descriptions:时间统计
@@ -301,7 +219,7 @@ void BSP_Init(void)
   HAL_CAN_Receive_IT(&hcan1, CAN_FIFO0); 
   HAL_CAN_Receive_IT(&hcan2, CAN_FIFO0);
 	#if jy61
-	//JY61_Frame();  
+	JY61_Frame();  
   #endif
 	HAL_Delay(1000);
 

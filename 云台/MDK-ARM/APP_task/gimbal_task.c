@@ -85,8 +85,13 @@ void gimbal_pid_init(void)
                   2.2f, 0.0f, 0.0f );
 #else
 /*pit编码器反馈*/
+/*操作稳定但强震会抖*/
+//  PID_struct_init(&pid_pit_jy61, POSITION_PID, 5000, 1000,
+//                  11.0f, 0.07f, 0.0f); //	
+//  PID_struct_init(&pid_pit_jy61_spd, POSITION_PID, 5000, 1000,
+//                  2.5f, 0.0f, 0.0f ); 
   PID_struct_init(&pid_pit_jy61, POSITION_PID, 5000, 1000,
-                  11.0f, 0.07f, 0.0f); //	
+                  11.0f, 0.07f, 9.0f); //	
   PID_struct_init(&pid_pit_jy61_spd, POSITION_PID, 5000, 1000,
                   2.5f, 0.0f, 0.0f ); 
 #endif

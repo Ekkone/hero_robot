@@ -10,6 +10,7 @@
 /* 任务相关信息定义----------------------------------------------------------*/
 //extern osMessageQId JSYS_QueueHandle;
 /* 内部常量定义--------------------------------------------------------------*/
+#define ABS(x)		((x>0)? (x): (-x)) 
 #define GUN_PERIOD  10
 #define BLOCK_TIME 5000
 #define REVERSE_TIME 2000
@@ -58,6 +59,14 @@ void Gun_Pid_Init()
 	*	@supplement	枪口热量限制任务
 	*	@retval	
 ****************************************************************************************/
+  uint8_t motor_stop_flag=0;
+  int32_t set_angle = 0;
+	int32_t set_speed = 0;
+  int32_t set_M_speed = 0;
+  uint8_t set_cnt = 0;
+  uint8_t block_flag;
+  uint8_t bochi_count = 0;//拨齿计数 0-4
+  uint8_t contiue_flag = 0;
 void Gun_Task(void const * argument)
 { 
 
@@ -67,14 +76,7 @@ void Gun_Task(void const * argument)
 
 	Gun_Pid_Init();
   /*设定发弹*/
-  uint8_t motor_stop_flag=0;
-	static int32_t set_angle = 0;
-	int32_t set_speed = 0;
-  int32_t set_M_speed = 0;
-	static uint8_t set_cnt = 0;
-  static uint8_t block_flag;
 
-  static uint8_t contiue_flag = 0;
 	for(;;)
 	{
     /*刷新断线时间*/
@@ -98,15 +100,13 @@ void Gun_Task(void const * argument)
     {
 			case 0://停止58982
 			{
-        
         switch(contiue_flag)
         {
           case 0:
           {
             /*设定角度*/
-            set_angle=moto_dial_get.total_angle;	
+            set_angle = moto_dial_get.total_angle;	
             contiue_flag = 1;
-            
           }break;
           case 1:
           {
@@ -118,14 +118,26 @@ void Gun_Task(void const * argument)
       case 1://单发模式
       {
         /*设定角度*/
-				moto_dial_get.cmd_time=GetSystemTimer();
-				set_cnt=1;
-				set_angle=58982*set_cnt;
-        /*清零*/
-				moto_dial_get.round_cnt=0;
-				moto_dial_get.offset_angle=moto_dial_get.angle;
-				moto_dial_get.total_angle=0;	
+        if(bochi_count != 4)//前四个角度
+        {
+          moto_dial_get.cmd_time=GetSystemTimer();
+          set_angle += 58982;//819.2*x
+          if(bochi_count > 4)
+          {
+            bochi_count = 0;
+            set_angle = 58982;
+            /*清零*/
+            moto_dial_get.round_cnt=0;
+            moto_dial_get.total_angle = moto_dial_get.angle - moto_dial_get.offset_angle;
+          }
+        }
+        else//最后一个角度
+        {
+          moto_dial_get.cmd_time=GetSystemTimer();
+          set_angle = 294912;//8192*36
+        }
         /*进入位置环*/
+        bochi_count++;
         ptr_heat_gun_t.sht_flg = 11;
         contiue_flag = 0;
         
@@ -143,23 +155,35 @@ void Gun_Task(void const * argument)
         ptr_heat_gun_t.sht_flg = 11;
         contiue_flag = 0;
       }break;
+      case 3://连发模式
+      {
+        set_speed = -4000;
+      }break;
+      case 4://连发模式
+      {
+        set_speed = 0;
+      }break;
       case 11:
       {
         /*pid位置环*/
-       position: pid_calc(&pid_dial_pos, moto_dial_get.total_angle,set_angle);	
+        position:
+        pid_calc(&pid_dial_pos, moto_dial_get.total_angle,set_angle);	
 				set_speed=pid_dial_pos.pos_out;
       }break;
       
 
 			default :break;
     }
-    ptr_heat_gun_t.sht_flg = 11;//默认位置环
+     ptr_heat_gun_t.sht_flg = 11;//默认位置环
      /*速度环*/
      pid_calc(&pid_dial_spd,moto_dial_get.speed_rpm ,set_speed);
      pid_calc(&pid_shot_spd[0],moto_M_get[0].speed_rpm ,set_M_speed);
      pid_calc(&pid_shot_spd[1],moto_M_get[1].speed_rpm ,-set_M_speed);
+    //printf("%d\t%d\r\n",moto_M_get[0].speed_rpm,moto_M_get[1].speed_rpm);
      /*驱动拨弹电机,摩擦轮*/
 		 Shot_Motor(&hcan2,pid_dial_spd.pos_out,pid_shot_spd[0].pos_out,pid_shot_spd[1].pos_out);
+//		 Shot_Motor(&hcan2,0,0,0);
+//     Shot_Motor(&hcan2,pid_dial_spd.pos_out,0,0);
 		 minipc_rx.state_flag=0;
 		 set_speed = 0;	   
     
