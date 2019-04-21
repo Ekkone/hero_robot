@@ -57,6 +57,7 @@
 2018.07.12-infantry\pid.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h
 2018.07.12-infantry\pid.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/semphr.h
 2018.07.12-infantry\pid.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/event_groups.h
+2018.07.12-infantry\pid.o: ../Inc/AX-12A.h
 2018.07.12-infantry\pid.o: .\Communication\minipc.h
 2018.07.12-infantry\pid.o: .\Communication\communication.h 
 2018.07.12-infantry\pid.o: ../Inc/spi.h

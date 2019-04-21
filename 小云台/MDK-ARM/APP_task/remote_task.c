@@ -23,6 +23,8 @@ pid_t pid_minipc_pit={0};
 
 #define REMOTE_PERIOD 2
 #define MINIPC_PERIOD 2
+#define REMOTE_MODE 0
+#define MOUSE_MODE 1
 /* 外部变量声明--------------------------------------------------------------*/
 
 /* 调用的外部函数原型声明------------------------------------------------------
@@ -68,6 +70,7 @@ void Minipc_Pid_Init()
 ****************************************************************************************/
 void ManualMode()
 {
+  
    pit_set.expect = pit_set.expect +(0x400-RC_Ctl.rc.ch3)/20;	
    yaw_set.expect = yaw_set.expect +(0x400-RC_Ctl.rc.ch2)/20;	
 
@@ -76,33 +79,27 @@ void ManualMode()
 		press_counter=press_times+1;
     switch(RC_Ctl.rc.s1)
       {
-        case 1://上,只传送电机开
+        case 1://上
         {
-          MoCa_Flag = 1; 
+            MoCa_Flag = 0;
         }break;
-        case 3://中,只拨盘单发
+        case 3://中,开启摩擦轮低速
         {
           /*拨盘单发*/
-           shot_anjian_counter++;
-            if(shot_anjian_counter > shot_frequency)//非连续触发信号
-            {
-              ptr_heat_gun_t.sht_flg=1;//单发
-              press_counter=0;
-              shot_anjian_counter=0;
-            }
             MoCa_Flag = 1;            
         }break;
-        case 2://下，传送电机和拨盘一起
+        case 2://下，开启摩擦轮高速与拨盘电机
         {
           /*拨盘单发*/
-          shot_anjian_counter++;
-            if(shot_anjian_counter > shot_frequency)//非连续触发信号
-            {
-              ptr_heat_gun_t.sht_flg=1;//单发
-              press_counter=0;
-              shot_anjian_counter=0;
-            }
-            MoCa_Flag = 1; 
+//          shot_anjian_counter++;
+//            if(shot_anjian_counter > shot_frequency)//非连续触发信号
+//            {
+//              ptr_heat_gun_t.sht_flg=1;//单发
+//              press_counter=0;
+//              shot_anjian_counter=0;
+//            }
+          ptr_heat_gun_t.sht_flg=3;
+            MoCa_Flag = 2; 
            /*拨盘电机*/
         }break;
         
@@ -118,8 +115,48 @@ void ManualMode()
 	*	@supplement	睡眠模式
 	*	@retval	
 ****************************************************************************************/
-void Sleep_Mode()
-{
+void Sleep_Mode(uint8_t mode)
+{ 
+  if(mode)
+  {
+    /*键鼠控制*/
+    switch(communication_message)
+    {
+      case 2:
+        Open_Door();
+        break;
+      case 3:
+        Close_Door();
+        break;
+      default:break;
+    }
+  }
+  else
+  {
+    /*遥控控制*/
+  if(press_counter >= press_times)//左按键延迟，时间由press_time控制
+	{
+		press_counter=press_times+1;
+    switch(RC_Ctl.rc.s1)
+      {
+        case 1://上,关闭仓门
+        {
+            Close_Door();
+        }break;
+        case 3://中,打开仓门
+        {
+            Open_Door();           
+        }break;
+        case 2://下
+        {
+            
+        }break;
+        
+        default:break;
+    }
+  }
+  }
+  
   
 }
 
@@ -132,7 +169,7 @@ void Sleep_Mode()
 ****************************************************************************************/
 void AutoMode()
 {
-				
+		
 }
 
 /* 任务主体部分 -------------------------------------------------------------*/
@@ -144,6 +181,7 @@ void AutoMode()
 	*	@retval	
 ****************************************************************************************/
 extern volatile uint8_t RemoteData_flag;
+extern volatile uint8_t Communication_flag;
 void Remote_Data_Task(void const * argument)
 {
     uint32_t NotifyValue;
@@ -153,18 +191,16 @@ void Remote_Data_Task(void const * argument)
 	{
 		/*刷新断线时间*/
     RefreshTaskOutLineTime(RemoteDataTask_ON);
-		   //NotifyValue=ulTaskNotifyTake(pdTRUE,portMAX_DELAY);
-    if(RemoteData_flag==1)
+    if(RemoteData_flag)//遥控控制
 		{
 			RemoteData_flag = 0;
-			//NotifyValue=0;
 			Remote_Ctrl();//遥控数据接收
 				switch(RC_Ctl.rc.s2)
 				{
           /*上*/
-					case 1: ManualMode();break; 
+					case 1: ManualMode();gimbal_mode = Manual_Mode;break; 
           /*中*/
-					case 3: Sleep_Mode();break;
+					case 3: Sleep_Mode(REMOTE_MODE);gimbal_mode = SleepMode;break;
           /*下*/
 					case 2: AutoMode();break;
           
@@ -172,6 +208,16 @@ void Remote_Data_Task(void const * argument)
 				}					
             press_counter++;
 		}
+    else if(Communication_flag)//自动控制
+    {
+      Communication_flag = 0;
+      if(communication_message == 0)AutoMode();//自动模式
+      else//休眠模式
+      {
+        Sleep_Mode(MOUSE_MODE);
+        gimbal_mode = SleepMode;
+      }
+    }
 			osDelayUntil(&xLastWakeTime, REMOTE_PERIOD);
 	}
 }

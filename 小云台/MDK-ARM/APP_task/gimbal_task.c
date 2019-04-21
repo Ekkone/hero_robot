@@ -163,9 +163,14 @@ void Gimbal_Contrl_Task(void const * argument)
       /*云台模式判断*/
       switch(gimbal_mode)
       {
-        case SleepMode://休眠模式，保持
+        case Manual_Mode://手动模式，遥控器控制
         {
-
+          
+        }break;
+        case SleepMode://休眠模式，复位
+        {
+            yaw_set.expect = 0;
+            yaw_set.expect = 0;
         }break;
         case PatrolMode://巡逻模式，yaw轴周期转动
         {

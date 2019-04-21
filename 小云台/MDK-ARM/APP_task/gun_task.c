@@ -19,6 +19,7 @@
 /* 外部变量声明--------------------------------------------------------------*/
 Heat_Gun_t  ptr_heat_gun_t;
 uint8_t MoCa_Flag = 0;
+ramp_function_source_t shoot;
 extern uint8_t shot_frequency;
 extern float Golf_speed;
 //Power_Heat * power_heat;
@@ -57,7 +58,7 @@ void Gun_Task(void const * argument)
 	osDelay(100);
 	portTickType xLastWakeTime;
 	xLastWakeTime = xTaskGetTickCount();
-
+  ramp_init(&shoot,0.05,150,100);//抹茶轮斜坡
 	Gun_Pid_Init();
   /*设定发弹*/
   uint8_t motor_stop_flag=0;
@@ -77,15 +78,23 @@ void Gun_Task(void const * argument)
       case 0:
       {
         /*摩擦轮速度*/
-        set_M_speed = 000;
+        set_M_speed = 100;
         ptr_heat_gun_t.sht_flg = 11;
       }break;
       case 1:
       {
-        /*摩擦轮速度*/
-        set_M_speed = 7000;
+        /*摩擦轮低速*/
+        set_M_speed = 105;
+        ptr_heat_gun_t.sht_flg = 11;
+      }break;
+      case 2:
+      {
+        /*摩擦轮高速*/
+        set_M_speed = 130;
       }break;
     }
+    ramp_calc(&shoot,set_M_speed);
+    Friction_Wheel_Motor(shoot.out,shoot.out);
  /*判断发射模式*/
     switch(ptr_heat_gun_t.sht_flg)
     {
@@ -136,6 +145,10 @@ void Gun_Task(void const * argument)
         ptr_heat_gun_t.sht_flg = 11;
         contiue_flag = 0;
       }break;
+      case 3://连发
+      {
+        set_speed = 1000;
+      }
       case 11:
       {
         /*pid位置环*/
@@ -146,10 +159,10 @@ void Gun_Task(void const * argument)
 
 			default :break;
     }
-    ptr_heat_gun_t.sht_flg = 11;//默认位置环
+    //ptr_heat_gun_t.sht_flg = 11;//默认位置环
      /*速度环*/
      pid_calc(&pid_dial_spd,moto_dial_get.speed_rpm ,set_speed);
-     /*驱动拨弹电机,摩擦轮*/
+     /*驱动拨弹电机*/
 		 Shot_Motor(&hcan2,pid_dial_spd.pos_out);
 		 minipc_rx.state_flag=0;
 		 set_speed = 0;	   

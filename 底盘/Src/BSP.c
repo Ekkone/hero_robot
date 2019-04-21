@@ -63,10 +63,12 @@ void BSP_Init(void)
   /*¿ªÆô  */
   HAL_CAN_Start(&hcan1);
 	HAL_CAN_Start(&hcan2);
-	HAL_ADC_Start(&hadc1);
-	HAL_ADC_Start(&hadc2);
-	HAL_ADC_Start(&hadc3);
+//	HAL_ADC_Start(&hadc1);
+//	HAL_ADC_Start(&hadc2);
+//	HAL_ADC_Start(&hadc3);
+  HAL_ADC_Start_DMA(&hadc1,(uint32_t*)uhADCxConvertedValue, 10);
 	/*¿ªÆôÖÐ¶Ï*/ 
+  HAL_UART_Transmit_DMA(&huart3,communication_message,3);
 //	HAL_UART_Receive_DMA(&huart1,USART1_RX_DATA,SizeofJY61);	
 //  HAL_UART_Receive_DMA(&huart2,LightBand1,sizeofLB);			
 //  HAL_UART_Receive_DMA(&huart3,LightBand2,sizeofLB); 	  	

@@ -46,7 +46,7 @@
   /* Includes ------------------------------------------------------------------*/
 //所有对库文件的更改全局搜索统一的关键词: _改库
 /* USER CODE BEGIN Includes */
-#define BoardOld 				0	//1为旧板子，0为新板子
+#define BoardOld 				0	
 #define BoardNew				1
 
 #define infantry 				0 	//步兵车

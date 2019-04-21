@@ -8,18 +8,16 @@
 #include "string.h"
 
 
-#define SizeofReferee 100
+
 #define SizeofRemote 18
-#define SizeofJY61	 33
 #define SizeofMinipc  9
+#define SizeofCommunication   5
 extern uint8_t USART1_RX_DATA[(SizeofRemote)];//遥控
 extern uint16_t USART1_RX_NUM;
-extern uint8_t USART6_RX_DATA[(SizeofJY61)];//裁判系统
+extern uint8_t USART6_RX_DATA[(SizeofCommunication)];//通信
 extern uint16_t USART6_RX_NUM;
-extern uint8_t UART8_RX_DATA[(SizeofJY61)];//外接陀螺仪
-extern uint16_t UART8_RX_NUM;
-extern uint8_t UART4_RX_DATA[(SizeofJY61)];//外接陀螺仪
-extern uint16_t UART4_RX_NUM;
+extern uint8_t USART2_RX_DATA[(SizeofMinipc)];//MINIPC
+extern uint16_t USART2_RX_NUM;
 
 /* 本模块向外部提供的数据类型定义 --------------------------------------------*/
 ///////////外接陀螺仪////////////////
@@ -160,6 +158,7 @@ extern IMUDataTypedef imu_data;
 extern IMUDataTypedef imu_data_offest;
 /****************遥控********************/
 extern RC_Ctl_t RC_Ctl; //遥控数据
+extern uint8_t communication_message;
 
 /* 本模块向外部提供的接口函数原型声明 ----------------------------------------*/
 //外接陀螺仪
@@ -174,6 +173,8 @@ uint8_t MPU6500_Read_Regs(uint8_t const regAddr, uint8_t *pData, uint8_t len);
 void IMU_Get_Data(void);
 uint8_t IST8310_Init(void);
 uint8_t IST_Reg_Read_By_MPU(uint8_t addr);
+//通信
+void Communication_Ctrl(void);
 //////裁判系统
 ////void DataVerify(void);
 ////// 使用方法 发送用户数据 Send_FrameData(SelfDefinedDara, userMessage,tSelfDefineInfo(userMessage)); 

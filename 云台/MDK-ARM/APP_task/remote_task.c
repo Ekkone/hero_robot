@@ -123,28 +123,28 @@ void ShotProcess()
         case 3://中,只拨盘单发
         {
           /*拨盘单发*/
-           shot_anjian_counter++;
-            if(shot_anjian_counter > shot_frequency)//非连续触发信号
-            {
-              ptr_heat_gun_t.sht_flg=1;//单发
-              press_counter=0;
-              shot_anjian_counter=0;
-            }
+//           shot_anjian_counter++;
+//            if(shot_anjian_counter > shot_frequency)//非连续触发信号
+//            {
+//              ptr_heat_gun_t.sht_flg=1;//单发
+//              press_counter=0;
+//              shot_anjian_counter=0;
+//            }
             MoCa_Flag = 1; 
-              //ptr_heat_gun_t.sht_flg=4;          
+              ptr_heat_gun_t.sht_flg=4;          
         }break;
         case 2://下，传送电机和拨盘一起
         {
           /*拨盘单发*/
-          shot_anjian_counter++;
-            if(shot_anjian_counter > shot_frequency)//非连续触发信号
-            {
-              ptr_heat_gun_t.sht_flg=1;//单发
-              press_counter=0;
-              shot_anjian_counter=0;
-            }
+//          shot_anjian_counter++;
+//            if(shot_anjian_counter > shot_frequency)//非连续触发信号
+//            {
+//              ptr_heat_gun_t.sht_flg=1;//单发
+//              press_counter=0;
+//              shot_anjian_counter=0;
+//            }
             MoCa_Flag = 1; 
-          //ptr_heat_gun_t.sht_flg=3;
+          ptr_heat_gun_t.sht_flg=3;
            /*拨盘电机*/
         }break;
         

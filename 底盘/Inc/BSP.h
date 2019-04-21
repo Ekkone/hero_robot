@@ -28,6 +28,7 @@
 
 /* Exported types --------------------------------------------------------*/
 extern volatile unsigned long long FreeRTOSRunTimeTicks;
+extern uint8_t communication_message[3];
 /* Exported constants------------------------------------------------------------*/
 
 /* Internal functions ------------------------------------------------------- */

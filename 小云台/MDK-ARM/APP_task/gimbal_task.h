@@ -27,7 +27,8 @@ typedef enum
 {
   SleepMode = 0,//休眠模式
   PatrolMode,//巡逻模式
-  SnipeMode//狙击模式
+  SnipeMode,//狙击模式
+  Manual_Mode//手动模式
 }Gimbal_Mode;
 
 /* 本模块向外部提供的宏定义--------------------------------------------------*/
@@ -38,6 +39,7 @@ extern Pos_Set  yaw_set;
 extern Pos_Set  yaw_set_follow;
 extern Pos_Set  pit_set;
 extern int8_t gimbal_disable_flg;
+extern uint8_t gimbal_mode;
 
 /* 本模块向外部提供的接口函数原型声明----------------------------------------*/
 void Gimbal_Task(void const * argument);

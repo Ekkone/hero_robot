@@ -92,7 +92,7 @@ void Gun_Task(void const * argument)
       case 1:
       {
         /*摩擦轮速度*/
-        set_M_speed = 7000;
+        set_M_speed = 2000;
       }break;
     }
  /*判断发射模式*/
@@ -157,7 +157,7 @@ void Gun_Task(void const * argument)
       }break;
       case 3://连发模式
       {
-        set_speed = -4000;
+        set_speed = 1500;
       }break;
       case 4://连发模式
       {
@@ -168,7 +168,7 @@ void Gun_Task(void const * argument)
         /*pid位置环*/
         position:
         pid_calc(&pid_dial_pos, moto_dial_get.total_angle,set_angle);	
-				set_speed=pid_dial_pos.pos_out;
+				//set_speed=pid_dial_pos.pos_out;
       }break;
       
 

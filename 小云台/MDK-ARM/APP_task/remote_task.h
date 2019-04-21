@@ -7,7 +7,7 @@
 #include "stm32f4xx_hal.h"
 #include "cmsis_os.h"
 	 
-
+#include "AX-12A.h"
 #include "pid.h"
 #include "string.h"
 #include "minipc.h"
@@ -75,7 +75,7 @@
 /* 本模块向外部提供的接口函数原型声明----------------------------------------*/		 
 void Remote_Data_Task(void const * argument); 
 void MiniPC_Data_task(void const * argument);
-void Sleep_Mode(void);
+void Sleep_Mode(uint8_t mode);
 void ManualMode(void);
 void AutoMode(void);
 void Remote_Ctrl(void);

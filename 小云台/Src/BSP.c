@@ -142,7 +142,7 @@ void JY61_Init(void)
 		printf("JY61 Init save\n\r");
 	}
 }
-#endif
+
 void JY61_Frame(void)
 {
 	static uint8_t JY61_Frame_flag = 0;
@@ -224,6 +224,7 @@ void JY61_Init(void)
 		printf("JY61 Init save\n\r");
 	}
 }
+#endif
 /**
 	**************************************************************
 	** Descriptions:时间统计
@@ -269,7 +270,7 @@ void BSP_Init(void)
 	MX_TIM6_Init();
 	SystemState_Inite();
   /*ADC*/
-	MX_ADC1_Init();
+	//MX_ADC1_Init();
 	/*串口*/
   MX_USART1_UART_Init();
 	MX_USART2_UART_Init();
@@ -280,17 +281,16 @@ void BSP_Init(void)
 	/*SPI*/
 	MX_SPI5_Init();
 
-	__HAL_UART_ENABLE_IT(&huart1, UART_IT_IDLE);
-	__HAL_UART_ENABLE_IT(&huart2, UART_IT_IDLE);
-  __HAL_UART_ENABLE_IT(&huart4, UART_IT_IDLE);
-  __HAL_UART_ENABLE_IT(&huart6, UART_IT_IDLE);
-  __HAL_UART_ENABLE_IT(&huart8, UART_IT_IDLE);
+	__HAL_UART_ENABLE_IT(&huart1, UART_IT_IDLE);//遥控
+	__HAL_UART_ENABLE_IT(&huart2, UART_IT_IDLE);//PC
+  __HAL_UART_ENABLE_IT(&huart4, UART_IT_IDLE);//舵机
+  __HAL_UART_ENABLE_IT(&huart6, UART_IT_IDLE);//通信
+  //__HAL_UART_ENABLE_IT(&huart8, UART_IT_IDLE);
 	
 	/*使能DMA中断*/
 	HAL_UART_Receive_DMA(&huart1,USART1_RX_DATA,SizeofRemote); //这一步的目的是创建一段接受内存，和CAN的一样
 	HAL_UART_Receive_DMA(&huart2,USART2_RX_DATA,SizeofMinipc);
-  HAL_UART_Receive_DMA(&huart4,UART4_RX_DATA,SizeofJY61);
-  HAL_UART_Receive_DMA(&huart6,USART6_RX_DATA,SizeofJY61);
+  HAL_UART_Receive_DMA(&huart6,USART6_RX_DATA,SizeofCommunication);
 
 /*开启ADC的DMA接收，注意缓存不能小于2，不能设置为_IO型即易变量*/
 //	HAL_ADC_Start_DMA(&hadc1, (uint32_t*)uhADCxConvertedValue, 10); 
@@ -298,11 +298,9 @@ void BSP_Init(void)
 	 MPU6500_Init();
 	/*使能can中断*/
   HAL_CAN_Receive_IT(&hcan1, CAN_FIFO0); 
-  HAL_CAN_Receive_IT(&hcan2, CAN_FIFO0);
-	#if jy61
-	//JY61_Frame();  
-  #endif
-	HAL_Delay(1000);
+  //HAL_CAN_Receive_IT(&hcan2, CAN_FIFO0);
+  /*摩擦轮*/
+  GUN_Init();
 
 }
 

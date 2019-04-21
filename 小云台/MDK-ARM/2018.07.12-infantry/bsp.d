@@ -68,6 +68,7 @@
 2018.07.12-infantry\bsp.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h
 2018.07.12-infantry\bsp.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/semphr.h
 2018.07.12-infantry\bsp.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/event_groups.h
+2018.07.12-infantry\bsp.o: ../Inc/AX-12A.h
 2018.07.12-infantry\bsp.o: .\Algorithm\pid.h
 2018.07.12-infantry\bsp.o: .\Algorithm\protocol.h
 2018.07.12-infantry\bsp.o: .\APP_task\gun_task.h

@@ -17,12 +17,9 @@
 /* 内部自定义数据类型 --------------------------------------------------------*/
  uint8_t USART1_RX_DATA[(SizeofRemote)];//遥控
  uint16_t USART1_RX_NUM;
- uint8_t USART6_RX_DATA[(SizeofJY61)];//裁判系统
+ uint8_t USART6_RX_DATA[(SizeofCommunication)];//通信
  uint16_t USART6_RX_NUM;
- uint8_t UART8_RX_DATA[(SizeofJY61)];//外接陀螺仪
- uint16_t UART8_RX_NUM;
- uint8_t UART4_RX_DATA[(SizeofJY61)];//外接陀螺仪
- uint16_t UART4_RX_NUM;
+
  struct STime			stcTime;
  struct SAcc 			stcAcc;
  struct SGyro 		stcGyro;
@@ -44,6 +41,8 @@
 /* 外部函数原型声明 ----------------------------------------------------------*/
 
 /* 内部变量 ------------------------------------------------------------------*/
+//通信
+uint8_t communication_message;
 //外接陀螺仪
 JY61_t   ptr_jy61_t_yaw =  {0};
 JY61_t   ptr_jy61_t_pit =  {0};
@@ -276,6 +275,20 @@ void JY61_Data_Pro()
 
 //}
 #endif
+/***************************************************************************************
+**
+	*	@brief	Remote_Ctrl(void)
+	*	@param
+	*	@supplement	使用串口接收遥控器数据
+	*	@retval	
+****************************************************************************************/
+void Communication_Ctrl(void)
+{
+  if(USART6_RX_DATA[0] == 0xfe && USART6_RX_DATA[2] == 0xff)
+  {
+      communication_message = USART6_RX_DATA[1];
+  }
+}
 /***************************************************************************************
 **
 	*	@brief	Remote_Ctrl(void)

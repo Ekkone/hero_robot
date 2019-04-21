@@ -40,3 +40,4 @@
 2018.07.12-infantry\motor_use_tim.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h
 2018.07.12-infantry\motor_use_tim.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h
 2018.07.12-infantry\motor_use_tim.o: ../Inc/tim.h
+2018.07.12-infantry\motor_use_tim.o: .\Algorithm\pid.h

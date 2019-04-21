@@ -28,10 +28,10 @@ GPIO：
 -串口：			-  引脚		  	功能/备注				         DMA_request        DMA-stream           波特率              	优先级
 
 -USART1   -  PB9/PB7  UART1_TX/UART1_RX（遥控器）   USART1_RX        DMA2-Stream2          100000   				  (5，0)/dma对应相同
--USART2   -  PD5/PD6  UART2_TX/UART2_Rx(蓝牙)       USART2_RX				 DMA1_Stream5					 115200
+-USART2   -  PD5/PD6  UART2_TX/UART2_Rx(MiniPC)      USART2_RX				 DMA1_Stream5					 115200
 -USART3   -  PD9/PD8	UART3_TX/UART3_RX（串口）	    USART3_RX        DMA1-Stream1          115200					    NULL	
-//-UART4    -  PA0/PA1  UART4_TX/UART4_Rx            UART4_RX         DMA1-Stream2          115200
--USART6   -  PG14/PG9	UART6_TX/UART6_RX（JY61）     USART6_RX				 DMA2-Stream1          115200				   	 (6,0) /
+-UART4    -  PA0/PA1  UART4_TX/UART4_Rx (舵机)       UART4_RX         DMA1-Stream2          115200
+-USART6   -  PG14/PG9	UART6_TX/UART6_RX（通信）     USART6_RX				 DMA2-Stream1          115200				   	 (6,0) /
 
 -spi5：
 	PF7     ------> SPI5_SCK

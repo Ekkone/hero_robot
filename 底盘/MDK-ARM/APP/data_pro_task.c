@@ -41,6 +41,7 @@ uint8_t press_counter;
 uint8_t shot_anjian_counter=0;
 uint8_t shot_frequency = 100;
 int8_t chassis_gimble_Mode_flg;
+uint8_t communication_message[3] = {0xfe,1,0xff};
 //volatile float remain_power=0.0;   //底盘功率 _待续
 //float power; 				 //底盘功率 _测试
 
@@ -194,6 +195,20 @@ void MouseKeyControlProcess()
             if(moto_3508_set.dstVmmps_X>0) 	                   moto_3508_set.dstVmmps_X -= DEC_SPEED;
             if(moto_3508_set.dstVmmps_X<0) 		                 moto_3508_set.dstVmmps_X += DEC_SPEED;
     }
+  }
+  /*小云台控制*/
+  if(B_Press)
+  {
+    communication_message[2] = 1;//睡眠模式
+  }
+  else if(V_Press)
+  {
+    communication_message[2] = 0;//自动模式
+  }
+  if(communication_message[2])
+  {
+    if(Z_Press && CTRL_Press) communication_message[2] = 3;//关闭仓门
+    else if(Z_Press)          communication_message[2] = 2;//打开仓门 
   }
 }
 

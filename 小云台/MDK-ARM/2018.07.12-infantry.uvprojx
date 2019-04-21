@@ -336,7 +336,7 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>--C99</MiscControls>
-              <Define>USE_HAL_DRIVER,STM32F427xx,ARM_MATH_CM4,__CC_ARM,ARM_MATH_MATRIX_CHECK,ARM_MATH_ROUNDING</Define>
+              <Define>USE_HAL_DRIVER,STM32F427xx,ARM_MATH_CM4,__CC_ARM,ARM_MATH_MATRIX_CHECK,ARM_MATH_ROUNDING,__FPU_PRESENT=1</Define>
               <Undefine></Undefine>
               <IncludePath>../Inc;../Drivers/STM32F4xx_HAL_Driver/Inc;../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy;../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F;../Drivers/CMSIS/Device/ST/STM32F4xx/Include;../Middlewares/Third_Party/FreeRTOS/Source/include;../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS;../Drivers/CMSIS/Include;.\app;.\MotorDriver;.\Algorithm;.\APP_task;..\DSP_LIB;..\DSP_LIB\include;.\Communication</IncludePath>
             </VariousControls>
@@ -497,6 +497,11 @@
               <FileType>1</FileType>
               <FilePath>..\..\云台\MDK-ARM\MotorDriver\Motor_USE_TIM.c</FilePath>
             </File>
+            <File>
+              <FileName>AX-12A.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Src\AX-12A.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -511,6 +516,11 @@
               <FileName>SystemState.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\Algorithm\SystemState.c</FilePath>
+            </File>
+            <File>
+              <FileName>user_lib.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\云台\MDK-ARM\Algorithm\user_lib.c</FilePath>
             </File>
           </Files>
         </Group>

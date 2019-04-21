@@ -48,7 +48,7 @@ extern void first_order_filter_init(first_order_filter_type_t *first_order_filte
 //一阶滤波计算
 extern void first_order_filter_cali(first_order_filter_type_t *first_order_filter_type, fp32 input);
 //绝对限制
-extern void abs_limit(fp32 *num, fp32 Limit);
+//extern void abs_limit(fp32 *num, fp32 Limit);
 //判断符号位
 extern fp32 sign(fp32 value);
 //浮点死区

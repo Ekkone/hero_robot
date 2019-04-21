@@ -55,6 +55,7 @@
 2018.07.12-infantry\remote_task.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h
 2018.07.12-infantry\remote_task.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/semphr.h
 2018.07.12-infantry\remote_task.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/event_groups.h
+2018.07.12-infantry\remote_task.o: ../Inc/AX-12A.h
 2018.07.12-infantry\remote_task.o: .\Algorithm\pid.h
 2018.07.12-infantry\remote_task.o: .\Communication\minipc.h
 2018.07.12-infantry\remote_task.o: .\Communication\communication.h 

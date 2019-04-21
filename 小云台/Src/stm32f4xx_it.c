@@ -72,6 +72,8 @@ extern DMA_HandleTypeDef hdma_uart8_rx;
 extern uint32_t Micro_Tick;
 extern uint32_t Photoelectric_gate1,Photoelectric_gate2;
 extern uint16_t gate1_counter,gate2_counter;
+volatile uint8_t RemoteData_flag = 0;
+volatile uint8_t Communication_flag = 0;
 /******************************************************************************/
 /*            Cortex-M4 Processor Interruption and Exception Handlers         */ 
 /******************************************************************************/
@@ -322,7 +324,6 @@ void DMA1_Stream5_IRQHandler(void)
   HAL_DMA_IRQHandler(&hdma_usart2_rx);
   /* USER CODE END DMA2_Stream2_IRQn 1 */
 }
-volatile uint8_t RemoteData_flag = 0;
 void USART1_IRQHandler (void)
 {
 	 static  BaseType_t  pxHigherPriorityTaskWoken;
@@ -390,31 +391,31 @@ void USART3_IRQHandler (void)
 			
 		 }
 }
-void UART4_IRQHandler(void)
-{
-	uint8_t tmp1,tmp2;
-	tmp1 = __HAL_UART_GET_FLAG(&huart4, UART_FLAG_IDLE);   //空闲中断中将已收字节数取出后，停止DMA
-  tmp2 = __HAL_UART_GET_IT_SOURCE(&huart4, UART_IT_IDLE);
-	
-   if((tmp1 != RESET)&&(tmp2 != RESET))
-	{
-		
-		//RefreshDeviceOutLineTime(JY61_NO);
-		
-		__HAL_DMA_DISABLE(&hdma_uart4_rx);
-		__HAL_UART_CLEAR_IDLEFLAG(&huart4);
-		
-		UART4_RX_NUM=(SizeofJY61)-(hdma_uart4_rx.Instance->NDTR);
-		
-		//JY61_Data_Pro();
-		__HAL_DMA_SET_COUNTER(&hdma_uart4_rx,SizeofJY61);
-    __HAL_DMA_ENABLE(&hdma_uart4_rx);
-	}
-  HAL_UART_IRQHandler(&huart4);
-  /* USER CODE BEGIN UART8_IRQn 1 */
+//void UART4_IRQHandler(void)
+//{
+//	uint8_t tmp1,tmp2;
+//	tmp1 = __HAL_UART_GET_FLAG(&huart4, UART_FLAG_IDLE);   //空闲中断中将已收字节数取出后，停止DMA
+//  tmp2 = __HAL_UART_GET_IT_SOURCE(&huart4, UART_IT_IDLE);
+//	
+//   if((tmp1 != RESET)&&(tmp2 != RESET))
+//	{
+//		
+//		//RefreshDeviceOutLineTime(JY61_NO);
+//		
+//		__HAL_DMA_DISABLE(&hdma_uart4_rx);
+//		__HAL_UART_CLEAR_IDLEFLAG(&huart4);
+//		
+//		UART4_RX_NUM=(SizeofJY61)-(hdma_uart4_rx.Instance->NDTR);
+//		
+//		//JY61_Data_Pro();
+//		__HAL_DMA_SET_COUNTER(&hdma_uart4_rx,SizeofJY61);
+//    __HAL_DMA_ENABLE(&hdma_uart4_rx);
+//	}
+//  HAL_UART_IRQHandler(&huart4);
+//  /* USER CODE BEGIN UART8_IRQn 1 */
 
-  /* USER CODE END UART8_IRQn 1 */
-}
+//  /* USER CODE END UART8_IRQn 1 */
+//}
 void USART6_IRQHandler(void)
 {
 	uint8_t tmp1,tmp2;
@@ -423,16 +424,16 @@ void USART6_IRQHandler(void)
 	
    if((tmp1 != RESET)&&(tmp2 != RESET))
 	{
-		
+		Communication_flag = 1;
 		//RefreshDeviceOutLineTime(JY61_NO);
 		
 		__HAL_DMA_DISABLE(&hdma_usart6_rx);
 		__HAL_UART_CLEAR_IDLEFLAG(&huart6);
 		
-		USART6_RX_NUM=(SizeofJY61)-(hdma_usart6_rx.Instance->NDTR);
+		USART6_RX_NUM=(SizeofCommunication)-(hdma_usart6_rx.Instance->NDTR);
 		
-		//JY61_Data_Pro();
-		__HAL_DMA_SET_COUNTER(&hdma_usart6_rx,SizeofJY61);
+		Communication_Ctrl();
+		__HAL_DMA_SET_COUNTER(&hdma_usart6_rx,SizeofCommunication);
     __HAL_DMA_ENABLE(&hdma_usart6_rx);
 	}
   HAL_UART_IRQHandler(&huart6);
@@ -440,31 +441,31 @@ void USART6_IRQHandler(void)
 
   /* USER CODE END UART8_IRQn 1 */
 }
-void UART8_IRQHandler(void)
-{
-	uint8_t tmp1,tmp2;
-	tmp1 = __HAL_UART_GET_FLAG(&huart8, UART_FLAG_IDLE);   //空闲中断中将已收字节数取出后，停止DMA
-  tmp2 = __HAL_UART_GET_IT_SOURCE(&huart8, UART_IT_IDLE);
-	
-   if((tmp1 != RESET)&&(tmp2 != RESET))
-	{
-		
-		//RefreshDeviceOutLineTime(JY61_NO);
-		
-		__HAL_DMA_DISABLE(&hdma_uart8_rx);
-		__HAL_UART_CLEAR_IDLEFLAG(&huart8);
-		
-		UART8_RX_NUM=(SizeofJY61)-(hdma_uart8_rx.Instance->NDTR);
-		
-		//JY61_Data_Pro();
-		__HAL_DMA_SET_COUNTER(&hdma_uart8_rx,SizeofJY61);
-    __HAL_DMA_ENABLE(&hdma_uart8_rx);
-	}
-  HAL_UART_IRQHandler(&huart8);
-  /* USER CODE BEGIN UART8_IRQn 1 */
+//void UART8_IRQHandler(void)
+//{
+//	uint8_t tmp1,tmp2;
+//	tmp1 = __HAL_UART_GET_FLAG(&huart8, UART_FLAG_IDLE);   //空闲中断中将已收字节数取出后，停止DMA
+//  tmp2 = __HAL_UART_GET_IT_SOURCE(&huart8, UART_IT_IDLE);
+//	
+//   if((tmp1 != RESET)&&(tmp2 != RESET))
+//	{
+//		
+//		//RefreshDeviceOutLineTime(JY61_NO);
+//		
+//		__HAL_DMA_DISABLE(&hdma_uart8_rx);
+//		__HAL_UART_CLEAR_IDLEFLAG(&huart8);
+//		
+//		UART8_RX_NUM=(SizeofJY61)-(hdma_uart8_rx.Instance->NDTR);
+//		
+//		//JY61_Data_Pro();
+//		__HAL_DMA_SET_COUNTER(&hdma_uart8_rx,SizeofJY61);
+//    __HAL_DMA_ENABLE(&hdma_uart8_rx);
+//	}
+//  HAL_UART_IRQHandler(&huart8);
+//  /* USER CODE BEGIN UART8_IRQn 1 */
 
-  /* USER CODE END UART8_IRQn 1 */
-}
+//  /* USER CODE END UART8_IRQn 1 */
+//}
 
 /**
 * @brief This function handles CAN1 RX0 interrupts.

@@ -74,6 +74,7 @@ extern float power; 				 //底盘功率 _测试
 extern int8_t chassis_gimble_Mode_flg;
 extern float chassis_Current; 
 extern float	 chassis_Volt; 
+
 /* 本模块向外部提供的接口函数原型声明----------------------------------------*/		 
 void Referee_Data_Task(void const * argument);
 void Remote_Data_Task(void const * argument); 

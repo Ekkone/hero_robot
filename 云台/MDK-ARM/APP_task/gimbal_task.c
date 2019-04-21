@@ -85,13 +85,13 @@ void gimbal_pid_init(void)
                   2.2f, 0.0f, 0.0f );
 #else
 /*pit编码器反馈*/
-/*操作稳定但强震会抖*/
+/*操作稳定*/
 //  PID_struct_init(&pid_pit_jy61, POSITION_PID, 5000, 1000,
-//                  11.0f, 0.07f, 0.0f); //	
+//                  11.0f, 0.07f, 9.0f); //	
 //  PID_struct_init(&pid_pit_jy61_spd, POSITION_PID, 5000, 1000,
 //                  2.5f, 0.0f, 0.0f ); 
-  PID_struct_init(&pid_pit_jy61, POSITION_PID, 5000, 1000,
-                  11.0f, 0.07f, 9.0f); //	
+  PID_struct_init(&pid_pit_jy61, POSITION_PID, 5000, 100,
+                  10.0f, 0.03f, 13.0f); //	
   PID_struct_init(&pid_pit_jy61_spd, POSITION_PID, 5000, 1000,
                   2.5f, 0.0f, 0.0f ); 
 #endif
@@ -210,7 +210,7 @@ void Gimbal_Contrl_Task(void const * argument)
           {
             if(yaw_set_follow.expect <= yaw_set_follow.expect_last)
             goto last;
-            yaw_set_follow.expect = ptr_jy61_t_yaw.final_angle-5;
+            yaw_set_follow.expect = ptr_jy61_t_yaw.final_angle;
           }
 
           if(yaw_get.angle < 1100)
