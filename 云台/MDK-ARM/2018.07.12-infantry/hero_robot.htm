@@ -3,7 +3,7 @@
 <title>Static Call Graph - [2018.07.12-infantry\hero_robot.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image 2018.07.12-infantry\hero_robot.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060750: Last Updated: Sat Apr 20 21:34:14 2019
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060750: Last Updated: Tue Apr 23 20:17:10 2019
 <BR><P>
 <H3>Maximum Stack Usage =        336 bytes + Unknown(Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -725,7 +725,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[73]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Gun_Task
 </UL>
 
-<P><STRONG><a name="[73]"></a>Gun_Task</STRONG> (Thumb, 414 bytes, Stack size 8 bytes, gun_task.o(i.Gun_Task))
+<P><STRONG><a name="[73]"></a>Gun_Task</STRONG> (Thumb, 428 bytes, Stack size 8 bytes, gun_task.o(i.Gun_Task))
 <BR><BR>[Stack]<UL><LI>Max Depth = 88<LI>Call Chain = Gun_Task &rArr; osDelayUntil &rArr; vTaskDelayUntil &rArr; xTaskResumeAll &rArr; xTaskIncrementTick
 </UL>
 <BR>[Calls]<UL><LI><a href="#[a8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;xTaskGetTickCount
@@ -1591,7 +1591,7 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[71]"></a>Remote_Data_Task</STRONG> (Thumb, 82 bytes, Stack size 8 bytes, remote_task.o(i.Remote_Data_Task))
-<BR><BR>[Stack]<UL><LI>Max Depth = 96<LI>Call Chain = Remote_Data_Task &rArr; ChassisModeProcess &rArr; CAN_Send_YK &rArr; HAL_CAN_Transmit
+<BR><BR>[Stack]<UL><LI>Max Depth = 96<LI>Call Chain = Remote_Data_Task &rArr; ShotProcess &rArr; CAN_Send_YK &rArr; HAL_CAN_Transmit
 </UL>
 <BR>[Calls]<UL><LI><a href="#[a8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;xTaskGetTickCount
 <LI><a href="#[ab]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osDelayUntil
@@ -1603,8 +1603,8 @@ Global Symbols
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> freertos.o(.constdata)
 </UL>
-<P><STRONG><a name="[10d]"></a>ShotProcess</STRONG> (Thumb, 164 bytes, Stack size 16 bytes, remote_task.o(i.ShotProcess))
-<BR><BR>[Stack]<UL><LI>Max Depth = 72<LI>Call Chain = ShotProcess &rArr; CAN_Send_YK &rArr; HAL_CAN_Transmit
+<P><STRONG><a name="[10d]"></a>ShotProcess</STRONG> (Thumb, 212 bytes, Stack size 32 bytes, remote_task.o(i.ShotProcess))
+<BR><BR>[Stack]<UL><LI>Max Depth = 88<LI>Call Chain = ShotProcess &rArr; CAN_Send_YK &rArr; HAL_CAN_Transmit
 </UL>
 <BR>[Calls]<UL><LI><a href="#[a2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CAN_Send_YK
 </UL>

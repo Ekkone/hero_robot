@@ -69,6 +69,7 @@ dipan_board_test\freertos.o: .\APP\data_pro_task.h
 dipan_board_test\freertos.o: ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.h
 dipan_board_test\freertos.o: .\Communication\minipc.h
 dipan_board_test\freertos.o: .\Algorithm\protocol.h
+dipan_board_test\freertos.o: ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.h
 dipan_board_test\freertos.o: .\APP\gun_task.h
 dipan_board_test\freertos.o: ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.h
 dipan_board_test\freertos.o: .\MotorDriver\Motor_USE_TIM.h

@@ -425,7 +425,7 @@ void USART6_IRQHandler(void)
    if((tmp1 != RESET)&&(tmp2 != RESET))
 	{
 		Communication_flag = 1;
-		//RefreshDeviceOutLineTime(JY61_NO);
+		RefreshDeviceOutLineTime(Remote_NO);
 		
 		__HAL_DMA_DISABLE(&hdma_usart6_rx);
 		__HAL_UART_CLEAR_IDLEFLAG(&huart6);

@@ -153,7 +153,56 @@
           <Name></Name>
         </SetRegEntry>
       </TargetDriverDllRegistry>
-      <Breakpoint/>
+      <Breakpoint>
+        <Bp>
+          <Number>0</Number>
+          <Type>0</Type>
+          <LineNumber>52</LineNumber>
+          <EnabledFlag>1</EnabledFlag>
+          <Address>134241146</Address>
+          <ByteObject>0</ByteObject>
+          <HtxType>0</HtxType>
+          <ManyObjects>0</ManyObjects>
+          <SizeOfObject>0</SizeOfObject>
+          <BreakByAccess>0</BreakByAccess>
+          <BreakIfRCount>1</BreakIfRCount>
+          <Filename>F:\Work\hero\Src\AX-12A.c</Filename>
+          <ExecCommand></ExecCommand>
+          <Expression>\\hero_robot\../Src/AX-12A.c\52</Expression>
+        </Bp>
+        <Bp>
+          <Number>1</Number>
+          <Type>0</Type>
+          <LineNumber>80</LineNumber>
+          <EnabledFlag>1</EnabledFlag>
+          <Address>134234160</Address>
+          <ByteObject>0</ByteObject>
+          <HtxType>0</HtxType>
+          <ManyObjects>0</ManyObjects>
+          <SizeOfObject>0</SizeOfObject>
+          <BreakByAccess>0</BreakByAccess>
+          <BreakIfRCount>1</BreakIfRCount>
+          <Filename>F:\Work\hero\Src\AX-12A.c</Filename>
+          <ExecCommand></ExecCommand>
+          <Expression>\\hero_robot\../Src/AX-12A.c\80</Expression>
+        </Bp>
+        <Bp>
+          <Number>2</Number>
+          <Type>0</Type>
+          <LineNumber>679</LineNumber>
+          <EnabledFlag>1</EnabledFlag>
+          <Address>134230716</Address>
+          <ByteObject>0</ByteObject>
+          <HtxType>0</HtxType>
+          <ManyObjects>0</ManyObjects>
+          <SizeOfObject>0</SizeOfObject>
+          <BreakByAccess>0</BreakByAccess>
+          <BreakIfRCount>1</BreakIfRCount>
+          <Filename>F:\Work\hero\Drivers\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_uart.c</Filename>
+          <ExecCommand></ExecCommand>
+          <Expression>\\hero_robot\../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.c\679</Expression>
+        </Bp>
+      </Breakpoint>
       <WatchWindow1>
         <Ww>
           <count>0</count>
@@ -274,7 +323,7 @@
       <DebugFlag>
         <trace>0</trace>
         <periodic>1</periodic>
-        <aLwin>1</aLwin>
+        <aLwin>0</aLwin>
         <aCover>0</aCover>
         <aSer1>0</aSer1>
         <aSer2>0</aSer2>

@@ -64,6 +64,7 @@ dipan_board_test\bsp.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/semph
 dipan_board_test\bsp.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/event_groups.h
 dipan_board_test\bsp.o: .\Algorithm\pid.h
 dipan_board_test\bsp.o: .\Algorithm\protocol.h
+dipan_board_test\bsp.o: ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.h
 dipan_board_test\bsp.o: .\APP\gun_task.h
 dipan_board_test\bsp.o: ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.h
 dipan_board_test\bsp.o: .\APP\chassis_task.h

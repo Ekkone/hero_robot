@@ -169,8 +169,8 @@ void Gimbal_Contrl_Task(void const * argument)
         }break;
         case SleepMode://休眠模式，复位
         {
-            yaw_set.expect = 0;
-            yaw_set.expect = 0;
+            yaw_set.expect = 3000 - yaw_get.offset_angle;
+            pit_set.expect = 3000 - pit_get.offset_angle;
         }break;
         case PatrolMode://巡逻模式，yaw轴周期转动
         {

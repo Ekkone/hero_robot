@@ -274,69 +274,6 @@ void Remote_Data_Task(void const * argument)
 
 /***************************************************************************************
 **
-	*	@brief	JSYS_Task(void const * argument)
-	*	@param
-	*	@supplement	裁判系统数据处理任务
-	*	@retval	
-****************************************************************************************/
-void Referee_Data_Task(void const * argument)
-{
-	    tFrame   *Frame;
-    portTickType xLastWakeTime;
-		xLastWakeTime = xTaskGetTickCount();
-	    uint32_t NotifyValue;
-	for(;;)
-	{
-    RefreshTaskOutLineTime(RefereeTask_ON);
-    NotifyValue=ulTaskNotifyTake(pdTRUE,portMAX_DELAY);
-    if(NotifyValue==1)
-		{
-        
-			  NotifyValue=0;
-        uint8_t *buff=USART6_RX_DATA;
-			for(int8_t i=0;i<USART6_RX_NUM;i++)
-			{
-					if(buff[i]==0xA5)
-					{
-					   Frame = (tFrame *)&buff[i];
-						
-					    if( verify_crc16_check_sum((uint8_t *)Frame, Frame->FrameHeader.DataLength + sizeof(tFrameHeader) + sizeof(tCmdID) + sizeof(Frame->CRC16))
-		             && verify_crc8_check_sum((uint8_t *)Frame,sizeof(tFrameHeader)))
-								 {
-									 if(Frame->CmdID==PowerANDHeat)
-									 {
-											current_get.Current_Referee = Frame->Data.PowerANDHeat.chassisCurrent;
-											limit.Volt_Referee = Frame->Data.PowerANDHeat.chassisVolt;
-											limit.PowerRemain_Referee=Frame->Data.PowerANDHeat.chassisPowerBuffer;
-											ptr_heat_gun_t.rel_heat = Frame->Data.PowerANDHeat.shootHeat0;
-											limit.Power_Referee = Frame->Data.PowerANDHeat.chassisPower;
-											
-									 }
-									 if(Frame->CmdID==GameInfo)
-									 {
-											ptr_heat_gun_t.roboLevel=Frame->Data.GameInfo.roboLevel;
-                      
-									 }
-									 if(Frame->CmdID==ShootData)
-									 {
-											ptr_heat_gun_t.shted_bullet++;
-									 }
-											 i=i+sizeof(Frame);
-								}
-					}
-				
-			}
-					if(printf_Referee){ 
-		printf("shootHeat0:%d\tchassisPowerBuffer:%f\n",
-						Frame->Data.PowerANDHeat.shootHeat0,Frame->Data.PowerANDHeat.chassisPowerBuffer);
-		}
-
-	 }
-    osDelayUntil(&xLastWakeTime, REFEREE_PERIOD);
- }
-}	
-/***************************************************************************************
-**
 	*	@brief	MiniPC_Data_task(void const * argument)
 	*	@param
 	*	@supplement	视觉数据处理任务

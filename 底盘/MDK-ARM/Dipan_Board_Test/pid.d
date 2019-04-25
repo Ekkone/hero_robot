@@ -56,6 +56,7 @@ dipan_board_test\pid.o: .\Communication\minipc.h
 dipan_board_test\pid.o: .\Communication\communication.h 
 dipan_board_test\pid.o: ../Inc/usart.h
 dipan_board_test\pid.o: .\Algorithm\protocol.h
+dipan_board_test\pid.o: ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.h
 dipan_board_test\pid.o: .\APP\gun_task.h
 dipan_board_test\pid.o: ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.h
 dipan_board_test\pid.o: .\MotorDriver\Motor_USE_CAN.h

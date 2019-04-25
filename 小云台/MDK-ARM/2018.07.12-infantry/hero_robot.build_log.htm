@@ -27,7 +27,13 @@ Project File Date:  04/21/2019
 <h2>Output:</h2>
 *** Using Compiler 'V5.06 update 6 (build 750)', folder: 'D:\Keil\ARM\ARMCC\Bin'
 Build target 'hero_robot'
-"2018.07.12-infantry\hero_robot.axf" - 0 Error(s), 0 Warning(s).
+compiling stm32f4xx_it.c...
+../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f427xx.h(70): warning:  #47-D: incompatible redefinition of macro "__FPU_PRESENT" 
+  #define __FPU_PRESENT             1U       /*!< FPU present   	 */
+../Src/stm32f4xx_it.c: 1 warning, 0 errors
+linking...
+Program Size: Code=24976 RO-data=784 RW-data=260 ZI-data=19868  
+"2018.07.12-infantry\hero_robot.axf" - 0 Error(s), 1 Warning(s).
 
 <h2>Software Packages used:</h2>
 
@@ -50,7 +56,7 @@ Package Vendor: Keil
 <h2>Collection of Component Files used:</h2>
 
    * Component: ARM::CMSIS:CORE:5.2.0
-Build Time Elapsed:  00:00:02
+Build Time Elapsed:  00:00:05
 </pre>
 </body>
 </html>

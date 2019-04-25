@@ -17,6 +17,8 @@
 
 /* 包含头文件 ----------------------------------------------------------------*/
 #include "protocol.h"
+#include "communication.h"
+#include "data_pro_task.h"
 /* 内部自定义数据类型 --------------------------------------------------------*/
 
 /* 内部宏定义 ----------------------------------------------------------------*/
@@ -24,6 +26,7 @@
 /* 任务相关信息定义-----------------------------------------------------------*/
 
 /* 内部常量定义---------------------------------------------------------------*/
+ROBOT Robot;
 const uint8_t CRC8_INIT     = 0xff;
 const uint8_t CRC8_TAB[256] = {
   0x00, 0x5e, 0xbc, 0xe2, 0x61, 0x3f, 0xdd, 0x83, 0xc2, 0x9c, 0x7e, 0x20, 0xa3, 0xfd, 0x1f, 0x41,
@@ -206,12 +209,12 @@ void Send_FrameData(tCmdID cmdid, uint8_t * pchMessage,uint8_t dwLength)
 {	
 	uint8_t i;
 	uint8_t *addr;
-  tSelfDefineFrame SelfDefineFrame = {.FrameHeader.SOF = 0xA5};// 帧
+  custom_dataFrame SelfDefineFrame = {.FrameHeader.SOF = 0xA5};// 帧
 	
-	if ((pchMessage == 0) || (dwLength != sizeof(tSelfDefine)))
+	if ((pchMessage == 0) || (dwLength != sizeof(custom_data)))
 		return ;
 	
-	addr = (uint8_t *)&SelfDefineFrame.SelfDefine.data1;
+	addr = (uint8_t *)&SelfDefineFrame.custom_data.data1;
 	
 	SelfDefineFrame.CmdID = cmdid; //命令
 	SelfDefineFrame.FrameHeader.DataLength = dwLength;//数据长度
@@ -228,8 +231,6 @@ void Send_FrameData(tCmdID cmdid, uint8_t * pchMessage,uint8_t dwLength)
   	i = sizeof(SelfDefineFrame.FrameHeader) + sizeof(SelfDefineFrame.CmdID)  + sizeof(SelfDefineFrame.CRC16) + dwLength;//计算实际帧的长度
 	  SelfDefineFrame.CRC16 = append_crc16_check_sum((uint8_t *)&SelfDefineFrame,i);
 	
-	
-//  HAL_UART_Transmit_DMA(&huart6, (uint8_t *)&SelfDefineFrame, 22);
 	HAL_UART_Transmit(&huart6,(uint8_t *)&SelfDefineFrame,22,100);
 	
 }
@@ -243,95 +244,106 @@ void Send_FrameData(tCmdID cmdid, uint8_t * pchMessage,uint8_t dwLength)
 void sendata(void)
 {
 	//(1)
-	tSelfDefine SelfDefine;
-	SelfDefine.data1 = 1.0f;
-	SelfDefine.data2 = 2.0f;
-	SelfDefine.data3 = 3.0f;
-	SelfDefine.data4 = 4;
-	Send_FrameData(SelfDefinedData,(uint8_t *)&SelfDefine,sizeof(SelfDefine));	
+	client_custom_data_t       custom_data_t; 
+	custom_data_t.data1 = 1.0f;
+	custom_data_t.data2 = 2.0f;
+	custom_data_t.data3 = 3.0f;
+	Send_FrameData(custom_data,(uint8_t *)&custom_data_t,sizeof(custom_data_t));	
 
 }
-/*
-//数据验证
-void DataVerify()
+
+
+/***************************************************************************************
+**
+	*	@brief	JSYS_Task(void const * argument)
+	*	@param
+	*	@supplement	
+	*	@retval	
+****************************************************************************************/
+void Referee_Data_Task(void const * argument)
 {
-	tFrame *frame;
+	    tFrame   *Frame;
 	
-	if(USART2_RX_STA&0x8000)//接收完成
-	{		
-		frame = (tFrame *)USART2_RX_BUF;//帧数据缓存地址
-		if(Verify_CRC8_Check_Sum((uint8_t *)frame,sizeof(tFrameHeader)) &&  
-			 Verify_CRC16_Check_Sum((uint8_t *)frame,frame->FrameHeader.DataLength + sizeof(tFrameHeader) + sizeof(tCmdID) + sizeof(frame->CRC16))
-		{ //通过校验
-			Explain(frame);//数据解释	
-		}
-		USART2_RX_STA = 0;
-	}
-}*/
-
-/*
-//解释裁判系统发来的串口数据
-void Explain(tFrame *pchMessage)
-{
-	tCmdID cmdid;
-	uint8_t temp;
-	uint32_t value;
-
-	cmdid = pchMessage->CmdID;
-	switch(cmdid)
+	    uint32_t NotifyValue;
+	for(;;)
 	{
-		case GameInfo:	//	
-		
-			printf("比赛剩余时间     %u \r\n",(uint32_t)pchMessage->Data.GameInfo.remainTime);
-		  printf("机器人剩余血量   %u \r\n",(uint32_t)pchMessage->Data.GameInfo.remainLifeValue);
-		  printf("实时底盘输出电压 %f V \r\n",pchMessage->Data.GameInfo.realChassisOutV);
-		  printf("实时底盘输出电流 %f A \r\n",pchMessage->Data.GameInfo.realChassisOutA);
-			printf("机器人位置信息   X = %u  Y = %u Z = %u compass = %u \r\n",(uint32_t)pchMessage->Data.GameInfo.locData.x,
-			(uint32_t)pchMessage->Data.GameInfo.locData.y,(uint32_t)pchMessage->Data.GameInfo.locData.z,(uint32_t)pchMessage->Data.GameInfo.locData.compass);
-			printf("剩余能量        %f J \r\n",pchMessage->Data.GameInfo.remainPower);
-			break;
-		
-		case RealBloodChangedData:
-		 
-			temp = pchMessage->Data.RealBloodChangedData.way;
-			value = (uint32_t)pchMessage->Data.RealBloodChangedData.value;
-			if(temp == BC_Strike)        
-				printf("%u 号装甲面攻击伤害，扣血 %u \r\n",(uint32_t)pchMessage->Data.RealBloodChangedData.weakId,value);				
-			if(temp == BC_ShootSpeed)  
-				printf("子弹超速，扣血     %u \r\n",value);			
-			if(temp == BC_ShootFreq)  
-				printf("子弹超频，扣血     %u \r\n",value);			
-			if(temp == BC_PowerLimit)  
-				printf("功率超限，扣血     %u \r\n",value);
-			if(temp == BC_ModuleOffline)  
-				printf("模块离线，扣血     %u \r\n",value);
-			if(temp == BC_CommonFoul)  
-				printf("普通犯规，扣血     %u \r\n",value);
-			if(temp == BC_Tarmac)  
-				printf("停机坪，加血       %u \r\n",value);
-			if(temp == BC_EngineerOuto)  
-				printf("工程机器人自动回血 %u \r\n",value);
-			break;
+    
+			  NotifyValue=ulTaskNotifyTake(pdTRUE,portMAX_DELAY);
+    
+    if(NotifyValue==1)
+		{
+			  NotifyValue=0;
 			
-		case RealShootData:
-			
-			printf("子弹实时射速             %f （m/s）\r\n",pchMessage->Data.RealShootData.realBulletShootSpeed);
-			printf("子弹实时射频             %f （发 /s）\r\n",pchMessage->Data.RealShootData.realBulletShootFreq);
-			printf("高尔夫实时射速           %f （发 /s）\r\n",pchMessage->Data.RealShootData.realGolfShootSpeed);
-			printf(" 英雄机器人高尔夫实时射频 %f  ( 发 /s )\r\n",pchMessage->Data.RealShootData.realGolfShootFreq);
-			break;
-		
-		case SelfDefinedData: 
-			
-			printf("the data is %f   %f   %f!\r\n",pchMessage->Data.SelfDefineInfo.data1,pchMessage->Data.SelfDefineInfo.data2,
-			       pchMessage->Data.SelfDefineInfo.data3);
-			break;
-		
-		default:              
-			printf("the message is wrong!\r\n");
-		  break;
-	}
-}
-*/
+				HAL_GPIO_TogglePin(GPIOG,GPIO_PIN_1); //GRE_H
+        uint8_t *buff=USART6_RX_DATA;
+			for(int8_t i=0;i<USART6_RX_NUM;i++)
+			{
+					if(buff[i]==0xA5)
+					{
+					   Frame = (tFrame *)&buff[i];
+						
+					    if( verify_crc16_check_sum((uint8_t *)Frame, Frame->FrameHeader.DataLength + sizeof(tFrameHeader) + sizeof(tCmdID) + sizeof(Frame->CRC16))
+		             && verify_crc8_check_sum((uint8_t *)Frame,sizeof(tFrameHeader)))
+								 {
+									 if(Frame->CmdID==game_robot_state)
+									 {
+											Robot.id = Frame->Data.game_robot_state.robot_id;//id号
+											Robot.level = Frame->Data.game_robot_state.robot_level;//等级
+                      Robot.remainHp = Frame->Data.game_robot_state.remain_HP;//剩余血量
+                      Robot.maxHp  = Frame->Data.game_robot_state.max_HP;//最大血量
+                      Robot.heat.shoot_17_cooling_rate = Frame->Data.game_robot_state.shooter_heat0_cooling_rate;//17每秒冷却值
+                     Robot.heat.shoot_17_cooling_limit = Frame->Data.game_robot_state.shooter_heat0_cooling_limit;//17；冷却上限
+                      Robot.heat.shoot_42_cooling_rate = Frame->Data.game_robot_state.shooter_heat1_cooling_rate;//
+                      Robot.heat.shoot_42_cooling_limit = Frame->Data.game_robot_state.shooter_heat1_cooling_limit;//
+											
+									 }
+									 if(Frame->CmdID == power_heat_data)
+									 {
+											Robot.heat.shoot_17_heat = Frame->Data.power_heat_data.shooter_heat0;//17枪口热量
+                      Robot.heat.shoot_42_heat = Frame->Data.power_heat_data.shooter_heat1;
+                     
+                      Robot.Chassis_Power.Chassis_Current = Frame->Data.power_heat_data.chassis_current;//电流
+                      Robot.Chassis_Power.chassis_Power = Frame->Data.power_heat_data.chassis_power;//功率
+                      Robot.Chassis_Power.Chassis_Power_buffer = Frame->Data.power_heat_data.chassis_power_buffer;//缓冲
+                      Robot.Chassis_Power.Chassis_Volt = Frame->Data.power_heat_data.chassis_volt;//电压
+									 }
+									 if(Frame->CmdID==game_robot_pos)
+									 {
+                     
+										 Robot.postion.x = Frame->Data.game_robot_pos.x;
+                     Robot.postion.y = Frame->Data.game_robot_pos.y;
+                     Robot.postion.z = Frame->Data.game_robot_pos.z;
+                     Robot.postion.yaw = Frame->Data.game_robot_pos.yaw;
+                    
+									 }
+                   
+                   if(Frame->CmdID == buff_musk)
+                   {
+                     Robot.buff = Frame->Data.buff_musk.power_rune_buff;
+                     
+                   }
+                   if( Frame->CmdID == shoot_data)
+                   {
+                     if(Frame->Data.shoot_data.bullet_type == 1) //17
+                     {
+                     Robot.heat.shoot_17_freq = Frame->Data.shoot_data.bullet_freq;
+                     Robot.heat.shoot_17_speed = Frame->Data.shoot_data.bullet_speed;
+                     }
+                     if(Frame->Data.shoot_data.bullet_type == 2)//42
+                     {
+                     Robot.heat.shoot_42_freq = Frame->Data.shoot_data.bullet_freq;
+                     Robot.heat.shoot_42_speed = Frame->Data.shoot_data.bullet_speed;
+                     }
+                   }
+											 i=i+sizeof(Frame);
+								}
+					}
+				
+			}
+		}
 
+	 }
+
+ }
+	
 

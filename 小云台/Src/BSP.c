@@ -60,7 +60,7 @@ void JY61_SLEEPorUNSLEEP(UART_HandleTypeDef *huart)
 	** Output: NULL
 	**************************************************************
 **/
-#if BoardNew
+#if 0
 void JY61_Frame(void)
 {
 	static uint8_t JY61_Frame_flag = 0;
@@ -256,7 +256,7 @@ void BSP_Init(void)
 	
 	/*引脚和引脚时钟*/
   MX_GPIO_Init();
-	HAL_Delay(1000);
+	//HAL_Delay(1000);
 	Power_Init();
 	/*dma*/
   MX_DMA_Init();
@@ -301,6 +301,7 @@ void BSP_Init(void)
   //HAL_CAN_Receive_IT(&hcan2, CAN_FIFO0);
   /*摩擦轮*/
   GUN_Init();
+  AX_Init();
 
 }
 

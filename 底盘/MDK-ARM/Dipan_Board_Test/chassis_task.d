@@ -68,6 +68,7 @@ dipan_board_test\chassis_task.o: .\APP\data_pro_task.h
 dipan_board_test\chassis_task.o: ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.h
 dipan_board_test\chassis_task.o: .\Communication\minipc.h
 dipan_board_test\chassis_task.o: .\Algorithm\protocol.h
+dipan_board_test\chassis_task.o: ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.h
 dipan_board_test\chassis_task.o: .\APP\gun_task.h
 dipan_board_test\chassis_task.o: ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.h
 dipan_board_test\chassis_task.o: .\MotorDriver\Motor_USE_TIM.h

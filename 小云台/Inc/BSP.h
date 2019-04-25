@@ -25,6 +25,7 @@
 #include "atom_imu.h"
 #include "decode.h"
 #include "SystemState.h"
+#include "AX-12A.h"
 /* Exported macro ------------------------------------------------------------*/
 
 /* Exported types --------------------------------------------------------*/

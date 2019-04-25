@@ -70,7 +70,7 @@ void Minipc_Pid_Init()
 ****************************************************************************************/
 void ManualMode()
 {
-  
+   gimbal_mode = Manual_Mode;
    pit_set.expect = pit_set.expect +(0x400-RC_Ctl.rc.ch3)/20;	
    yaw_set.expect = yaw_set.expect +(0x400-RC_Ctl.rc.ch2)/20;	
 
@@ -85,7 +85,6 @@ void ManualMode()
         }break;
         case 3://中,开启摩擦轮低速
         {
-          /*拨盘单发*/
             MoCa_Flag = 1;            
         }break;
         case 2://下，开启摩擦轮高速与拨盘电机
@@ -117,6 +116,8 @@ void ManualMode()
 ****************************************************************************************/
 void Sleep_Mode(uint8_t mode)
 { 
+  gimbal_mode = SleepMode;
+  MoCa_Flag = 0;//摩擦轮关闭
   if(mode)
   {
     /*键鼠控制*/
@@ -169,7 +170,17 @@ void Sleep_Mode(uint8_t mode)
 ****************************************************************************************/
 void AutoMode()
 {
-		
+		if(minipc_rx.state_flag)  
+    {
+      gimbal_mode = SnipeMode;
+      MoCa_Flag = 1;//低速
+    }
+    else
+    {
+      gimbal_mode = PatrolMode;
+      MoCa_Flag = 2;//高速
+      ptr_heat_gun_t.sht_flg=3;
+    }
 }
 
 /* 任务主体部分 -------------------------------------------------------------*/
@@ -198,9 +209,9 @@ void Remote_Data_Task(void const * argument)
 				switch(RC_Ctl.rc.s2)
 				{
           /*上*/
-					case 1: ManualMode();gimbal_mode = Manual_Mode;break; 
+					case 1: ManualMode();break; 
           /*中*/
-					case 3: Sleep_Mode(REMOTE_MODE);gimbal_mode = SleepMode;break;
+					case 3: Sleep_Mode(REMOTE_MODE);break;
           /*下*/
 					case 2: AutoMode();break;
           
@@ -211,12 +222,8 @@ void Remote_Data_Task(void const * argument)
     else if(Communication_flag)//自动控制
     {
       Communication_flag = 0;
-      if(communication_message == 0)AutoMode();//自动模式
-      else//休眠模式
-      {
-        Sleep_Mode(MOUSE_MODE);
-        gimbal_mode = SleepMode;
-      }
+      if(!communication_message)AutoMode();//自动模式
+      else          Sleep_Mode(MOUSE_MODE);//休眠模式
     }
 			osDelayUntil(&xLastWakeTime, REMOTE_PERIOD);
 	}
@@ -243,11 +250,11 @@ void MiniPC_Data_task(void const * argument)
 		
 		 
 		RefreshTaskOutLineTime(MiniPCTask_ON);
-	   NotifyValue=ulTaskNotifyTake(pdTRUE,portMAX_DELAY);
-    if(NotifyValue==1)
-		{
-			NotifyValue=0;
-			Get_MiniPC_Data();
+//	   NotifyValue=ulTaskNotifyTake(pdTRUE,portMAX_DELAY);
+//    if(NotifyValue==1)
+//		{
+//			NotifyValue=0;
+//			Get_MiniPC_Data();
 				
 //			pid_calc(&pid_minipc_yaw, (int16_t)minipc_rx.angle_yaw, 0);
 //			pid_calc(&pid_minipc_pit, (int16_t)minipc_rx.angle_pit, 0);
@@ -257,12 +264,12 @@ void MiniPC_Data_task(void const * argument)
 //			yaw_set.expect_pc += pid_minipc_yaw.pos_out;
 //			pit_set.expect_pc += pid_minipc_pit.pos_out;
 
-			yaw_set.expect=minipc_rx.angle_yaw+yaw_get.total_angle;
-			pit_set.expect=minipc_rx.angle_pit+pit_get.total_angle;
-			yaw_set.mode = minipc_rx.state_flag;
+//			yaw_set.expect=minipc_rx.angle_yaw+yaw_get.total_angle;
+//			pit_set.expect=minipc_rx.angle_pit+pit_get.total_angle;
+//			yaw_set.mode = minipc_rx.state_flag;
 			
 			osDelayUntil(&xLastWakeTime, MINIPC_PERIOD);
-		}
+//		}
 	}
 }
 

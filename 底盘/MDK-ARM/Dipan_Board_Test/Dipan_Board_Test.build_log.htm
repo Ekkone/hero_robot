@@ -27,11 +27,69 @@ Project File Date:  04/13/2019
 <h2>Output:</h2>
 *** Using Compiler 'V5.06 update 6 (build 750)', folder: 'D:\Keil\ARM\ARMCC\Bin'
 Build target 'Dipan_Board_Test'
+compiling chassis_task.c...
+compiling data_pro_task.c...
+APP\data_pro_task.c(242): warning:  #177-D: variable "NotifyValue"  was declared but never referenced
+  	uint32_t NotifyValue;
+APP\data_pro_task.c: 1 warning, 0 errors
+compiling freertos.c...
+.\APP\status_task.h(27): warning:  #1-D: last line of file ends without a newline
+  /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
+../Src/freertos.c: 1 warning, 0 errors
+compiling main.c...
+compiling test_task.c...
+APP\test_task.h(29): warning:  #1-D: last line of file ends without a newline
+  /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
+APP\test_task.c(66): warning:  #1-D: last line of file ends without a newline
+  /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
+APP\test_task.c: 2 warnings, 0 errors
 compiling BSP.c...
+compiling communication.c...
+Communication\communication.c(102): warning:  #177-D: variable "data_sum"  was declared but never referenced
+    int16_t data_sum=0;
+Communication\communication.c(103): warning:  #550-D: variable "i"  was set but never used
+  	static int16_t i=0;
+Communication\communication.c(106): warning:  #177-D: variable "JY_NUM"  was declared but never referenced
+  	uint8_t JY_NUM = 0;
+Communication\communication.c(107): warning:  #177-D: variable "buff_last"  was declared but never referenced
+  	static uint8_t buff_last[11] = {0};  	 //上一帧的残余数据
+Communication\communication.c(108): warning:  #177-D: variable "index"  was declared but never referenced
+  	static uint8_t index = 0;		
+Communication\communication.c(302): warning:  #177-D: variable "MPU_Rx"  was declared but never referenced
+    static uint8_t MPU_Rx, MPU_Tx;
+Communication\communication.c(302): warning:  #550-D: variable "MPU_Tx"  was set but never used
+    static uint8_t MPU_Rx, MPU_Tx;
+Communication\communication.c(324): warning:  #550-D: variable "MPU_Tx"  was set but never used
+    static uint8_t MPU_Rx, MPU_Tx;
+Communication\communication.c(345): warning:  #177-D: variable "MPU_Rx"  was declared but never referenced
+    static uint8_t MPU_Rx, MPU_Tx, MPU_Tx_buff[14] = {0xff};
+Communication\communication.c(345): warning:  #550-D: variable "MPU_Tx_buff"  was set but never used
+    static uint8_t MPU_Rx, MPU_Tx, MPU_Tx_buff[14] = {0xff};
+Communication\communication.c(72): warning:  #177-D: variable "ucRxCnt"  was declared but never referenced
+  static unsigned char ucRxCnt = 0;
+Communication\communication.c(73): warning:  #177-D: variable "buff_transition"  was declared but never referenced
+  static unsigned char buff_transition[11] = {0}; //过渡段缓存
+Communication\communication.c(74): warning:  #177-D: variable "buff_last"  was declared but never referenced
+  static unsigned char buff_last[SizeofJY61] = {0};
+Communication\communication.c: 13 warnings, 0 errors
+compiling status_task.c...
+APP\status_task.h(27): warning:  #1-D: last line of file ends without a newline
+  /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
+APP\status_task.c(139): warning:  #1-D: last line of file ends without a newline
+  /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
+APP\status_task.c: 2 warnings, 0 errors
+compiling Power_restriction.c...
+Algorithm\Power_restriction.c(335): warning:  #550-D: variable "T0"  was set but never used
+  		float T0 = 0;
+Algorithm\Power_restriction.c(336): warning:  #550-D: variable "P0"  was set but never used
+  		float P0 = 0;
+Algorithm\Power_restriction.c: 2 warnings, 0 errors
+compiling protocol.c...
+compiling pid.c...
 linking...
-Program Size: Code=20696 RO-data=1528 RW-data=236 ZI-data=20380  
+Program Size: Code=20852 RO-data=1528 RW-data=236 ZI-data=20444  
 FromELF: creating hex file...
-"Dipan_Board_Test\Dipan_Board_Test.axf" - 0 Error(s), 0 Warning(s).
+"Dipan_Board_Test\Dipan_Board_Test.axf" - 0 Error(s), 21 Warning(s).
 
 <h2>Software Packages used:</h2>
 
@@ -54,7 +112,7 @@ Package Vendor: Keil
 <h2>Collection of Component Files used:</h2>
 
    * Component: ARM::CMSIS:CORE:5.2.0
-Build Time Elapsed:  00:00:08
+Build Time Elapsed:  00:00:41
 </pre>
 </body>
 </html>

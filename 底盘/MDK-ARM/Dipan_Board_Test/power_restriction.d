@@ -56,6 +56,7 @@ dipan_board_test\power_restriction.o: .\Communication\minipc.h
 dipan_board_test\power_restriction.o: .\Communication\communication.h 
 dipan_board_test\power_restriction.o: ../Inc/usart.h
 dipan_board_test\power_restriction.o: .\Algorithm\protocol.h
+dipan_board_test\power_restriction.o: ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.h
 dipan_board_test\power_restriction.o: .\APP\gun_task.h
 dipan_board_test\power_restriction.o: ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.h
 dipan_board_test\power_restriction.o: .\MotorDriver\Motor_USE_CAN.h

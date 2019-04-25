@@ -8,7 +8,7 @@
 /* Includes ------------------------------------------------------------------------*/
 #include "AX-12A.h"
 /* External variables --------------------------------------------------------------*/
-extern UART_HandleTypeDef huart4;
+extern UART_HandleTypeDef huart6;
 /* Internal variables --------------------------------------------------------------*/
 
 /* Private function prototypes -----------------------------------------------------*/
@@ -16,9 +16,9 @@ extern UART_HandleTypeDef huart4;
 void AX_Init(void)
 {
 
-    uint8_t id[8] = {0x0e,0x12,0x10,0x03};
+    //uint8_t id[8] = {0x0e,0x12,0x10,0x03};
     
-  for(uint8_t i = 0;i < sizeof(id);i++)
+  for(uint8_t i = 1;i < 15;i++)
     {
       uart_t(0xff);
       uart_t(0xff);
@@ -27,12 +27,12 @@ void AX_Init(void)
       uart_t(0x83);
       uart_t(0x06);
       uart_t(0x04);
-      uart_t(id[i]);
+      uart_t(i);
       uart_t(0x00);
       uart_t(0x00);  
       uart_t(0xff);
       uart_t(0x03);
-      uart_t(~((0x94 + 0x03 + 0xff + (id[i])) & 0xff));
+      uart_t(~((0x94 + 0x03 + 0xff + (i)) & 0xff));
       /*ÉèÖÃ²¨ÌØÂÊ*/
       uart_t(0xff);
       uart_t(0xff);
@@ -41,15 +41,15 @@ void AX_Init(void)
       uart_t(0x83);
       uart_t(0x04);
       uart_t(0x01);
-      uart_t(id[i]);
+      uart_t(i);
       uart_t(0x10);//115200
-      uart_t(~((0x9c + (id[i])) & 0xff));
+      uart_t(~((0x9c + (i)) & 0xff));
     }
 }
 void uart_t(uint8_t data)
 {
   
-  HAL_UART_Transmit(&huart4,&data,1,10);
+  HAL_UART_Transmit(&huart6,&data,1,10);
   
 
 }
@@ -57,7 +57,7 @@ void uart_t(uint8_t data)
 
 void Set_AX6(uint16_t angle,uint16_t speed)
 {
-  uint8_t id = 0x0e;
+  uint8_t id = 0x01;
   uint8_t low = angle;
   uint8_t high = angle >> 8;
   uint8_t low2 = speed;
@@ -82,11 +82,11 @@ void Set_AX6(uint16_t angle,uint16_t speed)
 }
 void Open_Door(void)
 {
-  
+  Set_AX6(0x0,0xff);
 }
 void Close_Door(void)
 {
-  
+  Set_AX6(0x3ff,0xf0);
 }
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
 

@@ -168,7 +168,7 @@ void Gun_Task(void const * argument)
         /*pidŒª÷√ª∑*/
         position:
         pid_calc(&pid_dial_pos, moto_dial_get.total_angle,set_angle);	
-				//set_speed=pid_dial_pos.pos_out;
+				set_speed=pid_dial_pos.pos_out;
       }break;
       
 

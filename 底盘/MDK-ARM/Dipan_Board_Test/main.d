@@ -65,6 +65,7 @@ dipan_board_test\main.o: .\APP\data_pro_task.h
 dipan_board_test\main.o: ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.h
 dipan_board_test\main.o: .\Algorithm\pid.h
 dipan_board_test\main.o: .\Algorithm\protocol.h
+dipan_board_test\main.o: ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.h
 dipan_board_test\main.o: .\APP\gun_task.h
 dipan_board_test\main.o: ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.h
 dipan_board_test\main.o: .\APP\chassis_task.h
