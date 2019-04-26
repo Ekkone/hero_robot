@@ -231,7 +231,7 @@ void Send_FrameData(tCmdID cmdid, uint8_t * pchMessage,uint8_t dwLength)
   	i = sizeof(SelfDefineFrame.FrameHeader) + sizeof(SelfDefineFrame.CmdID)  + sizeof(SelfDefineFrame.CRC16) + dwLength;//计算实际帧的长度
 	  SelfDefineFrame.CRC16 = append_crc16_check_sum((uint8_t *)&SelfDefineFrame,i);
 	
-	HAL_UART_Transmit(&huart6,(uint8_t *)&SelfDefineFrame,22,100);
+	HAL_UART_Transmit(&huart3,(uint8_t *)&SelfDefineFrame,22,100);
 	
 }
 /*
@@ -275,8 +275,8 @@ void Referee_Data_Task(void const * argument)
 			  NotifyValue=0;
 			
 				HAL_GPIO_TogglePin(GPIOG,GPIO_PIN_1); //GRE_H
-        uint8_t *buff=USART6_RX_DATA;
-			for(int8_t i=0;i<USART6_RX_NUM;i++)
+        uint8_t *buff=USART3_RX_DATA;
+			for(int8_t i=0;i<USART3_RX_NUM;i++)
 			{
 					if(buff[i]==0xA5)
 					{
@@ -292,7 +292,7 @@ void Referee_Data_Task(void const * argument)
                       Robot.remainHp = Frame->Data.game_robot_state.remain_HP;//剩余血量
                       Robot.maxHp  = Frame->Data.game_robot_state.max_HP;//最大血量
                       Robot.heat.shoot_17_cooling_rate = Frame->Data.game_robot_state.shooter_heat0_cooling_rate;//17每秒冷却值
-                     Robot.heat.shoot_17_cooling_limit = Frame->Data.game_robot_state.shooter_heat0_cooling_limit;//17；冷却上限
+                      Robot.heat.shoot_17_cooling_limit = Frame->Data.game_robot_state.shooter_heat0_cooling_limit;//17；冷却上限
                       Robot.heat.shoot_42_cooling_rate = Frame->Data.game_robot_state.shooter_heat1_cooling_rate;//
                       Robot.heat.shoot_42_cooling_limit = Frame->Data.game_robot_state.shooter_heat1_cooling_limit;//
 											

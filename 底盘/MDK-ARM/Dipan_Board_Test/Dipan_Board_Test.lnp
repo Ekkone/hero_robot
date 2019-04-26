@@ -4,7 +4,6 @@
 "dipan_board_test\stm32f4xx_it.o"
 "dipan_board_test\chassis_task.o"
 "dipan_board_test\data_pro_task.o"
-"dipan_board_test\gun_task.o"
 "dipan_board_test\test_task.o"
 "dipan_board_test\status_task.o"
 "dipan_board_test\bsp.o"

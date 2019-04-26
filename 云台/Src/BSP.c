@@ -207,7 +207,6 @@ void BSP_Init(void)
 	
 	/*使能DMA中断*/
 	HAL_UART_Receive_DMA(&huart1,USART1_RX_DATA,SizeofRemote); //这一步的目的是创建一段接受内存，和CAN的一样
-	HAL_UART_Receive_DMA(&huart2,USART2_RX_DATA,SizeofMinipc);
   HAL_UART_Receive_DMA(&huart4,UART4_RX_DATA,SizeofJY61);
   HAL_UART_Receive_DMA(&huart6,USART6_RX_DATA,SizeofJY61);
 
@@ -219,7 +218,7 @@ void BSP_Init(void)
   HAL_CAN_Receive_IT(&hcan1, CAN_FIFO0); 
   HAL_CAN_Receive_IT(&hcan2, CAN_FIFO0);
 	#if jy61
-	JY61_Frame();  
+	//JY61_Frame();  
   #endif
 	HAL_Delay(1000);
 

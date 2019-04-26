@@ -78,6 +78,8 @@
 2018.07.12-infantry\freertos.o: ../Drivers/CMSIS/Include/core_cmFunc.h
 2018.07.12-infantry\freertos.o: .\Communication\minipc.h
 2018.07.12-infantry\freertos.o: .\Algorithm\protocol.h
+2018.07.12-infantry\freertos.o: ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.h
+2018.07.12-infantry\freertos.o: ../Drivers/CMSIS/Include/core_cmFunc.h
 2018.07.12-infantry\freertos.o: .\APP_task\gun_task.h
 2018.07.12-infantry\freertos.o: ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.h
 2018.07.12-infantry\freertos.o: ../Drivers/CMSIS/Include/core_cmFunc.h

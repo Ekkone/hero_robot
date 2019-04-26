@@ -41,7 +41,7 @@ uint8_t press_counter;
 uint8_t shot_anjian_counter=0;
 uint8_t shot_frequency = 100;
 int8_t chassis_gimble_Mode_flg;
-uint8_t communication_message[3] = {0xfe,1,0xff};
+uint8_t communication_message = 0;
 //volatile float remain_power=0.0;   //底盘功率 _待续
 //float power; 				 //底盘功率 _测试
 
@@ -199,16 +199,16 @@ void MouseKeyControlProcess()
   /*小云台控制*/
   if(B_Press)
   {
-    communication_message[2] = 1;//睡眠模式
+    communication_message = 1;//睡眠模式
   }
   else if(V_Press)
   {
-    communication_message[2] = 0;//自动模式
+    communication_message = 0;//自动模式
   }
-  if(communication_message[2])
+  if(communication_message)
   {
-    if(Z_Press && CTRL_Press) communication_message[2] = 3;//关闭仓门
-    else if(Z_Press)          communication_message[2] = 2;//打开仓门 
+    if(Z_Press && CTRL_Press) communication_message = 3;//关闭仓门
+    else if(Z_Press)          communication_message = 2;//打开仓门 
   }
 }
 
@@ -279,16 +279,15 @@ void Remote_Data_Task(void const * argument)
 	*	@supplement	视觉数据处理任务
 	*	@retval	
 ****************************************************************************************/
-void MiniPC_Data_task(void const * argument)
+void MiniPC_Big_Task(void const * argument)
 {
-	minipc_rx.state_flag = 0;
-	minipc_rx.angle_pit  = 0;
-	minipc_rx.angle_yaw  = 0;
+	minipc_rx_big.state_flag = 0;
+	minipc_rx_big.angle_pit  = 0;
+	minipc_rx_big.angle_yaw  = 0;
   uint32_t NotifyValue;
 	Minipc_Pid_Init();
 	for(;;)
 	{
-		
 		 portTickType xLastWakeTime;
 		 xLastWakeTime = xTaskGetTickCount();
 		
@@ -296,22 +295,36 @@ void MiniPC_Data_task(void const * argument)
     if(NotifyValue==1)
 		{
 			NotifyValue=0;
-			Get_MiniPC_Data();
-				
-//			pid_calc(&pid_minipc_yaw, (int16_t)minipc_rx.angle_yaw, 0);
-//			pid_calc(&pid_minipc_pit, (int16_t)minipc_rx.angle_pit, 0);
-//			pid_minipc_yaw.pos_out=-(pid_minipc_yaw.pos_out);
-//			pid_minipc_pit.pos_out=-(pid_minipc_pit.pos_out);
-//			
-//			yaw_set.expect_pc += pid_minipc_yaw.pos_out;
-//			pit_set.expect_pc += pid_minipc_pit.pos_out;
-
-//			yaw_set.expect=minipc_rx.angle_yaw+yaw_get.total_angle;
-//			pit_set.expect=minipc_rx.angle_pit+pit_get.total_angle;
-//			yaw_set.mode = minipc_rx.state_flag;
-			
+			Get_MiniPC_Data_Big();
 			osDelayUntil(&xLastWakeTime, MINIPC_PERIOD);
 		}
 	}
 }
-
+/***************************************************************************************
+**
+	*	@brief	MiniPC_Data_task(void const * argument)
+	*	@param
+	*	@supplement	视觉数据处理任务
+	*	@retval	
+****************************************************************************************/
+void MiniPC_Small_Task(void const * argument)
+{
+	minipc_rx_small.state_flag = 0;
+	minipc_rx_small.angle_pit  = 0;
+	minipc_rx_small.angle_yaw  = 0;
+  uint32_t NotifyValue;
+	Minipc_Pid_Init();
+	for(;;)
+	{
+		 portTickType xLastWakeTime;
+		 xLastWakeTime = xTaskGetTickCount();
+		
+	   NotifyValue=ulTaskNotifyTake(pdTRUE,portMAX_DELAY);
+    if(NotifyValue==1)
+		{
+			NotifyValue=0;
+			Get_MiniPC_Data_Small();
+			osDelayUntil(&xLastWakeTime, MINIPC_PERIOD);
+		}
+	}
+}

@@ -10,7 +10,7 @@
 
 
 #define SizeofRemote 18
-#define SizeofMinipc  9
+#define SizeofMinipc  7
 #define SizeofCommunication   5
 extern uint8_t USART1_RX_DATA[(SizeofRemote)];//Ò£¿Ø
 extern uint16_t USART1_RX_NUM;

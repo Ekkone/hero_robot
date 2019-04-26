@@ -522,6 +522,11 @@
               <FileType>1</FileType>
               <FilePath>..\..\云台\MDK-ARM\Algorithm\user_lib.c</FilePath>
             </File>
+            <File>
+              <FileName>protocol.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Algorithm\protocol.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

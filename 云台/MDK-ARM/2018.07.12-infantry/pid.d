@@ -62,6 +62,8 @@
 2018.07.12-infantry\pid.o: ../Inc/spi.h
 2018.07.12-infantry\pid.o: ../Inc/usart.h
 2018.07.12-infantry\pid.o: .\Algorithm\protocol.h
+2018.07.12-infantry\pid.o: ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.h
+2018.07.12-infantry\pid.o: ../Drivers/CMSIS/Include/core_cmFunc.h
 2018.07.12-infantry\pid.o: .\APP_task\gun_task.h
 2018.07.12-infantry\pid.o: ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.h
 2018.07.12-infantry\pid.o: ../Drivers/CMSIS/Include/core_cmFunc.h

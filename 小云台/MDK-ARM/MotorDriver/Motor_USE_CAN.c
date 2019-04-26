@@ -17,6 +17,8 @@
 *******************************************************************************/
 /* 包含头文件 ----------------------------------------------------------------*/
 #include "Motor_USE_CAN.h"
+#include "minipc.h"
+#include "protocol.h"
 /* 内部自定义数据类型 --------------------------------------------------------*/
 
 /* 内部宏定义 ----------------------------------------------------------------*/
@@ -251,4 +253,20 @@ void get_total_angle(moto_measure_t *p){
 
 	p->total_angle += delta;
 	p->last_angle = p->angle;
+}
+
+void CAN_Get_Referee( CAN_HandleTypeDef * hcan)
+{
+  Robot.level = (uint8_t)(hcan->pRxMsg->Data[0]);
+  Robot.remainHp = (uint16_t)(hcan->pRxMsg->Data[1]<<8 | hcan->pRxMsg->Data[2]) ;
+  Robot.heat.shoot_17_speed = (uint16_t)(hcan->pRxMsg->Data[3]<<8 | hcan->pRxMsg->Data[4]) ;
+  Robot.heat.shoot_17_heat = (uint16_t)(hcan->pRxMsg->Data[5]<<8 | hcan->pRxMsg->Data[6]) ;
+}
+void CAN_Get_MiniPC( CAN_HandleTypeDef * hcan)
+{
+  minipc_rx_small.angle_yaw = (int16_t)(hcan->pRxMsg->Data[0]<<8 | hcan->pRxMsg->Data[1]) ;
+  minipc_rx_small.angle_pit = (int16_t) (hcan->pRxMsg->Data[2]<<8 | hcan->pRxMsg->Data[3]) ;
+  minipc_rx_small.state_flag = (uint8_t)(hcan->pRxMsg->Data[4]);
+  communication_message = (uint8_t)(hcan->pRxMsg->Data[5]);
+  
 }

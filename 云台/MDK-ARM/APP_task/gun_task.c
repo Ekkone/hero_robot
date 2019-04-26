@@ -184,7 +184,7 @@ void Gun_Task(void const * argument)
 		 Shot_Motor(&hcan2,pid_dial_spd.pos_out,pid_shot_spd[0].pos_out,pid_shot_spd[1].pos_out);
 //		 Shot_Motor(&hcan2,0,0,0);
 //     Shot_Motor(&hcan2,pid_dial_spd.pos_out,0,0);
-		 minipc_rx.state_flag=0;
+		 minipc_rx_big.state_flag=0;
 		 set_speed = 0;	   
     
         osDelayUntil(&xLastWakeTime,GUN_PERIOD);

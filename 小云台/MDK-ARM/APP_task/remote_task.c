@@ -170,7 +170,7 @@ void Sleep_Mode(uint8_t mode)
 ****************************************************************************************/
 void AutoMode()
 {
-		if(minipc_rx.state_flag)  
+		if(minipc_rx_small.state_flag)  
     {
       gimbal_mode = SnipeMode;
       MoCa_Flag = 1;//µÍËÙ
@@ -237,9 +237,6 @@ void Remote_Data_Task(void const * argument)
 ****************************************************************************************/
 void MiniPC_Data_task(void const * argument)
 {
-	minipc_rx.state_flag = 0;
-	minipc_rx.angle_pit  = 0;
-	minipc_rx.angle_yaw  = 0;
   uint32_t NotifyValue;
 	Minipc_Pid_Init();
   
@@ -250,11 +247,11 @@ void MiniPC_Data_task(void const * argument)
 		
 		 
 		RefreshTaskOutLineTime(MiniPCTask_ON);
-//	   NotifyValue=ulTaskNotifyTake(pdTRUE,portMAX_DELAY);
-//    if(NotifyValue==1)
-//		{
-//			NotifyValue=0;
-//			Get_MiniPC_Data();
+	   NotifyValue=ulTaskNotifyTake(pdTRUE,portMAX_DELAY);
+    if(NotifyValue==1)
+		{
+			NotifyValue=0;
+	//		Get_MiniPC_Data();
 				
 //			pid_calc(&pid_minipc_yaw, (int16_t)minipc_rx.angle_yaw, 0);
 //			pid_calc(&pid_minipc_pit, (int16_t)minipc_rx.angle_pit, 0);
@@ -266,10 +263,10 @@ void MiniPC_Data_task(void const * argument)
 
 //			yaw_set.expect=minipc_rx.angle_yaw+yaw_get.total_angle;
 //			pit_set.expect=minipc_rx.angle_pit+pit_get.total_angle;
-//			yaw_set.mode = minipc_rx.state_flag;
+	//		yaw_set.mode = minipc_rx.state_flag;
 			
 			osDelayUntil(&xLastWakeTime, MINIPC_PERIOD);
-//		}
+		}
 	}
 }
 

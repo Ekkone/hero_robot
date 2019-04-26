@@ -17,6 +17,8 @@
 *******************************************************************************/
 /* 包含头文件 ----------------------------------------------------------------*/
 #include "Motor_USE_CAN.h"
+#include "protocol.h"
+#include "minipc.h"
 /* 内部自定义数据类型 --------------------------------------------------------*/
 
 /* 内部宏定义 ----------------------------------------------------------------*/
@@ -390,10 +392,25 @@ void CAN_Send_Error( CAN_HandleTypeDef * hcan, int16_t OutLine_Flag, int16_t tas
 			HAL_CAN_Transmit(hcan,30);
 }	
 
-void CAN_GET_DP( CAN_HandleTypeDef * hcan)
+void CAN_Get_Chassis( CAN_HandleTypeDef * hcan)
 {
 			moto_chassis_get[0].speed_rpm = (int16_t)(hcan->pRxMsg->Data[0]<<8 | hcan->pRxMsg->Data[1]) ;
 	    moto_chassis_get[1].speed_rpm  =(int16_t) (hcan->pRxMsg->Data[2]<<8 | hcan->pRxMsg->Data[3]) ;
 	    moto_chassis_get[2].speed_rpm = (int16_t)(hcan->pRxMsg->Data[4]<<8 | hcan->pRxMsg->Data[5]) ;
 	    moto_chassis_get[3].speed_rpm = (int16_t)(hcan->pRxMsg->Data[6]<<8 | hcan->pRxMsg->Data[7]) ;
 }	
+void CAN_Get_Referee( CAN_HandleTypeDef * hcan)
+{
+  Robot.remainHp = (uint16_t)(hcan->pRxMsg->Data[0]<<8 | hcan->pRxMsg->Data[1]) ;
+  Robot.heat.shoot_42_speed = (uint16_t)(hcan->pRxMsg->Data[2]<<8 | hcan->pRxMsg->Data[3]) ;
+  Robot.heat.shoot_42_heat = (uint16_t)(hcan->pRxMsg->Data[4]<<8 | hcan->pRxMsg->Data[5]) ;
+  Robot.Chassis_Power.chassis_Power = (uint16_t)(hcan->pRxMsg->Data[6]<<8 | hcan->pRxMsg->Data[7]) ;
+}
+void CAN_Get_MiniPC( CAN_HandleTypeDef * hcan)
+{
+  minipc_rx_big.angle_yaw = (int16_t)(hcan->pRxMsg->Data[0]<<8 | hcan->pRxMsg->Data[1]) ;
+  minipc_rx_big.angle_pit = (int16_t) (hcan->pRxMsg->Data[2]<<8 | hcan->pRxMsg->Data[3]) ;
+  minipc_rx_big.state_flag = (uint8_t)(hcan->pRxMsg->Data[4]);
+  Robot.level = (uint8_t)(hcan->pRxMsg->Data[5]);
+  
+}

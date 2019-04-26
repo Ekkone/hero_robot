@@ -62,6 +62,8 @@
 2018.07.12-infantry\power_restriction.o: ../Inc/spi.h
 2018.07.12-infantry\power_restriction.o: ../Inc/usart.h
 2018.07.12-infantry\power_restriction.o: .\Algorithm\protocol.h
+2018.07.12-infantry\power_restriction.o: ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.h
+2018.07.12-infantry\power_restriction.o: ../Drivers/CMSIS/Include/core_cmFunc.h
 2018.07.12-infantry\power_restriction.o: .\APP_task\gun_task.h
 2018.07.12-infantry\power_restriction.o: ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.h
 2018.07.12-infantry\power_restriction.o: ../Drivers/CMSIS/Include/core_cmFunc.h

@@ -22,62 +22,49 @@ Dialog DLL:      TCM.DLL V1.36.1.0
  
 <h2>Project:</h2>
 F:\Work\hero\底盘\MDK-ARM\Dipan_Board_Test.uvprojx
-Project File Date:  04/13/2019
+Project File Date:  04/26/2019
 
 <h2>Output:</h2>
 *** Using Compiler 'V5.06 update 6 (build 750)', folder: 'D:\Keil\ARM\ARMCC\Bin'
 Build target 'Dipan_Board_Test'
+compiling stm32f4xx_it.c...
+compiling main.c...
 compiling chassis_task.c...
-compiling data_pro_task.c...
-APP\data_pro_task.c(242): warning:  #177-D: variable "NotifyValue"  was declared but never referenced
-  	uint32_t NotifyValue;
-APP\data_pro_task.c: 1 warning, 0 errors
 compiling freertos.c...
 .\APP\status_task.h(27): warning:  #1-D: last line of file ends without a newline
   /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
 ../Src/freertos.c: 1 warning, 0 errors
-compiling main.c...
 compiling test_task.c...
 APP\test_task.h(29): warning:  #1-D: last line of file ends without a newline
   /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
 APP\test_task.c(66): warning:  #1-D: last line of file ends without a newline
   /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
 APP\test_task.c: 2 warnings, 0 errors
+compiling data_pro_task.c...
+APP\data_pro_task.c(242): warning:  #177-D: variable "NotifyValue"  was declared but never referenced
+  	uint32_t NotifyValue;
+APP\data_pro_task.c: 1 warning, 0 errors
 compiling BSP.c...
-compiling communication.c...
-Communication\communication.c(102): warning:  #177-D: variable "data_sum"  was declared but never referenced
-    int16_t data_sum=0;
-Communication\communication.c(103): warning:  #550-D: variable "i"  was set but never used
-  	static int16_t i=0;
-Communication\communication.c(106): warning:  #177-D: variable "JY_NUM"  was declared but never referenced
-  	uint8_t JY_NUM = 0;
-Communication\communication.c(107): warning:  #177-D: variable "buff_last"  was declared but never referenced
-  	static uint8_t buff_last[11] = {0};  	 //上一帧的残余数据
-Communication\communication.c(108): warning:  #177-D: variable "index"  was declared but never referenced
-  	static uint8_t index = 0;		
-Communication\communication.c(302): warning:  #177-D: variable "MPU_Rx"  was declared but never referenced
-    static uint8_t MPU_Rx, MPU_Tx;
-Communication\communication.c(302): warning:  #550-D: variable "MPU_Tx"  was set but never used
-    static uint8_t MPU_Rx, MPU_Tx;
-Communication\communication.c(324): warning:  #550-D: variable "MPU_Tx"  was set but never used
-    static uint8_t MPU_Rx, MPU_Tx;
-Communication\communication.c(345): warning:  #177-D: variable "MPU_Rx"  was declared but never referenced
-    static uint8_t MPU_Rx, MPU_Tx, MPU_Tx_buff[14] = {0xff};
-Communication\communication.c(345): warning:  #550-D: variable "MPU_Tx_buff"  was set but never used
-    static uint8_t MPU_Rx, MPU_Tx, MPU_Tx_buff[14] = {0xff};
-Communication\communication.c(72): warning:  #177-D: variable "ucRxCnt"  was declared but never referenced
-  static unsigned char ucRxCnt = 0;
-Communication\communication.c(73): warning:  #177-D: variable "buff_transition"  was declared but never referenced
-  static unsigned char buff_transition[11] = {0}; //过渡段缓存
-Communication\communication.c(74): warning:  #177-D: variable "buff_last"  was declared but never referenced
-  static unsigned char buff_last[SizeofJY61] = {0};
-Communication\communication.c: 13 warnings, 0 errors
 compiling status_task.c...
 APP\status_task.h(27): warning:  #1-D: last line of file ends without a newline
   /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
 APP\status_task.c(139): warning:  #1-D: last line of file ends without a newline
   /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
 APP\status_task.c: 2 warnings, 0 errors
+compiling Motor_USE_CAN.c...
+MotorDriver\Motor_USE_CAN.c(340): warning:  #1-D: last line of file ends without a newline
+  }
+MotorDriver\Motor_USE_CAN.c(42): warning:  #177-D: variable "Cloud_Platform_Data"  was declared but never referenced
+  static CAN_TxHeaderTypeDef  Cloud_Platform_Data;
+MotorDriver\Motor_USE_CAN.c(43): warning:  #177-D: variable "Allocate_Motor_Data"  was declared but never referenced
+  static CAN_TxHeaderTypeDef  Allocate_Motor_Data;
+MotorDriver\Motor_USE_CAN.c(45): warning:  #550-D: variable "CANSend_Referee_B"  was set but never used
+  static CAN_TxHeaderTypeDef  CANSend_Referee_B;
+MotorDriver\Motor_USE_CAN.c(46): warning:  #550-D: variable "CANSend_Referee_S"  was set but never used
+  static CAN_TxHeaderTypeDef  CANSend_Referee_S;
+MotorDriver\Motor_USE_CAN.c: 5 warnings, 0 errors
+compiling communication.c...
+compiling pid.c...
 compiling Power_restriction.c...
 Algorithm\Power_restriction.c(335): warning:  #550-D: variable "T0"  was set but never used
   		float T0 = 0;
@@ -85,11 +72,10 @@ Algorithm\Power_restriction.c(336): warning:  #550-D: variable "P0"  was set but
   		float P0 = 0;
 Algorithm\Power_restriction.c: 2 warnings, 0 errors
 compiling protocol.c...
-compiling pid.c...
 linking...
-Program Size: Code=20852 RO-data=1528 RW-data=236 ZI-data=20444  
+Program Size: Code=21440 RO-data=1564 RW-data=304 ZI-data=20352  
 FromELF: creating hex file...
-"Dipan_Board_Test\Dipan_Board_Test.axf" - 0 Error(s), 21 Warning(s).
+"Dipan_Board_Test\Dipan_Board_Test.axf" - 0 Error(s), 13 Warning(s).
 
 <h2>Software Packages used:</h2>
 
@@ -112,7 +98,7 @@ Package Vendor: Keil
 <h2>Collection of Component Files used:</h2>
 
    * Component: ARM::CMSIS:CORE:5.2.0
-Build Time Elapsed:  00:00:41
+Build Time Elapsed:  00:00:56
 </pre>
 </body>
 </html>

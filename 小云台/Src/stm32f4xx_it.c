@@ -635,48 +635,17 @@ void HAL_CAN_RxCpltCallback(CAN_HandleTypeDef *hcan)
 		}
 	}else if(hcan == &hcan2)
 	{
-//		HAL_CAN_Receive(&hcan1,CAN_FIFO0,10);
-//		switch(hcan->pRxMsg->StdId)
-//		{
-//			case CAN_2006_B:
-//			{
-//				
-//				RefreshDeviceOutLineTime(MotorB_NO);
-//				
-//				if(moto_dial_get.msg_cnt++ <= 50)	
-//				{
-//					get_moto_offset(&moto_dial_get,&hcan2);
-//				}
-//				else{	
-//					moto_dial_get.msg_cnt=51;	
-//					get_moto_measure_GM3510(&moto_dial_get, &hcan2);
-//				}
-//			}break;
-//      case CAN_3508_M1:
-//      {
-//        RefreshDeviceOutLineTime(MotorM1_NO);
-//        if(moto_M_get[0].msg_cnt++ <= 50)	
-//				{
-//					get_moto_offset(&moto_M_get[0],&hcan2);
-//				}
-//				else{		
-//					moto_M_get[0].msg_cnt=51;	
-//					get_moto_measure_GM6020(&moto_M_get[0], &hcan2);
-//				}
-//      }break;
-//      case CAN_3508_M2:
-//      {
-//        RefreshDeviceOutLineTime(MotorM2_NO);
-//        if(moto_M_get[1].msg_cnt++ <= 50)	
-//				{
-//					get_moto_offset(&moto_M_get[1],&hcan2);
-//				}
-//				else{		
-//					moto_M_get[1].msg_cnt=51;	
-//					get_moto_measure_GM6020(&moto_M_get[1], &hcan2);
-//				}
-//      }break;
-//		}
+		switch(hcan->pRxMsg->StdId)
+		{
+			case CAN_Mini_S:
+			{
+				CAN_Get_MiniPC(hcan);
+			}break;
+      case CAN_Referee_S:
+			{
+				CAN_Get_Referee(hcan);
+			}break;
+		}
 		if( HAL_BUSY == HAL_CAN_Receive_IT(&hcan2, CAN_FIFO0))//开启中断接收
 		{
 			/* Enable FIFO 0 overrun and message pending Interrupt */

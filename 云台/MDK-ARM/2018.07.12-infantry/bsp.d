@@ -70,6 +70,8 @@
 2018.07.12-infantry\bsp.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/event_groups.h
 2018.07.12-infantry\bsp.o: .\Algorithm\pid.h
 2018.07.12-infantry\bsp.o: .\Algorithm\protocol.h
+2018.07.12-infantry\bsp.o: ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.h
+2018.07.12-infantry\bsp.o: ../Drivers/CMSIS/Include/core_cmFunc.h
 2018.07.12-infantry\bsp.o: .\APP_task\gun_task.h
 2018.07.12-infantry\bsp.o: ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.h
 2018.07.12-infantry\bsp.o: ../Drivers/CMSIS/Include/core_cmFunc.h

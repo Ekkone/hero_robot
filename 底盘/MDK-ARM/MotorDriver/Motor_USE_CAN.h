@@ -21,8 +21,18 @@ typedef enum
   /*CAN1*/
   CAN_2006_B = 0X201,
   CAN_3508_STIR = 0X202,
-  CAN_6623_YAW = 0X205,
-  CAN_6623_PIT = 0X206,
+  /*ÔÆÌ¨->µ×ÅÌ*/
+  CAN_Remote = 0x110,
+  CAN_Yaw = 0x120,
+  CAN_Stir = 0x120,
+  CAN_Error = 0x119,
+  /*µ×ÅÌ->ÔÆÌ¨*/
+  CAN_Referee_B = 0x011,
+  CAN_Chassis = 0x010,
+  CAN_Mini_B = 0X012,
+  /*µ×ÅÌ->Ð¡ÔÆÌ¨*/
+  CAN_Referee_S = 0x013,
+  CAN_Mini_S = 0X014,
   /*CAN2*/
 	CAN_3510Moto_ALL_ID = 0x200,
 	CAN_3510Moto1_ID = 0x201,
@@ -83,9 +93,13 @@ void get_total_angle(moto_measure_t *p);
 
 void CAN_RX_YK(CAN_HandleTypeDef * hcan);
 void CAN_RX_YT(CAN_HandleTypeDef * hcan);
-void CAN_SEND_DP( CAN_HandleTypeDef * hcan,int16_t speed_rpm1, int16_t speed_rpm2, 
-	int16_t speed_rpm3, uint8_t speed_rpm4);
+void CAN_Send_chassis( CAN_HandleTypeDef * hcan,int16_t speed_rpm1, int16_t speed_rpm2, 
+	int16_t speed_rpm3, int16_t speed_rpm4);
+void CAN_Send_Referee_B( CAN_HandleTypeDef * hcan);
+void CAN_Send_MINI_B( CAN_HandleTypeDef * hcan);
+void CAN_Send_Referee_S( CAN_HandleTypeDef * hcan);
 void CAN_RX_ERROR(CAN_HandleTypeDef * hcan);
+void CAN_Send_MINI_S( CAN_HandleTypeDef * hcan);
 
 #endif
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

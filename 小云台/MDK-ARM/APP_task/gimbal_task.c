@@ -184,10 +184,10 @@ void Gimbal_Contrl_Task(void const * argument)
         }break;
         case SnipeMode://¾Ñ»÷Ä£Ê½
         {
-          yaw_set.expect = minipc_rx.angle_yaw + yaw_set.expect;
-          pit_set.expect = minipc_rx.angle_pit + pit_set.expect;
-          minipc_rx.angle_yaw = 0;
-          minipc_rx.angle_pit = 0;
+          yaw_set.expect = minipc_rx_small.angle_yaw + yaw_set.expect;
+          pit_set.expect = minipc_rx_small.angle_pit + pit_set.expect;
+          minipc_rx_small.angle_yaw = 0;
+          minipc_rx_small.angle_pit = 0;
         }break;
       }
         

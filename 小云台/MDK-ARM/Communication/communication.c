@@ -42,7 +42,7 @@
 
 /* 内部变量 ------------------------------------------------------------------*/
 //通信
-uint8_t communication_message;
+uint8_t communication_message = 0 ;
 //外接陀螺仪
 JY61_t   ptr_jy61_t_yaw =  {0};
 JY61_t   ptr_jy61_t_pit =  {0};

@@ -27,8 +27,9 @@ typedef enum
   CAN_Stir = 0x120,
   CAN_Error = 0x119,
   /*µ×ÅÌ->ÔÆÌ¨*/
-  CAN_Referee = 0x011,
-  CAN_Chassis = 0x911,
+  CAN_Referee_B = 0x011,
+  CAN_Chassis = 0x010,
+  CAN_Mini_B = 0X012,
   /*CAN2*/
   CAN_2006_B = 0X201,
 	CAN_3508_M1 = 0x202,
@@ -79,8 +80,10 @@ void CAN_Send_YK( CAN_HandleTypeDef * hcan,int16_t key_v, int16_t rc_ch0, int16_
 void CAN_Send_Error( CAN_HandleTypeDef * hcan, int16_t OutLine_Flag, int16_t task_OutLine_Flag );
 void CAN_Send_YT( CAN_HandleTypeDef * hcan, int16_t yaw_angle, int16_t yaw_speed , uint8_t flag , uint8_t flag1);
 void CAN_Send_Stir( CAN_HandleTypeDef * hcan,uint8_t flag);
-void CAN_GET_DP( CAN_HandleTypeDef * hcan);
 
+void CAN_Get_Chassis( CAN_HandleTypeDef * hcan);
+void CAN_Get_Referee( CAN_HandleTypeDef * hcan);
+void CAN_Get_MiniPC( CAN_HandleTypeDef * hcan);
 #endif
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
 

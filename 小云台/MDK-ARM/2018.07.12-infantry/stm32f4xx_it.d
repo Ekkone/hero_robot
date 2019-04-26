@@ -64,6 +64,8 @@
 2018.07.12-infantry\stm32f4xx_it.o: .\Communication\pidwireless.h
 2018.07.12-infantry\stm32f4xx_it.o: .\Algorithm\pid.h
 2018.07.12-infantry\stm32f4xx_it.o: .\Algorithm\protocol.h
+2018.07.12-infantry\stm32f4xx_it.o: ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.h
+2018.07.12-infantry\stm32f4xx_it.o: ../Drivers/CMSIS/Include/core_cmFunc.h
 2018.07.12-infantry\stm32f4xx_it.o: .\Communication\atom_imu.h
 2018.07.12-infantry\stm32f4xx_it.o: ../Inc/gpio.h
 2018.07.12-infantry\stm32f4xx_it.o: .\Communication\decode.h

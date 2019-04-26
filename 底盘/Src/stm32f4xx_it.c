@@ -37,6 +37,7 @@
 #include "cmsis_os.h"
 #include "Motor_USE_CAN.h"
 #include "SystemState.h"
+#include "FreeRTOS.h"
 /* USER CODE BEGIN 0 */
 uint8_t rx_date[8];
 int can_count=0;
@@ -63,6 +64,10 @@ extern DMA_HandleTypeDef hdma_usart3_rx;
 extern DMA_HandleTypeDef hdma_usart4_rx;
 extern DMA_HandleTypeDef hdma_usart5_rx;
 extern DMA_HandleTypeDef hdma_usart6_rx;
+
+extern osThreadId RefereeTaskHandle;
+extern osThreadId MINIPCBIGTaskHandle;
+extern osThreadId MINIPCSMATaskHandle;
 
 /******************************************************************************/
 /*            Cortex-M4 Processor Interruption and Exception Handlers         */ 
@@ -385,80 +390,21 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 {
 	static  BaseType_t  pxHigherPriorityTaskWoken;
 	
-	if(huart->Instance == USART1)				 //陀螺仪接收
+  if(huart->Instance == USART3)  //裁判系统
 	{
-//		Data_Updata_flag[0] = 1;
-//		__HAL_DMA_SET_COUNTER(&hdma_usart1_rx,SizeofJY61);
-//		__HAL_DMA_ENABLE(&hdma_usart1_rx);
-//		vTaskNotifyGiveFromISR(test_taskHandle,&pxHigherPriorityTaskWoken);
-//		portYIELD_FROM_ISR(pxHigherPriorityTaskWoken);	
+		vTaskNotifyGiveFromISR(RefereeTaskHandle,&pxHigherPriorityTaskWoken);
+		portYIELD_FROM_ISR(pxHigherPriorityTaskWoken);
 	}
-  else if(huart->Instance == USART2)  //灯板1接收
+  else if(huart->Instance == UART4)  //MINIPC大枪管
   {
-		
-//		Data_Updata_flag[1] = 1;
-//		__HAL_DMA_SET_COUNTER(&hdma_usart2_rx,sizeofLB);
-//		__HAL_DMA_ENABLE(&hdma_usart2_rx);
-//		vTaskNotifyGiveFromISR(test_taskHandle,&pxHigherPriorityTaskWoken);
-//		portYIELD_FROM_ISR(pxHigherPriorityTaskWoken);	
-				
-  }
-	else if(huart->Instance == USART3)  //灯板2接收
-	{
-		
-//		Data_Updata_flag[2] = 1;
-//		__HAL_DMA_SET_COUNTER(&hdma_usart3_rx,sizeofLB);
-//		__HAL_DMA_ENABLE(&hdma_usart3_rx);
-//		vTaskNotifyGiveFromISR(test_taskHandle,&pxHigherPriorityTaskWoken);
-//		portYIELD_FROM_ISR(pxHigherPriorityTaskWoken);
-		
-	}
-  else if(huart->Instance == UART4)  //激光数据接收
-  {
-//    for(uint8_t i = 0;i < 15;i++)
-//    {
-//      if((buff[i] == 0x5a) && (buff[i + 1] == 0x5a) && buff[i + 7] == ((0x5a + 0x5a + 0x18 + buff[i + 4] + buff[i +5] + buff[i +6]) & 0xff))
-//      {
-//        Distance = buff[i + 4] << 8 | buff[i + 5];
-//        mode = buff[i + 6];
-//      }
-//    }
-
+    vTaskNotifyGiveFromISR(MINIPCBIGTaskHandle,&pxHigherPriorityTaskWoken);
+		portYIELD_FROM_ISR(pxHigherPriorityTaskWoken);
  }
-  else if(huart->Instance == UART5)  //二维码
+  else if(huart->Instance == UART5)  //MINIPC小枪管
   {
-   
-//		Data_Updata_flag[4] = 1;
-//		__HAL_DMA_SET_COUNTER(&hdma_usart5_rx,10);
-//		__HAL_DMA_ENABLE(&hdma_usart5_rx);
-//		vTaskNotifyGiveFromISR(test_taskHandle,&pxHigherPriorityTaskWoken);
-//		portYIELD_FROM_ISR(pxHigherPriorityTaskWoken);
-		
-//    if(QR_Buff[0] == 0x02 && QR_Buff[1] == 0x00 && QR_Buff[2] == 0x00 && QR_Buff[3] == 0x01 &&
-//       QR_Buff[4] == 0x00 && QR_Buff[5] == 0x33 && QR_Buff[6] == 0x31)
-//    {
-//      way_color[0] = QR_Buff[7] - 30;
-//      way_color[1] = QR_Buff[8] - 30;
-//      way_color[2] = QR_Buff[9] - 30;
-//    }
-//    else
-//    {
-//      Get_QRcode();
-//    }
-//      HAL_UART_Receive_IT(&huart5,QR_Buff,11);      
+   vTaskNotifyGiveFromISR(MINIPCSMATaskHandle,&pxHigherPriorityTaskWoken);
+		portYIELD_FROM_ISR(pxHigherPriorityTaskWoken);
   }
-	else if(huart->Instance == USART6) //颜色传感器
-	{
-		
-//		Data_Updata_flag[5] = 1;
-//		__HAL_DMA_SET_COUNTER(&hdma_usart6_rx,54);
-//		__HAL_DMA_ENABLE(&hdma_usart6_rx);
-//		vTaskNotifyGiveFromISR(test_taskHandle,&pxHigherPriorityTaskWoken);
-//		portYIELD_FROM_ISR(pxHigherPriorityTaskWoken);	
-		
-	}
-   
-  
 }
 
 
@@ -537,7 +483,8 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan)
 //			/* Enable FIFO 0 overrun and message pending Interrupt */
 //			__HAL_CAN_ENABLE_IT(&hcan1, CAN_IT_FMP0);
 //		}
-		else if(hcan == &hcan2)  
+	else
+      if(hcan == &hcan2)  
 	{
 			HAL_CAN_GetRxMessage(hcan, CAN_RX_FIFO0,&Rx_Header,rx_date);
 		switch(Rx_Header.StdId)

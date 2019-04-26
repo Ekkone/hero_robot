@@ -23,14 +23,7 @@ unsigned char 		frame_tail; 	  	  //֡β0xFE
 }Minipc_Tx;
 
 
-extern Minipc_Rx minipc_rx;
-extern Minipc_Tx minipc_tx;
-
-extern uint8_t USART2_RX_DATA[(SizeofMinipc)];		//MiniPC
-extern uint16_t USART2_RX_NUM;
-
-void Get_MiniPC_Data(void);
-void Send_MiniPC_Data(unsigned char cmd1,unsigned char cmd2,unsigned char state);
+extern Minipc_Rx minipc_rx_big;;
 
 
 #endif

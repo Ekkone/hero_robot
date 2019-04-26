@@ -168,10 +168,10 @@ void Gimbal_Contrl_Task(void const * argument)
       #endif
       #if jy61
       IMU_Get_Data();
-      yaw_set.expect = minipc_rx.angle_yaw + yaw_set.expect;
-      pit_set.expect = minipc_rx.angle_pit + pit_set.expect;
-      minipc_rx.angle_yaw = 0;
-      minipc_rx.angle_pit = 0;
+      yaw_set.expect = minipc_rx_big.angle_yaw + yaw_set.expect;
+      pit_set.expect = minipc_rx_big.angle_pit + pit_set.expect;
+      minipc_rx_big.angle_yaw = 0;
+      minipc_rx_big.angle_pit = 0;
       /*云台限位保护*/
       /*pit正常0-670（前），7500（后）-8192*/
       if((pit_set.expect + pit_get.offset_angle) > (630 + pit_protect_correct_2) &&\

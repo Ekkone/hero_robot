@@ -22,9 +22,11 @@ typedef enum
   CAN_2006_B = 0X201,
   CAN_GM3510_YAW = 0X205,
   CAN_GM6020_PIT = 0X206,
-
   /*CAN2*/
-		
+	/*µ×ÅÌ->Ð¡ÔÆÌ¨*/
+  CAN_Referee_S = 0x013,
+  CAN_Mini_S = 0X014	
+  
 }CAN_Message_ID;
 
 typedef struct{
@@ -64,6 +66,8 @@ void get_moto_measure_GM3510(moto_measure_t *ptr,CAN_HandleTypeDef * hcan);
 void get_moto_offset(moto_measure_t *ptr,CAN_HandleTypeDef * hcan);
 void get_total_angle(moto_measure_t *p);
 
+void CAN_Get_Referee( CAN_HandleTypeDef * hcan);
+void CAN_Get_MiniPC( CAN_HandleTypeDef * hcan);
 #endif
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
 
