@@ -75,3 +75,5 @@ dipan_board_test\protocol.o: .\Algorithm\mecanum_calc.h
 dipan_board_test\protocol.o: D:\Keil\ARM\ARMCC\Bin\..\include\stdlib.h
 dipan_board_test\protocol.o: .\Algorithm\Power_restriction.h
 dipan_board_test\protocol.o: .\APP\data_pro_task.h
+dipan_board_test\protocol.o: Algorithm\SystemState.h
+dipan_board_test\protocol.o: ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.h

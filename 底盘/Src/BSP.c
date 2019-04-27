@@ -71,6 +71,9 @@ void BSP_Init(void)
   HAL_UART_Receive_DMA(&huart3,USART3_RX_DATA,SizeofReferee);  	
   HAL_UART_Receive_DMA(&huart4,UART4_RX_DATA,SizeofMinipc); 				 	  
 	HAL_UART_Receive_DMA(&huart5,UART5_RX_DATA,SizeofMinipc);   
+  __HAL_UART_ENABLE_IT(&huart3, UART_IT_IDLE);//
+  __HAL_UART_ENABLE_IT(&huart4, UART_IT_IDLE);//
+ 
 	/*关闭半传输完成中断*/
 //	__HAL_DMA_DISABLE_IT(&hdma_usart1_rx,DMA_IT_HT);	//关闭串口1半传输完成中断
 //	__HAL_DMA_DISABLE_IT(&hdma_usart2_rx,DMA_IT_HT);	//关闭串口2半传输完成中断

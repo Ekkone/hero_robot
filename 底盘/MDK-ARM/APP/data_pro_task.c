@@ -267,6 +267,7 @@ void Remote_Data_Task(void const * argument)
 				
 
             press_counter++;
+        //CAN_Send_chassis(&hcan1);
         osDelayUntil(&xLastWakeTime, REMOTE_PERIOD);
 		}
 
@@ -286,18 +287,19 @@ void MiniPC_Big_Task(void const * argument)
 	minipc_rx_big.angle_yaw  = 0;
   uint32_t NotifyValue;
 	Minipc_Pid_Init();
+  portTickType xLastWakeTime;
+ xLastWakeTime = xTaskGetTickCount();
 	for(;;)
 	{
-		 portTickType xLastWakeTime;
-		 xLastWakeTime = xTaskGetTickCount();
-		
-	   NotifyValue=ulTaskNotifyTake(pdTRUE,portMAX_DELAY);
+      RefreshTaskOutLineTime(MiniPC_BTask_ON);
+    NotifyValue=ulTaskNotifyTake(pdTRUE,portMAX_DELAY);
     if(NotifyValue==1)
 		{
 			NotifyValue=0;
 			Get_MiniPC_Data_Big();
+      CAN_Send_MINI_B(&hcan1);
+    }
 			osDelayUntil(&xLastWakeTime, MINIPC_PERIOD);
-		}
 	}
 }
 /***************************************************************************************
@@ -314,17 +316,18 @@ void MiniPC_Small_Task(void const * argument)
 	minipc_rx_small.angle_yaw  = 0;
   uint32_t NotifyValue;
 	Minipc_Pid_Init();
+  portTickType xLastWakeTime;
+ xLastWakeTime = xTaskGetTickCount();
 	for(;;)
 	{
-		 portTickType xLastWakeTime;
-		 xLastWakeTime = xTaskGetTickCount();
-		
-	   NotifyValue=ulTaskNotifyTake(pdTRUE,portMAX_DELAY);
+      RefreshTaskOutLineTime(MiniPC_STask_ON);
+    NotifyValue=ulTaskNotifyTake(pdTRUE,portMAX_DELAY);
     if(NotifyValue==1)
 		{
 			NotifyValue=0;
 			Get_MiniPC_Data_Small();
-			osDelayUntil(&xLastWakeTime, MINIPC_PERIOD);
-		}
+      CAN_Send_MINI_S(&hcan1);
+    }
+    osDelayUntil(&xLastWakeTime, MINIPC_PERIOD);
 	}
 }

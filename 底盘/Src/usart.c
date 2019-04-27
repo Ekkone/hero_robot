@@ -270,7 +270,8 @@ void HAL_UART_MspInit(UART_HandleTypeDef* uartHandle)
     
     __HAL_LINKDMA(uartHandle,hdmarx,hdma_usart4_rx);
   /* USER CODE BEGIN UART4_MspInit 1 */
-
+    HAL_NVIC_SetPriority(UART4_IRQn, 5, 0);
+    HAL_NVIC_EnableIRQ(UART4_IRQn);
   /* USER CODE END UART4_MspInit 1 */
   }
   else if(uartHandle->Instance==UART5)
@@ -316,6 +317,9 @@ void HAL_UART_MspInit(UART_HandleTypeDef* uartHandle)
     }
     
     __HAL_LINKDMA(uartHandle,hdmarx,hdma_usart5_rx);
+    
+    HAL_NVIC_SetPriority(UART5_IRQn, 5, 0);
+    HAL_NVIC_EnableIRQ(UART5_IRQn);
   }
   else if(uartHandle->Instance==USART1)
   {
@@ -356,7 +360,8 @@ void HAL_UART_MspInit(UART_HandleTypeDef* uartHandle)
 
     /* USART1 interrupt Init */
   /* USER CODE BEGIN USART1_MspInit 1 */
-
+    HAL_NVIC_SetPriority(USART1_IRQn, 5, 0);
+    HAL_NVIC_EnableIRQ(USART1_IRQn);
   /* USER CODE END USART1_MspInit 1 */
   }
   else if(uartHandle->Instance==USART2)
@@ -397,7 +402,8 @@ void HAL_UART_MspInit(UART_HandleTypeDef* uartHandle)
     
     __HAL_LINKDMA(uartHandle,hdmarx,hdma_usart2_rx);
   /* USER CODE BEGIN UART5_MspInit 1 */
-
+  HAL_NVIC_SetPriority(USART2_IRQn, 5, 0);
+    HAL_NVIC_EnableIRQ(USART2_IRQn);
   /* USER CODE END UART5_MspInit 1 */
   }
   else if(uartHandle->Instance==USART3)
@@ -436,7 +442,8 @@ void HAL_UART_MspInit(UART_HandleTypeDef* uartHandle)
 
     __HAL_LINKDMA(uartHandle,hdmarx,hdma_usart3_rx);
   /* USER CODE BEGIN UART5_MspInit 1 */
-
+    HAL_NVIC_SetPriority(USART3_IRQn, 5, 0);
+    HAL_NVIC_EnableIRQ(USART3_IRQn);
   /* USER CODE END UART5_MspInit 1 */
   }
   else if(uartHandle->Instance==USART6)
@@ -475,7 +482,8 @@ void HAL_UART_MspInit(UART_HandleTypeDef* uartHandle)
 
     __HAL_LINKDMA(uartHandle,hdmarx,hdma_usart6_rx);
   /* USER CODE BEGIN UART5_MspInit 1 */
-
+  HAL_NVIC_SetPriority(USART6_IRQn, 5, 0);
+    HAL_NVIC_EnableIRQ(USART6_IRQn);
   /* USER CODE END UART5_MspInit 1 */
   }
 }

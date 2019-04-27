@@ -30,28 +30,24 @@ void Status_Task(void const * argument)
   xLastWakeTime = xTaskGetTickCount();
   for(;;)
   {
-    if(!(SystemState.OutLine_Flag&0x01))//MOTOR1
+    if(!(SystemState.OutLine_Flag&0x01) ||!(SystemState.OutLine_Flag&0x02) ||\
+        !(SystemState.OutLine_Flag&0x04) || !(SystemState.OutLine_Flag&0x08) )//底盘四个电机
       LED1_Blink();
     else LED1(0);
-    
-    if(!(SystemState.OutLine_Flag&0x02))//MOTOR2
+    if(!(SystemState.OutLine_Flag&0x10))//REMOTE
       LED2_Blink();
     else LED2(0);
-    
-    if(!(SystemState.OutLine_Flag&0x04))//MOTOR3
+    if(!(SystemState.OutLine_Flag&0x20))//MOTORS
       LED3_Blink();
     else LED3(0);
-    
-    if(!(SystemState.OutLine_Flag&0x08))//MOTOR4
+    if(!(SystemState.OutLine_Flag&0x40))//REFEREE
       LED4_Blink();
     else LED4(0);
-    
-    if(!(SystemState.OutLine_Flag&0x10))//REMOTE
+    if(!(SystemState.OutLine_Flag&0x80))//MINI_B
       LED5_Blink();
     else LED5(0);
-    
-    if(!(SystemState.OutLine_Flag&0x20))//MOTORS
-      LED5_Blink();
+    if(!(SystemState.OutLine_Flag&0x100))//MINI_S
+      LED6_Blink();
     else LED6(0);
     
     osDelayUntil(&xLastWakeTime,300);
@@ -98,7 +94,7 @@ void Check_Task(void const * argument)
       BLINK();
       goto OFF;
     }
-    else if((SystemState.task_OutLine_Flag&0x08))//发射任务
+    else if((SystemState.task_OutLine_Flag&0x08))//掉线任务
     {
       BLINK();
       BLINK();
@@ -106,7 +102,7 @@ void Check_Task(void const * argument)
       BLINK();
       goto OFF;
     }
-    else if((SystemState.task_OutLine_Flag&0x10))//掉线任务
+    else if((SystemState.task_OutLine_Flag&0x10))//裁判任务
     {
       BLINK();
       BLINK();
@@ -115,8 +111,19 @@ void Check_Task(void const * argument)
       BLINK();
       goto OFF;
     }
-    else if((SystemState.task_OutLine_Flag&0x20))//裁判任务
+    else if((SystemState.task_OutLine_Flag&0x20))//minipc大枪管任务
     {
+      BLINK();
+      BLINK();
+      BLINK();
+      BLINK();
+      BLINK();
+      BLINK();
+      goto OFF;
+    }
+    else if((SystemState.task_OutLine_Flag&0x40))//minipc小枪管任务
+    {
+      BLINK();
       BLINK();
       BLINK();
       BLINK();
@@ -127,8 +134,8 @@ void Check_Task(void const * argument)
     }
     else 
     {
-      LED8(1);
-      osDelayUntil(&xLastWakeTime,20);
+      LED8_Blink();
+      osDelayUntil(&xLastWakeTime,16);
     }
     
   }

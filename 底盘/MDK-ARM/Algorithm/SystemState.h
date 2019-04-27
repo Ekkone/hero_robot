@@ -42,7 +42,9 @@ typedef enum
 		Motor4_NO,
     Remote_NO,
     MotorS_NO,
-    
+    Referee_NO,
+    MINI_B_NO,
+    MINI_S_NO,
 	
 		DeviceTotal_No	
 }DeviceX_NoDEF;
@@ -52,9 +54,10 @@ typedef enum
 	testTask_ON,
 	ChassisContrlTask_ON,
 	RemoteDataTask_ON,
-	GunTask_ON,
 	vOutLineCheckTask_ON,
-  RefereeTask_ON,
+	RefereeTask_ON,
+  MiniPC_BTask_ON,
+  MiniPC_STask_ON,
 	
 	TASKTotal_No	
 }TASK_NoDEF;

@@ -38,6 +38,9 @@
 #include "Motor_USE_CAN.h"
 #include "SystemState.h"
 #include "FreeRTOS.h"
+#include "dma.h"
+#include "usart.h"
+#include "communication.h "
 /* USER CODE BEGIN 0 */
 uint8_t rx_date[8];
 int can_count=0;
@@ -322,7 +325,7 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 void DMA2_Stream2_IRQHandler(void)
 {
 	/* USER CODE BEGIN DMA2_Stream2_IRQn 0 */
-	__HAL_DMA_DISABLE(&hdma_usart1_rx);
+	//__HAL_DMA_DISABLE_IT(&hdma_usart1_rx,DMA_IT_TC);
   /* USER CODE END DMA2_Stream2_IRQn 0 */
   HAL_DMA_IRQHandler(&hdma_usart1_rx);
   /* USER CODE BEGIN DMA2_Stream2_IRQn 1 */
@@ -335,7 +338,7 @@ void DMA2_Stream2_IRQHandler(void)
 void DMA1_Stream0_IRQHandler(void)
 {
   /* USER CODE BEGIN DMA2_Stream2_IRQn 0 */
-	__HAL_DMA_DISABLE(&hdma_usart5_rx);
+	//__HAL_DMA_DISABLE_IT(&hdma_usart5_rx,DMA_IT_TC);
   /* USER CODE END DMA2_Stream2_IRQn 0 */
   HAL_DMA_IRQHandler(&hdma_usart5_rx);
   /* USER CODE BEGIN DMA2_Stream2_IRQn 1 */
@@ -348,7 +351,7 @@ void DMA1_Stream0_IRQHandler(void)
 void DMA1_Stream1_IRQHandler(void)
 {
   /* USER CODE BEGIN DMA2_Stream2_IRQn 0 */
-	__HAL_DMA_DISABLE(&hdma_usart3_rx);
+	//__HAL_DMA_DISABLE_IT(&hdma_usart3_rx,DMA_IT_TC);
   /* USER CODE END DMA2_Stream2_IRQn 0 */
   HAL_DMA_IRQHandler(&hdma_usart3_rx);
   /* USER CODE BEGIN DMA2_Stream2_IRQn 1 */
@@ -362,7 +365,7 @@ void DMA1_Stream2_IRQHandler(void)
 {
   /* USER CODE BEGIN DMA2_Stream2_IRQn 0 */
 
-	__HAL_DMA_DISABLE(&hdma_usart4_rx);
+	//__HAL_DMA_DISABLE_IT(&hdma_usart4_rx,DMA_IT_TC);
   /* USER CODE END DMA2_Stream2_IRQn 0 */
   HAL_DMA_IRQHandler(&hdma_usart4_rx);
   /* USER CODE BEGIN DMA2_Stream2_IRQn 1 */
@@ -375,7 +378,7 @@ void DMA1_Stream2_IRQHandler(void)
 void DMA1_Stream5_IRQHandler(void)
 {
   /* USER CODE BEGIN DMA2_Stream2_IRQn 0 */
-	__HAL_DMA_DISABLE(&hdma_usart2_rx);
+	//__HAL_DMA_DISABLE_IT(&hdma_usart2_rx,DMA_IT_TC);
   /* USER CODE END DMA2_Stream2_IRQn 0 */
   HAL_DMA_IRQHandler(&hdma_usart2_rx);
   /* USER CODE BEGIN DMA2_Stream2_IRQn 1 */
@@ -383,8 +386,66 @@ void DMA1_Stream5_IRQHandler(void)
   /* USER CODE END DMA2_Stream2_IRQn 1 */
 }
 
-
-
+void USART3_IRQHandler(void)
+{
+  static  BaseType_t  pxHigherPriorityTaskWoken;
+  uint8_t tmp1,tmp2;
+    tmp1 = __HAL_UART_GET_FLAG(&huart3, UART_FLAG_IDLE);   //空闲中断中将已收字节数取出后，停止DMA
+    tmp2 = __HAL_UART_GET_IT_SOURCE(&huart3, UART_IT_IDLE);
+    if((tmp1 != RESET)&&(tmp2 != RESET))
+    {
+      RefreshDeviceOutLineTime(Referee_NO);
+      __HAL_DMA_DISABLE(&hdma_usart3_rx);
+      __HAL_UART_CLEAR_IDLEFLAG(&huart3);
+		
+		USART3_RX_NUM=(SizeofReferee)-(hdma_usart3_rx.Instance->NDTR);
+//    __HAL_DMA_SET_COUNTER(&hdma_usart3_rx,SizeofReferee);
+//    __HAL_DMA_ENABLE(&hdma_usart3_rx);
+      
+//     vTaskNotifyGiveFromISR(RefereeTaskHandle,&pxHigherPriorityTaskWoken);
+//		portYIELD_FROM_ISR(pxHigherPriorityTaskWoken);		
+    }
+}
+void USART4_IRQHandler(void)
+{
+  static  BaseType_t  pxHigherPriorityTaskWoken;
+  uint8_t tmp1,tmp2;
+    tmp1 = __HAL_UART_GET_FLAG(&huart4, UART_FLAG_IDLE);   //空闲中断中将已收字节数取出后，停止DMA
+    tmp2 = __HAL_UART_GET_IT_SOURCE(&huart4, UART_IT_IDLE);
+    if((tmp1 != RESET)&&(tmp2 != RESET))
+    {
+      RefreshDeviceOutLineTime(MINI_B_NO);
+      __HAL_DMA_DISABLE(&hdma_usart4_rx);
+      __HAL_UART_CLEAR_IDLEFLAG(&huart4);
+		
+		UART4_RX_NUM=(SizeofMinipc)-(hdma_usart4_rx.Instance->NDTR);
+    __HAL_DMA_SET_COUNTER(&hdma_usart4_rx,SizeofMinipc);
+    __HAL_DMA_ENABLE(&hdma_usart4_rx);
+      
+     vTaskNotifyGiveFromISR(MINIPCBIGTaskHandle,&pxHigherPriorityTaskWoken);
+		portYIELD_FROM_ISR(pxHigherPriorityTaskWoken);		
+    }
+}
+void USART5_IRQHandler(void)
+{
+  static  BaseType_t  pxHigherPriorityTaskWoken;
+  uint8_t tmp1,tmp2;
+    tmp1 = __HAL_UART_GET_FLAG(&huart5, UART_FLAG_IDLE);   //空闲中断中将已收字节数取出后，停止DMA
+    tmp2 = __HAL_UART_GET_IT_SOURCE(&huart5, UART_IT_IDLE);
+    if((tmp1 != RESET)&&(tmp2 != RESET))
+    {
+      RefreshDeviceOutLineTime(MINI_S_NO);
+      __HAL_DMA_DISABLE(&hdma_usart5_rx);
+      __HAL_UART_CLEAR_IDLEFLAG(&huart5);
+		
+		UART5_RX_NUM=(SizeofMinipc)-(hdma_usart5_rx.Instance->NDTR);
+    __HAL_DMA_SET_COUNTER(&hdma_usart5_rx,SizeofMinipc);
+    __HAL_DMA_ENABLE(&hdma_usart5_rx);
+      
+     vTaskNotifyGiveFromISR(MINIPCSMATaskHandle,&pxHigherPriorityTaskWoken);
+		portYIELD_FROM_ISR(pxHigherPriorityTaskWoken);		
+    }
+}
 /* USER CODE BEGIN 1 */
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 {
@@ -392,18 +453,15 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 	
   if(huart->Instance == USART3)  //裁判系统
 	{
-		vTaskNotifyGiveFromISR(RefereeTaskHandle,&pxHigherPriorityTaskWoken);
-		portYIELD_FROM_ISR(pxHigherPriorityTaskWoken);
+
 	}
   else if(huart->Instance == UART4)  //MINIPC大枪管
   {
-    vTaskNotifyGiveFromISR(MINIPCBIGTaskHandle,&pxHigherPriorityTaskWoken);
-		portYIELD_FROM_ISR(pxHigherPriorityTaskWoken);
+
  }
   else if(huart->Instance == UART5)  //MINIPC小枪管
   {
-   vTaskNotifyGiveFromISR(MINIPCSMATaskHandle,&pxHigherPriorityTaskWoken);
-		portYIELD_FROM_ISR(pxHigherPriorityTaskWoken);
+
   }
 }
 

@@ -53,3 +53,7 @@ dipan_board_test\stm32f4xx_it.o: .\MotorDriver\Motor_USE_CAN.h
 dipan_board_test\stm32f4xx_it.o: ../Inc/can.h
 dipan_board_test\stm32f4xx_it.o: .\Algorithm\SystemState.h
 dipan_board_test\stm32f4xx_it.o: ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.h
+dipan_board_test\stm32f4xx_it.o: ../Inc/dma.h
+dipan_board_test\stm32f4xx_it.o: ../Inc/usart.h
+dipan_board_test\stm32f4xx_it.o: .\Communication\communication.h 
+dipan_board_test\stm32f4xx_it.o: D:\Keil\ARM\ARMCC\Bin\..\include\string.h

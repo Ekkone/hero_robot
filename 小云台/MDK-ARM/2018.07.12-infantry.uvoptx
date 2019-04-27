@@ -157,50 +157,34 @@
         <Bp>
           <Number>0</Number>
           <Type>0</Type>
-          <LineNumber>52</LineNumber>
+          <LineNumber>631</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>134241146</Address>
+          <Address>134223566</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
           <SizeOfObject>0</SizeOfObject>
           <BreakByAccess>0</BreakByAccess>
           <BreakIfRCount>1</BreakIfRCount>
-          <Filename>F:\Work\hero\Src\AX-12A.c</Filename>
+          <Filename>F:\Work\hero\Src\stm32f4xx_it.c</Filename>
           <ExecCommand></ExecCommand>
-          <Expression>\\hero_robot\../Src/AX-12A.c\52</Expression>
+          <Expression>\\hero_robot\../Src/stm32f4xx_it.c\631</Expression>
         </Bp>
         <Bp>
           <Number>1</Number>
           <Type>0</Type>
-          <LineNumber>80</LineNumber>
+          <LineNumber>587</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>134234160</Address>
+          <Address>134223424</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
           <SizeOfObject>0</SizeOfObject>
           <BreakByAccess>0</BreakByAccess>
           <BreakIfRCount>1</BreakIfRCount>
-          <Filename>F:\Work\hero\Src\AX-12A.c</Filename>
+          <Filename>F:\Work\hero\Src\stm32f4xx_it.c</Filename>
           <ExecCommand></ExecCommand>
-          <Expression>\\hero_robot\../Src/AX-12A.c\80</Expression>
-        </Bp>
-        <Bp>
-          <Number>2</Number>
-          <Type>0</Type>
-          <LineNumber>679</LineNumber>
-          <EnabledFlag>1</EnabledFlag>
-          <Address>134230716</Address>
-          <ByteObject>0</ByteObject>
-          <HtxType>0</HtxType>
-          <ManyObjects>0</ManyObjects>
-          <SizeOfObject>0</SizeOfObject>
-          <BreakByAccess>0</BreakByAccess>
-          <BreakIfRCount>1</BreakIfRCount>
-          <Filename>F:\Work\hero\Drivers\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_uart.c</Filename>
-          <ExecCommand></ExecCommand>
-          <Expression>\\hero_robot\../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.c\679</Expression>
+          <Expression>\\hero_robot\../Src/stm32f4xx_it.c\587</Expression>
         </Bp>
       </Breakpoint>
       <WatchWindow1>
@@ -304,6 +288,11 @@
           <WinNumber>1</WinNumber>
           <ItemText>g_Time_TASKOutLine</ItemText>
         </Ww>
+        <Ww>
+          <count>20</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>hcan1.pRxMsg</ItemText>
+        </Ww>
       </WatchWindow1>
       <WatchWindow2>
         <Ww>
@@ -323,7 +312,7 @@
       <DebugFlag>
         <trace>0</trace>
         <periodic>1</periodic>
-        <aLwin>0</aLwin>
+        <aLwin>1</aLwin>
         <aCover>0</aCover>
         <aSer1>0</aSer1>
         <aSer2>0</aSer2>
@@ -919,7 +908,7 @@
 
   <Group>
     <GroupName>Drivers/STM32F4xx_HAL_Driver</GroupName>
-    <tvExp>0</tvExp>
+    <tvExp>1</tvExp>
     <tvExpOptDlg>0</tvExpOptDlg>
     <cbSel>0</cbSel>
     <RteFlg>0</RteFlg>

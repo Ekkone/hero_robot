@@ -19,7 +19,6 @@ void OutLine_Check()
 {
 	short num=0;//临时变量累加用
 	float time=GetSystemTimer();//当前系统时间
-
 	for(num=0;num<DeviceTotal_No;num++)
 	{
 		if(time-g_Time_DeviceOutLine[num]>OutLine_Time)

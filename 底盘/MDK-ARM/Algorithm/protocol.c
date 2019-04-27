@@ -19,6 +19,7 @@
 #include "protocol.h"
 #include "communication.h"
 #include "data_pro_task.h"
+#include "SystemState.h"
 /* 内部自定义数据类型 --------------------------------------------------------*/
 
 /* 内部宏定义 ----------------------------------------------------------------*/
@@ -263,19 +264,18 @@ void sendata(void)
 void Referee_Data_Task(void const * argument)
 {
 	    tFrame   *Frame;
-	
-	    uint32_t NotifyValue;
+  uint32_t NotifyValue;
+  osDelay(100);
+	portTickType xLastWakeTime;
+  xLastWakeTime = xTaskGetTickCount();
 	for(;;)
 	{
-    
-			  NotifyValue=ulTaskNotifyTake(pdTRUE,portMAX_DELAY);
-    
+      RefreshTaskOutLineTime(RefereeTask_ON);
+    NotifyValue=ulTaskNotifyTake(pdTRUE,portMAX_DELAY);
     if(NotifyValue==1)
 		{
-			  NotifyValue=0;
-			
-				HAL_GPIO_TogglePin(GPIOG,GPIO_PIN_1); //GRE_H
-        uint8_t *buff=USART3_RX_DATA;
+			NotifyValue=0;
+      uint8_t *buff=USART3_RX_DATA;
 			for(int8_t i=0;i<USART3_RX_NUM;i++)
 			{
 					if(buff[i]==0xA5)
@@ -338,9 +338,11 @@ void Referee_Data_Task(void const * argument)
 											 i=i+sizeof(Frame);
 								}
 					}
-				
-			}
 		}
+  }
+        CAN_Send_Referee_B(&hcan1);
+        CAN_Send_Referee_S(&hcan1);
+      osDelayUntil(&xLastWakeTime,10);
 
 	 }
 
