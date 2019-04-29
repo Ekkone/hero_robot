@@ -53,7 +53,7 @@ void Get_MiniPC_Data_Big(void)
 	{
 		minipc_rx_big.angle_yaw  = (int16_t)(buff[1]<<8|buff[2]);
 		minipc_rx_big.angle_pit  = (int16_t)(buff[3]<<8|buff[4]);
-		minipc_rx_big.state_flag = buff[5];
+		minipc_rx_big.state_flag = buff[5];//0无目标，1有目标，2低速，3中速，4高速
 	}
 }
 void Get_MiniPC_Data_Small(void)

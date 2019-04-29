@@ -29,7 +29,13 @@ volatile typedef struct
 	volatile uint16_t rel_heat;
 	volatile float remain_power;
 }Power_Heat;
-
+typedef enum
+{
+  GunStop = 0,
+  GunOne,
+  GunFire,
+  GunHold
+}GunMode;
 /* 本模块向外部提供的宏定义--------------------------------------------------*/
 
 /* 本模块向外部提供的接口常量声明--------------------------------------------*/

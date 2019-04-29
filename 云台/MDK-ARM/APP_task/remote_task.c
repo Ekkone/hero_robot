@@ -100,7 +100,8 @@ void ChassisModeProcess()
     }
     MoCa_Flag = 0; 
   }
-  chassis_gimble_Mode_flg = 0; 
+  stir_motor_flag = 0;
+  //chassis_gimble_Mode_flg = 0; 
 }
 void ShotProcess()
 {
@@ -111,6 +112,7 @@ void ShotProcess()
      
   yaw_set_follow.expect = ptr_jy61_t_yaw.final_angle;//更新跟随陀螺仪期望
   
+  MoCa_Flag = 1; 
   if(press_counter >= press_times)//左按键延迟，时间由press_time控制
 	{
 		press_counter=press_times+1;
@@ -118,34 +120,33 @@ void ShotProcess()
       {
         case 1://上,只传送电机开
         {
-          MoCa_Flag = 1; 
+          stir_motor_flag = 1;
         }break;
         case 3://中,只拨盘单发
         {
           /*拨盘单发*/
-//           shot_anjian_counter++;
-//            if(shot_anjian_counter > shot_frequency)//非连续触发信号
-//            {
-//              ptr_heat_gun_t.sht_flg=1;//单发
-//              press_counter=0;
-//              shot_anjian_counter=0;
-//            }
-            MoCa_Flag = 1; 
-              ptr_heat_gun_t.sht_flg=4;          
+           shot_anjian_counter++;
+            if(shot_anjian_counter > shot_frequency)//非连续触发信号
+            {
+              ptr_heat_gun_t.sht_flg=GunOne;//单发
+              press_counter=0;
+              shot_anjian_counter=0;
+            }
+           stir_motor_flag = 0;           
         }break;
         case 2://下，传送电机和拨盘一起
         {
           /*拨盘单发*/
-//          shot_anjian_counter++;
-//            if(shot_anjian_counter > shot_frequency)//非连续触发信号
-//            {
-//              ptr_heat_gun_t.sht_flg=1;//单发
-//              press_counter=0;
-//              shot_anjian_counter=0;
-//            }
-            MoCa_Flag = 1; 
-          ptr_heat_gun_t.sht_flg=3;
-           /*拨盘电机*/
+          shot_anjian_counter++;
+            if(shot_anjian_counter > shot_frequency)//非连续触发信号
+            {
+              ptr_heat_gun_t.sht_flg = GunOne;//单发
+              press_counter = 0;
+              shot_anjian_counter = 0;
+            }
+            
+            /*传送电机*/
+            stir_motor_flag = 1;
         }break;
         
         default:break;
@@ -154,14 +155,6 @@ void ShotProcess()
   /**/
   CAN_Send_YK(&hcan1,RC_Ctl.key.v,RC_Ctl.rc.ch0,RC_Ctl.rc.ch1,RC_Ctl.rc.s1,RC_Ctl.rc.s2);
 }
-/***************************************************************************************
-**
-	*	@brief	RemoteControlProcess()
-	*	@param
-	*	@supplement	与遥控器进行对接，对遥控器的数据进行处理，实现对底盘、云台、发射机构的控制
-	*	@retval	
-****************************************************************************************/
-
 
 /***************************************************************************************
 **
@@ -175,20 +168,34 @@ void MouseKeyControlProcess()
   static uint16_t delay = 0;
   chassis_gimble_Mode_flg = 0;
   CAN_Send_YK(&hcan1,RC_Ctl.key.v,0,0,RC_Ctl.rc.s1,RC_Ctl.rc.s2);
+  /*弹舱空则传送电机开*/
+  if(BULLTE_EMPTY)
+    stir_motor_flag = 1;
+  else
+    stir_motor_flag = 0;
   /*鼠标云台控制*/
   if(chassis_gimble_Mode_flg==1) //XY运动，底盘跟随云台
    {
+     if(CTRL_Press&&R_Press&&minipc_rx_big.state_flag)//辅助瞄准
+       yaw_set_follow.expect = yaw_set_follow.expect + minipc_rx_big.angle_yaw;
+     else
       yaw_set_follow.expect = yaw_set_follow.expect-RC_Ctl.mouse.x/2;	
     
      yaw_set.expect = yaw_get.total_angle;//更新分离编码器期望
    }
    else//WY运动，底盘云台分离
    {	
+     if(CTRL_Press&&R_Press&&minipc_rx_big.state_flag)//辅助瞄准
+       yaw_set.expect = yaw_set.expect + minipc_rx_big.angle_yaw;
+     else
       yaw_set.expect = yaw_set.expect-RC_Ctl.mouse.x/2;
      
      yaw_set_follow.expect = ptr_jy61_t_yaw.final_angle;//更新跟随陀螺仪期望
    }
-  pit_set.expect = pit_set.expect+RC_Ctl.mouse.y/2;	//鼠标（移动速度*1000/50）
+   if(CTRL_Press&&R_Press&&minipc_rx_big.state_flag)//辅助瞄准
+     pit_set.expect = pit_set.expect + minipc_rx_big.angle_pit;
+   else
+     pit_set.expect = pit_set.expect+RC_Ctl.mouse.y/2;	//鼠标（移动速度*1000/50）
    /*CTRL+鼠标右键关闭摩擦轮*/
    if(CTRL_Press&&Right_Press)
    {
@@ -218,7 +225,7 @@ void MouseKeyControlProcess()
     {
       if(delay > PRESS_DELAY && Left_Press)
       {
-        ptr_heat_gun_t.sht_flg=1;
+        ptr_heat_gun_t.sht_flg = GunOne;
         delay = 0;
       }
       delay++; 
@@ -246,7 +253,7 @@ void Remote_Data_Task(void const * argument)
 		/*刷新断线时间*/
     RefreshTaskOutLineTime(RemoteDataTask_ON);
 		   //NotifyValue=ulTaskNotifyTake(pdTRUE,portMAX_DELAY);
-    if(RemoteData_flag==1)
+    if(RemoteData_flag)
 		{
 			RemoteData_flag = 0;
 			//NotifyValue=0;
@@ -265,58 +272,6 @@ void Remote_Data_Task(void const * argument)
             press_counter++;
 		}
 			osDelayUntil(&xLastWakeTime, REMOTE_PERIOD);
-	}
-}
-
-/***************************************************************************************
-**
-	*	@brief	JSYS_Task(void const * argument)
-	*	@param
-	*	@supplement	裁判系统数据处理任务
-	*	@retval	
-****************************************************************************************/
-void Referee_Data_Task(void const * argument)
-{
-	    tFrame   *Frame;
-	
-	    uint32_t NotifyValue;
-	for(;;)
-	{
-				   NotifyValue=ulTaskNotifyTake(pdTRUE,portMAX_DELAY);
-    if(NotifyValue==1)
-		{
-//			printf("running!!!\n");
-			  NotifyValue=0;
-
-	 }
-
- }
-}	
-/***************************************************************************************
-**
-	*	@brief	MiniPC_Data_task(void const * argument)
-	*	@param
-	*	@supplement	视觉数据处理任务
-	*	@retval	
-****************************************************************************************/
-void MiniPC_Data_task(void const * argument)
-{
-
-  uint32_t NotifyValue;
-	Minipc_Pid_Init();
-	for(;;)
-	{
-		
-		 portTickType xLastWakeTime;
-		 xLastWakeTime = xTaskGetTickCount();
-		
-	   NotifyValue=ulTaskNotifyTake(pdTRUE,portMAX_DELAY);
-    if(NotifyValue==1)
-		{
-			NotifyValue=0;
-			
-			osDelayUntil(&xLastWakeTime, MINIPC_PERIOD);
-		}
 	}
 }
 

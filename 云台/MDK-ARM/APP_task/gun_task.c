@@ -87,7 +87,7 @@ void Gun_Task(void const * argument)
       {
         /*摩擦轮速度*/
         set_M_speed = 000;
-        ptr_heat_gun_t.sht_flg = 11;
+        ptr_heat_gun_t.sht_flg = GunHold;
       }break;
       case 1:
       {
@@ -98,7 +98,7 @@ void Gun_Task(void const * argument)
  /*判断发射模式*/
     switch(ptr_heat_gun_t.sht_flg)
     {
-			case 0://停止58982
+			case GunStop://停止58982
 			{
         switch(contiue_flag)
         {
@@ -115,7 +115,7 @@ void Gun_Task(void const * argument)
         }
         
 			}break;
-      case 1://单发模式
+      case GunOne://单发模式
       {
         /*设定角度*/
         if(bochi_count != 4)//前四个角度
@@ -142,28 +142,11 @@ void Gun_Task(void const * argument)
         contiue_flag = 0;
         
       }break;
-      case 2://3连发模式
-      {
-				moto_dial_get.cmd_time=GetSystemTimer();
-				set_cnt=3;
-				set_angle=58982*set_cnt;
-        /*清零*/
-				moto_dial_get.round_cnt=0;
-				moto_dial_get.offset_angle=moto_dial_get.angle;
-				moto_dial_get.total_angle=0;
-        /*进入位置环*/
-        ptr_heat_gun_t.sht_flg = 11;
-        contiue_flag = 0;
-      }break;
-      case 3://连发模式
+      case GunFire://连发模式
       {
         set_speed = 1500;
       }break;
-      case 4://连发模式
-      {
-        set_speed = 0;
-      }break;
-      case 11:
+      case GunHold:
       {
         /*pid位置环*/
         position:
@@ -174,7 +157,7 @@ void Gun_Task(void const * argument)
 
 			default :break;
     }
-     ptr_heat_gun_t.sht_flg = 11;//默认位置环
+     ptr_heat_gun_t.sht_flg = GunHold;//默认位置环
      /*速度环*/
      pid_calc(&pid_dial_spd,moto_dial_get.speed_rpm ,set_speed);
      pid_calc(&pid_shot_spd[0],moto_M_get[0].speed_rpm ,set_M_speed);

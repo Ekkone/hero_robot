@@ -71,7 +71,7 @@ extern moto_measure_t   moto_bo;
 extern moto_measure_t   moto_stir_get;
 extern moto_measure_t   pit_get;
 extern moto_measure_t   yaw_get;
-extern uint8_t flag ; 
+extern uint8_t stir_motor_flag;
 /* Internal functions ------------------------------------------------------- */
 /* Exported functions ------------------------------------------------------- */
 void Cloud_Platform_Motor(CAN_HandleTypeDef * hcan,int16_t yaw,int16_t	pitch);

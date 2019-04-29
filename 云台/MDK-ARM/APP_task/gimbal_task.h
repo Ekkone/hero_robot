@@ -33,6 +33,7 @@ extern Pos_Set  yaw_set;
 extern Pos_Set  yaw_set_follow;
 extern Pos_Set  pit_set;
 extern int8_t gimbal_disable_flg;
+extern uint8_t stir_motor_flag;
 
 /* 本模块向外部提供的接口函数原型声明----------------------------------------*/
 void Gimbal_Task(void const * argument);

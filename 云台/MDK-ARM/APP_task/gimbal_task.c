@@ -16,7 +16,7 @@ Pos_Set  yaw_set;
 Pos_Set  yaw_set_follow;
 Pos_Set  pit_set;
 int8_t gimbal_disable_flg;
-
+uint8_t stir_motor_flag = 0;
 /* 调用的外部函数原型声明------------------------------------------------------------
 void Cloud_Platform_Motor(CAN_HandleTypeDef * hcan,int16_t yaw,int16_t	pitch);
 float pid_calc(pid_t* pid, float get, float set);
@@ -168,10 +168,7 @@ void Gimbal_Contrl_Task(void const * argument)
       #endif
       #if jy61
       IMU_Get_Data();
-      yaw_set.expect = minipc_rx_big.angle_yaw + yaw_set.expect;
-      pit_set.expect = minipc_rx_big.angle_pit + pit_set.expect;
-      minipc_rx_big.angle_yaw = 0;
-      minipc_rx_big.angle_pit = 0;
+      
       /*云台限位保护*/
       /*pit正常0-670（前），7500（后）-8192*/
       if((pit_set.expect + pit_get.offset_angle) > (630 + pit_protect_correct_2) &&\
@@ -242,14 +239,17 @@ void Gimbal_Contrl_Task(void const * argument)
 //        Pitch_Current_Value = 0;
 //        Yaw_Current_Value = 0;
         /*驱动电机*/
-				if(gimbal_disable_flg==1)//失能
+				if(gimbal_disable_flg)//失能
 				{
 					Cloud_Platform_Motor_Disable(&hcan1);
 				}
 				else Cloud_Platform_Motor(&hcan1,Yaw_Current_Value,Pitch_Current_Value);
         yaw_set_follow.expect_last = yaw_set_follow.expect;
+        
+      minipc_rx_big.angle_yaw = 0;
+      minipc_rx_big.angle_pit = 0;
         /*发送底盘*/
-      CAN_Send_YT(&hcan1,yaw_get.total_angle,0,chassis_gimble_Mode_flg,0);
+      CAN_Send_YT(&hcan1,yaw_get.total_angle,0,chassis_gimble_Mode_flg,stir_motor_flag);
 			osDelayUntil(&xLastWakeTime, GIMBAL_PERIOD);
 			
    }

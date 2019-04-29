@@ -399,11 +399,11 @@ void USART3_IRQHandler(void)
       __HAL_UART_CLEAR_IDLEFLAG(&huart3);
 		
 		USART3_RX_NUM=(SizeofReferee)-(hdma_usart3_rx.Instance->NDTR);
-//    __HAL_DMA_SET_COUNTER(&hdma_usart3_rx,SizeofReferee);
-//    __HAL_DMA_ENABLE(&hdma_usart3_rx);
+    __HAL_DMA_SET_COUNTER(&hdma_usart3_rx,SizeofReferee);
+    __HAL_DMA_ENABLE(&hdma_usart3_rx);
       
-//     vTaskNotifyGiveFromISR(RefereeTaskHandle,&pxHigherPriorityTaskWoken);
-//		portYIELD_FROM_ISR(pxHigherPriorityTaskWoken);		
+     vTaskNotifyGiveFromISR(RefereeTaskHandle,&pxHigherPriorityTaskWoken);
+		portYIELD_FROM_ISR(pxHigherPriorityTaskWoken);		
     }
 }
 void USART4_IRQHandler(void)

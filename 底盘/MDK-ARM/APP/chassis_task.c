@@ -56,6 +56,7 @@ void Chassis_pid_init(void)
 			PID_struct_init(&pid_3508_spd[i], POSITION_PID, 10000, 2000,
 										1.5f,	0.1f,	0.1f	);  //4 motos angular rate closeloop.
 		}
+    
 }
 /* 任务主体部分 -------------------------------------------------------------*/
 

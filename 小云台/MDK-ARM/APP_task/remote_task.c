@@ -81,11 +81,11 @@ void ManualMode()
       {
         case 1://上
         {
-            MoCa_Flag = 0;
+            MoCa_Flag = Stop;
         }break;
         case 3://中,开启摩擦轮低速
         {
-            MoCa_Flag = 1;            
+            MoCa_Flag = LowSpeed;            
         }break;
         case 2://下，开启摩擦轮高速与拨盘电机
         {
@@ -97,8 +97,8 @@ void ManualMode()
 //              press_counter=0;
 //              shot_anjian_counter=0;
 //            }
-          ptr_heat_gun_t.sht_flg=3;
-            MoCa_Flag = 2; 
+          ptr_heat_gun_t.sht_flg=GunFire;
+            MoCa_Flag = MiddleSpeed; 
            /*拨盘电机*/
         }break;
         
@@ -173,13 +173,35 @@ void AutoMode()
 		if(minipc_rx_small.state_flag)  
     {
       gimbal_mode = SnipeMode;
-      MoCa_Flag = 1;//低速
+      switch(minipc_rx_small.state_flag)
+      {
+        case 1:
+        {
+          MoCa_Flag = LowSpeed;
+          ptr_heat_gun_t.sht_flg=GunStop;
+        }break;
+        case 2:
+        {
+          MoCa_Flag = LowSpeed;
+          ptr_heat_gun_t.sht_flg=GunFire;
+        }break;
+        case 3:
+        {
+          MoCa_Flag = MiddleSpeed;
+          ptr_heat_gun_t.sht_flg=GunFire;
+        }break;
+        case 4:
+        {
+          MoCa_Flag = HighSpeed;
+          ptr_heat_gun_t.sht_flg=GunFire;
+        }break;
+      }
     }
     else
     {
       gimbal_mode = PatrolMode;
-      MoCa_Flag = 2;//高速
-      ptr_heat_gun_t.sht_flg=3;
+      MoCa_Flag = Init;
+      ptr_heat_gun_t.sht_flg=GunStop;
     }
 }
 

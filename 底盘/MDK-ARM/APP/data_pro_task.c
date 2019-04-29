@@ -21,6 +21,7 @@ else if(val>=max)\
 /* 内部常量定义--------------------------------------------------------------*/
 pid_t pid_minipc_yaw={0};
 pid_t pid_minipc_pit={0};
+pid_t pid_stir_spd;
 
 #define REMOTE_PERIOD 5
 #define MINIPC_PERIOD 2
@@ -42,6 +43,7 @@ uint8_t shot_anjian_counter=0;
 uint8_t shot_frequency = 100;
 int8_t chassis_gimble_Mode_flg;
 uint8_t communication_message = 0;
+uint8_t stir_flag = 0;
 //volatile float remain_power=0.0;   //底盘功率 _待续
 //float power; 				 //底盘功率 _测试
 
@@ -83,53 +85,12 @@ void ChassisModeProcess()
 							moto_3508_set.dstVmmps_W=((RC_Ctl.rc.ch0-0x400)*5);
 							moto_3508_set.dstVmmps_Y=-((RC_Ctl.rc.ch1-0x400)*5);
 					 }
-   if(press_counter >= press_times)//左按键延迟，时间由press_time控制
-	{
-		press_counter=press_times+1;
-   switch(RC_Ctl.rc.s1)
-    {
-      case 1://上,急停
-      {
-        /*底盘急停*/
-        hard_brak();
-      }break;
-      case 2://下，底盘跟随
-      {
-
-      }break;
-      case 3://中,底盘分离
-      {
-       
-      }break;
-      default:break;
-    
-    }
-  }
+           if(RC_Ctl.rc.s1 == 1)
+             hard_brak();
 }
 void ShotProcess()
 {	
   
-  if(press_counter >= press_times)//左按键延迟，时间由press_time控制
-	{
-		press_counter=press_times+1;
-    switch(RC_Ctl.rc.s1)
-      {
-        case 1://上,只传送电机开
-        {
- 
-        }break;
-        case 3://中,只拨盘单发
-        {
-          
-        }break;
-        case 2://下，传送电机和拨盘一起
-        {
-           /*拨盘电机*/
-        }break;
-        
-        default:break;
-    }
-  }
 }
 /***************************************************************************************
 **
@@ -236,15 +197,15 @@ void hard_brak()
 	*	@supplement	遥控数据接收及处理任务
 	*	@retval	
 ****************************************************************************************/
-extern volatile uint8_t RemoteData_flag;
 void Remote_Data_Task(void const * argument)
 {
 	uint32_t NotifyValue;
-	
+	int set_stir_speed = 0;
 		portTickType xLastWakeTime;
 		xLastWakeTime = xTaskGetTickCount();
 	
-	
+	PID_struct_init(&pid_stir_spd, POSITION_PID,10000,1000,
+	                4.0f, 0.01f , 20.0f  );
 	for(;;)
 	{
 			
@@ -264,12 +225,16 @@ void Remote_Data_Task(void const * argument)
 			VAL_LIMIT(moto_3508_set.dstVmmps_X, XY_speed_min, XY_speed_max);
 			VAL_LIMIT(moto_3508_set.dstVmmps_Y, XY_speed_min, XY_speed_max);	
 			VAL_LIMIT(moto_3508_set.dstVmmps_W, W_speed_min, W_speed_max);
-				
-
-            press_counter++;
+        /*传送电机*/
+			if(stir_motor_flag)
+            set_stir_speed = 3000;
+      else  set_stir_speed = 0;
+      pid_calc(&pid_stir_spd,moto_stir_get.speed_rpm,set_stir_speed);
+      Stir_Motor(&hcan1,pid_stir_spd.pos_out);      
         //CAN_Send_chassis(&hcan1);
+      press_counter++;
         osDelayUntil(&xLastWakeTime, REMOTE_PERIOD);
-		}
+	}
 
 }
 

@@ -75,22 +75,32 @@ void Gun_Task(void const * argument)
 		RefreshTaskOutLineTime(GunTask_ON);
     switch(MoCa_Flag)
     {
-      case 0:
+      case Stop:
       {
-        /*摩擦轮速度*/
+        /*摩擦轮停止*/
         set_M_speed = 100;
         ptr_heat_gun_t.sht_flg = 11;
       }break;
-      case 1:
+      case Init:
       {
-        /*摩擦轮低速*/
+        /*摩擦轮初始化*/
         set_M_speed = 105;
         ptr_heat_gun_t.sht_flg = 11;
       }break;
-      case 2:
+      case LowSpeed:
       {
-        /*摩擦轮高速*/
+        /*摩擦轮低速*/
         set_M_speed = 130;
+      }break;
+      case MiddleSpeed:
+      {
+        /*摩擦轮中速*/
+        set_M_speed = 160;
+      }break;
+      case HighSpeed:
+      {
+        /*摩擦轮速低速*/
+        set_M_speed = 190;
       }break;
     }
     ramp_calc(&shoot,set_M_speed);
@@ -98,7 +108,7 @@ void Gun_Task(void const * argument)
  /*判断发射模式*/
     switch(ptr_heat_gun_t.sht_flg)
     {
-			case 0://停止58982
+			case GunStop://停止58982
 			{
         
         switch(contiue_flag)
@@ -117,7 +127,7 @@ void Gun_Task(void const * argument)
         }
         
 			}break;
-      case 1://单发模式
+      case GunOne://单发模式
       {
         /*设定角度*/
 				moto_dial_get.cmd_time=GetSystemTimer();
@@ -128,28 +138,15 @@ void Gun_Task(void const * argument)
 				moto_dial_get.offset_angle=moto_dial_get.angle;
 				moto_dial_get.total_angle=0;	
         /*进入位置环*/
-        ptr_heat_gun_t.sht_flg = 11;
+        ptr_heat_gun_t.sht_flg = GunHold;
         contiue_flag = 0;
         
       }break;
-      case 2://3连发模式
+      case GunFire://3连发模式
       {
-				moto_dial_get.cmd_time=GetSystemTimer();
-				set_cnt=3;
-				set_angle=58982*set_cnt;
-        /*清零*/
-				moto_dial_get.round_cnt=0;
-				moto_dial_get.offset_angle=moto_dial_get.angle;
-				moto_dial_get.total_angle=0;
-        /*进入位置环*/
-        ptr_heat_gun_t.sht_flg = 11;
-        contiue_flag = 0;
+				set_speed = 1000;
       }break;
-      case 3://连发
-      {
-        set_speed = 1000;
-      }
-      case 11:
+      case GunHold:
       {
         /*pid位置环*/
        position: pid_calc(&pid_dial_pos, moto_dial_get.total_angle,set_angle);	
@@ -159,7 +156,7 @@ void Gun_Task(void const * argument)
 
 			default :break;
     }
-    //ptr_heat_gun_t.sht_flg = 11;//默认位置环
+    ptr_heat_gun_t.sht_flg = GunHold;//默认位置环
      /*速度环*/
      pid_calc(&pid_dial_spd,moto_dial_get.speed_rpm ,set_speed);
      /*驱动拨弹电机*/

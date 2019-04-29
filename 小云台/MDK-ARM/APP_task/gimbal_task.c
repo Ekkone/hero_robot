@@ -61,7 +61,7 @@ void gimbal_pid_init(void)
                   2.0f, 0.0f, 0.0f );
   /*在调版*/
   /* yaw axis motor pid parameter */
-	 PID_struct_init(&pid_yaw, POSITION_PID, 5000, 1000,
+	 PID_struct_init(&pid_yaw, POSITION_PID, 10000, 1000,
                   10.0f, 0.02f, 10.0f); 
 	 PID_struct_init(&pid_yaw_spd, POSITION_PID, 5000, 1000,
                   2.0f, 0.0f, 0.0f );
@@ -174,12 +174,12 @@ void Gimbal_Contrl_Task(void const * argument)
         }break;
         case PatrolMode://巡逻模式，yaw轴周期转动
         {
-          if((yaw_set.expect + yaw_get.offset_angle) > 6000 \
-            || (yaw_set.expect + yaw_get.offset_angle) < 2400)
+          if((yaw_set.expect + yaw_get.offset_angle) > 8000 \
+            || (yaw_set.expect + yaw_get.offset_angle) < 1000)
             {
               Direction = -Direction;
             }
-          yaw_set.expect += Direction * 1;
+          yaw_set.expect += Direction * 10;
           
         }break;
         case SnipeMode://狙击模式
@@ -199,7 +199,7 @@ void Gimbal_Contrl_Task(void const * argument)
         pid_calc(&pid_pit_spd,pit_get.speed_rpm, pid_pit.pos_out);
       
         Pitch_Current_Value=(-pid_pit_spd.pos_out); 
-		    Yaw_Current_Value= (-pid_yaw_spd.pos_out);
+		    Yaw_Current_Value= (pid_yaw.pos_out);
      
       #if jy61
       IMU_Get_Data();

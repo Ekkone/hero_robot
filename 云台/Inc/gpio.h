@@ -65,6 +65,7 @@
 #define GREEN_Blink()  HAL_GPIO_TogglePin(LED_GREEN_GPIO_Port,LED_GREEN_Pin)
 #define RED_Blink()    HAL_GPIO_TogglePin(LED_RED_GPIO_Port,LED_RED_Pin)
 #define KEY()  HAL_GPIO_ReadPin(KEY_GPIO_Port,KEY_Pin)
+#define BULLTE_EMPTY HAL_GPIO_ReadPin(GPIOI,GPIO_PIN_0)
 
 #define IST_INT_Pin GPIO_PIN_3
 #define IST_INT_GPIO_Port GPIOE

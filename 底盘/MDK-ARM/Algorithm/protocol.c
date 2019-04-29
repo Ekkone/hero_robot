@@ -256,7 +256,7 @@ void sendata(void)
 
 /***************************************************************************************
 **
-	*	@brief	JSYS_Task(void const * argument)
+	*	@brief	Referee_Data_Task(void const * argument)
 	*	@param
 	*	@supplement	
 	*	@retval	
@@ -292,7 +292,7 @@ void Referee_Data_Task(void const * argument)
                       Robot.remainHp = Frame->Data.game_robot_state.remain_HP;//剩余血量
                       Robot.maxHp  = Frame->Data.game_robot_state.max_HP;//最大血量
                       Robot.heat.shoot_17_cooling_rate = Frame->Data.game_robot_state.shooter_heat0_cooling_rate;//17每秒冷却值
-                      Robot.heat.shoot_17_cooling_limit = Frame->Data.game_robot_state.shooter_heat0_cooling_limit;//17；冷却上限
+                     Robot.heat.shoot_17_cooling_limit = Frame->Data.game_robot_state.shooter_heat0_cooling_limit;//17热量上限
                       Robot.heat.shoot_42_cooling_rate = Frame->Data.game_robot_state.shooter_heat1_cooling_rate;//
                       Robot.heat.shoot_42_cooling_limit = Frame->Data.game_robot_state.shooter_heat1_cooling_limit;//
 											
