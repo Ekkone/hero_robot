@@ -404,7 +404,7 @@ void CAN_Get_Referee( CAN_HandleTypeDef * hcan)
   Robot.remainHp = (uint16_t)(hcan->pRxMsg->Data[0]<<8 | hcan->pRxMsg->Data[1]) ;
   Robot.heat.shoot_42_speed = (uint16_t)(hcan->pRxMsg->Data[2]<<8 | hcan->pRxMsg->Data[3]) ;
   Robot.heat.shoot_42_heat = (uint16_t)(hcan->pRxMsg->Data[4]<<8 | hcan->pRxMsg->Data[5]) ;
-  Robot.Chassis_Power.chassis_Power = (uint16_t)(hcan->pRxMsg->Data[6]<<8 | hcan->pRxMsg->Data[7]) ;
+  Robot.heat.shoot_42_cooling_limit = (uint16_t)(hcan->pRxMsg->Data[6]<<8 | hcan->pRxMsg->Data[7]) ;
 }
 void CAN_Get_MiniPC( CAN_HandleTypeDef * hcan)
 {

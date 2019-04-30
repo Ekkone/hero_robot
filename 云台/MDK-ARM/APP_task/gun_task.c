@@ -59,6 +59,13 @@ void Gun_Pid_Init()
 	*	@supplement	枪口热量限制任务
 	*	@retval	
 ****************************************************************************************/
+void Gun_Task(void const * argument)
+{ 
+
+	osDelay(100);
+	portTickType xLastWakeTime;
+	xLastWakeTime = xTaskGetTickCount();
+  
   uint8_t motor_stop_flag=0;
   int32_t set_angle = 0;
 	int32_t set_speed = 0;
@@ -67,13 +74,7 @@ void Gun_Pid_Init()
   uint8_t block_flag;
   uint8_t bochi_count = 0;//拨齿计数 0-4
   uint8_t contiue_flag = 0;
-void Gun_Task(void const * argument)
-{ 
-
-	osDelay(100);
-	portTickType xLastWakeTime;
-	xLastWakeTime = xTaskGetTickCount();
-
+  uint16_t remain_heat = 0;
 	Gun_Pid_Init();
   /*设定发弹*/
 
@@ -95,7 +96,11 @@ void Gun_Task(void const * argument)
         set_M_speed = 2000;
       }break;
     }
- /*判断发射模式*/
+    /*热量限制*/
+    remain_heat = Robot.heat.shoot_42_cooling_limit - Robot.heat.shoot_42_heat;
+    if(remain_heat < 100)
+      ptr_heat_gun_t.sht_flg = GunStop;
+    /*判断发射模式*/
     switch(ptr_heat_gun_t.sht_flg)
     {
 			case GunStop://停止58982

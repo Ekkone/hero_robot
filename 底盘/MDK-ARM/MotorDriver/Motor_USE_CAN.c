@@ -272,8 +272,8 @@ void CAN_Send_Referee_B( CAN_HandleTypeDef * hcan)
       TX_REFEREE_B[3] = (uint16_t)Robot.heat.shoot_42_speed;
       TX_REFEREE_B[4] = Robot.heat.shoot_42_heat>>8;	//42mmÇ¹¿ÚÈÈ
       TX_REFEREE_B[5] = Robot.heat.shoot_42_heat;
-      TX_REFEREE_B[6] = (uint16_t)Robot.Chassis_Power.chassis_Power>>8;;
-      TX_REFEREE_B[7] = (uint16_t)Robot.Chassis_Power.chassis_Power;
+      TX_REFEREE_B[6] = (uint16_t)Robot.heat.shoot_42_cooling_limit>>8;
+      TX_REFEREE_B[7] = (uint16_t)Robot.heat.shoot_42_cooling_limit;
 
 
 	
@@ -334,8 +334,8 @@ void CAN_Send_MINI_S( CAN_HandleTypeDef * hcan)
       TX_DATA_MINI_S[3] = minipc_rx_small.angle_pit;
       TX_DATA_MINI_S[4] = minipc_rx_small.state_flag;
       TX_DATA_MINI_S[5] = communication_message;	
-      TX_DATA_MINI_S[6] = 0;
-      TX_DATA_MINI_S[7] = 0;
+      TX_DATA_MINI_S[6] = (uint16_t)Robot.heat.shoot_17_cooling_limit>>8;
+      TX_DATA_MINI_S[7] = (uint16_t)Robot.heat.shoot_17_cooling_limit;
 
 	
 			HAL_CAN_AddTxMessage(hcan, &CANSend_MINI_S, TX_DATA_MINI_S, (uint32_t *)CAN_TX_MAILBOX0 );

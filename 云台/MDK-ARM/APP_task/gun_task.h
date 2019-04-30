@@ -7,7 +7,7 @@
 #include "Motor_USE_TIM.h"
 #include "pid.h"
 #include "minipc.h"
-
+#include "protocol.h"
 /* 本模块向外部提供的数据类型定义--------------------------------------------*/
 typedef struct Heat_Gun_t
 {

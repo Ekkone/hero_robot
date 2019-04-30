@@ -3,6 +3,7 @@
 #include "math.h"
 #include "SystemState.h"
 #include "user_lib.h"
+#include "protocol.h"
 /* 内部宏定义----------------------------------------------------------------*/
 
 /* 内部自定义数据类型--------------------------------------------------------*/
@@ -67,7 +68,7 @@ void Gun_Task(void const * argument)
   int32_t set_M_speed = 0;
 	static uint8_t set_cnt = 0;
   static uint8_t block_flag;
-
+  static uint16_t remain_heat = 0;
   static uint8_t contiue_flag = 0;
 	for(;;)
 	{
@@ -105,7 +106,11 @@ void Gun_Task(void const * argument)
     }
     ramp_calc(&shoot,set_M_speed);
     Friction_Wheel_Motor(shoot.out,shoot.out);
- /*判断发射模式*/
+    /*热量限制*/
+    remain_heat = Robot.heat.shoot_17_cooling_limit - Robot.heat.shoot_17_heat;
+    if(remain_heat < 30)
+      ptr_heat_gun_t.sht_flg = GunStop;
+    /*判断发射模式*/
     switch(ptr_heat_gun_t.sht_flg)
     {
 			case GunStop://停止58982
@@ -118,14 +123,12 @@ void Gun_Task(void const * argument)
             /*设定角度*/
             set_angle=moto_dial_get.total_angle;	
             contiue_flag = 1;
-            
           }break;
           case 1:
           {
             goto position;
           }break;
         }
-        
 			}break;
       case GunOne://单发模式
       {
@@ -152,8 +155,6 @@ void Gun_Task(void const * argument)
        position: pid_calc(&pid_dial_pos, moto_dial_get.total_angle,set_angle);	
 				set_speed=pid_dial_pos.pos_out;
       }break;
-      
-
 			default :break;
     }
     ptr_heat_gun_t.sht_flg = GunHold;//默认位置环
@@ -161,6 +162,7 @@ void Gun_Task(void const * argument)
      pid_calc(&pid_dial_spd,moto_dial_get.speed_rpm ,set_speed);
      /*驱动拨弹电机*/
 		 Shot_Motor(&hcan2,pid_dial_spd.pos_out);
+    /*清零标志位*/
 		 minipc_rx_small.state_flag=0;
 		 set_speed = 0;	   
     

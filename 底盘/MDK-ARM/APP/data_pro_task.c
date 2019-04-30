@@ -208,7 +208,8 @@ void Remote_Data_Task(void const * argument)
 	                4.0f, 0.01f , 20.0f  );
 	for(;;)
 	{
-			
+    /*发送给操作界面*/
+			sendata(1.5,1.6,1.7,8);
 			RefreshTaskOutLineTime(RemoteDataTask_ON);
 				switch(RC_Ctl.rc.s2)
 				{

@@ -466,31 +466,7 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 }
 
 
-void HAL_UART_ErrorCallback(UART_HandleTypeDef *huart)
-{
-  if(huart->Instance == UART5)
-  {
-      /* Enable the UART Error Interrupt: (Frame error, noise error, overrun error) */
-    SET_BIT(huart->Instance->CR3, USART_CR3_EIE);
 
-    /* Enable the UART Parity Error and Data Register not empty Interrupts */
-    SET_BIT(huart->Instance->CR1, USART_CR1_PEIE | USART_CR1_RXNEIE);
-  }
-	else if(huart->Instance == USART2)
-  {
-      /* Enable the UART Error Interrupt: (Frame error, noise error, overrun error) */
-    SET_BIT(huart->Instance->CR3, USART_CR3_EIE);
-
-		
-
-    /* Enable the UART Parity Error and Data Register not empty Interrupts */
-    SET_BIT(huart->Instance->CR1, USART_CR1_PEIE | USART_CR1_RXNEIE);
-	
-//		    HAL_UART_Receive_IT(&huart2,LightBand,10);
-
-		
-	}
-}
 
 void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan)
 {
@@ -507,19 +483,17 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan)
 			
 			case CAN_YK: 
 			{
-				
 				RefreshDeviceOutLineTime(Remote_NO);
 				CAN_RX_YK(&hcan1);         //遥控器数据接收
 				RemoteData_flag = 1;       //数据任务
 			}break;
-			
 			case CAN_ERROR: 
 			{
 				RefreshDeviceOutLineTime(Remote_NO);
 				CAN_RX_ERROR(&hcan1);
 			}break;
 			
-     case CAN_3508_STIR:
+      case CAN_3508_STIR:
       {
         RefreshDeviceOutLineTime(MotorS_NO);
         if(moto_stir_get.msg_cnt++ <= 50)	

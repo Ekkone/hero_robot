@@ -175,11 +175,14 @@ typedef __packed struct
 
 typedef __packed struct
 {
+ uint16_t data_id;
+uint16_t sender_id;
+uint16_t cilent_id;  
 float data1;
 float data2;
 float data3;
 uint8_t masks;
-} client_custom_data_t;                    //客户端自定义数据(0x0301)
+} client_custom_data_t;                      //客户端自定义数据(0x0301)
 
 typedef __packed struct
 {
@@ -393,7 +396,6 @@ typedef struct
  
 }ROBOT;
 
-
 //内部函数
 uint8_t verify_crc8_check_sum(uint8_t* pchMessage, uint16_t dwLength);
 uint8_t verify_crc16_check_sum(uint8_t* pchMessage, uint32_t dwLength);
@@ -401,11 +403,11 @@ uint8_t get_crc8_check_sum(uint8_t* pchMessage, uint16_t dwLength, uint8_t ucCRC
 uint16_t get_crc16_check_sum(uint8_t* pchMessage, uint32_t dwLength, uint16_t wCRC);
 uint8_t  append_crc8_check_sum(uint8_t* pchMessage, uint16_t dwLength);
 uint16_t append_crc16_check_sum(uint8_t* pchMessage, uint32_t dwLength);
-
+void sendata(float data1,float data2,float data3,uint8_t flag);
+void Send_FrameData(tCmdID cmdid, uint8_t * pchMessage,uint8_t dwLength);
 //接口函数
 void Referee_Data_Task(void const * argument);
 void Send_FrameData(tCmdID cmdid, uint8_t * pchMessage,uint8_t dwLength);
-void sendata(void);
 
 
 extern ROBOT Robot;

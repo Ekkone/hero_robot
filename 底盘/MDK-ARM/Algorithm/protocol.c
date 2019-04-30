@@ -204,7 +204,7 @@ uint16_t append_crc16_check_sum(uint8_t* pchMessage, uint32_t dwLength)
 **			pchMessage：发送数据的首地址，需要是tSelfDefine格式的
 **			dwLength：数据长度
 ** Output: 无
-**   发送函数是通过串口6发送出去的
+**   发送函数是通过串口3发送出去的
 */
 void Send_FrameData(tCmdID cmdid, uint8_t * pchMessage,uint8_t dwLength)
 {	
@@ -212,10 +212,10 @@ void Send_FrameData(tCmdID cmdid, uint8_t * pchMessage,uint8_t dwLength)
 	uint8_t *addr;
   custom_dataFrame SelfDefineFrame = {.FrameHeader.SOF = 0xA5};// 帧
 	
-	if ((pchMessage == 0) || (dwLength != sizeof(custom_data)))
+	if ((pchMessage == 0) || (dwLength != sizeof(client_custom_data_t)))
 		return ;
 	
-	addr = (uint8_t *)&SelfDefineFrame.custom_data.data1;
+	addr = (uint8_t *)&SelfDefineFrame.custom_data.data_id;
 	
 	SelfDefineFrame.CmdID = cmdid; //命令
 	SelfDefineFrame.FrameHeader.DataLength = dwLength;//数据长度
@@ -232,7 +232,7 @@ void Send_FrameData(tCmdID cmdid, uint8_t * pchMessage,uint8_t dwLength)
   	i = sizeof(SelfDefineFrame.FrameHeader) + sizeof(SelfDefineFrame.CmdID)  + sizeof(SelfDefineFrame.CRC16) + dwLength;//计算实际帧的长度
 	  SelfDefineFrame.CRC16 = append_crc16_check_sum((uint8_t *)&SelfDefineFrame,i);
 	
-	HAL_UART_Transmit(&huart3,(uint8_t *)&SelfDefineFrame,22,100);
+	HAL_UART_Transmit(&huart3,(uint8_t *)&SelfDefineFrame,sizeof(custom_dataFrame),100);
 	
 }
 /*
@@ -242,16 +242,22 @@ void Send_FrameData(tCmdID cmdid, uint8_t * pchMessage,uint8_t dwLength)
 **   发送函数是通过串口6发送出去的
 */
 
-void sendata(void)
+void sendata(float data1,float data2,float data3,uint8_t flag)
 {
-	//(1)
+
 	client_custom_data_t       custom_data_t; 
-	custom_data_t.data1 = 1.0f;
+  custom_data_t.data_id = 0xD180;//数据内容id（固定）
+  custom_data_t.sender_id = 1;//机器人id
+  custom_data_t.cilent_id = 0x0101;//客户端id
+	custom_data_t.data1 = 0;//imu_data.gz;
 	custom_data_t.data2 = 2.0f;
-	custom_data_t.data3 = 3.0f;
-	Send_FrameData(custom_data,(uint8_t *)&custom_data_t,sizeof(custom_data_t));	
+	custom_data_t.data3 = 2.0f;
+  custom_data_t.masks = 0;//后六位flag
+	Send_FrameData(custom_data,(uint8_t *)&custom_data_t,sizeof(client_custom_data_t));	
 
 }
+
+
 
 
 /***************************************************************************************
@@ -338,8 +344,8 @@ void Referee_Data_Task(void const * argument)
 											 i=i+sizeof(Frame);
 								}
 					}
-		}
-  }
+        }
+      }
         CAN_Send_Referee_B(&hcan1);
         CAN_Send_Referee_S(&hcan1);
       osDelayUntil(&xLastWakeTime,10);

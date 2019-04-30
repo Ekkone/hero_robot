@@ -268,5 +268,6 @@ void CAN_Get_MiniPC( CAN_HandleTypeDef * hcan)
   minipc_rx_small.angle_pit = (int16_t) (hcan->pRxMsg->Data[2]<<8 | hcan->pRxMsg->Data[3]) ;
   minipc_rx_small.state_flag = (uint8_t)(hcan->pRxMsg->Data[4]);
   communication_message = (uint8_t)(hcan->pRxMsg->Data[5]);
+  Robot.heat.shoot_17_cooling_limit = (uint16_t)(hcan->pRxMsg->Data[6]<<8 | hcan->pRxMsg->Data[7]) ;
   
 }
