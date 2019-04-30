@@ -20,8 +20,8 @@ typedef enum
 {
   /*CAN1*/
   CAN_2006_B = 0X201,
-  CAN_GM3510_YAW = 0X205,
-  CAN_GM6020_PIT = 0X206,
+  CAN_GM3510_PIT = 0X206,
+  CAN_GM6020_YAW = 0X205,
   /*CAN2*/
 	/*µ×ÅÌ->Ð¡ÔÆÌ¨*/
   CAN_Referee_S = 0x013,

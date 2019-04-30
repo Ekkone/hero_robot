@@ -261,13 +261,14 @@ void CAN_Get_Referee( CAN_HandleTypeDef * hcan)
   Robot.remainHp = (uint16_t)(hcan->pRxMsg->Data[1]<<8 | hcan->pRxMsg->Data[2]) ;
   Robot.heat.shoot_17_speed = (uint16_t)(hcan->pRxMsg->Data[3]<<8 | hcan->pRxMsg->Data[4]) ;
   Robot.heat.shoot_17_heat = (uint16_t)(hcan->pRxMsg->Data[5]<<8 | hcan->pRxMsg->Data[6]) ;
+  communication_message = (uint8_t)(hcan->pRxMsg->Data[7]);
 }
 void CAN_Get_MiniPC( CAN_HandleTypeDef * hcan)
 {
   minipc_rx_small.angle_yaw = (int16_t)(hcan->pRxMsg->Data[0]<<8 | hcan->pRxMsg->Data[1]) ;
   minipc_rx_small.angle_pit = (int16_t) (hcan->pRxMsg->Data[2]<<8 | hcan->pRxMsg->Data[3]) ;
   minipc_rx_small.state_flag = (uint8_t)(hcan->pRxMsg->Data[4]);
-  communication_message = (uint8_t)(hcan->pRxMsg->Data[5]);
+  //communication_message = (uint8_t)(hcan->pRxMsg->Data[5]);
   Robot.heat.shoot_17_cooling_limit = (uint16_t)(hcan->pRxMsg->Data[6]<<8 | hcan->pRxMsg->Data[7]) ;
   
 }

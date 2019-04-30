@@ -351,31 +351,6 @@ void USART1_IRQHandler (void)
   /* USER CODE END UART8_IRQn 1 */
 }
 
-void USART2_IRQHandler (void)
-{
-	 static  BaseType_t  pxHigherPriorityTaskWoken;
-	uint8_t tmp1,tmp2;
-	tmp1 = __HAL_UART_GET_FLAG(&huart2, UART_FLAG_IDLE);   //空闲中断中将已收字节数取出后，停止DMA
-  tmp2 = __HAL_UART_GET_IT_SOURCE(&huart2, UART_IT_IDLE);
-	
-   if((tmp1 != RESET) && (tmp2 != RESET))
-  { 
-		__HAL_DMA_DISABLE(&hdma_usart2_rx);
-		__HAL_UART_CLEAR_IDLEFLAG(&huart2);
-		
-			__HAL_DMA_SET_COUNTER(&hdma_usart2_rx,SizeofMinipc);
-			__HAL_DMA_ENABLE(&hdma_usart2_rx);
-		
-  HAL_UART_IRQHandler(&huart2);
-  /* USER CODE BEGIN UART8_IRQn 1 */
-   //vTaskNotifyGiveFromISR(MiniPCDataTaskHandle,&pxHigherPriorityTaskWoken);
-		portYIELD_FROM_ISR(pxHigherPriorityTaskWoken);			
-	}
-  /* USER CODE END UART8_IRQn 1 */
-}
-
-
-
 void USART3_IRQHandler (void)
 {
 	
@@ -391,81 +366,6 @@ void USART3_IRQHandler (void)
 			
 		 }
 }
-//void UART4_IRQHandler(void)
-//{
-//	uint8_t tmp1,tmp2;
-//	tmp1 = __HAL_UART_GET_FLAG(&huart4, UART_FLAG_IDLE);   //空闲中断中将已收字节数取出后，停止DMA
-//  tmp2 = __HAL_UART_GET_IT_SOURCE(&huart4, UART_IT_IDLE);
-//	
-//   if((tmp1 != RESET)&&(tmp2 != RESET))
-//	{
-//		
-//		//RefreshDeviceOutLineTime(JY61_NO);
-//		
-//		__HAL_DMA_DISABLE(&hdma_uart4_rx);
-//		__HAL_UART_CLEAR_IDLEFLAG(&huart4);
-//		
-//		UART4_RX_NUM=(SizeofJY61)-(hdma_uart4_rx.Instance->NDTR);
-//		
-//		//JY61_Data_Pro();
-//		__HAL_DMA_SET_COUNTER(&hdma_uart4_rx,SizeofJY61);
-//    __HAL_DMA_ENABLE(&hdma_uart4_rx);
-//	}
-//  HAL_UART_IRQHandler(&huart4);
-//  /* USER CODE BEGIN UART8_IRQn 1 */
-
-//  /* USER CODE END UART8_IRQn 1 */
-//}
-void USART6_IRQHandler(void)
-{
-	uint8_t tmp1,tmp2;
-	tmp1 = __HAL_UART_GET_FLAG(&huart6, UART_FLAG_IDLE);   //空闲中断中将已收字节数取出后，停止DMA
-  tmp2 = __HAL_UART_GET_IT_SOURCE(&huart6, UART_IT_IDLE);
-	
-   if((tmp1 != RESET)&&(tmp2 != RESET))
-	{
-		Communication_flag = 1;
-		RefreshDeviceOutLineTime(Remote_NO);
-		
-		__HAL_DMA_DISABLE(&hdma_usart6_rx);
-		__HAL_UART_CLEAR_IDLEFLAG(&huart6);
-		
-		USART6_RX_NUM=(SizeofCommunication)-(hdma_usart6_rx.Instance->NDTR);
-		
-		Communication_Ctrl();
-		__HAL_DMA_SET_COUNTER(&hdma_usart6_rx,SizeofCommunication);
-    __HAL_DMA_ENABLE(&hdma_usart6_rx);
-	}
-  HAL_UART_IRQHandler(&huart6);
-  /* USER CODE BEGIN UART8_IRQn 1 */
-
-  /* USER CODE END UART8_IRQn 1 */
-}
-//void UART8_IRQHandler(void)
-//{
-//	uint8_t tmp1,tmp2;
-//	tmp1 = __HAL_UART_GET_FLAG(&huart8, UART_FLAG_IDLE);   //空闲中断中将已收字节数取出后，停止DMA
-//  tmp2 = __HAL_UART_GET_IT_SOURCE(&huart8, UART_IT_IDLE);
-//	
-//   if((tmp1 != RESET)&&(tmp2 != RESET))
-//	{
-//		
-//		//RefreshDeviceOutLineTime(JY61_NO);
-//		
-//		__HAL_DMA_DISABLE(&hdma_uart8_rx);
-//		__HAL_UART_CLEAR_IDLEFLAG(&huart8);
-//		
-//		UART8_RX_NUM=(SizeofJY61)-(hdma_uart8_rx.Instance->NDTR);
-//		
-//		//JY61_Data_Pro();
-//		__HAL_DMA_SET_COUNTER(&hdma_uart8_rx,SizeofJY61);
-//    __HAL_DMA_ENABLE(&hdma_uart8_rx);
-//	}
-//  HAL_UART_IRQHandler(&huart8);
-//  /* USER CODE BEGIN UART8_IRQn 1 */
-
-//  /* USER CODE END UART8_IRQn 1 */
-//}
 
 /**
 * @brief This function handles CAN1 RX0 interrupts.
@@ -527,7 +427,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 	}
 }
 /* USER CODE BEGIN 1 */
-void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)  //接收完成            暂时不加任务通知，后续讨论　　_待续
+void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)  
 {
 
 		if(huart == &huart1)
@@ -600,23 +500,10 @@ void HAL_CAN_RxCpltCallback(CAN_HandleTypeDef *hcan)
 					get_moto_measure_GM6020(&moto_dial_get, &hcan1);
 				}
 			}break;
-			case CAN_GM3510_YAW:
+			case CAN_GM3510_PIT:
 			{
 				
-       RefreshDeviceOutLineTime(MotorY_NO);
-				
-				if(yaw_get.msg_cnt++ <= 50)
-				{
-					get_moto_offset(&yaw_get,&hcan1);
-				}else{
-					yaw_get.msg_cnt = 51;
-					get_moto_measure_GM3510(&yaw_get,&hcan1);
-				}
-			}break;
-			case CAN_GM6020_PIT:
-			{
-				
-				RefreshDeviceOutLineTime(MotorP_NO);
+       RefreshDeviceOutLineTime(MotorP_NO);
 				
 				if(pit_get.msg_cnt++ <= 50)
 				{
@@ -624,6 +511,19 @@ void HAL_CAN_RxCpltCallback(CAN_HandleTypeDef *hcan)
 				}else{
 					pit_get.msg_cnt = 51;
 					get_moto_measure_GM3510(&pit_get,&hcan1);
+				}
+			}break;
+			case CAN_GM6020_YAW:
+			{
+				
+				RefreshDeviceOutLineTime(MotorY_NO);
+				
+				if(yaw_get.msg_cnt++ <= 50)
+				{
+					get_moto_offset(&yaw_get,&hcan1);
+				}else{
+					yaw_get.msg_cnt = 51;
+					get_moto_measure_GM6020(&yaw_get,&hcan1);
 				}
 			}break;
 			default: break;
@@ -643,6 +543,7 @@ void HAL_CAN_RxCpltCallback(CAN_HandleTypeDef *hcan)
 			}break;
       case CAN_Referee_S:
 			{
+        RefreshDeviceOutLineTime(Remote_NO);
 				CAN_Get_Referee(hcan);
 			}break;
 		}

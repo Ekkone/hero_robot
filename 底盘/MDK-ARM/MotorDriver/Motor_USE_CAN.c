@@ -300,6 +300,7 @@ void CAN_Send_MINI_B( CAN_HandleTypeDef * hcan)
 }
 //小云台裁判系统数据
 uint8_t TX_DATA_S[8];
+extern uint8_t communication_message;
 void CAN_Send_Referee_S( CAN_HandleTypeDef * hcan)
 {
 	    CANSend_Referee_S.DLC = 0x08;
@@ -314,13 +315,13 @@ void CAN_Send_Referee_S( CAN_HandleTypeDef * hcan)
       TX_DATA_S[4] = (uint16_t)Robot.heat.shoot_17_speed;
       TX_DATA_S[5] = Robot.heat.shoot_17_heat>>8;	//17mm枪口热
       TX_DATA_S[6] = Robot.heat.shoot_17_heat;
-      TX_DATA_S[7] = 0;
+      TX_DATA_S[7] = communication_message;
 	
 			HAL_CAN_AddTxMessage(hcan, &CANSend_Referee_S, TX_DATA_S, (uint32_t *)CAN_TX_MAILBOX0 );
 }
 //小云台视觉数据以及控制数据
 uint8_t TX_DATA_MINI_S[8];
-extern uint8_t communication_message;
+
 void CAN_Send_MINI_S( CAN_HandleTypeDef * hcan)
 {
 	    CANSend_MINI_S.DLC = 0x08;
@@ -333,7 +334,7 @@ void CAN_Send_MINI_S( CAN_HandleTypeDef * hcan)
       TX_DATA_MINI_S[2] = minipc_rx_small.angle_pit>>8;
       TX_DATA_MINI_S[3] = minipc_rx_small.angle_pit;
       TX_DATA_MINI_S[4] = minipc_rx_small.state_flag;
-      TX_DATA_MINI_S[5] = communication_message;	
+      TX_DATA_MINI_S[5] = 0;	
       TX_DATA_MINI_S[6] = (uint16_t)Robot.heat.shoot_17_cooling_limit>>8;
       TX_DATA_MINI_S[7] = (uint16_t)Robot.heat.shoot_17_cooling_limit;
 

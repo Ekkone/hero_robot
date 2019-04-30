@@ -56,7 +56,7 @@ void gimbal_pid_init(void)
   /*暂时稳定版*/
   /*50*/
 	PID_struct_init(&pid_pit, POSITION_PID, 5000, 1000,
-									5.0f, 0.0f, 14.8f); 
+									10.0f, 0.0f, 10.0f); 
 	PID_struct_init(&pid_pit_spd, POSITION_PID, 5000, 1000,
                   2.0f, 0.0f, 0.0f );
   /*在调版*/
@@ -193,13 +193,13 @@ void Gimbal_Contrl_Task(void const * argument)
         
         //yaw轴
         pid_calc(&pid_yaw, yaw_get.total_angle,yaw_set.expect);
-        pid_calc(&pid_yaw_spd,(imu_data.gz), pid_yaw.pos_out);
+        pid_calc(&pid_yaw_spd,pit_get.speed_rpm, pid_yaw.pos_out);
         //pit轴
         pid_calc(&pid_pit, pit_get.total_angle, pit_set.expect);
-        pid_calc(&pid_pit_spd,pit_get.speed_rpm, pid_pit.pos_out);
+        pid_calc(&pid_pit_spd,(imu_data.gz), pid_pit.pos_out);
       
-        Pitch_Current_Value=(-pid_pit_spd.pos_out); 
-		    Yaw_Current_Value= (pid_yaw.pos_out);
+        Pitch_Current_Value=(pid_pit.pos_out); 
+		    //Yaw_Current_Value= (pid_yaw.pos_out);
      
       #if jy61
       IMU_Get_Data();
