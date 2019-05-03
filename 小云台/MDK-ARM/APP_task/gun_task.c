@@ -39,10 +39,10 @@ void Gun_Pid_Init()
 {
   /*拨弹电机*/
 		PID_struct_init(&pid_dial_pos, POSITION_PID, 6000, 5000,
-									0.7f,	0.0f,	1.8f);  
+									0.7f,	0.0f,	1.5f);  
 		//pid_dial_pos.deadband = 10;
 		PID_struct_init(&pid_dial_spd, POSITION_PID, 6000, 5000,
-									1.5f,	0.0f,	0.15f	);  
+									1.5f,	0.0f,	0.5f	);  
 }
 /* 任务主体部分 -------------------------------------------------------------*/
 
@@ -107,9 +107,9 @@ void Gun_Task(void const * argument)
     ramp_calc(&shoot,set_M_speed);
     Friction_Wheel_Motor(shoot.out,shoot.out);
     /*热量限制*/
-    remain_heat = Robot.heat.shoot_17_cooling_limit - Robot.heat.shoot_17_heat;
-    if(remain_heat < 30)
-      ptr_heat_gun_t.sht_flg = GunStop;
+//    remain_heat = Robot.heat.shoot_17_cooling_limit - Robot.heat.shoot_17_heat;
+//    if(remain_heat < 30)
+//      ptr_heat_gun_t.sht_flg = GunStop;
     /*判断发射模式*/
     switch(ptr_heat_gun_t.sht_flg)
     {
@@ -157,11 +157,11 @@ void Gun_Task(void const * argument)
       }break;
 			default :break;
     }
-    ptr_heat_gun_t.sht_flg = GunHold;//默认位置环
+    //ptr_heat_gun_t.sht_flg = GunHold;//默认位置环
      /*速度环*/
      pid_calc(&pid_dial_spd,moto_dial_get.speed_rpm ,set_speed);
      /*驱动拨弹电机*/
-		 Shot_Motor(&hcan2,pid_dial_spd.pos_out);
+		 Shot_Motor(&hcan1,pid_dial_spd.pos_out);
     /*清零标志位*/
 		 minipc_rx_small.state_flag=0;
 		 set_speed = 0;	   

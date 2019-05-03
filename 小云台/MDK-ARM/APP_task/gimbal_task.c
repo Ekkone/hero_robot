@@ -199,8 +199,8 @@ void Gimbal_Contrl_Task(void const * argument)
         pid_calc(&pid_pit, pit_get.total_angle, pit_set.expect);
         pid_calc(&pid_pit_spd,(imu_data.gz), pid_pit.pos_out);
       
-//        Pitch_Current_Value=(pid_pit.pos_out); 
-//		    Yaw_Current_Value= (pid_yaw.pos_out);
+        Pitch_Current_Value=(pid_pit.pos_out); 
+		    Yaw_Current_Value= (pid_yaw.pos_out);
      
       #if jy61
       IMU_Get_Data();

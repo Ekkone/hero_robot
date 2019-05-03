@@ -72,7 +72,7 @@ void ManualMode()
 {
    gimbal_mode = Manual_Mode;
    pit_set.expect = pit_set.expect +(0x400-RC_Ctl.rc.ch3)/20;	
-   yaw_set.expect = yaw_set.expect +(0x400-RC_Ctl.rc.ch2)/20;	
+   yaw_set.expect = yaw_set.expect -(0x400-RC_Ctl.rc.ch2)/20;	
 
   if(press_counter >= press_times)//左按键延迟，时间由press_time控制
 	{
@@ -85,18 +85,19 @@ void ManualMode()
         }break;
         case 3://中,开启摩擦轮低速
         {
-            MoCa_Flag = LowSpeed;            
+            MoCa_Flag = LowSpeed;   
+             /*拨盘单发*/
+          shot_anjian_counter++;
+            if(shot_anjian_counter > shot_frequency)//非连续触发信号
+            {
+              ptr_heat_gun_t.sht_flg=GunOne;//单发
+              press_counter=0;
+              shot_anjian_counter=0;
+            }         
         }break;
         case 2://下，开启摩擦轮高速与拨盘电机
         {
-          /*拨盘单发*/
-//          shot_anjian_counter++;
-//            if(shot_anjian_counter > shot_frequency)//非连续触发信号
-//            {
-//              ptr_heat_gun_t.sht_flg=1;//单发
-//              press_counter=0;
-//              shot_anjian_counter=0;
-//            }
+         
           ptr_heat_gun_t.sht_flg=GunFire;
             MoCa_Flag = MiddleSpeed; 
            /*拨盘电机*/
