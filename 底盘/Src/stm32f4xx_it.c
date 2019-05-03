@@ -406,7 +406,7 @@ void USART3_IRQHandler(void)
 		portYIELD_FROM_ISR(pxHigherPriorityTaskWoken);		
     }
 }
-void USART4_IRQHandler(void)
+void UART4_IRQHandler(void)
 {
   static  BaseType_t  pxHigherPriorityTaskWoken;
   uint8_t tmp1,tmp2;
@@ -426,7 +426,7 @@ void USART4_IRQHandler(void)
 		portYIELD_FROM_ISR(pxHigherPriorityTaskWoken);		
     }
 }
-void USART5_IRQHandler(void)
+void UART5_IRQHandler(void)
 {
   static  BaseType_t  pxHigherPriorityTaskWoken;
   uint8_t tmp1,tmp2;

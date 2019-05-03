@@ -264,8 +264,9 @@ void MiniPC_Big_Task(void const * argument)
 			NotifyValue=0;
 			Get_MiniPC_Data_Big();
       CAN_Send_MINI_B(&hcan1);
+      osDelayUntil(&xLastWakeTime, MINIPC_PERIOD);
     }
-			osDelayUntil(&xLastWakeTime, MINIPC_PERIOD);
+			
 	}
 }
 /***************************************************************************************
@@ -293,7 +294,8 @@ void MiniPC_Small_Task(void const * argument)
 			NotifyValue=0;
 			Get_MiniPC_Data_Small();
       CAN_Send_MINI_S(&hcan1);
+      osDelayUntil(&xLastWakeTime, MINIPC_PERIOD);
     }
-    osDelayUntil(&xLastWakeTime, MINIPC_PERIOD);
+    
 	}
 }

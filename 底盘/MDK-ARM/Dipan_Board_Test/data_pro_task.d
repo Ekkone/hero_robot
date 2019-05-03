@@ -73,7 +73,7 @@ dipan_board_test\data_pro_task.o: .\Communication\decode.h
 dipan_board_test\data_pro_task.o: .\Algorithm\mecanum_calc.h
 dipan_board_test\data_pro_task.o: D:\Keil\ARM\ARMCC\Bin\..\include\stdlib.h
 dipan_board_test\data_pro_task.o: .\Algorithm\Power_restriction.h
-dipan_board_test\data_pro_task.o: .\APP\data_pro_task.h
+dipan_board_test\data_pro_task.o: APP\data_pro_task.h
 dipan_board_test\data_pro_task.o: .\Communication\communication.h
 dipan_board_test\data_pro_task.o: .\Algorithm\SystemState.h
 dipan_board_test\data_pro_task.o: ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.h

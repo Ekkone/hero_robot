@@ -218,7 +218,7 @@ void BSP_Init(void)
   HAL_CAN_Receive_IT(&hcan1, CAN_FIFO0); 
   HAL_CAN_Receive_IT(&hcan2, CAN_FIFO0);
 	#if jy61
-	//JY61_Frame();  
+	JY61_Frame();  
   #endif
 	HAL_Delay(1000);
 

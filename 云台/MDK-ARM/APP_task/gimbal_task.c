@@ -187,14 +187,14 @@ void Gimbal_Contrl_Task(void const * argument)
         case 0://分离，yaw使用编码器
         {
           /*yaw轴云台保护*/
-          if((yaw_set.expect + yaw_get.offset_angle) > 2400)
-          {
-            yaw_set.expect = 2380 - yaw_get.offset_angle;
-          }
-          if((yaw_set.expect + yaw_get.offset_angle) < 1100)
-          {
-            yaw_set.expect = 1115 - yaw_get.offset_angle;
-          }
+//          if((yaw_set.expect + yaw_get.offset_angle) > 2400)
+//          {
+//            yaw_set.expect = 2380 - yaw_get.offset_angle;
+//          }
+//          if((yaw_set.expect + yaw_get.offset_angle) < 1100)
+//          {
+//            yaw_set.expect = 1115 - yaw_get.offset_angle;
+//          }
           pid_calc(&pid_yaw_jy61,(yaw_get.total_angle),yaw_set.expect);
           pid_calc(&pid_yaw_jy61_spd,(ptr_jy61_t_angular_velocity.vz), pid_yaw_jy61.pos_out);
           Yaw_Current_Value= (-pid_yaw_jy61_spd.pos_out);
@@ -203,19 +203,19 @@ void Gimbal_Contrl_Task(void const * argument)
         {
           /*yaw轴云台保护*/
           
-          if(yaw_get.angle > 2400)
-          {
-            if(yaw_set_follow.expect <= yaw_set_follow.expect_last)
-            goto last;
-            yaw_set_follow.expect = ptr_jy61_t_yaw.final_angle;
-          }
+//          if(yaw_get.angle > 2400)
+//          {
+//            if(yaw_set_follow.expect <= yaw_set_follow.expect_last)
+//            goto last;
+//            yaw_set_follow.expect = ptr_jy61_t_yaw.final_angle;
+//          }
 
-          if(yaw_get.angle < 1100)
-          {
-            if(yaw_set_follow.expect >= yaw_set_follow.expect_last)
-            goto last;
-            yaw_set_follow.expect = ptr_jy61_t_yaw.final_angle;
-          }
+//          if(yaw_get.angle < 1100)
+//          {
+//            if(yaw_set_follow.expect >= yaw_set_follow.expect_last)
+//            goto last;
+//            yaw_set_follow.expect = ptr_jy61_t_yaw.final_angle;
+//          }
       last:pid_calc(&pid_yaw_jy61_follow,(ptr_jy61_t_yaw.final_angle),yaw_set_follow.expect);
           pid_calc(&pid_yaw_jy61_follow_spd,(ptr_jy61_t_angular_velocity.vz), pid_yaw_jy61_follow.pos_out);
           Yaw_Current_Value= (-pid_yaw_jy61_follow_spd.pos_out);

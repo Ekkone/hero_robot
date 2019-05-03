@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<JScopeProject>
+    <FileVersion major="1" minor="1" />
+    <Project>
+        <Configuration>
+            <JLink>
+                <Options Connection="1" IsRTTSession="0" IsRTTWithTimeStamp="1" SamplingPeriod="100" SerialNo="0" JTAG_IRPre="-1" JTAG_DRPre="-1" IP="" TargetDevice="STM32F427II" TargetInterface="SWD" InterfaceSpeed="4000" />
+            </JLink>
+            <ScriptFile Name="F:\Work\hero\ÔÆÌ¨\MDK-ARM\2018.07.12-infantry\jscope.jscope\unspecified" />
+            <ElfFile Name="F:\Work\hero\ÔÆÌ¨\MDK-ARM\2018.07.12-infantry\hero_robot.axf" />
+            <DataFile Name="" />
+            <RawFile Name="G:\×ÀÃæ\Data.jraw" />
+            <Scope>
+                <Options TimeResolutionUs="1000000" />
+            </Scope>
+        </Configuration>
+        <Windows>
+            <Graph Show="1" />
+            <Watch Show="1" />
+        </Windows>
+        <SelectedSymbols>
+            <Symbol>
+                <Options Name="JY61_angle" Address="0x2000107C" Type="float" TypeID="1" Size="4" GraphColorRed="255" GraphColorGreen="215" GraphColorBlue="0" YMinSampled="-179" YMaxSampled="179" YAvgSampled="67" Offset="4" ShowInGraph="1" ACCoupling="0" YOffset="300" IsAutoConfig="1" YResolution="100" MaxValue="300" File="Communication\communication.c" Scope="0" DrawStyle="0" />
+            </Symbol>
+        </SelectedSymbols>
+    </Project>
+</JScopeProject>

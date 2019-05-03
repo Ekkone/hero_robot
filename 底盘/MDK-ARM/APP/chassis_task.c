@@ -116,19 +116,19 @@ void Chassis_Contrl_Task(void const * argument)
 		
 		/**********功率限制*********/
 
-//			Current_set[0] = pid_3508_spd[0].pos_out;
-//			Current_set[1] = pid_3508_spd[1].pos_out;
-//			Current_set[2] = pid_3508_spd[2].pos_out;
-//			Current_set[3] = pid_3508_spd[3].pos_out;			
+			Current_set[0] = pid_3508_spd[0].pos_out;
+			Current_set[1] = pid_3508_spd[1].pos_out;
+			Current_set[2] = pid_3508_spd[2].pos_out;
+			Current_set[3] = pid_3508_spd[3].pos_out;			
 			
 //			printf("befeor:%f   ",Current_set[0]);
 		  power_limit(Current_set);
 //			printf("after:%f\n\r",Current_set[0]);
 			
-//			pid_3508_spd[0].pos_out = Current_set[0];			
-//			pid_3508_spd[1].pos_out = Current_set[1];
-//			pid_3508_spd[2].pos_out = Current_set[2];
-//			pid_3508_spd[3].pos_out = Current_set[3];
+			pid_3508_spd[0].pos_out = Current_set[0];			
+			pid_3508_spd[1].pos_out = Current_set[1];
+			pid_3508_spd[2].pos_out = Current_set[2];
+			pid_3508_spd[3].pos_out = Current_set[3];
 
 							
 	  /************end***********/	

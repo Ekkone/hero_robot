@@ -395,7 +395,7 @@ void CAN_Send_Error( CAN_HandleTypeDef * hcan, int16_t OutLine_Flag, int16_t tas
 void CAN_Get_Chassis( CAN_HandleTypeDef * hcan)
 {
 			moto_chassis_get[0].speed_rpm = (int16_t)(hcan->pRxMsg->Data[0]<<8 | hcan->pRxMsg->Data[1]) ;
-	    moto_chassis_get[1].speed_rpm  =(int16_t) (hcan->pRxMsg->Data[2]<<8 | hcan->pRxMsg->Data[3]) ;
+	    moto_chassis_get[1].speed_rpm  =(int16_t)(hcan->pRxMsg->Data[2]<<8 | hcan->pRxMsg->Data[3]) ;
 	    moto_chassis_get[2].speed_rpm = (int16_t)(hcan->pRxMsg->Data[4]<<8 | hcan->pRxMsg->Data[5]) ;
 	    moto_chassis_get[3].speed_rpm = (int16_t)(hcan->pRxMsg->Data[6]<<8 | hcan->pRxMsg->Data[7]) ;
 }	

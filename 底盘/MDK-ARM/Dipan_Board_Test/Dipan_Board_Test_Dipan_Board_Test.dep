@@ -52,29 +52,21 @@ I (../Inc/BSP.h)(0x5CBC4995)
 I (../Inc/dma.h)(0x5CAB4A4B)
 I (../Inc/usart.h)(0x5CAB4A4D)
 I (../Inc/tim.h)(0x5CAC2CFC)
-I (../Inc/gpio.h)(0x5CB080D2)
+I (../Inc/gpio.h)(0x5CCBBDC4)
 I (../Inc/can.h)(0x5CAC3C91)
-I (../Inc/adc.h)(0x5CAB4A4A)
+I (../Inc/adc.h)(0x5CCBBA02)
 I (.\Communication\communication.h )(0x5CC2A0DF)
 I (D:\Keil\ARM\ARMCC\include\string.h)(0x599ECD2C)
 I (.\MotorDriver\Motor_USE_TIM.h)(0x5C9CCA33)
 I (.\MotorDriver\Motor_USE_CAN.h)(0x5CC6EB44)
 I (.\Communication\minipc.h)(0x5CC2A689)
-I (.\Algorithm\Power_restriction.h)(0x5C9CCA31)
-I (.\APP\data_pro_task.h)(0x5CC2A47D)
-I (.\Algorithm\pid.h)(0x5C9CCA31)
+I (.\Algorithm\Power_restriction.h)(0x5CCBBE52)
 I (.\Algorithm\protocol.h)(0x5CC80F59)
-I (.\APP\gun_task.h)(0x5C9CCA31)
-I (.\APP\chassis_task.h)(0x5C9CCA30)
-I (.\APP\gimbal_task.h)(0x5C9CCA30)
 I (.\Communication\atom_imu.h)(0x5C9CCA31)
 I (.\Communication\decode.h)(0x5C9CCA32)
-I (.\Algorithm\mecanum_calc.h)(0x5C9CCA31)
-I (D:\Keil\ARM\ARMCC\include\stdlib.h)(0x599ECD2C)
-I (.\Communication\communication.h)(0x5CC2A0DF)
 I (.\Algorithm\SystemState.h)(0x5CC3CD5C)
 I (.\APP\board_test.h)(0x5CAC3EEF)
-F (../Src/freertos.c)(0x5CC2A47D)(-c --cpu Cortex-M4.fp -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I .\APP -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS -I .\Algorithm -I .\Communication -I .\MotorDriver-I.\RTE\_Dipan_Board_Test-ID:\Keil\Packs\ARM\CMSIS\5.5.1\CMSIS\Core\Include-ID:\Keil\Packs\Keil\STM32F4xx_DFP\2.9.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="527" -D_RTE_ -DSTM32F407xx -DUSE_HAL_DRIVER -DSTM32F407xx -DARM_MATH_CM4 -D__CC_ARM -DARM_MATH_MATRIX_CHECK -DARM_MATH_ROUNDING --C99-o dipan_board_test\freertos.o --omf_browse dipan_board_test\freertos.crf --depend dipan_board_test\freertos.d)
+F (../Src/freertos.c)(0x5CCBD8CA)(-c --cpu Cortex-M4.fp -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I .\APP -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS -I .\Algorithm -I .\Communication -I .\MotorDriver-I.\RTE\_Dipan_Board_Test-ID:\Keil\Packs\ARM\CMSIS\5.5.1\CMSIS\Core\Include-ID:\Keil\Packs\Keil\STM32F4xx_DFP\2.9.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="527" -D_RTE_ -DSTM32F407xx -DUSE_HAL_DRIVER -DSTM32F407xx -DARM_MATH_CM4 -D__CC_ARM -DARM_MATH_MATRIX_CHECK -DARM_MATH_ROUNDING --C99-o dipan_board_test\freertos.o --omf_browse dipan_board_test\freertos.crf --depend dipan_board_test\freertos.d)
 I (../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h)(0x5A8FF5D4)
 I (D:\Keil\ARM\ARMCC\include\stddef.h)(0x599ECD2C)
 I (D:\Keil\ARM\ARMCC\include\stdint.h)(0x599ECD2E)
@@ -132,21 +124,21 @@ I (D:\Keil\ARM\ARMCC\include\string.h)(0x599ECD2C)
 I (.\MotorDriver\Motor_USE_CAN.h)(0x5CC6EB44)
 I (../Inc/can.h)(0x5CAC3C91)
 I (.\Communication\atom_imu.h)(0x5C9CCA31)
-I (../Inc/gpio.h)(0x5CB080D2)
+I (../Inc/gpio.h)(0x5CCBBDC4)
 I (.\Communication\decode.h)(0x5C9CCA32)
 I (.\Algorithm\mecanum_calc.h)(0x5C9CCA31)
 I (D:\Keil\ARM\ARMCC\include\stdlib.h)(0x599ECD2C)
-I (.\Algorithm\Power_restriction.h)(0x5C9CCA31)
+I (.\Algorithm\Power_restriction.h)(0x5CCBBE52)
+I (.\Algorithm\protocol.h)(0x5CC80F59)
 I (.\APP\data_pro_task.h)(0x5CC2A47D)
 I (.\Communication\minipc.h)(0x5CC2A689)
-I (.\Algorithm\protocol.h)(0x5CC80F59)
 I (.\APP\gun_task.h)(0x5C9CCA31)
 I (.\MotorDriver\Motor_USE_TIM.h)(0x5C9CCA33)
 I (../Inc/tim.h)(0x5CAC2CFC)
 I (.\Communication\communication.h)(0x5CC2A0DF)
 I (.\APP\status_task.h)(0x5CB14C4E)
 I (.\Algorithm\SystemState.h)(0x5CC3CD5C)
-F (../Src/stm32f4xx_it.c)(0x5CC806EE)(-c --cpu Cortex-M4.fp -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I .\APP -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS -I .\Algorithm -I .\Communication -I .\MotorDriver-I.\RTE\_Dipan_Board_Test-ID:\Keil\Packs\ARM\CMSIS\5.5.1\CMSIS\Core\Include-ID:\Keil\Packs\Keil\STM32F4xx_DFP\2.9.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="527" -D_RTE_ -DSTM32F407xx -DUSE_HAL_DRIVER -DSTM32F407xx -DARM_MATH_CM4 -D__CC_ARM -DARM_MATH_MATRIX_CHECK -DARM_MATH_ROUNDING --C99-o dipan_board_test\stm32f4xx_it.o --omf_browse dipan_board_test\stm32f4xx_it.crf --depend dipan_board_test\stm32f4xx_it.d)
+F (../Src/stm32f4xx_it.c)(0x5CCBDDD1)(-c --cpu Cortex-M4.fp -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I .\APP -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS -I .\Algorithm -I .\Communication -I .\MotorDriver-I.\RTE\_Dipan_Board_Test-ID:\Keil\Packs\ARM\CMSIS\5.5.1\CMSIS\Core\Include-ID:\Keil\Packs\Keil\STM32F4xx_DFP\2.9.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="527" -D_RTE_ -DSTM32F407xx -DUSE_HAL_DRIVER -DSTM32F407xx -DARM_MATH_CM4 -D__CC_ARM -DARM_MATH_MATRIX_CHECK -DARM_MATH_ROUNDING --C99-o dipan_board_test\stm32f4xx_it.o --omf_browse dipan_board_test\stm32f4xx_it.crf --depend dipan_board_test\stm32f4xx_it.d)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h)(0x5A8FF5D4)
 I (../Inc/stm32f4xx_hal_conf.h)(0x5CAB4A4E)
 I (../Inc/main.h)(0x5CAC2982)
@@ -204,7 +196,7 @@ I (../Inc/usart.h)(0x5CAB4A4D)
 I (.\Communication\communication.h )(0x5CC2A0DF)
 I (D:\Keil\ARM\ARMCC\include\string.h)(0x599ECD2C)
 F (..\Src\资源使用情况.c)(0x5CB1F180)()
-F (.\APP\chassis_task.c)(0x5CC54F86)(-c --cpu Cortex-M4.fp -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I .\APP -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS -I .\Algorithm -I .\Communication -I .\MotorDriver-I.\RTE\_Dipan_Board_Test-ID:\Keil\Packs\ARM\CMSIS\5.5.1\CMSIS\Core\Include-ID:\Keil\Packs\Keil\STM32F4xx_DFP\2.9.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="527" -D_RTE_ -DSTM32F407xx -DUSE_HAL_DRIVER -DSTM32F407xx -DARM_MATH_CM4 -D__CC_ARM -DARM_MATH_MATRIX_CHECK -DARM_MATH_ROUNDING --C99-o dipan_board_test\chassis_task.o --omf_browse dipan_board_test\chassis_task.crf --depend dipan_board_test\chassis_task.d)
+F (.\APP\chassis_task.c)(0x5CCBBF28)(-c --cpu Cortex-M4.fp -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I .\APP -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS -I .\Algorithm -I .\Communication -I .\MotorDriver-I.\RTE\_Dipan_Board_Test-ID:\Keil\Packs\ARM\CMSIS\5.5.1\CMSIS\Core\Include-ID:\Keil\Packs\Keil\STM32F4xx_DFP\2.9.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="527" -D_RTE_ -DSTM32F407xx -DUSE_HAL_DRIVER -DSTM32F407xx -DARM_MATH_CM4 -D__CC_ARM -DARM_MATH_MATRIX_CHECK -DARM_MATH_ROUNDING --C99-o dipan_board_test\chassis_task.o --omf_browse dipan_board_test\chassis_task.crf --depend dipan_board_test\chassis_task.d)
 I (APP\chassis_task.h)(0x5C9CCA30)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h)(0x5A8FF5D4)
 I (../Inc/stm32f4xx_hal_conf.h)(0x5CAB4A4E)
@@ -262,20 +254,20 @@ I (D:\Keil\ARM\ARMCC\include\string.h)(0x599ECD2C)
 I (.\MotorDriver\Motor_USE_CAN.h)(0x5CC6EB44)
 I (../Inc/can.h)(0x5CAC3C91)
 I (.\Communication\atom_imu.h)(0x5C9CCA31)
-I (../Inc/gpio.h)(0x5CB080D2)
+I (../Inc/gpio.h)(0x5CCBBDC4)
 I (.\Communication\decode.h)(0x5C9CCA32)
 I (.\Algorithm\mecanum_calc.h)(0x5C9CCA31)
 I (D:\Keil\ARM\ARMCC\include\stdlib.h)(0x599ECD2C)
-I (.\Algorithm\Power_restriction.h)(0x5C9CCA31)
-I (.\APP\data_pro_task.h)(0x5CC2A47D)
-I (.\Communication\minipc.h)(0x5CC2A689)
+I (.\Algorithm\Power_restriction.h)(0x5CCBBE52)
 I (.\Algorithm\protocol.h)(0x5CC80F59)
-I (.\APP\gun_task.h)(0x5C9CCA31)
+I (APP\data_pro_task.h)(0x5CC2A47D)
+I (.\Communication\minipc.h)(0x5CC2A689)
+I (APP\gun_task.h)(0x5C9CCA31)
 I (.\MotorDriver\Motor_USE_TIM.h)(0x5C9CCA33)
 I (../Inc/tim.h)(0x5CAC2CFC)
 I (.\Communication\communication.h)(0x5CC2A0DF)
 I (.\Algorithm\SystemState.h)(0x5CC3CD5C)
-F (.\APP\data_pro_task.c)(0x5CC80F59)(-c --cpu Cortex-M4.fp -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I .\APP -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS -I .\Algorithm -I .\Communication -I .\MotorDriver-I.\RTE\_Dipan_Board_Test-ID:\Keil\Packs\ARM\CMSIS\5.5.1\CMSIS\Core\Include-ID:\Keil\Packs\Keil\STM32F4xx_DFP\2.9.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="527" -D_RTE_ -DSTM32F407xx -DUSE_HAL_DRIVER -DSTM32F407xx -DARM_MATH_CM4 -D__CC_ARM -DARM_MATH_MATRIX_CHECK -DARM_MATH_ROUNDING --C99-o dipan_board_test\data_pro_task.o --omf_browse dipan_board_test\data_pro_task.crf --depend dipan_board_test\data_pro_task.d)
+F (.\APP\data_pro_task.c)(0x5CCBD82E)(-c --cpu Cortex-M4.fp -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I .\APP -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS -I .\Algorithm -I .\Communication -I .\MotorDriver-I.\RTE\_Dipan_Board_Test-ID:\Keil\Packs\ARM\CMSIS\5.5.1\CMSIS\Core\Include-ID:\Keil\Packs\Keil\STM32F4xx_DFP\2.9.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="527" -D_RTE_ -DSTM32F407xx -DUSE_HAL_DRIVER -DSTM32F407xx -DARM_MATH_CM4 -D__CC_ARM -DARM_MATH_MATRIX_CHECK -DARM_MATH_ROUNDING --C99-o dipan_board_test\data_pro_task.o --omf_browse dipan_board_test\data_pro_task.crf --depend dipan_board_test\data_pro_task.d)
 I (APP\data_pro_task.h)(0x5CC2A47D)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h)(0x5A8FF5D4)
 I (../Inc/stm32f4xx_hal_conf.h)(0x5CAB4A4E)
@@ -339,12 +331,11 @@ I (../Inc/tim.h)(0x5CAC2CFC)
 I (APP\chassis_task.h)(0x5C9CCA30)
 I (APP\gimbal_task.h)(0x5C9CCA30)
 I (.\Communication\atom_imu.h)(0x5C9CCA31)
-I (../Inc/gpio.h)(0x5CB080D2)
+I (../Inc/gpio.h)(0x5CCBBDC4)
 I (.\Communication\decode.h)(0x5C9CCA32)
 I (.\Algorithm\mecanum_calc.h)(0x5C9CCA31)
 I (D:\Keil\ARM\ARMCC\include\stdlib.h)(0x599ECD2C)
-I (.\Algorithm\Power_restriction.h)(0x5C9CCA31)
-I (.\APP\data_pro_task.h)(0x5CC2A47D)
+I (.\Algorithm\Power_restriction.h)(0x5CCBBE52)
 I (.\Communication\communication.h)(0x5CC2A0DF)
 I (.\Algorithm\SystemState.h)(0x5CC3CD5C)
 F (.\APP\test_task.c)(0x5CB19DCF)(-c --cpu Cortex-M4.fp -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I .\APP -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS -I .\Algorithm -I .\Communication -I .\MotorDriver-I.\RTE\_Dipan_Board_Test-ID:\Keil\Packs\ARM\CMSIS\5.5.1\CMSIS\Core\Include-ID:\Keil\Packs\Keil\STM32F4xx_DFP\2.9.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="527" -D_RTE_ -DSTM32F407xx -DUSE_HAL_DRIVER -DSTM32F407xx -DARM_MATH_CM4 -D__CC_ARM -DARM_MATH_MATRIX_CHECK -DARM_MATH_ROUNDING --C99-o dipan_board_test\test_task.o --omf_browse dipan_board_test\test_task.crf --depend dipan_board_test\test_task.d)
@@ -398,27 +389,11 @@ I (../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h)(0x5A8FF5D4)
 I (../Middlewares/Third_Party/FreeRTOS/Source/include/semphr.h)(0x5A8FF5D4)
 I (../Middlewares/Third_Party/FreeRTOS/Source/include/event_groups.h)(0x5A8FF5D4)
 I (.\Algorithm\SystemState.h)(0x5CC3CD5C)
-I (.\Algorithm\Power_restriction.h)(0x5C9CCA31)
+I (.\Algorithm\Power_restriction.h)(0x5CCBBE52)
 I (D:\Keil\ARM\ARMCC\include\String.h)(0x599ECD2C)
-I (.\APP\data_pro_task.h)(0x5CC2A47D)
-I (.\Algorithm\pid.h)(0x5C9CCA31)
-I (.\Communication\minipc.h)(0x5CC2A689)
-I (.\Communication\communication.h )(0x5CC2A0DF)
+I (../Inc/gpio.h)(0x5CCBBDC4)
 I (../Inc/usart.h)(0x5CAB4A4D)
 I (.\Algorithm\protocol.h)(0x5CC80F59)
-I (.\APP\gun_task.h)(0x5C9CCA31)
-I (.\MotorDriver\Motor_USE_CAN.h)(0x5CC6EB44)
-I (../Inc/can.h)(0x5CAC3C91)
-I (.\MotorDriver\Motor_USE_TIM.h)(0x5C9CCA33)
-I (../Inc/tim.h)(0x5CAC2CFC)
-I (.\APP\chassis_task.h)(0x5C9CCA30)
-I (.\APP\gimbal_task.h)(0x5C9CCA30)
-I (.\Communication\atom_imu.h)(0x5C9CCA31)
-I (../Inc/gpio.h)(0x5CB080D2)
-I (.\Communication\decode.h)(0x5C9CCA32)
-I (.\Algorithm\mecanum_calc.h)(0x5C9CCA31)
-I (D:\Keil\ARM\ARMCC\include\stdlib.h)(0x599ECD2C)
-I (.\Communication\communication.h)(0x5CC2A0DF)
 F (.\APP\status_task.c)(0x5CC3CDD9)(-c --cpu Cortex-M4.fp -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I .\APP -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS -I .\Algorithm -I .\Communication -I .\MotorDriver-I.\RTE\_Dipan_Board_Test-ID:\Keil\Packs\ARM\CMSIS\5.5.1\CMSIS\Core\Include-ID:\Keil\Packs\Keil\STM32F4xx_DFP\2.9.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="527" -D_RTE_ -DSTM32F407xx -DUSE_HAL_DRIVER -DSTM32F407xx -DARM_MATH_CM4 -D__CC_ARM -DARM_MATH_MATRIX_CHECK -DARM_MATH_ROUNDING --C99-o dipan_board_test\status_task.o --omf_browse dipan_board_test\status_task.crf --depend dipan_board_test\status_task.d)
 I (APP\status_task.h)(0x5CB14C4E)
 I (../Inc/main.h)(0x5CAC2982)
@@ -470,28 +445,12 @@ I (../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h)(0x5A8FF5D4)
 I (../Middlewares/Third_Party/FreeRTOS/Source/include/semphr.h)(0x5A8FF5D4)
 I (../Middlewares/Third_Party/FreeRTOS/Source/include/event_groups.h)(0x5A8FF5D4)
 I (.\Algorithm\SystemState.h)(0x5CC3CD5C)
-I (.\Algorithm\Power_restriction.h)(0x5C9CCA31)
+I (.\Algorithm\Power_restriction.h)(0x5CCBBE52)
 I (D:\Keil\ARM\ARMCC\include\String.h)(0x599ECD2C)
-I (.\APP\data_pro_task.h)(0x5CC2A47D)
-I (.\Algorithm\pid.h)(0x5C9CCA31)
-I (.\Communication\minipc.h)(0x5CC2A689)
-I (.\Communication\communication.h )(0x5CC2A0DF)
+I (../Inc/gpio.h)(0x5CCBBDC4)
 I (../Inc/usart.h)(0x5CAB4A4D)
 I (.\Algorithm\protocol.h)(0x5CC80F59)
-I (.\APP\gun_task.h)(0x5C9CCA31)
-I (.\MotorDriver\Motor_USE_CAN.h)(0x5CC6EB44)
-I (../Inc/can.h)(0x5CAC3C91)
-I (.\MotorDriver\Motor_USE_TIM.h)(0x5C9CCA33)
-I (../Inc/tim.h)(0x5CAC2CFC)
-I (.\APP\chassis_task.h)(0x5C9CCA30)
-I (.\APP\gimbal_task.h)(0x5C9CCA30)
-I (.\Communication\atom_imu.h)(0x5C9CCA31)
-I (../Inc/gpio.h)(0x5CB080D2)
-I (.\Communication\decode.h)(0x5C9CCA32)
-I (.\Algorithm\mecanum_calc.h)(0x5C9CCA31)
-I (D:\Keil\ARM\ARMCC\include\stdlib.h)(0x599ECD2C)
-I (.\Communication\communication.h)(0x5CC2A0DF)
-F (..\Src\BSP.c)(0x5CC3F67D)(-c --cpu Cortex-M4.fp -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I .\APP -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS -I .\Algorithm -I .\Communication -I .\MotorDriver-I.\RTE\_Dipan_Board_Test-ID:\Keil\Packs\ARM\CMSIS\5.5.1\CMSIS\Core\Include-ID:\Keil\Packs\Keil\STM32F4xx_DFP\2.9.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="527" -D_RTE_ -DSTM32F407xx -DUSE_HAL_DRIVER -DSTM32F407xx -DARM_MATH_CM4 -D__CC_ARM -DARM_MATH_MATRIX_CHECK -DARM_MATH_ROUNDING --C99-o dipan_board_test\bsp.o --omf_browse dipan_board_test\bsp.crf --depend dipan_board_test\bsp.d)
+F (..\Src\BSP.c)(0x5CCBDDD1)(-c --cpu Cortex-M4.fp -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I .\APP -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS -I .\Algorithm -I .\Communication -I .\MotorDriver-I.\RTE\_Dipan_Board_Test-ID:\Keil\Packs\ARM\CMSIS\5.5.1\CMSIS\Core\Include-ID:\Keil\Packs\Keil\STM32F4xx_DFP\2.9.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="527" -D_RTE_ -DSTM32F407xx -DUSE_HAL_DRIVER -DSTM32F407xx -DARM_MATH_CM4 -D__CC_ARM -DARM_MATH_MATRIX_CHECK -DARM_MATH_ROUNDING --C99-o dipan_board_test\bsp.o --omf_browse dipan_board_test\bsp.crf --depend dipan_board_test\bsp.d)
 I (../Inc/BSP.h)(0x5CBC4995)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h)(0x5A8FF5D4)
 I (../Inc/stm32f4xx_hal_conf.h)(0x5CAB4A4E)
@@ -529,17 +488,16 @@ I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h)(0x5A8FF5D4)
 I (../Inc/dma.h)(0x5CAB4A4B)
 I (../Inc/usart.h)(0x5CAB4A4D)
 I (../Inc/tim.h)(0x5CAC2CFC)
-I (../Inc/gpio.h)(0x5CB080D2)
+I (../Inc/gpio.h)(0x5CCBBDC4)
 I (../Inc/can.h)(0x5CAC3C91)
-I (../Inc/adc.h)(0x5CAB4A4A)
+I (../Inc/adc.h)(0x5CCBBA02)
 I (.\Communication\communication.h )(0x5CC2A0DF)
 I (D:\Keil\ARM\ARMCC\include\string.h)(0x599ECD2C)
 I (.\MotorDriver\Motor_USE_TIM.h)(0x5C9CCA33)
 I (.\MotorDriver\Motor_USE_CAN.h)(0x5CC6EB44)
 I (.\Communication\minipc.h)(0x5CC2A689)
-I (.\Algorithm\Power_restriction.h)(0x5C9CCA31)
-I (.\APP\data_pro_task.h)(0x5CC2A47D)
-I (../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.h)(0x5A8FF5D4)
+I (.\Algorithm\Power_restriction.h)(0x5CCBBE52)
+I (.\Algorithm\protocol.h)(0x5CC80F59)
 I (../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h)(0x5A8FF5D4)
 I (D:\Keil\ARM\ARMCC\include\stddef.h)(0x599ECD2C)
 I (../Inc/FreeRTOSConfig.h)(0x5CAC8DEE)
@@ -548,24 +506,17 @@ I (../Middlewares/Third_Party/FreeRTOS/Source/include/portable.h)(0x5A8FF5D4)
 I (../Middlewares/Third_Party/FreeRTOS/Source/include/deprecated_definitions.h)(0x5A8FF5D4)
 I (../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F/portmacro.h)(0x5A8FF5D4)
 I (../Middlewares/Third_Party/FreeRTOS/Source/include/mpu_wrappers.h)(0x5A8FF5D4)
+I (../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.h)(0x5A8FF5D4)
 I (../Middlewares/Third_Party/FreeRTOS/Source/include/task.h)(0x5A8FF5D4)
 I (../Middlewares/Third_Party/FreeRTOS/Source/include/list.h)(0x5A8FF5D4)
 I (../Middlewares/Third_Party/FreeRTOS/Source/include/timers.h)(0x5A8FF5D4)
 I (../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h)(0x5A8FF5D4)
 I (../Middlewares/Third_Party/FreeRTOS/Source/include/semphr.h)(0x5A8FF5D4)
 I (../Middlewares/Third_Party/FreeRTOS/Source/include/event_groups.h)(0x5A8FF5D4)
-I (.\Algorithm\pid.h)(0x5C9CCA31)
-I (.\Algorithm\protocol.h)(0x5CC80F59)
-I (.\APP\gun_task.h)(0x5C9CCA31)
-I (.\APP\chassis_task.h)(0x5C9CCA30)
-I (.\APP\gimbal_task.h)(0x5C9CCA30)
 I (.\Communication\atom_imu.h)(0x5C9CCA31)
 I (.\Communication\decode.h)(0x5C9CCA32)
-I (.\Algorithm\mecanum_calc.h)(0x5C9CCA31)
-I (D:\Keil\ARM\ARMCC\include\stdlib.h)(0x599ECD2C)
-I (.\Communication\communication.h)(0x5CC2A0DF)
 I (.\Algorithm\SystemState.h)(0x5CC3CD5C)
-F (../Src/usart.c)(0x5CC3F9C2)(-c --cpu Cortex-M4.fp -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I .\APP -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS -I .\Algorithm -I .\Communication -I .\MotorDriver-I.\RTE\_Dipan_Board_Test-ID:\Keil\Packs\ARM\CMSIS\5.5.1\CMSIS\Core\Include-ID:\Keil\Packs\Keil\STM32F4xx_DFP\2.9.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="527" -D_RTE_ -DSTM32F407xx -DUSE_HAL_DRIVER -DSTM32F407xx -DARM_MATH_CM4 -D__CC_ARM -DARM_MATH_MATRIX_CHECK -DARM_MATH_ROUNDING --C99-o dipan_board_test\usart.o --omf_browse dipan_board_test\usart.crf --depend dipan_board_test\usart.d)
+F (../Src/usart.c)(0x5CCBDC9E)(-c --cpu Cortex-M4.fp -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I .\APP -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS -I .\Algorithm -I .\Communication -I .\MotorDriver-I.\RTE\_Dipan_Board_Test-ID:\Keil\Packs\ARM\CMSIS\5.5.1\CMSIS\Core\Include-ID:\Keil\Packs\Keil\STM32F4xx_DFP\2.9.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="527" -D_RTE_ -DSTM32F407xx -DUSE_HAL_DRIVER -DSTM32F407xx -DARM_MATH_CM4 -D__CC_ARM -DARM_MATH_MATRIX_CHECK -DARM_MATH_ROUNDING --C99-o dipan_board_test\usart.o --omf_browse dipan_board_test\usart.crf --depend dipan_board_test\usart.d)
 I (../Inc/usart.h)(0x5CAB4A4D)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h)(0x5A8FF5D4)
 I (../Inc/stm32f4xx_hal_conf.h)(0x5CAB4A4E)
@@ -600,7 +551,7 @@ I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_ex.h)(0x5A8FF5D4)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h)(0x5A8FF5D4)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h)(0x5A8FF5D4)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h)(0x5A8FF5D4)
-I (../Inc/gpio.h)(0x5CB080D2)
+I (../Inc/gpio.h)(0x5CCBBDC4)
 F (../Src/tim.c)(0x5CAC2CBA)(-c --cpu Cortex-M4.fp -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I .\APP -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS -I .\Algorithm -I .\Communication -I .\MotorDriver-I.\RTE\_Dipan_Board_Test-ID:\Keil\Packs\ARM\CMSIS\5.5.1\CMSIS\Core\Include-ID:\Keil\Packs\Keil\STM32F4xx_DFP\2.9.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="527" -D_RTE_ -DSTM32F407xx -DUSE_HAL_DRIVER -DSTM32F407xx -DARM_MATH_CM4 -D__CC_ARM -DARM_MATH_MATRIX_CHECK -DARM_MATH_ROUNDING --C99-o dipan_board_test\tim.o --omf_browse dipan_board_test\tim.crf --depend dipan_board_test\tim.d)
 I (../Inc/tim.h)(0x5CAC2CFC)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h)(0x5A8FF5D4)
@@ -636,7 +587,7 @@ I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_ex.h)(0x5A8FF5D4)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h)(0x5A8FF5D4)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h)(0x5A8FF5D4)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h)(0x5A8FF5D4)
-F (../Src/dma.c)(0x5CB1F0BA)(-c --cpu Cortex-M4.fp -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I .\APP -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS -I .\Algorithm -I .\Communication -I .\MotorDriver-I.\RTE\_Dipan_Board_Test-ID:\Keil\Packs\ARM\CMSIS\5.5.1\CMSIS\Core\Include-ID:\Keil\Packs\Keil\STM32F4xx_DFP\2.9.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="527" -D_RTE_ -DSTM32F407xx -DUSE_HAL_DRIVER -DSTM32F407xx -DARM_MATH_CM4 -D__CC_ARM -DARM_MATH_MATRIX_CHECK -DARM_MATH_ROUNDING --C99-o dipan_board_test\dma.o --omf_browse dipan_board_test\dma.crf --depend dipan_board_test\dma.d)
+F (../Src/dma.c)(0x5CCBBAD2)(-c --cpu Cortex-M4.fp -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I .\APP -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS -I .\Algorithm -I .\Communication -I .\MotorDriver-I.\RTE\_Dipan_Board_Test-ID:\Keil\Packs\ARM\CMSIS\5.5.1\CMSIS\Core\Include-ID:\Keil\Packs\Keil\STM32F4xx_DFP\2.9.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="527" -D_RTE_ -DSTM32F407xx -DUSE_HAL_DRIVER -DSTM32F407xx -DARM_MATH_CM4 -D__CC_ARM -DARM_MATH_MATRIX_CHECK -DARM_MATH_ROUNDING --C99-o dipan_board_test\dma.o --omf_browse dipan_board_test\dma.crf --depend dipan_board_test\dma.d)
 I (../Inc/dma.h)(0x5CAB4A4B)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h)(0x5A8FF5D4)
 I (../Inc/stm32f4xx_hal_conf.h)(0x5CAB4A4E)
@@ -706,9 +657,9 @@ I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_ex.h)(0x5A8FF5D4)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h)(0x5A8FF5D4)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h)(0x5A8FF5D4)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h)(0x5A8FF5D4)
-I (../Inc/gpio.h)(0x5CB080D2)
-F (../Src/adc.c)(0x5CAB4A4A)(-c --cpu Cortex-M4.fp -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I .\APP -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS -I .\Algorithm -I .\Communication -I .\MotorDriver-I.\RTE\_Dipan_Board_Test-ID:\Keil\Packs\ARM\CMSIS\5.5.1\CMSIS\Core\Include-ID:\Keil\Packs\Keil\STM32F4xx_DFP\2.9.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="527" -D_RTE_ -DSTM32F407xx -DUSE_HAL_DRIVER -DSTM32F407xx -DARM_MATH_CM4 -D__CC_ARM -DARM_MATH_MATRIX_CHECK -DARM_MATH_ROUNDING --C99-o dipan_board_test\adc.o --omf_browse dipan_board_test\adc.crf --depend dipan_board_test\adc.d)
-I (../Inc/adc.h)(0x5CAB4A4A)
+I (../Inc/gpio.h)(0x5CCBBDC4)
+F (../Src/adc.c)(0x5CCBBA02)(-c --cpu Cortex-M4.fp -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I .\APP -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS -I .\Algorithm -I .\Communication -I .\MotorDriver-I.\RTE\_Dipan_Board_Test-ID:\Keil\Packs\ARM\CMSIS\5.5.1\CMSIS\Core\Include-ID:\Keil\Packs\Keil\STM32F4xx_DFP\2.9.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="527" -D_RTE_ -DSTM32F407xx -DUSE_HAL_DRIVER -DSTM32F407xx -DARM_MATH_CM4 -D__CC_ARM -DARM_MATH_MATRIX_CHECK -DARM_MATH_ROUNDING --C99-o dipan_board_test\adc.o --omf_browse dipan_board_test\adc.crf --depend dipan_board_test\adc.d)
+I (../Inc/adc.h)(0x5CCBBA02)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h)(0x5A8FF5D4)
 I (../Inc/stm32f4xx_hal_conf.h)(0x5CAB4A4E)
 I (../Inc/main.h)(0x5CAC2982)
@@ -742,10 +693,10 @@ I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_ex.h)(0x5A8FF5D4)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h)(0x5A8FF5D4)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h)(0x5A8FF5D4)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h)(0x5A8FF5D4)
-I (../Inc/gpio.h)(0x5CB080D2)
+I (../Inc/gpio.h)(0x5CCBBDC4)
 I (../Inc/dma.h)(0x5CAB4A4B)
 F (../Src/gpio.c)(0x5CB080D2)(-c --cpu Cortex-M4.fp -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I .\APP -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS -I .\Algorithm -I .\Communication -I .\MotorDriver-I.\RTE\_Dipan_Board_Test-ID:\Keil\Packs\ARM\CMSIS\5.5.1\CMSIS\Core\Include-ID:\Keil\Packs\Keil\STM32F4xx_DFP\2.9.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="527" -D_RTE_ -DSTM32F407xx -DUSE_HAL_DRIVER -DSTM32F407xx -DARM_MATH_CM4 -D__CC_ARM -DARM_MATH_MATRIX_CHECK -DARM_MATH_ROUNDING --C99-o dipan_board_test\gpio.o --omf_browse dipan_board_test\gpio.crf --depend dipan_board_test\gpio.d)
-I (../Inc/gpio.h)(0x5CB080D2)
+I (../Inc/gpio.h)(0x5CCBBDC4)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h)(0x5A8FF5D4)
 I (../Inc/stm32f4xx_hal_conf.h)(0x5CAB4A4E)
 I (../Inc/main.h)(0x5CAC2982)
@@ -940,9 +891,9 @@ I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h)(0x5A8FF5D4)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h)(0x5A8FF5D4)
 I (../Inc/usart.h)(0x5CAB4A4D)
 I (D:\Keil\ARM\ARMCC\include\string.h)(0x599ECD2C)
-I (.\Algorithm\Power_restriction.h)(0x5C9CCA31)
-I (.\APP\data_pro_task.h)(0x5CC2A47D)
-I (../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.h)(0x5A8FF5D4)
+I (.\Algorithm\Power_restriction.h)(0x5CCBBE52)
+I (../Inc/gpio.h)(0x5CCBBDC4)
+I (.\Algorithm\protocol.h)(0x5CC80F59)
 I (../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h)(0x5A8FF5D4)
 I (D:\Keil\ARM\ARMCC\include\stddef.h)(0x599ECD2C)
 I (../Inc/FreeRTOSConfig.h)(0x5CAC8DEE)
@@ -951,28 +902,15 @@ I (../Middlewares/Third_Party/FreeRTOS/Source/include/portable.h)(0x5A8FF5D4)
 I (../Middlewares/Third_Party/FreeRTOS/Source/include/deprecated_definitions.h)(0x5A8FF5D4)
 I (../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F/portmacro.h)(0x5A8FF5D4)
 I (../Middlewares/Third_Party/FreeRTOS/Source/include/mpu_wrappers.h)(0x5A8FF5D4)
+I (../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.h)(0x5A8FF5D4)
 I (../Middlewares/Third_Party/FreeRTOS/Source/include/task.h)(0x5A8FF5D4)
 I (../Middlewares/Third_Party/FreeRTOS/Source/include/list.h)(0x5A8FF5D4)
 I (../Middlewares/Third_Party/FreeRTOS/Source/include/timers.h)(0x5A8FF5D4)
 I (../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h)(0x5A8FF5D4)
 I (../Middlewares/Third_Party/FreeRTOS/Source/include/semphr.h)(0x5A8FF5D4)
 I (../Middlewares/Third_Party/FreeRTOS/Source/include/event_groups.h)(0x5A8FF5D4)
-I (.\Algorithm\pid.h)(0x5C9CCA31)
-I (.\Communication\minipc.h)(0x5CC2A689)
-I (.\Algorithm\protocol.h)(0x5CC80F59)
-I (.\APP\gun_task.h)(0x5C9CCA31)
 I (.\MotorDriver\Motor_USE_CAN.h)(0x5CC6EB44)
 I (../Inc/can.h)(0x5CAC3C91)
-I (.\MotorDriver\Motor_USE_TIM.h)(0x5C9CCA33)
-I (../Inc/tim.h)(0x5CAC2CFC)
-I (.\APP\chassis_task.h)(0x5C9CCA30)
-I (.\APP\gimbal_task.h)(0x5C9CCA30)
-I (.\Communication\atom_imu.h)(0x5C9CCA31)
-I (../Inc/gpio.h)(0x5CB080D2)
-I (.\Communication\decode.h)(0x5C9CCA32)
-I (.\Algorithm\mecanum_calc.h)(0x5C9CCA31)
-I (D:\Keil\ARM\ARMCC\include\stdlib.h)(0x599ECD2C)
-I (.\Communication\communication.h)(0x5CC2A0DF)
 F (.\Communication\minipc.c)(0x5CC6EB44)(-c --cpu Cortex-M4.fp -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I .\APP -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS -I .\Algorithm -I .\Communication -I .\MotorDriver-I.\RTE\_Dipan_Board_Test-ID:\Keil\Packs\ARM\CMSIS\5.5.1\CMSIS\Core\Include-ID:\Keil\Packs\Keil\STM32F4xx_DFP\2.9.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="527" -D_RTE_ -DSTM32F407xx -DUSE_HAL_DRIVER -DSTM32F407xx -DARM_MATH_CM4 -D__CC_ARM -DARM_MATH_MATRIX_CHECK -DARM_MATH_ROUNDING --C99-o dipan_board_test\minipc.o --omf_browse dipan_board_test\minipc.crf --depend dipan_board_test\minipc.d)
 I (Communication\minipc.h)(0x5CC2A689)
 I (../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f4xx.h)(0x5A8FF5D4)
@@ -1076,11 +1014,11 @@ I (../Inc/tim.h)(0x5CAC2CFC)
 I (.\APP\chassis_task.h)(0x5C9CCA30)
 I (.\APP\gimbal_task.h)(0x5C9CCA30)
 I (.\Communication\atom_imu.h)(0x5C9CCA31)
-I (../Inc/gpio.h)(0x5CB080D2)
+I (../Inc/gpio.h)(0x5CCBBDC4)
 I (.\Communication\decode.h)(0x5C9CCA32)
 I (.\Algorithm\mecanum_calc.h)(0x5C9CCA31)
 I (D:\Keil\ARM\ARMCC\include\stdlib.h)(0x599ECD2C)
-I (.\Algorithm\Power_restriction.h)(0x5C9CCA31)
+I (.\Algorithm\Power_restriction.h)(0x5CCBBE52)
 I (Algorithm\SystemState.h)(0x5CC3CD5C)
 F (.\Algorithm\SystemState.c)(0x5CC3CD5C)(-c --cpu Cortex-M4.fp -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I .\APP -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS -I .\Algorithm -I .\Communication -I .\MotorDriver-I.\RTE\_Dipan_Board_Test-ID:\Keil\Packs\ARM\CMSIS\5.5.1\CMSIS\Core\Include-ID:\Keil\Packs\Keil\STM32F4xx_DFP\2.9.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="527" -D_RTE_ -DSTM32F407xx -DUSE_HAL_DRIVER -DSTM32F407xx -DARM_MATH_CM4 -D__CC_ARM -DARM_MATH_MATRIX_CHECK -DARM_MATH_ROUNDING --C99-o dipan_board_test\systemstate.o --omf_browse dipan_board_test\systemstate.crf --depend dipan_board_test\systemstate.d)
 I (Algorithm\SystemState.h)(0x5CC3CD5C)
@@ -1206,10 +1144,11 @@ I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_ex.h)(0x5A8FF5D4)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h)(0x5A8FF5D4)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h)(0x5A8FF5D4)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h)(0x5A8FF5D4)
-I (Algorithm\Power_restriction.h)(0x5C9CCA31)
+I (Algorithm\Power_restriction.h)(0x5CCBBE52)
 I (D:\Keil\ARM\ARMCC\include\String.h)(0x599ECD2C)
-I (.\APP\data_pro_task.h)(0x5CC2A47D)
-I (../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.h)(0x5A8FF5D4)
+I (../Inc/gpio.h)(0x5CCBBDC4)
+I (../Inc/usart.h)(0x5CAB4A4D)
+I (Algorithm\protocol.h)(0x5CC80F59)
 I (../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h)(0x5A8FF5D4)
 I (D:\Keil\ARM\ARMCC\include\stddef.h)(0x599ECD2C)
 I (../Inc/FreeRTOSConfig.h)(0x5CAC8DEE)
@@ -1218,33 +1157,16 @@ I (../Middlewares/Third_Party/FreeRTOS/Source/include/portable.h)(0x5A8FF5D4)
 I (../Middlewares/Third_Party/FreeRTOS/Source/include/deprecated_definitions.h)(0x5A8FF5D4)
 I (../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F/portmacro.h)(0x5A8FF5D4)
 I (../Middlewares/Third_Party/FreeRTOS/Source/include/mpu_wrappers.h)(0x5A8FF5D4)
+I (../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.h)(0x5A8FF5D4)
 I (../Middlewares/Third_Party/FreeRTOS/Source/include/task.h)(0x5A8FF5D4)
 I (../Middlewares/Third_Party/FreeRTOS/Source/include/list.h)(0x5A8FF5D4)
 I (../Middlewares/Third_Party/FreeRTOS/Source/include/timers.h)(0x5A8FF5D4)
 I (../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h)(0x5A8FF5D4)
 I (../Middlewares/Third_Party/FreeRTOS/Source/include/semphr.h)(0x5A8FF5D4)
 I (../Middlewares/Third_Party/FreeRTOS/Source/include/event_groups.h)(0x5A8FF5D4)
-I (.\Communication\minipc.h)(0x5CC2A689)
-I (.\Communication\communication.h )(0x5CC2A0DF)
-I (../Inc/usart.h)(0x5CAB4A4D)
-I (.\Algorithm\protocol.h)(0x5CC80F59)
-I (.\APP\gun_task.h)(0x5C9CCA31)
-I (.\MotorDriver\Motor_USE_CAN.h)(0x5CC6EB44)
-I (../Inc/can.h)(0x5CAC3C91)
-I (.\MotorDriver\Motor_USE_TIM.h)(0x5C9CCA33)
-I (../Inc/tim.h)(0x5CAC2CFC)
-I (.\APP\chassis_task.h)(0x5C9CCA30)
-I (.\APP\gimbal_task.h)(0x5C9CCA30)
-I (.\Communication\atom_imu.h)(0x5C9CCA31)
-I (../Inc/gpio.h)(0x5CB080D2)
-I (.\Communication\decode.h)(0x5C9CCA32)
-I (.\Algorithm\mecanum_calc.h)(0x5C9CCA31)
-I (D:\Keil\ARM\ARMCC\include\stdlib.h)(0x599ECD2C)
-I (.\Algorithm\Power_restriction.h)(0x5C9CCA31)
-I (.\Communication\communication.h)(0x5CC2A0DF)
 I (D:\Keil\ARM\ARMCC\include\math.h)(0x599ECD2E)
-F (.\Algorithm\Power_restriction.c)(0x5C9CCA31)(-c --cpu Cortex-M4.fp -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I .\APP -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS -I .\Algorithm -I .\Communication -I .\MotorDriver-I.\RTE\_Dipan_Board_Test-ID:\Keil\Packs\ARM\CMSIS\5.5.1\CMSIS\Core\Include-ID:\Keil\Packs\Keil\STM32F4xx_DFP\2.9.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="527" -D_RTE_ -DSTM32F407xx -DUSE_HAL_DRIVER -DSTM32F407xx -DARM_MATH_CM4 -D__CC_ARM -DARM_MATH_MATRIX_CHECK -DARM_MATH_ROUNDING --C99-o dipan_board_test\power_restriction.o --omf_browse dipan_board_test\power_restriction.crf --depend dipan_board_test\power_restriction.d)
-I (Algorithm\Power_restriction.h)(0x5C9CCA31)
+F (.\Algorithm\Power_restriction.c)(0x5CCBBF28)(-c --cpu Cortex-M4.fp -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I .\APP -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS -I .\Algorithm -I .\Communication -I .\MotorDriver-I.\RTE\_Dipan_Board_Test-ID:\Keil\Packs\ARM\CMSIS\5.5.1\CMSIS\Core\Include-ID:\Keil\Packs\Keil\STM32F4xx_DFP\2.9.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="527" -D_RTE_ -DSTM32F407xx -DUSE_HAL_DRIVER -DSTM32F407xx -DARM_MATH_CM4 -D__CC_ARM -DARM_MATH_MATRIX_CHECK -DARM_MATH_ROUNDING --C99-o dipan_board_test\power_restriction.o --omf_browse dipan_board_test\power_restriction.crf --depend dipan_board_test\power_restriction.d)
+I (Algorithm\Power_restriction.h)(0x5CCBBE52)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h)(0x5A8FF5D4)
 I (../Inc/stm32f4xx_hal_conf.h)(0x5CAB4A4E)
 I (../Inc/main.h)(0x5CAC2982)
@@ -1279,8 +1201,9 @@ I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h)(0x5A8FF5D4)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h)(0x5A8FF5D4)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h)(0x5A8FF5D4)
 I (D:\Keil\ARM\ARMCC\include\String.h)(0x599ECD2C)
-I (.\APP\data_pro_task.h)(0x5CC2A47D)
-I (../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.h)(0x5A8FF5D4)
+I (../Inc/gpio.h)(0x5CCBBDC4)
+I (../Inc/usart.h)(0x5CAB4A4D)
+I (Algorithm\protocol.h)(0x5CC80F59)
 I (../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h)(0x5A8FF5D4)
 I (D:\Keil\ARM\ARMCC\include\stddef.h)(0x599ECD2C)
 I (../Inc/FreeRTOSConfig.h)(0x5CAC8DEE)
@@ -1289,31 +1212,15 @@ I (../Middlewares/Third_Party/FreeRTOS/Source/include/portable.h)(0x5A8FF5D4)
 I (../Middlewares/Third_Party/FreeRTOS/Source/include/deprecated_definitions.h)(0x5A8FF5D4)
 I (../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F/portmacro.h)(0x5A8FF5D4)
 I (../Middlewares/Third_Party/FreeRTOS/Source/include/mpu_wrappers.h)(0x5A8FF5D4)
+I (../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.h)(0x5A8FF5D4)
 I (../Middlewares/Third_Party/FreeRTOS/Source/include/task.h)(0x5A8FF5D4)
 I (../Middlewares/Third_Party/FreeRTOS/Source/include/list.h)(0x5A8FF5D4)
 I (../Middlewares/Third_Party/FreeRTOS/Source/include/timers.h)(0x5A8FF5D4)
 I (../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h)(0x5A8FF5D4)
 I (../Middlewares/Third_Party/FreeRTOS/Source/include/semphr.h)(0x5A8FF5D4)
 I (../Middlewares/Third_Party/FreeRTOS/Source/include/event_groups.h)(0x5A8FF5D4)
-I (.\Algorithm\pid.h)(0x5C9CCA31)
-I (.\Communication\minipc.h)(0x5CC2A689)
-I (.\Communication\communication.h )(0x5CC2A0DF)
-I (../Inc/usart.h)(0x5CAB4A4D)
-I (.\Algorithm\protocol.h)(0x5CC80F59)
-I (.\APP\gun_task.h)(0x5C9CCA31)
 I (.\MotorDriver\Motor_USE_CAN.h)(0x5CC6EB44)
 I (../Inc/can.h)(0x5CAC3C91)
-I (.\MotorDriver\Motor_USE_TIM.h)(0x5C9CCA33)
-I (../Inc/tim.h)(0x5CAC2CFC)
-I (.\APP\chassis_task.h)(0x5C9CCA30)
-I (.\APP\gimbal_task.h)(0x5C9CCA30)
-I (.\Communication\atom_imu.h)(0x5C9CCA31)
-I (../Inc/gpio.h)(0x5CB080D2)
-I (.\Communication\decode.h)(0x5C9CCA32)
-I (.\Algorithm\mecanum_calc.h)(0x5C9CCA31)
-I (D:\Keil\ARM\ARMCC\include\stdlib.h)(0x599ECD2C)
-I (.\Algorithm\Power_restriction.h)(0x5C9CCA31)
-I (.\Communication\communication.h)(0x5CC2A0DF)
 F (../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_adc.c)(0x5A8FF5D4)(-c --cpu Cortex-M4.fp -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I .\APP -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS -I .\Algorithm -I .\Communication -I .\MotorDriver-I.\RTE\_Dipan_Board_Test-ID:\Keil\Packs\ARM\CMSIS\5.5.1\CMSIS\Core\Include-ID:\Keil\Packs\Keil\STM32F4xx_DFP\2.9.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="527" -D_RTE_ -DSTM32F407xx -DUSE_HAL_DRIVER -DSTM32F407xx -DARM_MATH_CM4 -D__CC_ARM -DARM_MATH_MATRIX_CHECK -DARM_MATH_ROUNDING --C99-o dipan_board_test\stm32f4xx_hal_adc.o --omf_browse dipan_board_test\stm32f4xx_hal_adc.crf --depend dipan_board_test\stm32f4xx_hal_adc.d)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h)(0x5A8FF5D4)
 I (../Inc/stm32f4xx_hal_conf.h)(0x5CAB4A4E)

@@ -104,6 +104,12 @@
 #define KEY2 HAL_GPIO_ReadPin(GPIOC,GPIO_PIN_2)
 #define KEY3 HAL_GPIO_ReadPin(GPIOA,GPIO_PIN_6)
 #define KEY4 HAL_GPIO_ReadPin(GPIOA,GPIO_PIN_5)
+          
+//三个电容板开关
+#define Switch1_Pin GPIO_PIN_0
+#define Switch2_Pin GPIO_PIN_1
+#define Switch3_Pin GPIO_PIN_2
+#define Switch_GPIO_Port GPIOF
 /* USER CODE END Includes */
 
 /* USER CODE BEGIN Private defines */

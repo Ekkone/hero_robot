@@ -139,27 +139,7 @@ void Gimbal_Contrl_Task(void const * argument)
       /*刷新断线时间*/
 	   RefreshTaskOutLineTime(GimbalContrlTask_ON);
         IMU_Get_Data();
-      /*云台限位保护*/
-      /*pit正常0-670（前），7500（后）-8192*/
-//      if((pit_set.expect + pit_get.offset_angle) > (630 + pit_protect_correct_2) &&\
-//          (pit_set.expect + pit_get.offset_angle) < (2000 + pit_protect_correct_2))
-//      {
-//        pit_set.expect = (630 + pit_protect_correct_2) - pit_get.offset_angle;
-//      }
-//      if((pit_set.expect + pit_get.offset_angle) > (6500 - pit_protect_correct_1) &&\
-//          (pit_set.expect + pit_get.offset_angle) < (7500 - pit_protect_correct_1))
-//      {
-//        pit_set.expect = (7500 - pit_protect_correct_1) - pit_get.offset_angle;
-//      }
-//      /*yaw轴云台保护*/
-//      if((yaw_set.expect + yaw_get.offset_angle) > 2400)
-//      {
-//        yaw_set.expect = 2380 - yaw_get.offset_angle;
-//      }
-//      if((yaw_set.expect + yaw_get.offset_angle) < 1100)
-//      {
-//        yaw_set.expect = 1115 - yaw_get.offset_angle;
-//      }
+      
       /*云台模式判断*/
       switch(gimbal_mode)
       {
@@ -190,6 +170,27 @@ void Gimbal_Contrl_Task(void const * argument)
           minipc_rx_small.angle_pit = 0;
         }break;
       }
+      /*云台限位保护*/
+      /*pit正常0-670（前），7500（后）-8192*/
+//      if((pit_set.expect + pit_get.offset_angle) > (630 + pit_protect_correct_2) &&\
+//          (pit_set.expect + pit_get.offset_angle) < (2000 + pit_protect_correct_2))
+//      {
+//        pit_set.expect = (630 + pit_protect_correct_2) - pit_get.offset_angle;
+//      }
+//      if((pit_set.expect + pit_get.offset_angle) > (6500 - pit_protect_correct_1) &&\
+//          (pit_set.expect + pit_get.offset_angle) < (7500 - pit_protect_correct_1))
+//      {
+//        pit_set.expect = (7500 - pit_protect_correct_1) - pit_get.offset_angle;
+//      }
+//      /*yaw轴云台保护*/
+//      if((yaw_set.expect + yaw_get.offset_angle) > 2400)
+//      {
+//        yaw_set.expect = 2380 - yaw_get.offset_angle;
+//      }
+//      if((yaw_set.expect + yaw_get.offset_angle) < 1100)
+//      {
+//        yaw_set.expect = 1115 - yaw_get.offset_angle;
+//      }
         
         //yaw轴
         pid_calc(&pid_yaw, yaw_get.total_angle,yaw_set.expect);
@@ -198,8 +199,8 @@ void Gimbal_Contrl_Task(void const * argument)
         pid_calc(&pid_pit, pit_get.total_angle, pit_set.expect);
         pid_calc(&pid_pit_spd,(imu_data.gz), pid_pit.pos_out);
       
-        Pitch_Current_Value=(pid_pit.pos_out); 
-		    //Yaw_Current_Value= (pid_yaw.pos_out);
+//        Pitch_Current_Value=(pid_pit.pos_out); 
+//		    Yaw_Current_Value= (pid_yaw.pos_out);
      
       #if jy61
       IMU_Get_Data();
