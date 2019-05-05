@@ -34,8 +34,8 @@ pid_t pid_stir_spd;
 ------------------------------------------------------------------------------
 */
 /* 内部变量------------------------------------------------------------------*/
-int16_t XY_speed_max = 3000;
-int16_t XY_speed_min = -3000; 
+int16_t XY_speed_max = 6000;
+int16_t XY_speed_min = -6000; 
 int16_t W_speed_max = 2000;
 int16_t W_speed_min = -2000; 
 uint8_t press_counter;
@@ -111,8 +111,8 @@ void MouseKeyControlProcess()
       }
   else//正常速度
   {
-     XY_speed_max = 3000;//(NORMAL_SPEED_MAX)*3.5;
-     XY_speed_min = -3000;//(NORMAL_SPEED_MIN)*3.5;
+     XY_speed_max = 6000;//(NORMAL_SPEED_MAX)*3.5;
+     XY_speed_min = -6000;//(NORMAL_SPEED_MIN)*3.5;
      W_speed_max = 2000;
      W_speed_min = -2000;
   }

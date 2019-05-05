@@ -7,7 +7,7 @@
 #include "string.h"
 
 
-#define SizeofReferee 100
+#define SizeofReferee 200
 #define SizeofMinipc  7
 extern uint8_t USART3_RX_DATA[(SizeofReferee)];//≤√≈–œµÕ≥
 extern uint16_t USART3_RX_NUM;

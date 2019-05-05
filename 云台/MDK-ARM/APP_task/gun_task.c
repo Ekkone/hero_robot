@@ -169,7 +169,7 @@ void Gun_Task(void const * argument)
      pid_calc(&pid_shot_spd[1],moto_M_get[1].speed_rpm ,-set_M_speed);
     //printf("%d\t%d\r\n",moto_M_get[0].speed_rpm,moto_M_get[1].speed_rpm);
      /*Çý¶¯²¦µ¯µç»ú,Ä¦²ÁÂÖ*/
-		 Shot_Motor(&hcan2,pid_dial_spd.pos_out,pid_shot_spd[0].pos_out,pid_shot_spd[1].pos_out);
+		// Shot_Motor(&hcan2,pid_dial_spd.pos_out,pid_shot_spd[0].pos_out,pid_shot_spd[1].pos_out);
 //		 Shot_Motor(&hcan2,0,0,0);
 //     Shot_Motor(&hcan2,pid_dial_spd.pos_out,0,0);
 		 minipc_rx_big.state_flag=0;

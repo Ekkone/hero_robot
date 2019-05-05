@@ -28,12 +28,14 @@ Project File Date:  04/30/2019
 *** Using Compiler 'V5.06 update 6 (build 750)', folder: 'D:\Keil\ARM\ARMCC\Bin'
 Build target 'hero_robot'
 compiling gimbal_task.c...
-APP_task\gimbal_task.c(219): warning:  #177-D: label "last"  was declared but never referenced
-        last:pid_calc(&pid_yaw_jy61_follow,(ptr_jy61_t_yaw.final_angle),yaw_set_follow.expect);
-APP_task\gimbal_task.c: 1 warning, 0 errors
+APP_task\gimbal_task.c(135): warning:  #550-D: variable "pit_protect_correct_1"  was set but never used
+  	uint16_t pit_protect_correct_1 = 0;
+APP_task\gimbal_task.c(136): warning:  #550-D: variable "pit_protect_correct_2"  was set but never used
+  	uint16_t pit_protect_correct_2 = 0;
+APP_task\gimbal_task.c: 2 warnings, 0 errors
 linking...
 Program Size: Code=24896 RO-data=752 RW-data=272 ZI-data=21024  
-"2018.07.12-infantry\hero_robot.axf" - 0 Error(s), 1 Warning(s).
+"2018.07.12-infantry\hero_robot.axf" - 0 Error(s), 2 Warning(s).
 
 <h2>Software Packages used:</h2>
 
@@ -56,7 +58,7 @@ Package Vendor: Keil
 <h2>Collection of Component Files used:</h2>
 
    * Component: ARM::CMSIS:CORE:5.2.0
-Build Time Elapsed:  00:00:07
+Build Time Elapsed:  00:00:06
 </pre>
 </body>
 </html>

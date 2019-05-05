@@ -91,9 +91,9 @@ void gimbal_pid_init(void)
 //  PID_struct_init(&pid_pit_jy61_spd, POSITION_PID, 5000, 1000,
 //                  2.5f, 0.0f, 0.0f ); 
   PID_struct_init(&pid_pit_jy61, POSITION_PID, 5000, 100,
-                  10.0f, 0.03f, 13.0f); //	
+                  20.0f, 0.00f, 22.0f); //	
   PID_struct_init(&pid_pit_jy61_spd, POSITION_PID, 5000, 1000,
-                  2.5f, 0.0f, 0.0f ); 
+                  2.5f, 0.0f, 0.0f  ); 
 #endif
 
 /*yaw陀螺仪反馈*/
@@ -170,81 +170,89 @@ void Gimbal_Contrl_Task(void const * argument)
       IMU_Get_Data();
       
       /*云台限位保护*/
-      /*pit正常0-670（前），7500（后）-8192*/
-      if((pit_set.expect + pit_get.offset_angle) > (630 + pit_protect_correct_2) &&\
-          (pit_set.expect + pit_get.offset_angle) < (2000 + pit_protect_correct_2))
+      /*pit正常280-800*/
+      if((pit_set.expect + pit_get.offset_angle) > 800)
       {
-        pit_set.expect = (630 + pit_protect_correct_2) - pit_get.offset_angle;
+        if(pit_set.expect <= pit_set.expect_last)
+          goto pit_last;
+        pit_set.expect = 780 - pit_get.offset_angle;
       }
-      if((pit_set.expect + pit_get.offset_angle) > (6500 - pit_protect_correct_1) &&\
-          (pit_set.expect + pit_get.offset_angle) < (7500 - pit_protect_correct_1))
+      if((pit_set.expect + pit_get.offset_angle) < 280)
       {
-        pit_set.expect = (7500 - pit_protect_correct_1) - pit_get.offset_angle;
+        if(pit_set.expect >= pit_set.expect_last)
+          goto pit_last;
+        pit_set.expect = 300 - pit_get.offset_angle;
       }
+      #if PIT_JY
+      //pit轴陀螺仪
+      pid_calc(&pid_pit_jy61, (ptr_jy61_t_pit.final_angle*22.76), pit_set.expect);
+      pid_calc(&pid_pit_jy61_spd,(ptr_jy61_t_angular_velocity.vy), pid_pit_jy61.pos_out);
+      #else
+      //pit轴编码器
+      pit_last:pid_calc(&pid_pit_jy61, pit_get.total_angle, pit_set.expect);
+      pid_calc(&pid_pit_jy61_spd,(ptr_jy61_t_angular_velocity.vy), pid_pit_jy61.pos_out);
+      #endif
+      Pitch_Current_Value=(-pid_pit_jy61_spd.pos_out); 
       /*yaw轴模式判断*/
       switch(chassis_gimble_Mode_flg)
       {
         case 0://分离，yaw使用编码器
         {
-          /*yaw轴云台保护*/
-//          if((yaw_set.expect + yaw_get.offset_angle) > 2400)
-//          {
-//            yaw_set.expect = 2380 - yaw_get.offset_angle;
-//          }
-//          if((yaw_set.expect + yaw_get.offset_angle) < 1100)
-//          {
-//            yaw_set.expect = 1115 - yaw_get.offset_angle;
-//          }
-          pid_calc(&pid_yaw_jy61,(yaw_get.total_angle),yaw_set.expect);
-          pid_calc(&pid_yaw_jy61_spd,(ptr_jy61_t_angular_velocity.vz), pid_yaw_jy61.pos_out);
-          Yaw_Current_Value= (-pid_yaw_jy61_spd.pos_out);
+          /*yaw轴云台保护3100-4300*/
+          if((yaw_set.expect + yaw_get.offset_angle) > 4300)
+          {
+            if(yaw_set.expect <= yaw_set.expect_last)
+              goto yaw_last;
+            yaw_set.expect = 4300 - yaw_get.offset_angle;
+          }
+          if((yaw_set.expect + yaw_get.offset_angle) < 3100)
+          {
+            if(yaw_set.expect >= yaw_set.expect_last)
+              goto yaw_last;
+            yaw_set.expect = 3120 - yaw_get.offset_angle;
+          }
+          yaw_last:pid_calc(&pid_yaw_jy61,(-yaw_get.total_angle),yaw_set.expect);
+          pid_calc(&pid_yaw_jy61_spd,(-ptr_jy61_t_angular_velocity.vz), pid_yaw_jy61.pos_out);
+          Yaw_Current_Value= (pid_yaw_jy61_spd.pos_out);
         }break;
         case 1://跟随，yaw使用陀螺仪
         {
           /*yaw轴云台保护*/
           
-//          if(yaw_get.angle > 2400)
-//          {
-//            if(yaw_set_follow.expect <= yaw_set_follow.expect_last)
-//            goto last;
-//            yaw_set_follow.expect = ptr_jy61_t_yaw.final_angle;
-//          }
+          if(yaw_get.angle > 4300)
+          {
+            if(yaw_set_follow.expect <= yaw_set_follow.expect_last)
+            goto yaw_follow_last;
+            yaw_set_follow.expect = ptr_jy61_t_yaw.final_angle;
+          }
 
-//          if(yaw_get.angle < 1100)
-//          {
-//            if(yaw_set_follow.expect >= yaw_set_follow.expect_last)
-//            goto last;
-//            yaw_set_follow.expect = ptr_jy61_t_yaw.final_angle;
-//          }
-      last:pid_calc(&pid_yaw_jy61_follow,(ptr_jy61_t_yaw.final_angle),yaw_set_follow.expect);
+          if(yaw_get.angle < 3100)
+          {
+            if(yaw_set_follow.expect >= yaw_set_follow.expect_last)
+            goto yaw_follow_last;
+            yaw_set_follow.expect = ptr_jy61_t_yaw.final_angle;
+          }
+      yaw_follow_last:pid_calc(&pid_yaw_jy61_follow,(ptr_jy61_t_yaw.final_angle),yaw_set_follow.expect);
           pid_calc(&pid_yaw_jy61_follow_spd,(ptr_jy61_t_angular_velocity.vz), pid_yaw_jy61_follow.pos_out);
           Yaw_Current_Value= (-pid_yaw_jy61_follow_spd.pos_out);
           
           
         }break;
-      }
-
-        #if PIT_JY
-        //pit轴陀螺仪
-        pid_calc(&pid_pit_jy61, (ptr_jy61_t_pit.final_angle*22.76), pit_set.expect);
-        pid_calc(&pid_pit_jy61_spd,(ptr_jy61_t_angular_velocity.vy), pid_pit_jy61.pos_out);
-        #else
-        //pit轴编码器
-        pid_calc(&pid_pit_jy61, pit_get.total_angle, pit_set.expect);
-        pid_calc(&pid_pit_jy61_spd,(-ptr_jy61_t_angular_velocity.vy), pid_pit_jy61.pos_out);
-        #endif
-        Pitch_Current_Value=(-pid_pit_jy61_spd.pos_out); 
+      }  
 		    
       #endif
-//        Pitch_Current_Value = 0;
-//        Yaw_Current_Value = 0;
+        //Pitch_Current_Value = 0;
+        //Yaw_Current_Value = 0;
         /*驱动电机*/
 				if(gimbal_disable_flg)//失能
 				{
 					Cloud_Platform_Motor_Disable(&hcan1);
 				}
 				else Cloud_Platform_Motor(&hcan1,Yaw_Current_Value,Pitch_Current_Value);
+        
         yaw_set_follow.expect_last = yaw_set_follow.expect;
+        yaw_set.expect_last = yaw_set.expect;
+        pit_set.expect_last = pit_set.expect;
         
       minipc_rx_big.angle_yaw = 0;
       minipc_rx_big.angle_pit = 0;

@@ -69,7 +69,7 @@
 #endif /* __GNUC__ */ /** * @brief Retargets the C library printf function to the USART. * @param None * @retval None */ 
 PUTCHAR_PROTOTYPE { 
 //while(HAL_UART_GetState(&huart3) == HAL_UART_STATE_BUSY_TX){}
-HAL_UART_Transmit(&huart1, (uint8_t *)&ch, 1, 100); 
+HAL_UART_Transmit(&huart2, (uint8_t *)&ch, 1, 100); 
 return ch; }//串口调试必须
 
 #define uart_putbuff Usart_SendArray
@@ -80,15 +80,15 @@ void vcan_sendware(uint8_t *wareaddr, uint32_t waresize)
     uint8_t cmdf[2] = {CMD_WARE, ~CMD_WARE};    //串口调试 使用的前命令
     uint8_t cmdr[2] = {~CMD_WARE, CMD_WARE};    //串口调试 使用的后命令
 
-    uart_putbuff(&huart1, cmdf, sizeof(cmdf));    //先发送前命令
-    uart_putbuff(&huart1, wareaddr, waresize);    //发送数据
-    uart_putbuff(&huart1, cmdr, sizeof(cmdr));    //发送后命令
+    uart_putbuff(&huart2, cmdf, sizeof(cmdf));    //先发送前命令
+    uart_putbuff(&huart2, wareaddr, waresize);    //发送数据
+    uart_putbuff(&huart2, cmdr, sizeof(cmdr));    //发送后命令
 }
 
 /******** 发送一个字符 *********/
 void Usart_SendByte( UART_HandleTypeDef *huart,uint8_t ch )
 {
-  HAL_UART_Transmit(&huart1, (uint8_t *)&ch, 1, 10); 
+  HAL_UART_Transmit(&huart2, (uint8_t *)&ch, 1, 10); 
 }
 	
 /******** 发送8位的数组 *********/

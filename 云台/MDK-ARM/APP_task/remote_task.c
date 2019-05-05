@@ -62,15 +62,15 @@ void ChassisModeProcess()
 {
    if(chassis_gimble_Mode_flg==1) //XY运动，底盘跟随云台
    {
-      pit_set.expect = pit_set.expect +(0x400-RC_Ctl.rc.ch3)/20;	
-      yaw_set_follow.expect = yaw_set_follow.expect +(0x400-RC_Ctl.rc.ch2)/20;	
+      pit_set.expect = pit_set.expect - (0x400-RC_Ctl.rc.ch3)/20;	
+      yaw_set_follow.expect = yaw_set_follow.expect - (0x400-RC_Ctl.rc.ch2)/20;	
      
      yaw_set.expect = yaw_get.total_angle;//更新分离编码器期望
    }
    else//WY运动，底盘云台分离
    {
-      pit_set.expect = pit_set.expect +(0x400-RC_Ctl.rc.ch3)/20;	
-      yaw_set.expect = yaw_set.expect +(0x400-RC_Ctl.rc.ch2)/20;	
+      pit_set.expect = pit_set.expect - (0x400-RC_Ctl.rc.ch3)/20;	
+      yaw_set.expect = yaw_set.expect - (0x400-RC_Ctl.rc.ch2)/20;	
      
      yaw_set_follow.expect = ptr_jy61_t_yaw.final_angle;//更新跟随陀螺仪期望
    }
@@ -101,7 +101,6 @@ void ChassisModeProcess()
     MoCa_Flag = 0; 
   }
   stir_motor_flag = 0;
-  //chassis_gimble_Mode_flg = 0; 
 }
 void ShotProcess()
 {
@@ -113,7 +112,7 @@ void ShotProcess()
   yaw_set_follow.expect = ptr_jy61_t_yaw.final_angle;//更新跟随陀螺仪期望
   
   MoCa_Flag = 1; 
-  if(press_counter >= press_times)//左按键延迟，时间由press_time控制
+  if(press_counter >= press_times)//左按键延迟，  时间由press_time控制
 	{
 		press_counter=press_times+1;
     switch(RC_Ctl.rc.s1)
@@ -166,7 +165,6 @@ void ShotProcess()
 void MouseKeyControlProcess()
 {
   static uint16_t delay = 0;
-  chassis_gimble_Mode_flg = 0;
   CAN_Send_YK(&hcan1,RC_Ctl.key.v,0,0,RC_Ctl.rc.s1,RC_Ctl.rc.s2);
   /*弹舱空则传送电机开*/
   if(BULLTE_EMPTY)

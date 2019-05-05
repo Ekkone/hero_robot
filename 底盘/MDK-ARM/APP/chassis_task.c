@@ -41,7 +41,7 @@ extern int16_t yaw_speed;
 void Chassis_pid_init(void)
 {
 	
-	 PID_struct_init(&pid_3508_pos, POSITION_PID, 10000, 1000,
+	 PID_struct_init(&pid_3508_pos, POSITION_PID, 10000, 5000,
 									1.5f,	0.0f,	20.0f);  // motos angular rate closeloop.pid:1.5,0.0,20.0
 	 pid_3508_pos.deadband=150;
 	
@@ -53,7 +53,7 @@ void Chassis_pid_init(void)
 	
 		for(int i=0; i<4; i++)
 		{ 
-			PID_struct_init(&pid_3508_spd[i], POSITION_PID, 10000, 2000,
+			PID_struct_init(&pid_3508_spd[i], POSITION_PID, 10000, 5000,
 										1.5f,	0.1f,	0.1f	);  //4 motos angular rate closeloop.
 		}
     
@@ -121,9 +121,9 @@ void Chassis_Contrl_Task(void const * argument)
 			Current_set[2] = pid_3508_spd[2].pos_out;
 			Current_set[3] = pid_3508_spd[3].pos_out;			
 			
-//			printf("befeor:%f   ",Current_set[0]);
-		  power_limit(Current_set);
-//			printf("after:%f\n\r",Current_set[0]);
+			printf("befeor:%f \n  ",Current_set[0]);
+		  Super_Capacitance(Current_set);
+			printf("after:%f\n",Current_set[0]);
 			
 			pid_3508_spd[0].pos_out = Current_set[0];			
 			pid_3508_spd[1].pos_out = Current_set[1];
@@ -146,7 +146,8 @@ void Chassis_Contrl_Task(void const * argument)
 												pid_3508_spd[2].pos_out, 
 												pid_3508_spd[3].pos_out);
 
-      }        
+      } 
+      
 				
 			if(0){  //数据发送和任务检测   _待续
 			//	if(HAL_GPIO_ReadPin(GPIOI,GPIO_PIN_0) == 1)            //弹仓检测  低电平触发发送0为子弹空

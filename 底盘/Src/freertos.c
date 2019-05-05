@@ -68,7 +68,6 @@ osThreadId RemoteDataTaskHandle;
 osThreadId StatusTaskHandle; 
 osThreadId vOutLineCheckTaskHandle;
 osThreadId CheckTaskHandle;
-osThreadId RefereeTaskHandle;
 osThreadId MINIPCBIGTaskHandle;
 osThreadId MINIPCSMATaskHandle;
 /* USER CODE BEGIN Variables */
@@ -83,7 +82,6 @@ extern void Remote_Data_Task(void const * argument);
 extern void Status_Task(void const * argument);
 extern void vOutLineCheck_Task(void const *argument);
 extern void Check_Task(void const *argument);
-extern void Referee_Data_Task(void const * argument);
 extern void MiniPC_Big_Task(void const * argument);
 extern void MiniPC_Small_Task(void const * argument);
 void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
@@ -137,9 +135,6 @@ void MX_FREERTOS_Init(void) {
   
   osThreadDef(CheckTask, Check_Task, osPriorityNormal, 0, 128);
 	CheckTaskHandle = osThreadCreate(osThread(CheckTask), NULL);
-  
-  osThreadDef(RefereeTask, Referee_Data_Task, osPriorityAboveNormal, 0, 256);
-	RefereeTaskHandle = osThreadCreate(osThread(RefereeTask), NULL);
   
   osThreadDef(MINI_BTask, MiniPC_Big_Task, osPriorityAboveNormal, 0, 256);
 	MINIPCBIGTaskHandle = osThreadCreate(osThread(MINI_BTask), NULL);

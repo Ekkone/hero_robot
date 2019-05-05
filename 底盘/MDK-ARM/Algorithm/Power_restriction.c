@@ -41,12 +41,13 @@ else if(val>=max)\
 	val = max;\
 }\
 
-#define Predict_Time  0.05f
+#define SET_BITS(x,n,m)    (x | ~(~0U<<(m-n+1))<<(n-1))
+
 #define Predict_RemainPower 20
 
-#define Switch1_On HAL_GPIO_WritePin(Switch_GPIO_Port,Switch1_Pin,GPIO_PIN_SET);	//放电开关
-#define Switch2_On HAL_GPIO_WritePin(Switch_GPIO_Port,Switch2_Pin,GPIO_PIN_SET); //充电开关
-#define Switch3_On HAL_GPIO_WritePin(Switch_GPIO_Port,Switch3_Pin,GPIO_PIN_SET);	//裁判系统直接供电开关
+//#define Switch1_On HAL_GPIO_WritePin(Switch_GPIO_Port,Switch1_Pin,GPIO_PIN_SET);	//放电开关
+//#define Switch2_On HAL_GPIO_WritePin(Switch_GPIO_Port,Switch2_Pin,GPIO_PIN_SET); //充电开关
+//#define Switch3_On HAL_GPIO_WritePin(Switch_GPIO_Port,Switch3_Pin,GPIO_PIN_SET);//裁判系统直接供电开关
 
 
 #define Charge_switch()						\
@@ -79,15 +80,14 @@ else if(val>=max)\
 #define	Normal			2
 #define Discharge  	3
 //判据
-#define BoundaryOFCharge	39		//进入充电状态的最大功率
+#define BoundaryOFCharge	35		//进入充电状态的最大功率
 #define	RatedPower				80		//额定功率
 #define	BoundaryOFNormal	75		//退出充电进入正常状态的最大功率
-//ABS（BoundaryOFCharge - BoundaryOFNormal）是最大的电容充电功率36
-#define MinVoltOFCap			15.0f	//电容放电的最小允许电压
-#define	RatedCurrent			2900.0//额定功率下对应的额定电流值（发送给电调的值）
+//ABS（BoundaryOFCharge - BoundaryOFNormal）是最大的电容充电功率40
+#define MinVoltOFCap			16.0f	//电容放电的最小允许电压
+#define	RatedCurrent			5000.0//额定功率下对应的额定电流值（发送给电调的值）
 #define SoftLimitRP				55.0f		//进入软件限制的剩余能量值
-#define	MinCapPower				40.0f		//最小的电容放电功率
-#define	Filed							1.5f		//屏蔽范围
+#define	Filed							2.0f		//屏蔽范围
 /* 任务相关信息定义-----------------------------------------------------------*/
 
 /* 内部常量定义---------------------------------------------------------------*/
@@ -372,6 +372,7 @@ void Get_ADC_Value(void)
 			
 			if(current_get.Current_Offset_num > 50)
 			{
+        current_get.Current_Referee = (float)Robot.Chassis_Power.Chassis_Current * 0.001;
 				current_get.Current_Offset += current_get.CurrentCalculat - current_get.Current_Referee;
 			}
 			if(current_get.Current_Offset_num > 200)
@@ -415,11 +416,12 @@ void Get_ADC_Value(void)
 void Power_Calculate(void)
 {
 		limit.Power_Referee =  Robot.Chassis_Power.chassis_Power;
-		if(limit.Volt_Referee != 0)//防止裁判系统失效
-		{
-			limit.Power_Calculat = current_get.CurrentCalculat * limit.Volt_Referee;
+    limit.Volt_Referee = Robot.Chassis_Power.Chassis_Volt * 0.001;
+//		if(limit.Volt_Referee != 0)//防止裁判系统失效
+//		{
+//			limit.Power_Calculat = current_get.CurrentCalculat * limit.Volt_Referee * 0.001;
 
-		}else
+//		}else
 		{
 			limit.Power_Calculat = current_get.CurrentCalculat * 23.3f;		
 		}
@@ -469,36 +471,62 @@ void Remain_Power_Calculate(void)
 ** Descriptions:电容电压处理
 ** Input:waterline:水平线，filed：范围
 ** Output:
-** Note:屏蔽电容电压在waterline附近+-field的数据
+** Note: 向下屏蔽
 */
+float Down_Shield(float num,float waterline ,float filed)
+{
+	float dir = 0;
+	dir = num - waterline;
+	if (MyAbs(dir) < filed)//在filed范围内
+	{
+		if (num >= waterline)
+		{
+				return num;
+		}
+		else 
+		{
+				return waterline - filed;
+		}
+	}
+}
 void	Cap_Volt_Treatment(float waterline ,float filed)
 {
-		current_get.Capacitance_Volt = Shield(current_get.Capacitance_Volt, waterline,filed);
+		current_get.Capacitance_Volt = Down_Shield(current_get.Capacitance_Volt, waterline,filed);
 }
 
 /*
 *	如何充分利用裁判系统传回的功率和能量缓存
 *
 */
-void power_limit(float  Current_get[4])
+void power_limit(float  * Current_get)
 {
-		
+    static uint8_t soft_limit_flag = 0;
+    
 		float total_current = 0;
 	
 		total_current = MyAbs(Current_get[0]) + MyAbs(Current_get[1])+\
 										MyAbs(Current_get[2]) + MyAbs(Current_get[3]);
 	
 		/*功率限制*/
-		limit.PowerRemain_Calculat_Next = limit.PowerRemain_Calculat;//预测能量缓存没用到
-		
-		if(limit.PowerRemain_Calculat_Next < Predict_RemainPower)
-		{
+		limit.PowerRemain_Calculat_Next = Robot.Chassis_Power.Chassis_Power_buffer;//limit.PowerRemain_Calculat;//预测能量缓存没用到
+      
+    if (limit.PowerRemain_Calculat_Next > 45)
+    {
+        soft_limit_flag = 0;
+    }
+    else if(limit.PowerRemain_Calculat_Next < Predict_RemainPower)//20
+    {
+        soft_limit_flag = 1;
+    }
+  
+		if(soft_limit_flag == 1)
+		{      
 			if(limit.PowerRemain_Calculat_Next <0) 
 			{
 				limit.PowerRemain_Calculat_Next = 0;
 			}
 			
-			limit.PowerLimit = RatedCurrent;//原本是5000，效果待测试
+			limit.PowerLimit = RatedCurrent;
 			limit.PowerLimit = ((limit.PowerRemain_Calculat_Next * limit.PowerRemain_Calculat_Next) / 400) * limit.PowerLimit;		
 			
 			/*电流限制*/
@@ -522,13 +550,13 @@ void power_limit(float  Current_get[4])
 
 
 /*注意：两种板子有一个不能同时开24v供电和电容让供电 */
-void Super_Capacitance(float  Current_get[4])
+void Super_Capacitance(float * Current_get)
 {
 		static float total_current = 0;
 		static uint8_t flag = 0;
 		//计算总电流
-		total_current = MyAbs(moto_chassis_get[0].real_current) + MyAbs(moto_chassis_get[1].real_current)\
-										+ MyAbs(moto_chassis_get[2].real_current) + MyAbs(moto_chassis_get[3].real_current);
+//		total_current = MyAbs(moto_chassis_get[0].real_current) + MyAbs(moto_chassis_get[1].real_current)\
+//										+ MyAbs(moto_chassis_get[2].real_current) + MyAbs(moto_chassis_get[3].real_current);
 
 		/*ADC数据处理*/
 		Get_ADC_Value();
@@ -544,9 +572,9 @@ void Super_Capacitance(float  Current_get[4])
 	
 	
 		/*等待底盘电机电流检测模块采集偏置量*/
-		if(/*current_get.Current_Offset_num < 200*/0)
+		if(current_get.Current_Offset_num < 200)
 		{
-				printf("current:%f,power:%f,capVolt:%f,ChassisP:%f，ChassisI:%f,state2:%d,%d\n\r",current_get.CurrentCalculat,limit.Power_Calculat,current_get.Capacitance_Volt,limit.Power_Chassis_Calculat,current_get.Chassis_Current,state2,flag);
+//				printf("current:%f,power:%f,capVolt:%f,ChassisP:%f，ChassisI:%f,state2:%d,%d\n\r",current_get.CurrentCalculat,limit.Power_Calculat,current_get.Capacitance_Volt,limit.Power_Chassis_Calculat,current_get.Chassis_Current,state2,flag);
 
 				return;
 		}
@@ -595,7 +623,6 @@ void Super_Capacitance(float  Current_get[4])
 				break;
 				case Discharge:
 				{ 	
-					
 						if (current_get.Capacitance_Volt < MinVoltOFCap)//电容电量不足
 						{
 								Normal_switch();
@@ -611,7 +638,6 @@ void Super_Capacitance(float  Current_get[4])
 																									flag = 2;
 								break;
 						}
-						
 							
 						if (discharge_flag)
 						{
@@ -627,7 +653,6 @@ void Super_Capacitance(float  Current_get[4])
 										Discharge_switch();					
 																									flag = 1;
 								}
-								
 						}
 						else if(limit.PowerRemain_Calculat < 20)//剩余能量做判据
 						{
@@ -643,16 +668,39 @@ void Super_Capacitance(float  Current_get[4])
 				break;
 			}
 		
-//	 float *buff;
-//	buff = &limit.Power_Calculat;
-//	buff[1] = &total_current;
-//	buff[2] = &Capacitance_Volt;
-//	vcan_sendware((uint8_t *)buff,sizeof(buff));
+
 			printf("power_referee:%f,power:%f,capVolt:%f,limit.PowerRemain_Calculat:%f,state2:%d,discharge_flag:%d,flag:%d\n\r",
 			limit.Power_Referee,limit.Power_Calculat,current_get.Capacitance_Volt,limit.PowerRemain_Calculat,state2,discharge_flag,flag);
-//	printf("current:%f\n",current_get.CurrentCalculat);
-//	printf("power:%f,capVolt:%f,current:%f\n\r",limit.Power_Calculat,current_get.Capacitance_Volt,total_current);
+}
+/*
+** Descriptions: 电容电量显示
+** Input:	
+** Output:
+** Note:
+*/
+uint8_t set_bits(uint8_t n, uint8_t m)
+{
+		uint8_t buff = 0;
+	
+		for(uint8_t num = n;num < m + 1;num++)
+		{
+				buff |= (1 << num);
+		}
+		
+		return buff;
+}
 
-//		printf("capVolt:%f\n\r",current_get.Capacitance_Volt);
-
+uint8_t	Show_CapVolt(void)
+{
+		uint8_t capvolt = 0,capvolt_num = 0;
+	
+		capvolt_num =  6 - (uint8_t)((24.0f - current_get.Capacitance_Volt) / 1.5);
+	
+		capvolt = set_bits(0,capvolt_num);
+	
+		if (current_get.Capacitance_Volt <= MinVoltOFCap)
+		{
+				return 0;
+		}
+		
 }

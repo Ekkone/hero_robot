@@ -48,7 +48,7 @@ void BSP_Init(void)
   MX_CAN1_Init();
   /*串口*/
   //MX_USART1_UART_Init();
-  //MX_USART2_UART_Init();
+  MX_USART2_UART_Init();
   MX_USART3_UART_Init();
   MX_UART4_Init();
   MX_UART5_Init();
@@ -67,6 +67,9 @@ void BSP_Init(void)
   HAL_ADC_Start_DMA(&hadc1,(uint32_t*)uhADC1ConvertedValue, 10);//底盘总电流adc数据
   HAL_ADC_Start_DMA(&hadc2,(uint32_t*)uhADC2ConvertedValue, 10);//电容总电压Hadc数据
   HAL_ADC_Start_DMA(&hadc3,(uint32_t*)uhADC3ConvertedValue, 10);//电容总电压Ladc数据
+  __HAL_DMA_DISABLE_IT(&hdma_adc1,DMA_IT_TC | DMA_IT_HT | DMA_IT_TE | DMA_IT_FE | DMA_IT_DME);
+  __HAL_DMA_DISABLE_IT(&hdma_adc2,DMA_IT_TC | DMA_IT_HT | DMA_IT_TE | DMA_IT_FE | DMA_IT_DME);
+  __HAL_DMA_DISABLE_IT(&hdma_adc3,DMA_IT_TC | DMA_IT_HT | DMA_IT_TE | DMA_IT_FE | DMA_IT_DME);
 	/*开启中断*/ 
   HAL_UART_Receive_DMA(&huart3,USART3_RX_DATA,SizeofReferee);  	
   HAL_UART_Receive_DMA(&huart4,UART4_RX_DATA,SizeofMinipc); 				 	  

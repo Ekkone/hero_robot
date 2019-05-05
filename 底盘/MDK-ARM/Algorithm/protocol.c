@@ -267,91 +267,89 @@ void sendata(float data1,float data2,float data3,uint8_t flag)
 	*	@supplement	
 	*	@retval	
 ****************************************************************************************/
-void Referee_Data_Task(void const * argument)
+void Referee_Data_Handler(void)
 {
-	    tFrame   *Frame;
-  uint32_t NotifyValue;
-  osDelay(100);
-	portTickType xLastWakeTime;
-  xLastWakeTime = xTaskGetTickCount();
-	for(;;)
-	{
-      RefreshTaskOutLineTime(RefereeTask_ON);
-    NotifyValue=ulTaskNotifyTake(pdTRUE,portMAX_DELAY);
-    if(NotifyValue==1)
+		static tFrame *Frame;
+		static uint8_t crc8_flag = 0,crc16_flag = 0;
+		uint8_t *buff = USART3_RX_DATA;
+
+		HAL_GPIO_TogglePin(GPIOG,GPIO_PIN_1); //GRE_H
+
+		for(uint8_t num = 0; num < USART3_RX_NUM; num++)
 		{
-			NotifyValue=0;
-      uint8_t *buff=USART3_RX_DATA;
-			for(int8_t i=0;i<USART3_RX_NUM;i++)
-			{
-					if(buff[i]==0xA5)
-					{
-					   Frame = (tFrame *)&buff[i];
+				if(buff[num]==0xA5)
+				{		
+					
+						Frame = (tFrame *)&buff[num];
+
+						if (!verify_crc8_check_sum((uint8_t *)Frame,5))
+						{
+								continue;
+						}
+						else if(!verify_crc16_check_sum((uint8_t *)Frame, 5 + 2 +  Frame->FrameHeader.DataLength + 2))
+						{
+								continue;
+						}
+
+						if(Frame->CmdID==game_robot_state)
+						{
+							Robot.id = Frame->Data.game_robot_state.robot_id;//id号
+							Robot.level = Frame->Data.game_robot_state.robot_level;//等级
+							Robot.remainHp = Frame->Data.game_robot_state.remain_HP;//剩余血量
+							Robot.maxHp  = Frame->Data.game_robot_state.max_HP;//最大血量
+							Robot.heat.shoot_17_cooling_rate = Frame->Data.game_robot_state.shooter_heat0_cooling_rate;//17每秒冷却值
+							Robot.heat.shoot_17_cooling_limit = Frame->Data.game_robot_state.shooter_heat0_cooling_limit;//17；冷却上限
+							Robot.heat.shoot_42_cooling_rate = Frame->Data.game_robot_state.shooter_heat1_cooling_rate;//
+							Robot.heat.shoot_42_cooling_limit = Frame->Data.game_robot_state.shooter_heat1_cooling_limit;//
+							
+						}
+						if(Frame->CmdID == power_heat_data)
+						{
+							Robot.heat.shoot_17_heat = Frame->Data.power_heat_data.shooter_heat0;//17枪口热量
+							Robot.heat.shoot_42_heat = Frame->Data.power_heat_data.shooter_heat1;
+						 
+							Robot.Chassis_Power.Chassis_Current = Frame->Data.power_heat_data.chassis_current;//电流
+							Robot.Chassis_Power.chassis_Power = Frame->Data.power_heat_data.chassis_power;//功率
+							Robot.Chassis_Power.Chassis_Power_buffer = Frame->Data.power_heat_data.chassis_power_buffer;//缓冲
+							Robot.Chassis_Power.Chassis_Volt = Frame->Data.power_heat_data.chassis_volt;//电压
+						}
+						if(Frame->CmdID==game_robot_pos)
+						{
+						 
+						 Robot.postion.x = Frame->Data.game_robot_pos.x;
+						 Robot.postion.y = Frame->Data.game_robot_pos.y;
+						 Robot.postion.z = Frame->Data.game_robot_pos.z;
+						 Robot.postion.yaw = Frame->Data.game_robot_pos.yaw;
+
+						}
+
+						if(Frame->CmdID == buff_musk)
+						{
+							Robot.buff = Frame->Data.buff_musk.power_rune_buff;
+						}
+						if( Frame->CmdID == shoot_data)
+						{
+							 if(Frame->Data.shoot_data.bullet_type == 1) //17
+							 {
+								 Robot.heat.shoot_17_freq = Frame->Data.shoot_data.bullet_freq;
+								 Robot.heat.shoot_17_speed = Frame->Data.shoot_data.bullet_speed;
+							 }
+							 if(Frame->Data.shoot_data.bullet_type == 2)//42
+							 {
+								 Robot.heat.shoot_42_freq = Frame->Data.shoot_data.bullet_freq;
+								 Robot.heat.shoot_42_speed = Frame->Data.shoot_data.bullet_speed;
+							 }
+						}
+
+						num = num + 5 + 2 +  Frame->FrameHeader.DataLength + 2;
 						
-					    if( verify_crc16_check_sum((uint8_t *)Frame, Frame->FrameHeader.DataLength + sizeof(tFrameHeader) + sizeof(tCmdID) + sizeof(Frame->CRC16))
-		             && verify_crc8_check_sum((uint8_t *)Frame,sizeof(tFrameHeader)))
-								 {
-									 if(Frame->CmdID==game_robot_state)
-									 {
-											Robot.id = Frame->Data.game_robot_state.robot_id;//id号
-											Robot.level = Frame->Data.game_robot_state.robot_level;//等级
-                      Robot.remainHp = Frame->Data.game_robot_state.remain_HP;//剩余血量
-                      Robot.maxHp  = Frame->Data.game_robot_state.max_HP;//最大血量
-                      Robot.heat.shoot_17_cooling_rate = Frame->Data.game_robot_state.shooter_heat0_cooling_rate;//17每秒冷却值
-                     Robot.heat.shoot_17_cooling_limit = Frame->Data.game_robot_state.shooter_heat0_cooling_limit;//17热量上限
-                      Robot.heat.shoot_42_cooling_rate = Frame->Data.game_robot_state.shooter_heat1_cooling_rate;//
-                      Robot.heat.shoot_42_cooling_limit = Frame->Data.game_robot_state.shooter_heat1_cooling_limit;//
-											
-									 }
-									 if(Frame->CmdID == power_heat_data)
-									 {
-											Robot.heat.shoot_17_heat = Frame->Data.power_heat_data.shooter_heat0;//17枪口热量
-                      Robot.heat.shoot_42_heat = Frame->Data.power_heat_data.shooter_heat1;
-                     
-                      Robot.Chassis_Power.Chassis_Current = Frame->Data.power_heat_data.chassis_current;//电流
-                      Robot.Chassis_Power.chassis_Power = Frame->Data.power_heat_data.chassis_power;//功率
-                      Robot.Chassis_Power.Chassis_Power_buffer = Frame->Data.power_heat_data.chassis_power_buffer;//缓冲
-                      Robot.Chassis_Power.Chassis_Volt = Frame->Data.power_heat_data.chassis_volt;//电压
-									 }
-									 if(Frame->CmdID==game_robot_pos)
-									 {
-                     
-										 Robot.postion.x = Frame->Data.game_robot_pos.x;
-                     Robot.postion.y = Frame->Data.game_robot_pos.y;
-                     Robot.postion.z = Frame->Data.game_robot_pos.z;
-                     Robot.postion.yaw = Frame->Data.game_robot_pos.yaw;
-                    
-									 }
-                   
-                   if(Frame->CmdID == buff_musk)
-                   {
-                     Robot.buff = Frame->Data.buff_musk.power_rune_buff;
-                     
-                   }
-                   if( Frame->CmdID == shoot_data)
-                   {
-                     if(Frame->Data.shoot_data.bullet_type == 1) //17
-                     {
-                     Robot.heat.shoot_17_freq = Frame->Data.shoot_data.bullet_freq;
-                     Robot.heat.shoot_17_speed = Frame->Data.shoot_data.bullet_speed;
-                     }
-                     if(Frame->Data.shoot_data.bullet_type == 2)//42
-                     {
-                     Robot.heat.shoot_42_freq = Frame->Data.shoot_data.bullet_freq;
-                     Robot.heat.shoot_42_speed = Frame->Data.shoot_data.bullet_speed;
-                     }
-                   }
-											 i=i+sizeof(Frame);
-								}
-					}
-        }
-      }
-        CAN_Send_Referee_B(&hcan1);
-        CAN_Send_Referee_S(&hcan1);
-      osDelayUntil(&xLastWakeTime,10);
+				}
+		}
+		
+		//清空缓存
+		memset(USART3_RX_DATA,0,SizeofReferee);
+}
 
-	 }
 
- }
 	
 

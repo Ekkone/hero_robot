@@ -406,7 +406,7 @@ uint16_t append_crc16_check_sum(uint8_t* pchMessage, uint32_t dwLength);
 void sendata(float data1,float data2,float data3,uint8_t flag);
 void Send_FrameData(tCmdID cmdid, uint8_t * pchMessage,uint8_t dwLength);
 //½Ó¿Úº¯Êý
-void Referee_Data_Task(void const * argument);
+void Referee_Data_Handler(void);
 void Send_FrameData(tCmdID cmdid, uint8_t * pchMessage,uint8_t dwLength);
 
 

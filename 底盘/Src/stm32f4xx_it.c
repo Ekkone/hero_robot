@@ -40,6 +40,7 @@
 #include "FreeRTOS.h"
 #include "dma.h"
 #include "usart.h"
+#include "protocol.h"
 #include "communication.h "
 /* USER CODE BEGIN 0 */
 uint8_t rx_date[8];
@@ -399,11 +400,9 @@ void USART3_IRQHandler(void)
       __HAL_UART_CLEAR_IDLEFLAG(&huart3);
 		
 		USART3_RX_NUM=(SizeofReferee)-(hdma_usart3_rx.Instance->NDTR);
+      Referee_Data_Handler();
     __HAL_DMA_SET_COUNTER(&hdma_usart3_rx,SizeofReferee);
-    __HAL_DMA_ENABLE(&hdma_usart3_rx);
-      
-     vTaskNotifyGiveFromISR(RefereeTaskHandle,&pxHigherPriorityTaskWoken);
-		portYIELD_FROM_ISR(pxHigherPriorityTaskWoken);		
+    __HAL_DMA_ENABLE(&hdma_usart3_rx);	
     }
 }
 void UART4_IRQHandler(void)
