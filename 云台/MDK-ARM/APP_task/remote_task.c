@@ -38,7 +38,7 @@ int16_t W_speed_min = -3000;
 uint8_t press_counter;
 uint8_t shot_anjian_counter=0;
 uint8_t shot_frequency = 100;
-int8_t chassis_gimble_Mode_flg;
+uint8_t chassis_gimble_Mode_flg = 0;
 //volatile float remain_power=0.0;   //底盘功率 _待续
 //float power; 				 //底盘功率 _测试
 
@@ -63,9 +63,9 @@ void ChassisModeProcess()
    if(chassis_gimble_Mode_flg==1) //XY运动，底盘跟随云台
    {
       pit_set.expect = pit_set.expect - (0x400-RC_Ctl.rc.ch3)/20;	
-      yaw_set_follow.expect = yaw_set_follow.expect - (0x400-RC_Ctl.rc.ch2)/20;	
+      yaw_set_follow.expect = yaw_set_follow.expect + (0x400-RC_Ctl.rc.ch2)/20;	
      
-     yaw_set.expect = yaw_get.total_angle;//更新分离编码器期望
+     yaw_set.expect = -yaw_get.total_angle;//更新分离编码器期望
    }
    else//WY运动，底盘云台分离
    {
@@ -106,8 +106,8 @@ void ShotProcess()
 {
   /*底盘模式默认分离*/
   chassis_gimble_Mode_flg = 0;
-  pit_set.expect = pit_set.expect +(0x400-RC_Ctl.rc.ch3)/20;	
-  yaw_set.expect = yaw_set.expect +(0x400-RC_Ctl.rc.ch2)/20;	
+  pit_set.expect = pit_set.expect - (0x400-RC_Ctl.rc.ch3)/20;	
+  yaw_set.expect = yaw_set.expect - (0x400-RC_Ctl.rc.ch2)/20;	
      
   yaw_set_follow.expect = ptr_jy61_t_yaw.final_angle;//更新跟随陀螺仪期望
   
@@ -177,23 +177,23 @@ void MouseKeyControlProcess()
      if(CTRL_Press&&R_Press&&minipc_rx_big.state_flag)//辅助瞄准
        yaw_set_follow.expect = yaw_set_follow.expect + minipc_rx_big.angle_yaw;
      else
-      yaw_set_follow.expect = yaw_set_follow.expect-RC_Ctl.mouse.x/2;	
+      yaw_set_follow.expect = yaw_set_follow.expect -  RC_Ctl.mouse.x/2;	
     
      yaw_set.expect = yaw_get.total_angle;//更新分离编码器期望
    }
    else//WY运动，底盘云台分离
    {	
      if(CTRL_Press&&R_Press&&minipc_rx_big.state_flag)//辅助瞄准
-       yaw_set.expect = yaw_set.expect + minipc_rx_big.angle_yaw;
+       yaw_set.expect = yaw_set.expect - minipc_rx_big.angle_yaw;
      else
-      yaw_set.expect = yaw_set.expect-RC_Ctl.mouse.x/2;
+      yaw_set.expect = yaw_set.expect + RC_Ctl.mouse.x/2;
      
      yaw_set_follow.expect = ptr_jy61_t_yaw.final_angle;//更新跟随陀螺仪期望
    }
    if(CTRL_Press&&R_Press&&minipc_rx_big.state_flag)//辅助瞄准
-     pit_set.expect = pit_set.expect + minipc_rx_big.angle_pit;
+     pit_set.expect = pit_set.expect - minipc_rx_big.angle_pit;
    else
-     pit_set.expect = pit_set.expect+RC_Ctl.mouse.y/2;	//鼠标（移动速度*1000/50）
+     pit_set.expect = pit_set.expect - RC_Ctl.mouse.y/2;	//鼠标（移动速度*1000/50）
    /*CTRL+鼠标右键关闭摩擦轮*/
    if(CTRL_Press&&Right_Press)
    {

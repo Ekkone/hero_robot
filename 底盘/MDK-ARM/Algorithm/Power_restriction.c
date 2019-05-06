@@ -43,7 +43,7 @@ else if(val>=max)\
 
 #define SET_BITS(x,n,m)    (x | ~(~0U<<(m-n+1))<<(n-1))
 
-#define Predict_RemainPower 20
+#define Predict_RemainPower 30
 
 //#define Switch1_On HAL_GPIO_WritePin(Switch_GPIO_Port,Switch1_Pin,GPIO_PIN_SET);	//放电开关
 //#define Switch2_On HAL_GPIO_WritePin(Switch_GPIO_Port,Switch2_Pin,GPIO_PIN_SET); //充电开关
@@ -80,14 +80,15 @@ else if(val>=max)\
 #define	Normal			2
 #define Discharge  	3
 //判据
-#define BoundaryOFCharge	35		//进入充电状态的最大功率
+#define BoundaryOFCharge	40		//进入充电状态的最大功率
 #define	RatedPower				80		//额定功率
 #define	BoundaryOFNormal	75		//退出充电进入正常状态的最大功率
-//ABS（BoundaryOFCharge - BoundaryOFNormal）是最大的电容充电功率40
-#define MinVoltOFCap			16.0f	//电容放电的最小允许电压
-#define	RatedCurrent			5000.0//额定功率下对应的额定电流值（发送给电调的值）
+//ABS（BoundaryOFCharge - BoundaryOFNormal）是最大的电容充电功率35
+#define MinVoltOFCap			15.0f	//电容放电的最小允许电压                       16.0
+#define	RatedCurrent			6000.0//额定功率下对应的额定电流值（发送给电调的值） 5000.0
 #define SoftLimitRP				55.0f		//进入软件限制的剩余能量值
-#define	Filed							2.0f		//屏蔽范围
+#define	Filed							1.5f		//屏蔽范围                                    2.0
+#define QuitSoftLimitPower 10     //防止低功率下的功率限制 
 /* 任务相关信息定义-----------------------------------------------------------*/
 
 /* 内部常量定义---------------------------------------------------------------*/
@@ -415,6 +416,7 @@ void Get_ADC_Value(void)
 
 void Power_Calculate(void)
 {
+    static float power_referee_last = 0;
 		limit.Power_Referee =  Robot.Chassis_Power.chassis_Power;
     limit.Volt_Referee = Robot.Chassis_Power.Chassis_Volt * 0.001;
 //		if(limit.Volt_Referee != 0)//防止裁判系统失效
@@ -428,6 +430,16 @@ void Power_Calculate(void)
 		
 		limit.Power_Chassis_Calculat = current_get.Chassis_Current * 23.3f;//current_get.Capacitance_Volt;
 		
+    if(limit.Power_Referee !=power_referee_last)
+    {
+        limit.Power_Calculat = limit.Power_Referee;
+    }
+    
+    power_referee_last = limit.Power_Referee;
+    
+            limit.Power_Calculat = limit.Power_Referee;//test
+
+    
 		VAL_LIMIT(limit.Power_Calculat,0,300);
 		VAL_LIMIT(limit.Power_Chassis_Calculat,0,300);
 
@@ -461,6 +473,7 @@ void Remain_Power_Calculate(void)
 		}
 		limit.PowerRemain_Referee_last = limit.PowerRemain_Referee;	
 		
+    limit.PowerRemain_Calculat = limit.PowerRemain_Referee;//test
 		/*清空总时间*/
 		MyTime_memset(&time_for_RP,2);		
 		
@@ -508,18 +521,18 @@ void power_limit(float  * Current_get)
 										MyAbs(Current_get[2]) + MyAbs(Current_get[3]);
 	
 		/*功率限制*/
-		limit.PowerRemain_Calculat_Next = Robot.Chassis_Power.Chassis_Power_buffer;//limit.PowerRemain_Calculat;//预测能量缓存没用到
+		limit.PowerRemain_Calculat_Next = Robot.Chassis_Power.Chassis_Power_buffer;//limit.PowerRemain_Calculat;////预测能量缓存没用到
       
-    if (limit.PowerRemain_Calculat_Next > 45)
+    if (limit.PowerRemain_Calculat_Next > SoftLimitRP)
     {
         soft_limit_flag = 0;
     }
-    else if(limit.PowerRemain_Calculat_Next < Predict_RemainPower)//20
+    else if(limit.PowerRemain_Calculat_Next < Predict_RemainPower)//30
     {
         soft_limit_flag = 1;
     }
   
-		if(soft_limit_flag == 1)
+		if(soft_limit_flag == 1 && (limit.Power_Calculat > QuitSoftLimitPower || limit.PowerRemain_Calculat_Next < Predict_RemainPower))//20 10
 		{      
 			if(limit.PowerRemain_Calculat_Next <0) 
 			{
@@ -527,7 +540,7 @@ void power_limit(float  * Current_get)
 			}
 			
 			limit.PowerLimit = RatedCurrent;
-			limit.PowerLimit = ((limit.PowerRemain_Calculat_Next * limit.PowerRemain_Calculat_Next) / 400) * limit.PowerLimit;		
+			limit.PowerLimit = ((limit.PowerRemain_Calculat_Next * limit.PowerRemain_Calculat_Next) / 3025) * limit.PowerLimit;		
 			
 			/*电流限制*/
 			Current_get[0] = (Current_get[0]/(total_current + 1.0f)) * limit.PowerLimit; 
@@ -601,7 +614,7 @@ void Super_Capacitance(float * Current_get)
 		}
 
 		/*二级状态下的动作执行*/
-		static uint8_t discharge_flag = 0;
+		static uint8_t discharge_flag = 0,soft_limit_flag = 0;
 		switch (state2)
 		{
 				case Charge:
@@ -623,8 +636,10 @@ void Super_Capacitance(float * Current_get)
 				break;
 				case Discharge:
 				{ 	
-						if (current_get.Capacitance_Volt < MinVoltOFCap)//电容电量不足
+						if (current_get.Capacitance_Volt < MinVoltOFCap || soft_limit_flag)//电容电量不足
 						{
+                soft_limit_flag = 1;
+              
 								Normal_switch();
 								//软件功率限制
 								power_limit(Current_get);
@@ -632,6 +647,7 @@ void Super_Capacitance(float * Current_get)
 								if (limit.PowerRemain_Calculat > SoftLimitRP)
 								{
 										state1 = Judge;
+                    soft_limit_flag = 0;
 								}
 									
 								discharge_flag = 0;								
@@ -654,10 +670,10 @@ void Super_Capacitance(float * Current_get)
 																									flag = 1;
 								}
 						}
-						else if(limit.PowerRemain_Calculat < 20)//剩余能量做判据
+						else if(limit.PowerRemain_Calculat < 30)//剩余能量做判据
 						{
-								discharge_flag = 1;		
-								Discharge_switch();					
+                discharge_flag = 1;		
+                Discharge_switch();				
 						}
 						else
 						{
@@ -669,8 +685,8 @@ void Super_Capacitance(float * Current_get)
 			}
 		
 
-			printf("power_referee:%f,power:%f,capVolt:%f,limit.PowerRemain_Calculat:%f,state2:%d,discharge_flag:%d,flag:%d\n\r",
-			limit.Power_Referee,limit.Power_Calculat,current_get.Capacitance_Volt,limit.PowerRemain_Calculat,state2,discharge_flag,flag);
+			printf("power_referee:%f,power:%f,capVolt:%f,limit.PowerRemain_Calculat:%d,state2:%d,discharge_flag:%d,flag:%d\n\r",
+			limit.Power_Referee,limit.Power_Calculat,current_get.Capacitance_Volt, Robot.Chassis_Power.Chassis_Power_buffer,state2,discharge_flag,flag);
 }
 /*
 ** Descriptions: 电容电量显示

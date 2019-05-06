@@ -643,8 +643,8 @@ void HAL_CAN_RxCpltCallback(CAN_HandleTypeDef *hcan)
 				
 				if(moto_dial_get.msg_cnt++ <= 50)	
 				{
-          moto_dial_get.offset_angle = 4495;
-					//get_moto_offset(&moto_dial_get,&hcan2);
+          //moto_dial_get.offset_angle = 4495;
+					get_moto_offset(&moto_dial_get,&hcan2);
 				}
 				else{	
 					moto_dial_get.msg_cnt=51;	

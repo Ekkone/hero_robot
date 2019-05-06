@@ -153,7 +153,40 @@
           <Name></Name>
         </SetRegEntry>
       </TargetDriverDllRegistry>
-      <Breakpoint/>
+      <Breakpoint>
+        <Bp>
+          <Number>0</Number>
+          <Type>0</Type>
+          <LineNumber>404</LineNumber>
+          <EnabledFlag>1</EnabledFlag>
+          <Address>134219988</Address>
+          <ByteObject>0</ByteObject>
+          <HtxType>0</HtxType>
+          <ManyObjects>0</ManyObjects>
+          <SizeOfObject>0</SizeOfObject>
+          <BreakByAccess>0</BreakByAccess>
+          <BreakIfRCount>1</BreakIfRCount>
+          <Filename>F:\Work\hero\浜戝彴\MDK-ARM\MotorDriver\Motor_USE_CAN.c</Filename>
+          <ExecCommand></ExecCommand>
+          <Expression>\\hero_robot\MotorDriver/Motor_USE_CAN.c\404</Expression>
+        </Bp>
+        <Bp>
+          <Number>1</Number>
+          <Type>0</Type>
+          <LineNumber>405</LineNumber>
+          <EnabledFlag>1</EnabledFlag>
+          <Address>134219998</Address>
+          <ByteObject>0</ByteObject>
+          <HtxType>0</HtxType>
+          <ManyObjects>0</ManyObjects>
+          <SizeOfObject>0</SizeOfObject>
+          <BreakByAccess>0</BreakByAccess>
+          <BreakIfRCount>1</BreakIfRCount>
+          <Filename>F:\Work\hero\浜戝彴\MDK-ARM\MotorDriver\Motor_USE_CAN.c</Filename>
+          <ExecCommand></ExecCommand>
+          <Expression>\\hero_robot\MotorDriver/Motor_USE_CAN.c\405</Expression>
+        </Bp>
+      </Breakpoint>
       <WatchWindow1>
         <Ww>
           <count>0</count>
@@ -184,6 +217,36 @@
           <count>5</count>
           <WinNumber>1</WinNumber>
           <ItemText>pid_pit_jy61_spd.pos_out</ItemText>
+        </Ww>
+        <Ww>
+          <count>6</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>chassis_gimble_Mode_flg</ItemText>
+        </Ww>
+        <Ww>
+          <count>7</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>yaw_set.expect</ItemText>
+        </Ww>
+        <Ww>
+          <count>8</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>ptr_heat_gun_t.sht_flg</ItemText>
+        </Ww>
+        <Ww>
+          <count>9</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>Robot.heat.shoot_42_cooling_limit</ItemText>
+        </Ww>
+        <Ww>
+          <count>10</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>Robot.heat.shoot_42_heat</ItemText>
+        </Ww>
+        <Ww>
+          <count>11</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>Robot.remainHp</ItemText>
         </Ww>
       </WatchWindow1>
       <WatchWindow2>

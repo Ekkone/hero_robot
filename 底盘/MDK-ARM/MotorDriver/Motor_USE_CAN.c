@@ -135,10 +135,10 @@ void Stir_Motor(CAN_HandleTypeDef * hcan,int16_t value)
 
       tx_date[0] = 0x00;
 	    tx_date[1] = 0x00;
-	    tx_date[2] = value>>8;
-      tx_date[3] = value;
-	    tx_date[4] = 0x00;
-	    tx_date[5] = 0x00;
+	    tx_date[2] = 0x00;
+      tx_date[3] = 0x00;
+	    tx_date[4] = value >> 8;
+	    tx_date[5] = value;
 	    tx_date[6] = 0x00;
 	    tx_date[7] = 0x00;
 	
@@ -219,8 +219,8 @@ void CAN_RX_YT(CAN_HandleTypeDef * hcan)
 {
 	yaw_get.total_angle = (int16_t)(rx_date[0]<<8 |rx_date[1]) ;
 	yaw_speed = (int16_t) (rx_date[2]<<8 | rx_date[3]) ;
-	chassis_gimble_Mode_flg = (int16_t)(rx_date[4]<<8);
-	stir_motor_flag = (int16_t)(rx_date[5]<<8);
+	chassis_gimble_Mode_flg = (uint8_t)(rx_date[4]);
+	stir_motor_flag = (uint8_t)(rx_date[5]);
 	
 }
 void CAN_RX_YK(CAN_HandleTypeDef * hcan)

@@ -86,14 +86,14 @@ void gimbal_pid_init(void)
 #else
 /*pit±àÂëÆ÷·´À¡*/
 /*²Ù×÷ÎÈ¶¨*/
-//  PID_struct_init(&pid_pit_jy61, POSITION_PID, 5000, 1000,
-//                  11.0f, 0.07f, 9.0f); //	
+//  PID_struct_init(&pid_pit_jy61, POSITION_PID, 5000, 100,
+//                  20.0f, 0.03f, 22.0f); //	
 //  PID_struct_init(&pid_pit_jy61_spd, POSITION_PID, 5000, 1000,
-//                  2.5f, 0.0f, 0.0f ); 
+//                  2.5f, 0.0f, 0.0f  ); 
   PID_struct_init(&pid_pit_jy61, POSITION_PID, 5000, 100,
-                  20.0f, 0.00f, 22.0f); //	
+                  20.0f, 0.03f, 32.0f); //	
   PID_struct_init(&pid_pit_jy61_spd, POSITION_PID, 5000, 1000,
-                  2.5f, 0.0f, 0.0f  ); 
+                  2.5f, 0.0f, 0.0f  );
 #endif
 
 /*yawÍÓÂÝÒÇ·´À¡*/
@@ -183,15 +183,9 @@ void Gimbal_Contrl_Task(void const * argument)
           goto pit_last;
         pit_set.expect = 300 - pit_get.offset_angle;
       }
-      #if PIT_JY
-      //pitÖáÍÓÂÝÒÇ
-      pid_calc(&pid_pit_jy61, (ptr_jy61_t_pit.final_angle*22.76), pit_set.expect);
-      pid_calc(&pid_pit_jy61_spd,(ptr_jy61_t_angular_velocity.vy), pid_pit_jy61.pos_out);
-      #else
       //pitÖá±àÂëÆ÷
       pit_last:pid_calc(&pid_pit_jy61, pit_get.total_angle, pit_set.expect);
       pid_calc(&pid_pit_jy61_spd,(ptr_jy61_t_angular_velocity.vy), pid_pit_jy61.pos_out);
-      #endif
       Pitch_Current_Value=(-pid_pit_jy61_spd.pos_out); 
       /*yawÖáÄ£Ê½ÅÐ¶Ï*/
       switch(chassis_gimble_Mode_flg)
@@ -241,8 +235,8 @@ void Gimbal_Contrl_Task(void const * argument)
       }  
 		    
       #endif
-        //Pitch_Current_Value = 0;
-        //Yaw_Current_Value = 0;
+//        Pitch_Current_Value = 0;
+//        Yaw_Current_Value = 0;
         /*Çý¶¯µç»ú*/
 				if(gimbal_disable_flg)//Ê§ÄÜ
 				{
@@ -257,7 +251,7 @@ void Gimbal_Contrl_Task(void const * argument)
       minipc_rx_big.angle_yaw = 0;
       minipc_rx_big.angle_pit = 0;
         /*·¢ËÍµ×ÅÌ*/
-      CAN_Send_YT(&hcan1,yaw_get.total_angle,0,chassis_gimble_Mode_flg,stir_motor_flag);
+      CAN_Send_YT(&hcan1,yaw_get.total_angle,(int16_t)(ptr_jy61_t_angular_velocity.vz),chassis_gimble_Mode_flg,stir_motor_flag);
 			osDelayUntil(&xLastWakeTime, GIMBAL_PERIOD);
 			
    }

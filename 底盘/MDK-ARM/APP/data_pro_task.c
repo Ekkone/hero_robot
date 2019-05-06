@@ -34,14 +34,14 @@ pid_t pid_stir_spd;
 ------------------------------------------------------------------------------
 */
 /* 内部变量------------------------------------------------------------------*/
-int16_t XY_speed_max = 6000;
-int16_t XY_speed_min = -6000; 
+int16_t XY_speed_max = 12000;
+int16_t XY_speed_min = -12000; 
 int16_t W_speed_max = 2000;
 int16_t W_speed_min = -2000; 
 uint8_t press_counter;
 uint8_t shot_anjian_counter=0;
 uint8_t shot_frequency = 100;
-int8_t chassis_gimble_Mode_flg;
+uint8_t chassis_gimble_Mode_flg = 0;
 uint8_t communication_message = 0;
 uint8_t stir_flag = 0;
 //volatile float remain_power=0.0;   //底盘功率 _待续
@@ -79,6 +79,7 @@ void ChassisModeProcess()
 					 {
 							moto_3508_set.dstVmmps_X=-((RC_Ctl.rc.ch0-0x400)*5);
 							moto_3508_set.dstVmmps_Y=-((RC_Ctl.rc.ch1-0x400)*5);
+             
 					 }
 					 else//WY运动，底盘云台分离
 					 {
@@ -90,7 +91,8 @@ void ChassisModeProcess()
 }
 void ShotProcess()
 {	
-  
+  moto_3508_set.dstVmmps_W=((RC_Ctl.rc.ch0-0x400)*5);
+	moto_3508_set.dstVmmps_Y=-((RC_Ctl.rc.ch1-0x400)*5);
 }
 /***************************************************************************************
 **
@@ -111,8 +113,8 @@ void MouseKeyControlProcess()
       }
   else//正常速度
   {
-     XY_speed_max = 6000;//(NORMAL_SPEED_MAX)*3.5;
-     XY_speed_min = -6000;//(NORMAL_SPEED_MIN)*3.5;
+     XY_speed_max = 5000;//(NORMAL_SPEED_MAX)*3.5;
+     XY_speed_min = -5000;//(NORMAL_SPEED_MIN)*3.5;
      W_speed_max = 2000;
      W_speed_min = -2000;
   }
@@ -197,15 +199,16 @@ void hard_brak()
 	*	@supplement	遥控数据接收及处理任务
 	*	@retval	
 ****************************************************************************************/
+int set_stir_speed = 0;
 void Remote_Data_Task(void const * argument)
 {
 	uint32_t NotifyValue;
-	int set_stir_speed = 0;
+	
 		portTickType xLastWakeTime;
 		xLastWakeTime = xTaskGetTickCount();
 	
-	PID_struct_init(&pid_stir_spd, POSITION_PID,10000,1000,
-	                4.0f, 0.01f , 20.0f  );
+	PID_struct_init(&pid_stir_spd, POSITION_PID,15000,1000,
+	                4.0f, 0.01f , 0.0f  );
 	for(;;)
 	{
     /*发送给操作界面*/
@@ -228,10 +231,11 @@ void Remote_Data_Task(void const * argument)
 			VAL_LIMIT(moto_3508_set.dstVmmps_W, W_speed_min, W_speed_max);
         /*传送电机*/
 			if(stir_motor_flag)
-            set_stir_speed = 3000;
+            set_stir_speed = -700;
       else  set_stir_speed = 0;
       pid_calc(&pid_stir_spd,moto_stir_get.speed_rpm,set_stir_speed);
-      Stir_Motor(&hcan1,pid_stir_spd.pos_out);      
+      Stir_Motor(&hcan1,pid_stir_spd.pos_out); 
+      CAN_Send_Referee_B(&hcan1);      
         //CAN_Send_chassis(&hcan1);
       press_counter++;
         osDelayUntil(&xLastWakeTime, REMOTE_PERIOD);

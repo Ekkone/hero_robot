@@ -71,7 +71,7 @@
 
 /* 本模块向外部提供的接口常量声明--------------------------------------------*/	
 extern float power; 				 //底盘功率 _测试
-extern int8_t chassis_gimble_Mode_flg;
+extern uint8_t chassis_gimble_Mode_flg;
 extern float chassis_Current; 
 extern float	 chassis_Volt; 
 

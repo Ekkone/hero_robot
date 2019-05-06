@@ -93,7 +93,7 @@ void Gun_Task(void const * argument)
       case 1:
       {
         /*摩擦轮速度*/
-        set_M_speed = 2000;
+        set_M_speed = 7000;
       }break;
     }
     /*热量限制*/
@@ -165,11 +165,11 @@ void Gun_Task(void const * argument)
      ptr_heat_gun_t.sht_flg = GunHold;//默认位置环
      /*速度环*/
      pid_calc(&pid_dial_spd,moto_dial_get.speed_rpm ,set_speed);
-     pid_calc(&pid_shot_spd[0],moto_M_get[0].speed_rpm ,set_M_speed);
-     pid_calc(&pid_shot_spd[1],moto_M_get[1].speed_rpm ,-set_M_speed);
+     pid_calc(&pid_shot_spd[0],moto_M_get[0].speed_rpm ,-set_M_speed);
+     pid_calc(&pid_shot_spd[1],moto_M_get[1].speed_rpm ,set_M_speed);
     //printf("%d\t%d\r\n",moto_M_get[0].speed_rpm,moto_M_get[1].speed_rpm);
      /*驱动拨弹电机,摩擦轮*/
-		// Shot_Motor(&hcan2,pid_dial_spd.pos_out,pid_shot_spd[0].pos_out,pid_shot_spd[1].pos_out);
+		 Shot_Motor(&hcan2,pid_dial_spd.pos_out,pid_shot_spd[0].pos_out,pid_shot_spd[1].pos_out);
 //		 Shot_Motor(&hcan2,0,0,0);
 //     Shot_Motor(&hcan2,pid_dial_spd.pos_out,0,0);
 		 minipc_rx_big.state_flag=0;
