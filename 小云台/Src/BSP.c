@@ -269,26 +269,18 @@ void BSP_Init(void)
   MX_TIM12_Init();//测速模块定时器
 	MX_TIM6_Init();
 	SystemState_Inite();
-  /*ADC*/
-	//MX_ADC1_Init();
+
 	/*串口*/
   MX_USART1_UART_Init();
-	MX_USART2_UART_Init();
-  MX_USART3_UART_Init();
-  MX_UART4_Init();
   MX_USART6_UART_Init();
-  MX_UART8_Init();
 	/*SPI*/
 	MX_SPI5_Init();
 
 	__HAL_UART_ENABLE_IT(&huart1, UART_IT_IDLE);//遥控
-  __HAL_UART_ENABLE_IT(&huart6, UART_IT_IDLE);//舵机
 	
 	/*使能DMA中断*/
 	HAL_UART_Receive_DMA(&huart1,USART1_RX_DATA,SizeofRemote); //这一步的目的是创建一段接受内存，和CAN的一样
 
-/*开启ADC的DMA接收，注意缓存不能小于2，不能设置为_IO型即易变量*/
-//	HAL_ADC_Start_DMA(&hadc1, (uint32_t*)uhADCxConvertedValue, 10); 
 	/*陀螺仪*/
 	 MPU6500_Init();
 	/*使能can中断*/

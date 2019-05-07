@@ -175,13 +175,13 @@ void Gimbal_Contrl_Task(void const * argument)
       {
         if(pit_set.expect <= pit_set.expect_last)
           goto pit_last;
-        pit_set.expect = 780 - pit_get.offset_angle;
+        pit_set.expect = 800 - pit_get.offset_angle;
       }
       if((pit_set.expect + pit_get.offset_angle) < 280)
       {
         if(pit_set.expect >= pit_set.expect_last)
           goto pit_last;
-        pit_set.expect = 300 - pit_get.offset_angle;
+        pit_set.expect = 280 - pit_get.offset_angle;
       }
       //pitÖá±àÂëÆ÷
       pit_last:pid_calc(&pid_pit_jy61, pit_get.total_angle, pit_set.expect);
@@ -203,7 +203,7 @@ void Gimbal_Contrl_Task(void const * argument)
           {
             if(yaw_set.expect >= yaw_set.expect_last)
               goto yaw_last;
-            yaw_set.expect = 3120 - yaw_get.offset_angle;
+            yaw_set.expect = 3100 - yaw_get.offset_angle;
           }
           yaw_last:pid_calc(&pid_yaw_jy61,(-yaw_get.total_angle),yaw_set.expect);
           pid_calc(&pid_yaw_jy61_spd,(-ptr_jy61_t_angular_velocity.vz), pid_yaw_jy61.pos_out);

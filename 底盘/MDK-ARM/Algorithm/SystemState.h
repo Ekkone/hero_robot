@@ -55,10 +55,6 @@ typedef enum
 	ChassisContrlTask_ON,
 	RemoteDataTask_ON,
 	vOutLineCheckTask_ON,
-	RefereeTask_ON,
-  MiniPC_BTask_ON,
-  MiniPC_STask_ON,
-	
 	TASKTotal_No	
 }TASK_NoDEF;
 

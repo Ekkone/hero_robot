@@ -102,36 +102,6 @@ void Check_Task(void const * argument)
       BLINK();
       goto OFF;
     }
-    else if((SystemState.task_OutLine_Flag&0x10))//裁判任务
-    {
-      BLINK();
-      BLINK();
-      BLINK();
-      BLINK();
-      BLINK();
-      goto OFF;
-    }
-    else if((SystemState.task_OutLine_Flag&0x20))//minipc大枪管任务
-    {
-      BLINK();
-      BLINK();
-      BLINK();
-      BLINK();
-      BLINK();
-      BLINK();
-      goto OFF;
-    }
-    else if((SystemState.task_OutLine_Flag&0x40))//minipc小枪管任务
-    {
-      BLINK();
-      BLINK();
-      BLINK();
-      BLINK();
-      BLINK();
-      BLINK();
-      BLINK();
-      goto OFF;
-    }
     else 
     {
       LED8_Blink();

@@ -45,8 +45,7 @@ dipan_board_test\bsp.o: D:\Keil\ARM\ARMCC\Bin\..\include\string.h
 dipan_board_test\bsp.o: .\MotorDriver\Motor_USE_TIM.h
 dipan_board_test\bsp.o: .\MotorDriver\Motor_USE_CAN.h
 dipan_board_test\bsp.o: .\Communication\minipc.h
-dipan_board_test\bsp.o: .\Algorithm\Power_restriction.h
-dipan_board_test\bsp.o: .\Algorithm\protocol.h
+dipan_board_test\bsp.o: .\Algorithm\SystemState.h
 dipan_board_test\bsp.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h
 dipan_board_test\bsp.o: D:\Keil\ARM\ARMCC\Bin\..\include\stddef.h
 dipan_board_test\bsp.o: ../Inc/FreeRTOSConfig.h
@@ -62,7 +61,8 @@ dipan_board_test\bsp.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/timer
 dipan_board_test\bsp.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h
 dipan_board_test\bsp.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/semphr.h
 dipan_board_test\bsp.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/event_groups.h
+dipan_board_test\bsp.o: .\Algorithm\Power_restriction.h
+dipan_board_test\bsp.o: .\Algorithm\protocol.h
+dipan_board_test\bsp.o: ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.h
 dipan_board_test\bsp.o: .\Communication\atom_imu.h
 dipan_board_test\bsp.o: .\Communication\decode.h
-dipan_board_test\bsp.o: .\Algorithm\SystemState.h
-dipan_board_test\bsp.o: ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.h

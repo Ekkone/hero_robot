@@ -273,8 +273,6 @@ void Referee_Data_Handler(void)
 		static uint8_t crc8_flag = 0,crc16_flag = 0;
 		uint8_t *buff = USART3_RX_DATA;
 
-		HAL_GPIO_TogglePin(GPIOG,GPIO_PIN_1); //GRE_H
-
 		for(uint8_t num = 0; num < USART3_RX_NUM; num++)
 		{
 				if(buff[num]==0xA5)

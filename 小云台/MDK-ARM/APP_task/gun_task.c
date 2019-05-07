@@ -107,9 +107,9 @@ void Gun_Task(void const * argument)
     ramp_calc(&shoot,set_M_speed);
     Friction_Wheel_Motor(shoot.out,shoot.out);
     /*热量限制*/
-//    remain_heat = Robot.heat.shoot_17_cooling_limit - Robot.heat.shoot_17_heat;
-//    if(remain_heat < 30)
-//      ptr_heat_gun_t.sht_flg = GunStop;
+    remain_heat = Robot.heat.shoot_17_cooling_limit - Robot.heat.shoot_17_heat;
+    if(remain_heat < 30)
+      ptr_heat_gun_t.sht_flg = GunStop;
     /*判断发射模式*/
     switch(ptr_heat_gun_t.sht_flg)
     {

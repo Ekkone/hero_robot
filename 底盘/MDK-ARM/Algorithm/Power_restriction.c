@@ -685,8 +685,8 @@ void Super_Capacitance(float * Current_get)
 			}
 		
 
-			printf("power_referee:%f,power:%f,capVolt:%f,limit.PowerRemain_Calculat:%d,state2:%d,discharge_flag:%d,flag:%d\n\r",
-			limit.Power_Referee,limit.Power_Calculat,current_get.Capacitance_Volt, Robot.Chassis_Power.Chassis_Power_buffer,state2,discharge_flag,flag);
+//			printf("power_referee:%f,power:%f,capVolt:%f,limit.PowerRemain_Calculat:%d,state2:%d,discharge_flag:%d,flag:%d\n\r",
+//			limit.Power_Referee,limit.Power_Calculat,current_get.Capacitance_Volt, Robot.Chassis_Power.Chassis_Power_buffer,state2,discharge_flag,flag);
 }
 /*
 ** Descriptions: 电容电量显示

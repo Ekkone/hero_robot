@@ -55,3 +55,5 @@ dipan_board_test\motor_use_can.o: ../Middlewares/Third_Party/FreeRTOS/Source/inc
 dipan_board_test\motor_use_can.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/semphr.h
 dipan_board_test\motor_use_can.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/event_groups.h
 dipan_board_test\motor_use_can.o: .\Communication\minipc.h
+dipan_board_test\motor_use_can.o: .\Algorithm\SystemState.h
+dipan_board_test\motor_use_can.o: ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.h

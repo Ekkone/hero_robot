@@ -68,8 +68,6 @@ osThreadId RemoteDataTaskHandle;
 osThreadId StatusTaskHandle; 
 osThreadId vOutLineCheckTaskHandle;
 osThreadId CheckTaskHandle;
-osThreadId MINIPCBIGTaskHandle;
-osThreadId MINIPCSMATaskHandle;
 /* USER CODE BEGIN Variables */
 
 /* USER CODE END Variables */
@@ -82,8 +80,6 @@ extern void Remote_Data_Task(void const * argument);
 extern void Status_Task(void const * argument);
 extern void vOutLineCheck_Task(void const *argument);
 extern void Check_Task(void const *argument);
-extern void MiniPC_Big_Task(void const * argument);
-extern void MiniPC_Small_Task(void const * argument);
 void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
 
 /* USER CODE BEGIN FunctionPrototypes */
@@ -135,12 +131,6 @@ void MX_FREERTOS_Init(void) {
   
   osThreadDef(CheckTask, Check_Task, osPriorityNormal, 0, 128);
 	CheckTaskHandle = osThreadCreate(osThread(CheckTask), NULL);
-  
-  osThreadDef(MINI_BTask, MiniPC_Big_Task, osPriorityAboveNormal, 0, 256);
-	MINIPCBIGTaskHandle = osThreadCreate(osThread(MINI_BTask), NULL);
-  
-  osThreadDef(MINI_STask, MiniPC_Small_Task, osPriorityAboveNormal, 0, 256);
-	MINIPCSMATaskHandle = osThreadCreate(osThread(MINI_STask), NULL);
   /* USER CODE BEGIN RTOS_QUEUES */
   /* add queues, ... */
   /* USER CODE END RTOS_QUEUES */

@@ -43,30 +43,24 @@ Minipc_Rx minipc_rx_small;
 	** Output: NULL
 	**************************************************************
 **/
-void Get_MiniPC_Data_Big(void)
+void Get_MiniPC_Handle(void)
 {
-	uint8_t *buff = UART4_RX_DATA;
-		
-	minipc_rx_big.frame_header = buff[0];
-	minipc_rx_big.frame_tail 	 = buff[8];
-	if((minipc_rx_big.frame_header == 0xFD) && (minipc_rx_big.frame_tail == 0xFC))
+  uint8_t *buff = UART4_RX_DATA;
+  uint8_t frame_header = buff[0];
+	uint8_t frame_tail 	 = buff[8];
+	if((frame_header == 0xFD) && (frame_tail == 0xFC))
 	{
+    RefreshDeviceOutLineTime(MINI_B_NO);
 		minipc_rx_big.angle_yaw  = (int16_t)(buff[1]<<8|buff[2]);
 		minipc_rx_big.angle_pit  = (int16_t)(buff[3]<<8|buff[4]);
 		minipc_rx_big.state_flag = buff[5];//0无目标，1有目标，2低速，3中速，4高速
 	}
-}
-void Get_MiniPC_Data_Small(void)
-{
-	uint8_t *buff = UART5_RX_DATA;
-		
-	minipc_rx_small.frame_header = buff[0];
-	minipc_rx_small.frame_tail 	 = buff[8];
-	if((minipc_rx_small.frame_header == 0xFF) && (minipc_rx_small.frame_tail == 0xFE))
+  else if((frame_header == 0xFF) && (frame_tail == 0xFE))
 	{
+    RefreshDeviceOutLineTime(MINI_S_NO);
 		minipc_rx_small.angle_yaw  = (int16_t)(buff[1]<<8|buff[2]);
 		minipc_rx_small.angle_pit  = (int16_t)(buff[3]<<8|buff[4]);
-		minipc_rx_small.state_flag = buff[5];
+		minipc_rx_small.state_flag = buff[5];//0无目标，1有目标，2低速，3中速，4高速
 	}
 }
 //void Send_MiniPC_Data(unsigned char cmd1,unsigned char cmd2,unsigned char state)

@@ -77,8 +77,6 @@ extern float	 chassis_Volt;
 
 /* 本模块向外部提供的接口函数原型声明----------------------------------------*/		 
 void Remote_Data_Task(void const * argument); 
-void MiniPC_Big_Task(void const * argument);
-void MiniPC_Small_Task(void const * argument);
 void RemoteControlProcess(void);
 void MouseKeyControlProcess(void);
 void hard_brak(void);

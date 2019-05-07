@@ -154,6 +154,7 @@ void Gimbal_Contrl_Task(void const * argument)
         }break;
         case PatrolMode://巡逻模式，yaw轴周期转动
         {
+          pit_set.expect = 3000 - pit_get.offset_angle;
           if((yaw_set.expect + yaw_get.offset_angle) > 8000 \
             || (yaw_set.expect + yaw_get.offset_angle) < 1000)
             {
@@ -171,36 +172,42 @@ void Gimbal_Contrl_Task(void const * argument)
         }break;
       }
       /*云台限位保护*/
-      /*pit正常0-670（前），7500（后）-8192*/
-//      if((pit_set.expect + pit_get.offset_angle) > (630 + pit_protect_correct_2) &&\
-//          (pit_set.expect + pit_get.offset_angle) < (2000 + pit_protect_correct_2))
+      /*pit正常280-800*/
+//      if((pit_set.expect + pit_get.offset_angle) > 800)
 //      {
-//        pit_set.expect = (630 + pit_protect_correct_2) - pit_get.offset_angle;
+//        if(pit_set.expect <= pit_set.expect_last)
+//          goto pit_last;
+//        pit_set.expect = 800 - pit_get.offset_angle;
 //      }
-//      if((pit_set.expect + pit_get.offset_angle) > (6500 - pit_protect_correct_1) &&\
-//          (pit_set.expect + pit_get.offset_angle) < (7500 - pit_protect_correct_1))
+//      if((pit_set.expect + pit_get.offset_angle) < 280)
 //      {
-//        pit_set.expect = (7500 - pit_protect_correct_1) - pit_get.offset_angle;
+//        if(pit_set.expect >= pit_set.expect_last)
+//          goto pit_last;
+//        pit_set.expect = 280 - pit_get.offset_angle;
 //      }
-//      /*yaw轴云台保护*/
-//      if((yaw_set.expect + yaw_get.offset_angle) > 2400)
-//      {
-//        yaw_set.expect = 2380 - yaw_get.offset_angle;
-//      }
-//      if((yaw_set.expect + yaw_get.offset_angle) < 1100)
-//      {
-//        yaw_set.expect = 1115 - yaw_get.offset_angle;
-//      }
+      //pit轴编码器
+      pit_last:
+      pid_calc(&pid_pit, pit_get.total_angle, pit_set.expect);
+      pid_calc(&pid_pit_spd,(imu_data.gy), pid_pit.pos_out);
+      Pitch_Current_Value=(-pid_pit_jy61_spd.pos_out); 
         
-        //yaw轴
-        pid_calc(&pid_yaw, yaw_get.total_angle,yaw_set.expect);
-        pid_calc(&pid_yaw_spd,pit_get.speed_rpm, pid_yaw.pos_out);
-        //pit轴
-        pid_calc(&pid_pit, pit_get.total_angle, pit_set.expect);
-        pid_calc(&pid_pit_spd,(imu_data.gz), pid_pit.pos_out);
-      
-        Pitch_Current_Value=(pid_pit.pos_out); 
-		    Yaw_Current_Value= (pid_yaw.pos_out);
+      /*yaw轴云台保护3100-4300*/
+//      if((yaw_set.expect + yaw_get.offset_angle) > 4300)
+//      {
+//        if(yaw_set.expect <= yaw_set.expect_last)
+//          goto yaw_last;
+//        yaw_set.expect = 4300 - yaw_get.offset_angle;
+//      }
+//      if((yaw_set.expect + yaw_get.offset_angle) < 3100)
+//      {
+//        if(yaw_set.expect >= yaw_set.expect_last)
+//          goto yaw_last;
+//        yaw_set.expect = 3100 - yaw_get.offset_angle;
+//      }
+      yaw_last:
+      pid_calc(&pid_yaw, yaw_get.total_angle,yaw_set.expect);
+      pid_calc(&pid_yaw_spd,pit_get.speed_rpm, pid_yaw.pos_out);
+      Yaw_Current_Value= (pid_yaw_jy61_spd.pos_out);
      
       #if jy61
       IMU_Get_Data();
@@ -283,6 +290,10 @@ void Gimbal_Contrl_Task(void const * argument)
 					Cloud_Platform_Motor_Disable(&hcan1);
 				}
 				else Cloud_Platform_Motor(&hcan1,Yaw_Current_Value,Pitch_Current_Value);
+        
+        yaw_set.expect_last = yaw_set.expect;
+        pit_set.expect_last = pit_set.expect;
+        
 			osDelayUntil(&xLastWakeTime, GIMBAL_PERIOD);
 			
       }

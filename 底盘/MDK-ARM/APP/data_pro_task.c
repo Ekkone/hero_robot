@@ -44,6 +44,7 @@ uint8_t shot_frequency = 100;
 uint8_t chassis_gimble_Mode_flg = 0;
 uint8_t communication_message = 0;
 uint8_t stir_flag = 0;
+extern int16_t yaw_speed;
 //volatile float remain_power=0.0;   //底盘功率 _待续
 //float power; 				 //底盘功率 _测试
 
@@ -104,17 +105,24 @@ void ShotProcess()
 void MouseKeyControlProcess()
 {
 	
-	if(SHIFT_Press)//交接时要求调整速度低
+	if(SHIFT_Press)//最高速度
       {
-        XY_speed_max = 500;//(NORMAL_SPEED_MAX)*3.5;
-        XY_speed_min = -500;//(NORMAL_SPEED_MIN)*3.5;
-        W_speed_max = 500;
-        W_speed_min = -500; 
+        XY_speed_max = 5000;//(NORMAL_SPEED_MAX)*3.5;
+        XY_speed_min = -5000;//(NORMAL_SPEED_MIN)*3.5;
+        W_speed_max = 3000;
+        W_speed_min = -3000; 
       }
+  else if(G_Press)//慢速
+    {
+      XY_speed_max = 500;//(NORMAL_SPEED_MAX)*3.5;
+      XY_speed_min = -500;//(NORMAL_SPEED_MIN)*3.5;
+      W_speed_max = 500;
+      W_speed_min = -500; 
+    }
   else//正常速度
   {
-     XY_speed_max = 5000;//(NORMAL_SPEED_MAX)*3.5;
-     XY_speed_min = -5000;//(NORMAL_SPEED_MIN)*3.5;
+     XY_speed_max = 4000;//(NORMAL_SPEED_MAX)*3.5;
+     XY_speed_min = -4000;//(NORMAL_SPEED_MIN)*3.5;
      W_speed_max = 2000;
      W_speed_min = -2000;
   }
@@ -126,10 +134,19 @@ void MouseKeyControlProcess()
         if(moto_3508_set.dstVmmps_Y>0) 	                   moto_3508_set.dstVmmps_Y -= DEC_SPEED;
         if(moto_3508_set.dstVmmps_Y<0) 		                 moto_3508_set.dstVmmps_Y += DEC_SPEED;
   }
+  
   /*分离时*/
 	if(chassis_gimble_Mode_flg == 0)
   {
-    
+    if(F_Press)
+    {
+      pid_calc(&pid_chassis_follow,-yaw_get.total_angle,0);
+        /*跟随速度环*/ 
+			pid_calc(&pid_chassis_follow_spd,-yaw_speed,pid_chassis_follow.pos_out);
+      moto_3508_set.dstVmmps_W = -pid_chassis_follow_spd.pos_out;
+    }
+    else
+    {
     /*W向速度*/
     if(A_Press)                       moto_3508_set.dstVmmps_W -= ACC_SPEED;//按下A键
     else if(D_Press)                  moto_3508_set.dstVmmps_W += ACC_SPEED;//按下D键
@@ -137,6 +154,7 @@ void MouseKeyControlProcess()
           if(moto_3508_set.dstVmmps_W>-DEC_SPEED&&moto_3508_set.dstVmmps_W<DEC_SPEED) 	 moto_3508_set.dstVmmps_W = 0;
           if(moto_3508_set.dstVmmps_W>0) 	                   moto_3508_set.dstVmmps_W -= DEC_SPEED;
           if(moto_3508_set.dstVmmps_W<0) 		                 moto_3508_set.dstVmmps_W += DEC_SPEED;
+      }
     }
     /*X向速度*/
     if(Q_Press)                        moto_3508_set.dstVmmps_X += ACC_SPEED; //按下Q键
@@ -157,7 +175,16 @@ void MouseKeyControlProcess()
             if(moto_3508_set.dstVmmps_X>-DEC_SPEED&&moto_3508_set.dstVmmps_X<DEC_SPEED) 		moto_3508_set.dstVmmps_X = 0;		
             if(moto_3508_set.dstVmmps_X>0) 	                   moto_3508_set.dstVmmps_X -= DEC_SPEED;
             if(moto_3508_set.dstVmmps_X<0) 		                 moto_3508_set.dstVmmps_X += DEC_SPEED;
+      }
+    /*W向速度*/
+    if(Q_Press)                       moto_3508_set.dstVmmps_W -= ACC_SPEED;//按下Q键
+    else if(E_Press)                  moto_3508_set.dstVmmps_W += ACC_SPEED;//按下E键
+    else{  
+          if(moto_3508_set.dstVmmps_W>-DEC_SPEED&&moto_3508_set.dstVmmps_W<DEC_SPEED) 	 moto_3508_set.dstVmmps_W = 0;
+          if(moto_3508_set.dstVmmps_W>0) 	                   moto_3508_set.dstVmmps_W -= DEC_SPEED;
+          if(moto_3508_set.dstVmmps_W<0) 		                 moto_3508_set.dstVmmps_W += DEC_SPEED;
     }
+    
   }
   /*小云台控制*/
   if(B_Press)
@@ -235,71 +262,13 @@ void Remote_Data_Task(void const * argument)
       else  set_stir_speed = 0;
       pid_calc(&pid_stir_spd,moto_stir_get.speed_rpm,set_stir_speed);
       Stir_Motor(&hcan1,pid_stir_spd.pos_out); 
-      CAN_Send_Referee_B(&hcan1);      
-        //CAN_Send_chassis(&hcan1);
+      CAN_Send_Referee_B(&hcan1);
+      CAN_Send_Referee_S(&hcan1);       
+      CAN_Send_MINI_B(&hcan1);
+      CAN_Send_MINI_S(&hcan1);
       press_counter++;
         osDelayUntil(&xLastWakeTime, REMOTE_PERIOD);
 	}
 
 }
 
-/***************************************************************************************
-**
-	*	@brief	MiniPC_Data_task(void const * argument)
-	*	@param
-	*	@supplement	视觉数据处理任务
-	*	@retval	
-****************************************************************************************/
-void MiniPC_Big_Task(void const * argument)
-{
-	minipc_rx_big.state_flag = 0;
-	minipc_rx_big.angle_pit  = 0;
-	minipc_rx_big.angle_yaw  = 0;
-  uint32_t NotifyValue;
-	Minipc_Pid_Init();
-  portTickType xLastWakeTime;
- xLastWakeTime = xTaskGetTickCount();
-	for(;;)
-	{
-      RefreshTaskOutLineTime(MiniPC_BTask_ON);
-    NotifyValue=ulTaskNotifyTake(pdTRUE,portMAX_DELAY);
-    if(NotifyValue==1)
-		{
-			NotifyValue=0;
-			Get_MiniPC_Data_Big();
-      CAN_Send_MINI_B(&hcan1);
-      osDelayUntil(&xLastWakeTime, MINIPC_PERIOD);
-    }
-			
-	}
-}
-/***************************************************************************************
-**
-	*	@brief	MiniPC_Data_task(void const * argument)
-	*	@param
-	*	@supplement	视觉数据处理任务
-	*	@retval	
-****************************************************************************************/
-void MiniPC_Small_Task(void const * argument)
-{
-	minipc_rx_small.state_flag = 0;
-	minipc_rx_small.angle_pit  = 0;
-	minipc_rx_small.angle_yaw  = 0;
-  uint32_t NotifyValue;
-	Minipc_Pid_Init();
-  portTickType xLastWakeTime;
- xLastWakeTime = xTaskGetTickCount();
-	for(;;)
-	{
-      RefreshTaskOutLineTime(MiniPC_STask_ON);
-    NotifyValue=ulTaskNotifyTake(pdTRUE,portMAX_DELAY);
-    if(NotifyValue==1)
-		{
-			NotifyValue=0;
-			Get_MiniPC_Data_Small();
-      CAN_Send_MINI_S(&hcan1);
-      osDelayUntil(&xLastWakeTime, MINIPC_PERIOD);
-    }
-    
-	}
-}

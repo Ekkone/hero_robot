@@ -27,7 +27,21 @@ Project File Date:  04/26/2019
 <h2>Output:</h2>
 *** Using Compiler 'V5.06 update 6 (build 750)', folder: 'D:\Keil\ARM\ARMCC\Bin'
 Build target 'hero_robot'
-"2018.07.12-infantry\hero_robot.axf" - 0 Error(s), 0 Warning(s).
+compiling gimbal_task.c...
+../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f427xx.h(70): warning:  #47-D: incompatible redefinition of macro "__FPU_PRESENT" 
+  #define __FPU_PRESENT             1U       /*!< FPU present   	 */
+APP_task\gimbal_task.c(121): warning:  #550-D: variable "pit_protect_correct_1"  was set but never used
+  	uint16_t pit_protect_correct_1 = 0;
+APP_task\gimbal_task.c(122): warning:  #550-D: variable "pit_protect_correct_2"  was set but never used
+  	uint16_t pit_protect_correct_2 = 0;
+APP_task\gimbal_task.c(189): warning:  #177-D: label "pit_last"  was declared but never referenced
+        pit_last:
+APP_task\gimbal_task.c(207): warning:  #177-D: label "yaw_last"  was declared but never referenced
+        yaw_last:
+APP_task\gimbal_task.c: 5 warnings, 0 errors
+linking...
+Program Size: Code=24452 RO-data=752 RW-data=264 ZI-data=19904  
+"2018.07.12-infantry\hero_robot.axf" - 0 Error(s), 5 Warning(s).
 
 <h2>Software Packages used:</h2>
 
@@ -50,7 +64,7 @@ Package Vendor: Keil
 <h2>Collection of Component Files used:</h2>
 
    * Component: ARM::CMSIS:CORE:5.2.0
-Build Time Elapsed:  00:00:03
+Build Time Elapsed:  00:00:04
 </pre>
 </body>
 </html>

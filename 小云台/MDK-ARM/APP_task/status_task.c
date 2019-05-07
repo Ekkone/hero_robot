@@ -65,17 +65,6 @@ void Status_Task(void const * argument)
       BLINK_GREEN();
       goto OFF;
     }
-    
-    if((SystemState.task_OutLine_Flag&0x20))//йс╬УхннЯ
-    {
-      BLINK_GREEN();
-      BLINK_GREEN();
-      BLINK_GREEN();
-      BLINK_GREEN();
-      BLINK_GREEN();
-      BLINK_GREEN();
-      goto OFF;
-    }
     else 
     {
       GREEN_Blink();

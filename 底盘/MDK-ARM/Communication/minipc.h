@@ -3,6 +3,7 @@
 #include "stm32f4xx.h"
 #include "main.h"
 #include "communication.h "
+#include "SystemState.h"
 
 typedef struct{
 
@@ -25,11 +26,10 @@ unsigned char 		frame_tail; 	  	  //֡β0xFC
 extern Minipc_Rx minipc_rx_big;
 extern Minipc_Rx minipc_rx_small;
 
-extern uint8_t USART2_RX_DATA[(SizeofMinipc)];		//MiniPC
-extern uint16_t USART2_RX_NUM;
+extern uint8_t USART4_RX_DATA[(SizeofMinipc)];		//MiniPC
+extern uint16_t USART4_RX_NUM;
 
-void Get_MiniPC_Data_Big(void);
-void Get_MiniPC_Data_Small(void);
+void Get_MiniPC_Handle(void);
 void Send_MiniPC_Data(unsigned char cmd1,unsigned char cmd2,unsigned char state);
 
 

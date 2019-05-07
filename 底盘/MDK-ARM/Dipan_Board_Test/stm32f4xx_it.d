@@ -58,4 +58,5 @@ dipan_board_test\stm32f4xx_it.o: ../Inc/usart.h
 dipan_board_test\stm32f4xx_it.o: .\Algorithm\protocol.h
 dipan_board_test\stm32f4xx_it.o: D:\Keil\ARM\ARMCC\Bin\..\include\String.h
 dipan_board_test\stm32f4xx_it.o: ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.h
+dipan_board_test\stm32f4xx_it.o: .\Communication\minipc.h
 dipan_board_test\stm32f4xx_it.o: .\Communication\communication.h 

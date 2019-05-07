@@ -29,6 +29,8 @@ typedef struct
 /* 本模块向外部提供的接口常量声明--------------------------------------------*/
 extern moto3508_type  moto_3508_set; 
 extern int8_t chassis_disable_flg;
+extern pid_t pid_chassis_follow;//底盘跟随位置环
+extern pid_t pid_chassis_follow_spd;//底盘跟随速度环
 /* 本模块向外部提供的接口函数原型声明----------------------------------------*/
 void Chassis_Task(void const * argument);
 

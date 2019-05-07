@@ -51,7 +51,7 @@ void BSP_Init(void)
   MX_USART2_UART_Init();
   MX_USART3_UART_Init();
   MX_UART4_Init();
-  MX_UART5_Init();
+  //MX_UART5_Init();
   //MX_USART6_UART_Init();
   /*ADC*/
   MX_ADC1_Init();
@@ -72,16 +72,13 @@ void BSP_Init(void)
   __HAL_DMA_DISABLE_IT(&hdma_adc3,DMA_IT_TC | DMA_IT_HT | DMA_IT_TE | DMA_IT_FE | DMA_IT_DME);
 	/*开启中断*/ 
   HAL_UART_Receive_DMA(&huart3,USART3_RX_DATA,SizeofReferee);  	
-  HAL_UART_Receive_DMA(&huart4,UART4_RX_DATA,SizeofMinipc); 				 	  
-	HAL_UART_Receive_DMA(&huart5,UART5_RX_DATA,SizeofMinipc);   
+  HAL_UART_Receive_DMA(&huart4,UART4_RX_DATA,SizeofMinipc); 				 	     
   __HAL_UART_ENABLE_IT(&huart3, UART_IT_IDLE);//
   __HAL_UART_ENABLE_IT(&huart4, UART_IT_IDLE);//
-  __HAL_UART_ENABLE_IT(&huart5, UART_IT_IDLE);//
  
 	/*关闭半传输完成中断*/
 	__HAL_DMA_DISABLE_IT(&hdma_usart3_rx,DMA_IT_HT);	//关闭串口3半传输完成中断
 	__HAL_DMA_DISABLE_IT(&hdma_usart4_rx,DMA_IT_HT);	//关闭串口4半传输完成中断
-	__HAL_DMA_DISABLE_IT(&hdma_usart5_rx,DMA_IT_HT);  //关闭串口5半传输完成中断
   
 	CanFilter_Init(&hcan1);
 	CanFilter_Init(&hcan2);

@@ -41,6 +41,7 @@
 #include "dma.h"
 #include "usart.h"
 #include "protocol.h"
+#include "minipc.h"
 #include "communication.h "
 /* USER CODE BEGIN 0 */
 uint8_t rx_date[8];
@@ -400,7 +401,7 @@ void USART3_IRQHandler(void)
       __HAL_UART_CLEAR_IDLEFLAG(&huart3);
 		
 		USART3_RX_NUM=(SizeofReferee)-(hdma_usart3_rx.Instance->NDTR);
-      Referee_Data_Handler();
+    Referee_Data_Handler();
     __HAL_DMA_SET_COUNTER(&hdma_usart3_rx,SizeofReferee);
     __HAL_DMA_ENABLE(&hdma_usart3_rx);	
     }
@@ -413,36 +414,13 @@ void UART4_IRQHandler(void)
     tmp2 = __HAL_UART_GET_IT_SOURCE(&huart4, UART_IT_IDLE);
     if((tmp1 != RESET)&&(tmp2 != RESET))
     {
-      RefreshDeviceOutLineTime(MINI_B_NO);
       __HAL_DMA_DISABLE(&hdma_usart4_rx);
       __HAL_UART_CLEAR_IDLEFLAG(&huart4);
 		
 		UART4_RX_NUM=(SizeofMinipc)-(hdma_usart4_rx.Instance->NDTR);
+    Get_MiniPC_Handle();
     __HAL_DMA_SET_COUNTER(&hdma_usart4_rx,SizeofMinipc);
-    __HAL_DMA_ENABLE(&hdma_usart4_rx);
-      
-     vTaskNotifyGiveFromISR(MINIPCBIGTaskHandle,&pxHigherPriorityTaskWoken);
-		portYIELD_FROM_ISR(pxHigherPriorityTaskWoken);		
-    }
-}
-void UART5_IRQHandler(void)
-{
-  static  BaseType_t  pxHigherPriorityTaskWoken;
-  uint8_t tmp1,tmp2;
-    tmp1 = __HAL_UART_GET_FLAG(&huart5, UART_FLAG_IDLE);   //空闲中断中将已收字节数取出后，停止DMA
-    tmp2 = __HAL_UART_GET_IT_SOURCE(&huart5, UART_IT_IDLE);
-    if((tmp1 != RESET)&&(tmp2 != RESET))
-    {
-      RefreshDeviceOutLineTime(MINI_S_NO);
-      __HAL_DMA_DISABLE(&hdma_usart5_rx);
-      __HAL_UART_CLEAR_IDLEFLAG(&huart5);
-		
-		UART5_RX_NUM=(SizeofMinipc)-(hdma_usart5_rx.Instance->NDTR);
-    __HAL_DMA_SET_COUNTER(&hdma_usart5_rx,SizeofMinipc);
-    __HAL_DMA_ENABLE(&hdma_usart5_rx);
-      
-     vTaskNotifyGiveFromISR(MINIPCSMATaskHandle,&pxHigherPriorityTaskWoken);
-		portYIELD_FROM_ISR(pxHigherPriorityTaskWoken);		
+    __HAL_DMA_ENABLE(&hdma_usart4_rx);	
     }
 }
 /* USER CODE BEGIN 1 */

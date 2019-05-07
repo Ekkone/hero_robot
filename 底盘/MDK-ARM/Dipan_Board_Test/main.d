@@ -60,11 +60,11 @@ dipan_board_test\main.o: D:\Keil\ARM\ARMCC\Bin\..\include\string.h
 dipan_board_test\main.o: .\MotorDriver\Motor_USE_TIM.h
 dipan_board_test\main.o: .\MotorDriver\Motor_USE_CAN.h
 dipan_board_test\main.o: .\Communication\minipc.h
+dipan_board_test\main.o: .\Algorithm\SystemState.h
+dipan_board_test\main.o: ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.h
 dipan_board_test\main.o: .\Algorithm\Power_restriction.h
 dipan_board_test\main.o: .\Algorithm\protocol.h
 dipan_board_test\main.o: ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.h
 dipan_board_test\main.o: .\Communication\atom_imu.h
 dipan_board_test\main.o: .\Communication\decode.h
-dipan_board_test\main.o: .\Algorithm\SystemState.h
-dipan_board_test\main.o: ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.h
 dipan_board_test\main.o: .\APP\board_test.h
