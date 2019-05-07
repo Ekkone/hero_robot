@@ -539,6 +539,7 @@ void HAL_CAN_RxCpltCallback(CAN_HandleTypeDef *hcan)
 		{
 			case CAN_Mini_S:
 			{
+        RefreshDeviceOutLineTime(MiniPC_NO);
 				CAN_Get_MiniPC(hcan);
 			}break;
       case CAN_Referee_S:

@@ -96,6 +96,10 @@ void Check_Task(void const * argument)
       LED4_Blink();
     else LED4(0);
     
+    if(!(SystemState.OutLine_Flag&0x10))//MINIPC
+      LED5_Blink();
+    else LED5(0);
+    
     osDelayUntil(&xLastWakeTime,200);
     
   }

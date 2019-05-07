@@ -173,18 +173,18 @@ void Gimbal_Contrl_Task(void const * argument)
       }
       /*云台限位保护*/
       /*pit正常280-800*/
-//      if((pit_set.expect + pit_get.offset_angle) > 800)
-//      {
-//        if(pit_set.expect <= pit_set.expect_last)
-//          goto pit_last;
-//        pit_set.expect = 800 - pit_get.offset_angle;
-//      }
-//      if((pit_set.expect + pit_get.offset_angle) < 280)
-//      {
-//        if(pit_set.expect >= pit_set.expect_last)
-//          goto pit_last;
-//        pit_set.expect = 280 - pit_get.offset_angle;
-//      }
+      if((pit_set.expect + pit_get.offset_angle) > 800)
+      {
+        if(pit_set.expect <= pit_set.expect_last)
+          goto pit_last;
+        pit_set.expect = 800 - pit_get.offset_angle;
+      }
+      if((pit_set.expect + pit_get.offset_angle) < 280)
+      {
+        if(pit_set.expect >= pit_set.expect_last)
+          goto pit_last;
+        pit_set.expect = 280 - pit_get.offset_angle;
+      }
       //pit轴编码器
       pit_last:
       pid_calc(&pid_pit, pit_get.total_angle, pit_set.expect);
@@ -192,18 +192,18 @@ void Gimbal_Contrl_Task(void const * argument)
       Pitch_Current_Value=(-pid_pit_jy61_spd.pos_out); 
         
       /*yaw轴云台保护3100-4300*/
-//      if((yaw_set.expect + yaw_get.offset_angle) > 4300)
-//      {
-//        if(yaw_set.expect <= yaw_set.expect_last)
-//          goto yaw_last;
-//        yaw_set.expect = 4300 - yaw_get.offset_angle;
-//      }
-//      if((yaw_set.expect + yaw_get.offset_angle) < 3100)
-//      {
-//        if(yaw_set.expect >= yaw_set.expect_last)
-//          goto yaw_last;
-//        yaw_set.expect = 3100 - yaw_get.offset_angle;
-//      }
+      if((yaw_set.expect + yaw_get.offset_angle) > 4300)
+      {
+        if(yaw_set.expect <= yaw_set.expect_last)
+          goto yaw_last;
+        yaw_set.expect = 4300 - yaw_get.offset_angle;
+      }
+      if((yaw_set.expect + yaw_get.offset_angle) < 3100)
+      {
+        if(yaw_set.expect >= yaw_set.expect_last)
+          goto yaw_last;
+        yaw_set.expect = 3100 - yaw_get.offset_angle;
+      }
       yaw_last:
       pid_calc(&pid_yaw, yaw_get.total_angle,yaw_set.expect);
       pid_calc(&pid_yaw_spd,pit_get.speed_rpm, pid_yaw.pos_out);
@@ -282,8 +282,8 @@ void Gimbal_Contrl_Task(void const * argument)
         Pitch_Current_Value=(-pid_pit_jy61_spd.pos_out); 
 		    
       #endif
-//        Pitch_Current_Value = 0;
-//        Yaw_Current_Value = 0;
+        Pitch_Current_Value = 0;
+        Yaw_Current_Value = 0;
         /*驱动电机*/
 				if(gimbal_disable_flg==1)//失能
 				{

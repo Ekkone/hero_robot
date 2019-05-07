@@ -40,6 +40,7 @@ typedef enum
 		MotorY_NO,
 		MotorP_NO,
   	MotorB_NO,
+    MiniPC_NO,
 	
 		DeviceTotal_No	
 }DeviceX_NoDEF;

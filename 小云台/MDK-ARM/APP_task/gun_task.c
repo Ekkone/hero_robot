@@ -161,7 +161,7 @@ void Gun_Task(void const * argument)
      /*速度环*/
      pid_calc(&pid_dial_spd,moto_dial_get.speed_rpm ,set_speed);
      /*驱动拨弹电机*/
-		 Shot_Motor(&hcan1,pid_dial_spd.pos_out);
+		 //Shot_Motor(&hcan1,pid_dial_spd.pos_out);
     /*清零标志位*/
 		 minipc_rx_small.state_flag=0;
 		 set_speed = 0;	   
