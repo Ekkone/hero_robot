@@ -102,9 +102,21 @@ void ShotProcess()
 	*	@supplement	对键鼠的数据进行处理
 	*	@retval	
 ****************************************************************************************/
+uint8_t back_flag = 0;
+uint8_t round_flag = 0;
 void MouseKeyControlProcess()
 {
 	
+  if(F_Press)//暂时切换为跟随
+   {
+     back_flag = 1;
+   } 
+   else back_flag = 0;
+  if(E_Press || Q_Press)//暂时切换为分离
+  {
+    round_flag = 1;
+  }
+  else round_flag = 0;
 	if(SHIFT_Press)//最高速度
       {
         XY_speed_max = 5000;//(NORMAL_SPEED_MAX)*3.5;
@@ -134,9 +146,16 @@ void MouseKeyControlProcess()
         if(moto_3508_set.dstVmmps_Y>0) 	                   moto_3508_set.dstVmmps_Y -= DEC_SPEED;
         if(moto_3508_set.dstVmmps_Y<0) 		                 moto_3508_set.dstVmmps_Y += DEC_SPEED;
   }
-  
+  /*W向速度*/
+  if(Q_Press)                       moto_3508_set.dstVmmps_W -= ACC_SPEED;//按下A键
+  else if(E_Press)                  moto_3508_set.dstVmmps_W += ACC_SPEED;//按下D键
+  else{  
+        if(moto_3508_set.dstVmmps_W>-DEC_SPEED&&moto_3508_set.dstVmmps_W<DEC_SPEED) 	 moto_3508_set.dstVmmps_W = 0;
+        if(moto_3508_set.dstVmmps_W>0) 	                   moto_3508_set.dstVmmps_W -= DEC_SPEED;
+        if(moto_3508_set.dstVmmps_W<0) 		                 moto_3508_set.dstVmmps_W += DEC_SPEED;
+    }
   /*分离时*/
-	if(chassis_gimble_Mode_flg == 0)
+	if(chassis_gimble_Mode_flg == 0 || round_flag)
   {
     if(F_Press)
     {
@@ -145,20 +164,9 @@ void MouseKeyControlProcess()
 			pid_calc(&pid_chassis_follow_spd,-yaw_speed,pid_chassis_follow.pos_out);
       moto_3508_set.dstVmmps_W = -pid_chassis_follow_spd.pos_out;
     }
-    else
-    {
-    /*W向速度*/
-    if(A_Press)                       moto_3508_set.dstVmmps_W -= ACC_SPEED;//按下A键
-    else if(D_Press)                  moto_3508_set.dstVmmps_W += ACC_SPEED;//按下D键
-    else{  
-          if(moto_3508_set.dstVmmps_W>-DEC_SPEED&&moto_3508_set.dstVmmps_W<DEC_SPEED) 	 moto_3508_set.dstVmmps_W = 0;
-          if(moto_3508_set.dstVmmps_W>0) 	                   moto_3508_set.dstVmmps_W -= DEC_SPEED;
-          if(moto_3508_set.dstVmmps_W<0) 		                 moto_3508_set.dstVmmps_W += DEC_SPEED;
-      }
-    }
     /*X向速度*/
-    if(Q_Press)                        moto_3508_set.dstVmmps_X += ACC_SPEED; //按下Q键
-    else if(E_Press)    		           moto_3508_set.dstVmmps_X -= ACC_SPEED;//按下E键
+    if(A_Press)                        moto_3508_set.dstVmmps_X += ACC_SPEED; //按下Q键
+    else if(D_Press)    		           moto_3508_set.dstVmmps_X -= ACC_SPEED;//按下E键
     else{
             if(moto_3508_set.dstVmmps_X>-DEC_SPEED&&moto_3508_set.dstVmmps_X<DEC_SPEED) 		moto_3508_set.dstVmmps_X = 0;		
             if(moto_3508_set.dstVmmps_X>0) 	                   moto_3508_set.dstVmmps_X -= DEC_SPEED;
@@ -166,7 +174,7 @@ void MouseKeyControlProcess()
     }
   }
   /*跟随时*/
-  else
+  else if(chassis_gimble_Mode_flg == 1 || back_flag)
   {
     /*X向速度*/
     if(D_Press)                        moto_3508_set.dstVmmps_X -= ACC_SPEED; //按下D键
@@ -176,14 +184,6 @@ void MouseKeyControlProcess()
             if(moto_3508_set.dstVmmps_X>0) 	                   moto_3508_set.dstVmmps_X -= DEC_SPEED;
             if(moto_3508_set.dstVmmps_X<0) 		                 moto_3508_set.dstVmmps_X += DEC_SPEED;
       }
-    /*W向速度*/
-    if(Q_Press)                       moto_3508_set.dstVmmps_W -= ACC_SPEED;//按下Q键
-    else if(E_Press)                  moto_3508_set.dstVmmps_W += ACC_SPEED;//按下E键
-    else{  
-          if(moto_3508_set.dstVmmps_W>-DEC_SPEED&&moto_3508_set.dstVmmps_W<DEC_SPEED) 	 moto_3508_set.dstVmmps_W = 0;
-          if(moto_3508_set.dstVmmps_W>0) 	                   moto_3508_set.dstVmmps_W -= DEC_SPEED;
-          if(moto_3508_set.dstVmmps_W<0) 		                 moto_3508_set.dstVmmps_W += DEC_SPEED;
-    }
     
   }
   /*小云台控制*/

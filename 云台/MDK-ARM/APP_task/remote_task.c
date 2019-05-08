@@ -162,9 +162,12 @@ void ShotProcess()
 	*	@supplement	对键鼠的数据进行处理
 	*	@retval	
 ****************************************************************************************/
+uint8_t back_flag = 0;
+uint8_t round_flag = 0;
 void MouseKeyControlProcess()
 {
   static uint16_t delay = 0;
+ 
   CAN_Send_YK(&hcan1,RC_Ctl.key.v,0,0,RC_Ctl.rc.s1,RC_Ctl.rc.s2);
   /*弹舱空则传送电机开*/
   if(BULLTE_EMPTY)
@@ -172,7 +175,20 @@ void MouseKeyControlProcess()
   else
     stir_motor_flag = 0;
   /*鼠标云台控制*/
-  if(chassis_gimble_Mode_flg==1) //XY运动，底盘跟随云台
+  if(F_Press)//暂时切换为跟随
+   {
+     back_flag = 1;
+     yaw_set_follow.expect = ptr_jy61_t_yaw.final_angle;
+     yaw_set.expect = -yaw_get.total_angle;//更新分离编码器期望
+   } 
+   else back_flag = 0;
+  if(E_Press || Q_Press)//暂时切换为分离
+  {
+    round_flag = 1;
+    yaw_set_follow.expect = ptr_jy61_t_yaw.final_angle;//更新跟随陀螺仪期望
+  }
+  else round_flag = 0;
+  if(chassis_gimble_Mode_flg == 1 || back_flag == 1) //XY运动，底盘跟随云台
    {
      if(CTRL_Press&&R_Press&&minipc_rx_big.state_flag)//辅助瞄准
        yaw_set_follow.expect = yaw_set_follow.expect + minipc_rx_big.angle_yaw;
@@ -181,8 +197,8 @@ void MouseKeyControlProcess()
     
      yaw_set.expect = yaw_get.total_angle;//更新分离编码器期望
    }
-   else//WY运动，底盘云台分离
-   {	
+   else if(chassis_gimble_Mode_flg == 0 || round_flag == 1)//WY运动，底盘云台分离
+   {
      if(CTRL_Press&&R_Press&&minipc_rx_big.state_flag)//辅助瞄准
        yaw_set.expect = yaw_set.expect - minipc_rx_big.angle_yaw;
      else

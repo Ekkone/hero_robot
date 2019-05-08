@@ -270,6 +270,31 @@
           <WinNumber>1</WinNumber>
           <ItemText>imu_data,0x0A</ItemText>
         </Ww>
+        <Ww>
+          <count>23</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>pid_pit_spd.pos_out</ItemText>
+        </Ww>
+        <Ww>
+          <count>24</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>yaw_set.expect</ItemText>
+        </Ww>
+        <Ww>
+          <count>25</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>ptr_heat_gun_t.sht_flg</ItemText>
+        </Ww>
+        <Ww>
+          <count>26</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>pid_dial_spd.pos_out</ItemText>
+        </Ww>
+        <Ww>
+          <count>27</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>communication_message</ItemText>
+        </Ww>
       </WatchWindow1>
       <WatchWindow2>
         <Ww>
@@ -281,6 +306,11 @@
           <count>1</count>
           <WinNumber>2</WinNumber>
           <ItemText>\\2018_07\Communication/communication.c\stcGyro</ItemText>
+        </Ww>
+        <Ww>
+          <count>2</count>
+          <WinNumber>2</WinNumber>
+          <ItemText>communication_message</ItemText>
         </Ww>
       </WatchWindow2>
       <Tracepoint>

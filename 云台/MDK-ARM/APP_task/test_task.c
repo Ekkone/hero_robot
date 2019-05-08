@@ -58,11 +58,7 @@ void testTask(void const * argument)
 			}
 			counter_last = gate1_counter;
 		
-    #endif
-//		vTaskGetRunTimeStats(InfoBuffer);
-//		printf("%s\r\n",InfoBuffer);
-//		vTaskList(InfoBuffer);
-//		printf("%s\n\r",InfoBuffer);
+    #endif 
   #if printf_sendware
 		  int16_t  *ptr = &angle; //≥ı ºªØ÷∏’Î
       int16_t  *p1  = &speed_set;

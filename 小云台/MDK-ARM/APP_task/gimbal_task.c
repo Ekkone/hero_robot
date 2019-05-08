@@ -55,16 +55,16 @@ void gimbal_pid_init(void)
   /*imu pid parameter*/
   /*暂时稳定版*/
   /*50*/
-	PID_struct_init(&pid_pit, POSITION_PID, 5000, 1000,
-									10.0f, 0.0f, 10.0f); 
-	PID_struct_init(&pid_pit_spd, POSITION_PID, 5000, 1000,
-                  2.0f, 0.0f, 0.0f );
+	PID_struct_init(&pid_pit, POSITION_PID, 29000, 10000,
+									35.0f, 0.05f, 120.0f); 
+	PID_struct_init(&pid_pit_spd, POSITION_PID, 29000, 1000,
+                  4.0f, 0.0f, 0.0f );
   /*在调版*/
   /* yaw axis motor pid parameter */
-	 PID_struct_init(&pid_yaw, POSITION_PID, 10000, 1000,
-                  10.0f, 0.02f, 10.0f); 
-	 PID_struct_init(&pid_yaw_spd, POSITION_PID, 5000, 1000,
-                  2.0f, 0.0f, 0.0f );
+	 PID_struct_init(&pid_yaw, POSITION_PID, 30000, 1000,
+                  10.0f, 0.02f, 20.0f); 
+	 PID_struct_init(&pid_yaw_spd, POSITION_PID, 10000, 1000,
+                  4.0f, 0.0f, 0.0f );
   #endif
   #if jy61
 /*暂时稳定版*/
@@ -149,18 +149,18 @@ void Gimbal_Contrl_Task(void const * argument)
         }break;
         case SleepMode://休眠模式，复位
         {
-            yaw_set.expect = 3000 - yaw_get.offset_angle;
-            pit_set.expect = 3000 - pit_get.offset_angle;
+            yaw_set.expect = 2700 ;
+            pit_set.expect = 250 - pit_get.offset_angle;
         }break;
         case PatrolMode://巡逻模式，yaw轴周期转动
         {
-          pit_set.expect = 3000 - pit_get.offset_angle;
-          if((yaw_set.expect + yaw_get.offset_angle) > 8000 \
-            || (yaw_set.expect + yaw_get.offset_angle) < 1000)
+          pit_set.expect = 250 - pit_get.offset_angle;
+          if((yaw_set.expect) > 3500 \
+            || (yaw_set.expect ) < -1300)
             {
               Direction = -Direction;
             }
-          yaw_set.expect += Direction * 10;
+          yaw_set.expect += Direction * 5;
           
         }break;
         case SnipeMode://狙击模式
@@ -172,42 +172,42 @@ void Gimbal_Contrl_Task(void const * argument)
         }break;
       }
       /*云台限位保护*/
-      /*pit正常280-800*/
-      if((pit_set.expect + pit_get.offset_angle) > 800)
+      /*pit正常65-500*/
+      if((pit_set.expect + pit_get.offset_angle) > 500)
       {
         if(pit_set.expect <= pit_set.expect_last)
           goto pit_last;
-        pit_set.expect = 800 - pit_get.offset_angle;
+        pit_set.expect = 500 - pit_get.offset_angle;
       }
-      if((pit_set.expect + pit_get.offset_angle) < 280)
+      if((pit_set.expect + pit_get.offset_angle) < 65)
       {
         if(pit_set.expect >= pit_set.expect_last)
           goto pit_last;
-        pit_set.expect = 280 - pit_get.offset_angle;
+        pit_set.expect = 65 - pit_get.offset_angle;
       }
       //pit轴编码器
       pit_last:
       pid_calc(&pid_pit, pit_get.total_angle, pit_set.expect);
       pid_calc(&pid_pit_spd,(imu_data.gy), pid_pit.pos_out);
-      Pitch_Current_Value=(-pid_pit_jy61_spd.pos_out); 
+      Pitch_Current_Value=(pid_pit_spd.pos_out); 
         
-      /*yaw轴云台保护3100-4300*/
-      if((yaw_set.expect + yaw_get.offset_angle) > 4300)
+      /*yaw轴云台保护1200-8100*/
+      if((yaw_set.expect) > 3600)
       {
         if(yaw_set.expect <= yaw_set.expect_last)
           goto yaw_last;
-        yaw_set.expect = 4300 - yaw_get.offset_angle;
+        yaw_set.expect = 3600;
       }
-      if((yaw_set.expect + yaw_get.offset_angle) < 3100)
+      if((yaw_set.expect) < -1400)
       {
         if(yaw_set.expect >= yaw_set.expect_last)
           goto yaw_last;
-        yaw_set.expect = 3100 - yaw_get.offset_angle;
+        yaw_set.expect = -1400;
       }
       yaw_last:
       pid_calc(&pid_yaw, yaw_get.total_angle,yaw_set.expect);
       pid_calc(&pid_yaw_spd,pit_get.speed_rpm, pid_yaw.pos_out);
-      Yaw_Current_Value= (pid_yaw_jy61_spd.pos_out);
+      Yaw_Current_Value= (pid_yaw_spd.pos_out);
      
       #if jy61
       IMU_Get_Data();
@@ -282,8 +282,8 @@ void Gimbal_Contrl_Task(void const * argument)
         Pitch_Current_Value=(-pid_pit_jy61_spd.pos_out); 
 		    
       #endif
-        Pitch_Current_Value = 0;
-        Yaw_Current_Value = 0;
+//        Pitch_Current_Value = 0;
+//        Yaw_Current_Value = 0;
         /*驱动电机*/
 				if(gimbal_disable_flg==1)//失能
 				{

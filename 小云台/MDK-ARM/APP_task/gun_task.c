@@ -38,11 +38,11 @@ pid_t pid_dial_spd  = {0};	//拨盘电机速度环
 void Gun_Pid_Init()
 {
   /*拨弹电机*/
-		PID_struct_init(&pid_dial_pos, POSITION_PID, 6000, 5000,
-									0.7f,	0.0f,	1.5f);  
+//		PID_struct_init(&pid_dial_pos, POSITION_PID, 10000, 5000,
+//									5.0f,	0.0f,	3.0f);  
 		//pid_dial_pos.deadband = 10;
-		PID_struct_init(&pid_dial_spd, POSITION_PID, 6000, 5000,
-									1.5f,	0.0f,	0.5f	);  
+		PID_struct_init(&pid_dial_spd, POSITION_PID, 10000, 5000,
+									5.0f,	0.03f,	0.0f	);  
 }
 /* 任务主体部分 -------------------------------------------------------------*/
 
@@ -80,13 +80,13 @@ void Gun_Task(void const * argument)
       {
         /*摩擦轮停止*/
         set_M_speed = 100;
-        ptr_heat_gun_t.sht_flg = 11;
+        //ptr_heat_gun_t.sht_flg = 11;
       }break;
       case Init:
       {
         /*摩擦轮初始化*/
         set_M_speed = 105;
-        ptr_heat_gun_t.sht_flg = 11;
+        //ptr_heat_gun_t.sht_flg = 11;
       }break;
       case LowSpeed:
       {
@@ -109,59 +109,45 @@ void Gun_Task(void const * argument)
     /*热量限制*/
     remain_heat = Robot.heat.shoot_17_cooling_limit - Robot.heat.shoot_17_heat;
     if(remain_heat < 30)
-      ptr_heat_gun_t.sht_flg = GunStop;
+//      ptr_heat_gun_t.sht_flg = GunStop;
     /*判断发射模式*/
     switch(ptr_heat_gun_t.sht_flg)
     {
 			case GunStop://停止58982
 			{
+        set_speed = 000;
         
-        switch(contiue_flag)
-        {
-          case 0:
-          {
-            /*设定角度*/
-            set_angle=moto_dial_get.total_angle;	
-            contiue_flag = 1;
-          }break;
-          case 1:
-          {
-            goto position;
-          }break;
-        }
+//        switch(contiue_flag)
+//        {
+//          case 0:
+//          {
+//            /*设定角度*/
+//            set_angle=moto_dial_get.total_angle;	
+//            contiue_flag = 1;
+//          }break;
+//          case 1:
+//          {
+//            goto position;
+//          }break;
+//        }
 			}break;
-      case GunOne://单发模式
-      {
-        /*设定角度*/
-				moto_dial_get.cmd_time=GetSystemTimer();
-				set_cnt=1;
-				set_angle=58982*set_cnt;
-        /*清零*/
-				moto_dial_get.round_cnt=0;
-				moto_dial_get.offset_angle=moto_dial_get.angle;
-				moto_dial_get.total_angle=0;	
-        /*进入位置环*/
-        ptr_heat_gun_t.sht_flg = GunHold;
-        contiue_flag = 0;
-        
-      }break;
-      case GunFire://3连发模式
+      case GunFire://连发模式
       {
 				set_speed = 1000;
+//        contiue_flag = 0;
       }break;
-      case GunHold:
-      {
-        /*pid位置环*/
-       position: pid_calc(&pid_dial_pos, moto_dial_get.total_angle,set_angle);	
-				set_speed=pid_dial_pos.pos_out;
-      }break;
-			default :break;
+//      case GunHold:
+//      {
+//        /*pid位置环*/
+//       position: pid_calc(&pid_dial_pos,-moto_dial_get.total_angle,set_angle);	
+//				set_speed=pid_dial_pos.pos_out;
+//      }break;
+			default :break; 
     }
-    //ptr_heat_gun_t.sht_flg = GunHold;//默认位置环
      /*速度环*/
-     pid_calc(&pid_dial_spd,moto_dial_get.speed_rpm ,set_speed);
+     pid_calc(&pid_dial_spd,moto_dial_get.speed_rpm ,-set_speed);
      /*驱动拨弹电机*/
-		 //Shot_Motor(&hcan1,pid_dial_spd.pos_out);
+		 Shot_Motor(&hcan1,pid_dial_spd.pos_out);
     /*清零标志位*/
 		 minipc_rx_small.state_flag=0;
 		 set_speed = 0;	   

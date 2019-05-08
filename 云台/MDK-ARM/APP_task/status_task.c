@@ -65,7 +65,6 @@ void Status_Task(void const * argument)
     }
     else 
     {
-//      GREEN_LED(1);
       GREEN_Blink();
       osDelayUntil(&xLastWakeTime,Check_PERIOD);
     }

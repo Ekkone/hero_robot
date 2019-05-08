@@ -82,11 +82,11 @@ void Set_AX6(uint16_t angle,uint16_t speed)
 }
 void Open_Door(void)
 {
-  Set_AX6(0x0,0xff);
+  Set_AX6(0x33f,0xff); 
 }
 void Close_Door(void)
 {
-  Set_AX6(0x3ff,0xf0);
+  Set_AX6(0x1df,0xff);
 }
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
 

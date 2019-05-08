@@ -16,6 +16,8 @@ Pos_Set  yaw_set;
 Pos_Set  yaw_set_follow;
 Pos_Set  pit_set;
 int8_t gimbal_disable_flg;
+extern uint8_t back_flag;
+extern uint8_t round_flag;
 uint8_t stir_motor_flag = 0;
 /* 调用的外部函数原型声明------------------------------------------------------------
 void Cloud_Platform_Motor(CAN_HandleTypeDef * hcan,int16_t yaw,int16_t	pitch);
@@ -98,13 +100,13 @@ void gimbal_pid_init(void)
 
 /*yaw陀螺仪反馈*/
   PID_struct_init(&pid_yaw_jy61_follow, POSITION_PID, 5000, 300,
-                  7.0f, 0.1f, 40.0f); //	
+                  7.0f, 0.1f, 75.0f); //	
   PID_struct_init(&pid_yaw_jy61_follow_spd, POSITION_PID, 5000, 100,
                   2.0f, 0.0f, 0.0f );
 
 /*yaw编码器反馈*/
   PID_struct_init(&pid_yaw_jy61, POSITION_PID, 5000, 300,
-                  12.0f, 0.1f, 12.0f); //	
+                  12.0f, 0.1f, 20.0f); //	
   PID_struct_init(&pid_yaw_jy61_spd, POSITION_PID, 5000, 100,
                   2.5f, 0.0f, 0.0f );
   #endif
@@ -188,11 +190,11 @@ void Gimbal_Contrl_Task(void const * argument)
       pid_calc(&pid_pit_jy61_spd,(ptr_jy61_t_angular_velocity.vy), pid_pit_jy61.pos_out);
       Pitch_Current_Value=(-pid_pit_jy61_spd.pos_out); 
       /*yaw轴模式判断*/
-      switch(chassis_gimble_Mode_flg)
+      if(chassis_gimble_Mode_flg == 0 || round_flag)//分离
       {
-        case 0://分离，yaw使用编码器
-        {
-          /*yaw轴云台保护3100-4300*/
+        if(back_flag)
+          goto back;
+        /*yaw轴云台保护3100-4300*/
           if((yaw_set.expect + yaw_get.offset_angle) > 4300)
           {
             if(yaw_set.expect <= yaw_set.expect_last)
@@ -208,11 +210,11 @@ void Gimbal_Contrl_Task(void const * argument)
           yaw_last:pid_calc(&pid_yaw_jy61,(-yaw_get.total_angle),yaw_set.expect);
           pid_calc(&pid_yaw_jy61_spd,(-ptr_jy61_t_angular_velocity.vz), pid_yaw_jy61.pos_out);
           Yaw_Current_Value= (pid_yaw_jy61_spd.pos_out);
-        }break;
-        case 1://跟随，yaw使用陀螺仪
-        {
-          /*yaw轴云台保护*/
-          
+      }
+      else
+      {
+        /*yaw轴云台保护*/
+        back:  
           if(yaw_get.angle > 4300)
           {
             if(yaw_set_follow.expect <= yaw_set_follow.expect_last)
@@ -229,6 +231,16 @@ void Gimbal_Contrl_Task(void const * argument)
       yaw_follow_last:pid_calc(&pid_yaw_jy61_follow,(ptr_jy61_t_yaw.final_angle),yaw_set_follow.expect);
           pid_calc(&pid_yaw_jy61_follow_spd,(ptr_jy61_t_angular_velocity.vz), pid_yaw_jy61_follow.pos_out);
           Yaw_Current_Value= (-pid_yaw_jy61_follow_spd.pos_out);
+      }
+      switch(chassis_gimble_Mode_flg)
+      {
+        case 0://分离，yaw使用编码器
+        {
+          
+        }break;
+        case 1://跟随，yaw使用陀螺仪
+        {
+          
           
           
         }break;
@@ -251,7 +263,7 @@ void Gimbal_Contrl_Task(void const * argument)
       minipc_rx_big.angle_yaw = 0;
       minipc_rx_big.angle_pit = 0;
         /*发送底盘*/
-      CAN_Send_YT(&hcan1,yaw_get.total_angle,(int16_t)(ptr_jy61_t_angular_velocity.vz),chassis_gimble_Mode_flg,stir_motor_flag);
+      CAN_Send_YT(&hcan1,yaw_get.angle,(int16_t)(ptr_jy61_t_angular_velocity.vz),chassis_gimble_Mode_flg,stir_motor_flag);
 			osDelayUntil(&xLastWakeTime, GIMBAL_PERIOD);
 			
    }

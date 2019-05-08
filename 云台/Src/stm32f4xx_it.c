@@ -597,7 +597,6 @@ void HAL_CAN_RxCpltCallback(CAN_HandleTypeDef *hcan)
 					yaw_get.msg_cnt = 51;
 					get_moto_measure_6623(&yaw_get,&hcan1);
 				}
-//				yaw_get.angle=(uint16_t)(hcan->pRxMsg->Data[0]<<8 |hcan->pRxMsg->Data[1]) ;
 			}break;
 			case CAN_6623_PIT:
 			{
@@ -643,7 +642,6 @@ void HAL_CAN_RxCpltCallback(CAN_HandleTypeDef *hcan)
 				
 				if(moto_dial_get.msg_cnt++ <= 50)	
 				{
-          //moto_dial_get.offset_angle = 4495;
 					get_moto_offset(&moto_dial_get,&hcan2);
 				}
 				else{	

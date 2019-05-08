@@ -71,8 +71,8 @@ void Minipc_Pid_Init()
 void ManualMode()
 {
    gimbal_mode = Manual_Mode;
-   pit_set.expect = pit_set.expect +(0x400-RC_Ctl.rc.ch3)/20;	
-   yaw_set.expect = yaw_set.expect -(0x400-RC_Ctl.rc.ch2)/20;	
+   pit_set.expect = pit_set.expect -(0x400-RC_Ctl.rc.ch3)/20;	
+   yaw_set.expect = yaw_set.expect + (0x400-RC_Ctl.rc.ch2)/20;	
 
   if(press_counter >= press_times)//左按键延迟，时间由press_time控制
 	{
@@ -82,18 +82,12 @@ void ManualMode()
         case 1://上
         {
             MoCa_Flag = Stop;
+          ptr_heat_gun_t.sht_flg=GunStop;
         }break;
         case 3://中,开启摩擦轮低速
         {
-            MoCa_Flag = LowSpeed;   
-             /*拨盘单发*/
-          shot_anjian_counter++;
-            if(shot_anjian_counter > shot_frequency)//非连续触发信号
-            {
-              ptr_heat_gun_t.sht_flg=GunOne;//单发
-              press_counter=0;
-              shot_anjian_counter=0;
-            }         
+            MoCa_Flag = LowSpeed;     
+            ptr_heat_gun_t.sht_flg=GunFire;
         }break;
         case 2://下，开启摩擦轮高速与拨盘电机
         {
@@ -221,6 +215,7 @@ void Remote_Data_Task(void const * argument)
     uint32_t NotifyValue;
 		portTickType xLastWakeTime;
 		xLastWakeTime = xTaskGetTickCount();
+  Close_Door();
 	for(;;)
 	{
 		/*刷新断线时间*/

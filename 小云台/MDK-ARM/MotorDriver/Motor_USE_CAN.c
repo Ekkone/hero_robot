@@ -208,7 +208,7 @@ void get_moto_measure_GM6020(moto_measure_t *ptr,CAN_HandleTypeDef * hcan)
 		ptr->round_cnt --;
 	else if (ptr->angle - ptr->last_angle < -4096)
 		ptr->round_cnt ++;
-	ptr->total_angle = ptr->round_cnt * 8192 + ptr->angle - ptr->offset_angle;
+	ptr->total_angle = ptr->round_cnt * 8192 + ptr->angle ;
 }
 /**
 	**************************************************************

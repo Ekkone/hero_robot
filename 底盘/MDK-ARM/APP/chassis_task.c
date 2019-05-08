@@ -1,6 +1,7 @@
 /* 包含头文件----------------------------------------------------------------*/
 #include "chassis_task.h"
 #include "SystemState.h"
+#include "data_pro_task.h"
 /* 内部宏定义----------------------------------------------------------------*/
 
 /* 内部自定义数据类型--------------------------------------------------------*/
@@ -19,6 +20,8 @@ void motor_move_setvmmps(float  wheel[4],float dstVmmps_X,
 /* 外部变量声明--------------------------------------------------------------*/
 moto3508_type  moto_3508_set = {.flag = 0}; 
 extern float power;		//功率  	_测试变量
+extern uint8_t back_flag;
+extern uint8_t round_flag;
 int8_t chassis_disable_flg;
 /* 调用的外部函数原型声明----------------------------------------------------------*/
 
@@ -36,7 +39,7 @@ int16_t angle[2];
 
 extern int16_t yaw_speed;
 #define CHASSIS_PERIOD 5
-
+#define Middle_angle 3700
 /* 内部函数原型声明----------------------------------------------------------*/
 void Chassis_pid_init(void)
 {
@@ -46,10 +49,10 @@ void Chassis_pid_init(void)
 	 pid_3508_pos.deadband=150;
 	
 	 PID_struct_init(&pid_chassis_follow, POSITION_PID,3000,1000,
-	                4.0f, 0.01f , 20.0f  );
+	               2.9f, 0.01f , 20.0f  );
 //	  pid_chassis_follow.deadband=10;
 	 PID_struct_init(&pid_chassis_follow_spd, POSITION_PID,3000,1000,
-	                0.8f, 0.0f , 0.0f  );
+	                1.0f, 0.0f , 0.0f  );
 	
 		for(int i=0; i<4; i++)
 		{ 
@@ -71,6 +74,7 @@ void Chassis_Contrl_Task(void const * argument)
 {
   /*数据初始化*/
 	static float  wheel[4]={0,0,0,0};
+  static float Angle_gap;
 	osDelay(200);//延时200ms
 	portTickType xLastWakeTime;
   xLastWakeTime = xTaskGetTickCount();
@@ -84,29 +88,26 @@ void Chassis_Contrl_Task(void const * argument)
 
     RefreshTaskOutLineTime(ChassisContrlTask_ON);
     /*底盘模式*/
-		switch(chassis_gimble_Mode_flg)
-		{	
-			case 0:	{	//分离	
-        /*麦轮解算得出wheel[4]*/
+    Angle_gap = yaw_get.angle-Middle_angle;
+    if(chassis_gimble_Mode_flg == 0 || round_flag)//分离
+    {
+      if(back_flag)
+        goto back;
+       /*麦轮解算得出wheel[4]*/
 			motor_move_setvmmps(wheel,moto_3508_set.dstVmmps_X,moto_3508_set.dstVmmps_Y,moto_3508_set.dstVmmps_W);
-			}break;
-      
-			case 1:	{	//底盘跟随云台
-	  	/*有两个组合：
-			*						 1. get:yaw_get.totalangle 
-			* 							set:0     			因为一开机，云台所处的位置是在哪里，哪里的totalangle就是0。
-			*			  		 2. get:yaw_get.angle
-			*								set:枪口在正中心时候的云台绝对值 
-			*/	
-        /*跟随位置环*/
-			pid_calc(&pid_chassis_follow,-yaw_get.total_angle,0);
-        /*跟随速度环*/ 
+    }
+    else
+    {
+      back:
+      /*跟随位置环*/
+			pid_calc(&pid_chassis_follow,yaw_get.angle,Middle_angle);
+      /*跟随速度环*/ 
 			pid_calc(&pid_chassis_follow_spd,-yaw_speed,pid_chassis_follow.pos_out);
-		
+      moto_3508_set.dstVmmps_W = pid_chassis_follow_spd.pos_out;
+      if(abs(Angle_gap)<150)  moto_3508_set.dstVmmps_W=0;
         /*麦轮解算得出wheel[4]*/
-			motor_move_setvmmps(wheel,moto_3508_set.dstVmmps_X,moto_3508_set.dstVmmps_Y,-pid_chassis_follow_spd.pos_out); 																																												
-			}break;
-		}
+			motor_move_setvmmps(wheel,moto_3508_set.dstVmmps_X,moto_3508_set.dstVmmps_Y,moto_3508_set.dstVmmps_W); 	
+    }
     /*速度环计算*/
 		for(int i=0; i<4; i++)
 			{		
@@ -121,9 +122,9 @@ void Chassis_Contrl_Task(void const * argument)
 			Current_set[2] = pid_3508_spd[2].pos_out;
 			Current_set[3] = pid_3508_spd[3].pos_out;			
 			
-			printf("befeor:%f \n  ",Current_set[0]);
+//			printf("befeor:%f \n  ",Current_set[0]);
 		  Super_Capacitance(Current_set);
-			printf("after:%f\n",Current_set[0]);
+//			printf("after:%f\n",Current_set[0]);
 			
 			pid_3508_spd[0].pos_out = Current_set[0];			
 			pid_3508_spd[1].pos_out = Current_set[1];
@@ -147,28 +148,6 @@ void Chassis_Contrl_Task(void const * argument)
 												pid_3508_spd[3].pos_out);
 
       } 
-      
-				
-			if(0){  //数据发送和任务检测   _待续
-			//	if(HAL_GPIO_ReadPin(GPIOI,GPIO_PIN_0) == 1)            //弹仓检测  低电平触发发送0为子弹空
-																															 //                    发送1为弹夹满
-			//	{
-			//		data1 = 1;
-			//	}
-			//	else if(HAL_GPIO_ReadPin(GPIOI,GPIO_PIN_0) == 0)
-			//	{	
-			//	data1 = 0;
-			//	}
-			//	sendata();
-			//		
-			//	
-			//	
-			//		if(data_pro_task_flag==1) { data_pro_task_flag=0;flag_counter=0;}				//错误检测
-			//		else flag_counter++;
-			//		if(flag_counter>100)  { NVIC_SystemReset();}
-			//		if(flag_counter>200)
-			//			flag_counter = 0;
-				}
 			
 			osDelayUntil(&xLastWakeTime, CHASSIS_PERIOD);
   }

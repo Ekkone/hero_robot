@@ -217,7 +217,7 @@ void get_total_angle(moto_measure_t *p){
 //接收，大云台
 void CAN_RX_YT(CAN_HandleTypeDef * hcan)
 {
-	yaw_get.total_angle = (int16_t)(rx_date[0]<<8 |rx_date[1]) ;
+	yaw_get.angle = (int16_t)(rx_date[0]<<8 |rx_date[1]) ;
 	yaw_speed = (int16_t) (rx_date[2]<<8 | rx_date[3]) ;
 	chassis_gimble_Mode_flg = (uint8_t)(rx_date[4]);
 	stir_motor_flag = (uint8_t)(rx_date[5]);
