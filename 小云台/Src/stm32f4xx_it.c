@@ -526,7 +526,20 @@ void HAL_CAN_RxCpltCallback(CAN_HandleTypeDef *hcan)
 					get_moto_measure_GM6020(&yaw_get,&hcan1);
 				}
 			}break;
-			default: break;
+			case CAN_3508_STIR:
+      {
+        RefreshDeviceOutLineTime(MotorS_NO);
+        if(moto_stir_get.msg_cnt++ <= 50)	
+				{
+					get_moto_offset(&moto_stir_get,&hcan1);
+				}
+				else
+				{		
+					moto_stir_get.msg_cnt=51;	
+					get_moto_measure_3508(&moto_stir_get, &hcan1);
+				}
+      }break;
+      default: break;
 		}
 		if( HAL_BUSY == HAL_CAN_Receive_IT(&hcan1, CAN_FIFO0))//开启中断接收
 		{
@@ -544,6 +557,7 @@ void HAL_CAN_RxCpltCallback(CAN_HandleTypeDef *hcan)
 			}break;
       case CAN_Referee_S:
 			{
+        Communication_flag = 1;
         RefreshDeviceOutLineTime(Remote_NO);
 				CAN_Get_Referee(hcan);
 			}break;

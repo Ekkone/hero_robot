@@ -20,7 +20,7 @@ else if(val>=max)\
 /* 内部常量定义--------------------------------------------------------------*/
 pid_t pid_minipc_yaw={0};
 pid_t pid_minipc_pit={0};
-
+pid_t pid_stir_spd;
 #define REMOTE_PERIOD 2
 #define MINIPC_PERIOD 2
 #define REMOTE_MODE 0
@@ -210,12 +210,16 @@ void AutoMode()
 ****************************************************************************************/
 extern volatile uint8_t RemoteData_flag;
 extern volatile uint8_t Communication_flag;
+uint8_t stir_motor_flag=0;
 void Remote_Data_Task(void const * argument)
 {
+  int set_stir_speed = 0;
     uint32_t NotifyValue;
 		portTickType xLastWakeTime;
 		xLastWakeTime = xTaskGetTickCount();
   Close_Door();
+  PID_struct_init(&pid_stir_spd, POSITION_PID,15000,1000,
+	                4.0f, 0.01f , 0.0f  );
 	for(;;)
 	{
 		/*刷新断线时间*/
@@ -243,6 +247,7 @@ void Remote_Data_Task(void const * argument)
       if(!communication_message)AutoMode();//自动模式
       else          Sleep_Mode(MOUSE_MODE);//休眠模式
     }
+    
 			osDelayUntil(&xLastWakeTime, REMOTE_PERIOD);
 	}
 }

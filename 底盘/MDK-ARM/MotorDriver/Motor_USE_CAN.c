@@ -264,7 +264,7 @@ void CAN_Send_Referee_B( CAN_HandleTypeDef * hcan)
 	    CANSend_Referee_B.DLC = 0x08;
 			CANSend_Referee_B.IDE = CAN_ID_STD;
 			CANSend_Referee_B.RTR = CAN_RTR_DATA;
-			CANSend_Referee_B.StdId = 0x011;
+			CANSend_Referee_B.StdId = CAN_Referee_B;
   
       TX_REFEREE_B[0] = Robot.remainHp >> 8;
       TX_REFEREE_B[1] = Robot.remainHp;
@@ -308,11 +308,11 @@ void CAN_Send_Referee_S( CAN_HandleTypeDef * hcan)
 			CANSend_Referee_S.RTR = CAN_RTR_DATA;
 			CANSend_Referee_S.StdId = CAN_Referee_S;
   
-      TX_DATA_S[0] = Robot.level;
+      TX_DATA_S[0] = stir_motor_flag;
       TX_DATA_S[1] = Robot.remainHp >> 8;
       TX_DATA_S[2] = Robot.remainHp;
-      TX_DATA_S[3] = (uint16_t)Robot.heat.shoot_17_speed>>8;	//float型数据，扩大100倍后强制转换成uint16_t型
-      TX_DATA_S[4] = (uint16_t)Robot.heat.shoot_17_speed;
+      TX_DATA_S[3] = Robot.heat.shoot_17_cooling_limit>>8;	//float型数据，扩大100倍后强制转换成uint16_t型
+      TX_DATA_S[4] = Robot.heat.shoot_17_cooling_limit;
       TX_DATA_S[5] = Robot.heat.shoot_17_heat>>8;	//17mm枪口热
       TX_DATA_S[6] = Robot.heat.shoot_17_heat;
       TX_DATA_S[7] = communication_message;
@@ -334,7 +334,7 @@ void CAN_Send_MINI_S( CAN_HandleTypeDef * hcan)
       TX_DATA_MINI_S[2] = minipc_rx_small.angle_pit>>8;
       TX_DATA_MINI_S[3] = minipc_rx_small.angle_pit;
       TX_DATA_MINI_S[4] = minipc_rx_small.state_flag;
-      TX_DATA_MINI_S[5] = 0;	
+      TX_DATA_MINI_S[5] = stir_motor_flag;	
       TX_DATA_MINI_S[6] = (uint16_t)Robot.heat.shoot_17_cooling_limit>>8;
       TX_DATA_MINI_S[7] = (uint16_t)Robot.heat.shoot_17_cooling_limit;
 

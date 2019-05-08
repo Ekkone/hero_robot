@@ -19,6 +19,7 @@
 typedef enum
 {
   /*CAN1*/
+  CAN_3508_STIR = 0X203,
   CAN_2006_B = 0X201,
   CAN_GM3510_PIT = 0X206,
   CAN_GM6020_YAW = 0X205,
@@ -50,7 +51,8 @@ typedef struct{
 }moto_measure_t;
 
 /* Exported constants------------------------------------------------------------*/
-extern moto_measure_t   moto_dial_get;   
+extern moto_measure_t   moto_dial_get; 
+extern moto_measure_t   moto_stir_get;
 extern moto_measure_t   pit_get;
 extern moto_measure_t   yaw_get;
 /* Internal functions ------------------------------------------------------- */
@@ -60,9 +62,10 @@ void Cloud_Platform_Motor_Correct(CAN_HandleTypeDef * hcan);
 void Cloud_Platform_Motor_Disable(CAN_HandleTypeDef * hcan);
 
 void Shot_Motor(CAN_HandleTypeDef * hcan,int16_t bo_value);
-
+void Stir_Motor(CAN_HandleTypeDef * hcan,int16_t value);
 void get_moto_measure_GM6020(moto_measure_t *ptr,CAN_HandleTypeDef * hcan);
 void get_moto_measure_GM3510(moto_measure_t *ptr,CAN_HandleTypeDef * hcan);
+void get_moto_measure_3508(moto_measure_t *ptr,CAN_HandleTypeDef * hcan);
 void get_moto_offset(moto_measure_t *ptr,CAN_HandleTypeDef * hcan);
 void get_total_angle(moto_measure_t *p);
 

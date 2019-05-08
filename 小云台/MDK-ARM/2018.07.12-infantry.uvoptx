@@ -295,6 +295,16 @@
           <WinNumber>1</WinNumber>
           <ItemText>communication_message</ItemText>
         </Ww>
+        <Ww>
+          <count>28</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>stir_motor_flag</ItemText>
+        </Ww>
+        <Ww>
+          <count>29</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>Robot.level</ItemText>
+        </Ww>
       </WatchWindow1>
       <WatchWindow2>
         <Ww>

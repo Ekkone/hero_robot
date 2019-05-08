@@ -42,7 +42,7 @@ uint8_t press_counter;
 uint8_t shot_anjian_counter=0;
 uint8_t shot_frequency = 100;
 uint8_t chassis_gimble_Mode_flg = 0;
-uint8_t communication_message = 0;
+uint8_t communication_message = 1;
 uint8_t stir_flag = 0;
 extern int16_t yaw_speed;
 //volatile float remain_power=0.0;   //底盘功率 _待续
@@ -256,16 +256,10 @@ void Remote_Data_Task(void const * argument)
 			VAL_LIMIT(moto_3508_set.dstVmmps_X, XY_speed_min, XY_speed_max);
 			VAL_LIMIT(moto_3508_set.dstVmmps_Y, XY_speed_min, XY_speed_max);	
 			VAL_LIMIT(moto_3508_set.dstVmmps_W, W_speed_min, W_speed_max);
-        /*传送电机*/
-			if(stir_motor_flag)
-            set_stir_speed = -700;
-      else  set_stir_speed = 0;
-      pid_calc(&pid_stir_spd,moto_stir_get.speed_rpm,set_stir_speed);
-      Stir_Motor(&hcan1,pid_stir_spd.pos_out); 
+        
       CAN_Send_Referee_B(&hcan1);
       CAN_Send_Referee_S(&hcan1);       
-      CAN_Send_MINI_B(&hcan1);
-      CAN_Send_MINI_S(&hcan1);
+      
       press_counter++;
         osDelayUntil(&xLastWakeTime, REMOTE_PERIOD);
 	}

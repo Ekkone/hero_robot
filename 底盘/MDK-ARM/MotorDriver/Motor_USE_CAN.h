@@ -20,7 +20,7 @@ typedef enum
 {
   /*CAN1*/
   //CAN_2006_B = 0X201,
-  CAN_3508_STIR = 0X203,
+  
   /*тфл╗->╣вел*/
   CAN_Remote = 0x110,
   CAN_Yaw = 0x120,

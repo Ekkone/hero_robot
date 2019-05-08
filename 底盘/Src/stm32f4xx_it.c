@@ -470,19 +470,7 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan)
 				CAN_RX_ERROR(&hcan1);
 			}break;
 			
-      case CAN_3508_STIR:
-      {
-        RefreshDeviceOutLineTime(MotorS_NO);
-        if(moto_stir_get.msg_cnt++ <= 50)	
-				{
-					get_moto_offset(&moto_stir_get,&hcan1);
-				}
-				else
-				{		
-					moto_stir_get.msg_cnt=51;	
-					get_moto_measure_3508(&moto_stir_get, &hcan1);
-				}
-      }break;
+      
 			default: break;
 		}
 	}
