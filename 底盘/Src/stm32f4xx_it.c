@@ -463,13 +463,7 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan)
 				RefreshDeviceOutLineTime(Remote_NO);
 				CAN_RX_YK(&hcan1);         //遥控器数据接收
 				RemoteData_flag = 1;       //数据任务
-			}break;
-			case CAN_ERROR: 
-			{
-				RefreshDeviceOutLineTime(Remote_NO);
-				CAN_RX_ERROR(&hcan1);
-			}break;
-			
+			}break;		
       
 			default: break;
 		}

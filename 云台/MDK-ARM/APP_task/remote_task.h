@@ -27,7 +27,7 @@
 #define  ACC_SPEED    30 
 #define  DEC_SPEED    300 
 /*按键*/
-#define PRESS_DELAY  50
+#define PRESS_DELAY  30
 /* ----------------------- PC Key Definition-------------------------------- */
 #define KEY_PRESSED_OFFSET_W ((uint16_t)1 << 0)
 #define KEY_PRESSED_OFFSET_S ((uint16_t)1 << 1)
@@ -83,9 +83,7 @@ extern float chassis_Current;
 extern float	 chassis_Volt; 
 //extern moto3508_type  moto_3508_set; 
 /* 本模块向外部提供的接口函数原型声明----------------------------------------*/		 
-void Referee_Data_Task(void const * argument);
 void Remote_Data_Task(void const * argument); 
-void MiniPC_Data_task(void const * argument);
 void RemoteControlProcess(void);
 void ChassisModeProcess(void);
 void MouseKeyControlProcess(void);

@@ -226,11 +226,8 @@ void hard_brak()
 	*	@supplement	遥控数据接收及处理任务
 	*	@retval	
 ****************************************************************************************/
-int set_stir_speed = 0;
 void Remote_Data_Task(void const * argument)
 {
-	uint32_t NotifyValue;
-	
 		portTickType xLastWakeTime;
 		xLastWakeTime = xTaskGetTickCount();
 	
@@ -239,7 +236,7 @@ void Remote_Data_Task(void const * argument)
 	for(;;)
 	{
     /*发送给操作界面*/
-			sendata(1.5,1.6,1.7,8);
+    sendata(Show_CapVolt(),0,0,stir_motor_flag,1,1,1,1,1);
 			RefreshTaskOutLineTime(RemoteDataTask_ON);
 				switch(RC_Ctl.rc.s2)
 				{

@@ -20,8 +20,6 @@
  uint16_t USART3_RX_NUM ;
  uint8_t UART4_RX_DATA[(SizeofMinipc)];//外接PC大云台
  uint16_t UART4_RX_NUM ;
- uint8_t UART5_RX_DATA[(SizeofMinipc)];//外接PC小云台
- uint16_t UART5_RX_NUM;
 RC_Ctl_t RC_Ctl; //遥控数据
 /* 内部宏定义 ----------------------------------------------------------------*/
 

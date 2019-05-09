@@ -100,7 +100,7 @@ void Check_Task(void const * argument)
       LED5_Blink();
     else LED5(0);
     
-    if(!(SystemState.OutLine_Flag&0x20))//motor_s
+    if(!(SystemState.OutLine_Flag&0x20))//MINIPC
       LED6_Blink();
     else LED6(0);
     

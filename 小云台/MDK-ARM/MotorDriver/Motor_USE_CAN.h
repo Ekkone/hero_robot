@@ -26,7 +26,7 @@ typedef enum
   /*CAN2*/
 	/*µ×ÅÌ->Ð¡ÔÆÌ¨*/
   CAN_Referee_S = 0x013,
-  CAN_Mini_S = 0X014	
+  CAN_Mini_S = 0X114	
   
 }CAN_Message_ID;
 

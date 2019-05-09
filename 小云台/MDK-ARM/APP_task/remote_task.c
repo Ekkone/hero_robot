@@ -247,7 +247,13 @@ void Remote_Data_Task(void const * argument)
       if(!communication_message)AutoMode();//自动模式
       else          Sleep_Mode(MOUSE_MODE);//休眠模式
     }
-    
+    if(stir_motor_flag)
+      set_stir_speed = -700;
+    else
+      set_stir_speed = 0;
+      /*速度环*/
+       pid_calc(&pid_stir_spd,moto_stir_get.speed_rpm ,set_stir_speed);
+       Stir_Motor(&hcan1,pid_stir_spd.pos_out);
 			osDelayUntil(&xLastWakeTime, REMOTE_PERIOD);
 	}
 }

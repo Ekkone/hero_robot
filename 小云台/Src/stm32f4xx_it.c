@@ -550,15 +550,11 @@ void HAL_CAN_RxCpltCallback(CAN_HandleTypeDef *hcan)
 	{
 		switch(hcan->pRxMsg->StdId)
 		{
-			case CAN_Mini_S:
-			{
-        RefreshDeviceOutLineTime(MiniPC_NO);
-				CAN_Get_MiniPC(hcan);
-			}break;
       case CAN_Referee_S:
 			{
         Communication_flag = 1;
         RefreshDeviceOutLineTime(Remote_NO);
+        RefreshDeviceOutLineTime(MiniPC_NO);
 				CAN_Get_Referee(hcan);
 			}break;
 		}
@@ -568,31 +564,6 @@ void HAL_CAN_RxCpltCallback(CAN_HandleTypeDef *hcan)
 			__HAL_CAN_ENABLE_IT(&hcan2,CAN_IT_FMP0);
 		}	
 	}
-}
-/**
-	**************************************************************
-	** Descriptions:外部中断回调函数
-	** Input: 	
-  **						
-	**					
-	**					
-	** Output: 全局变量 speed_golf
-	**************************************************************
-**/
-float speed_golf = 0;
-void	HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
-{
-	if(GPIO_Pin == GPIO_PIN_2)//gate1
-	{
-		Photoelectric_gate1 = Micro_Tick;
-		gate1_counter++;
-	}
-	else if(GPIO_Pin == GPIO_PIN_7)//gate2
-	{
-		Photoelectric_gate2 = Micro_Tick;
-		gate2_counter++;
-    speed_golf = (float)(0.05 / 0.000005 / (Photoelectric_gate2 - Photoelectric_gate1));
- 	}
 }
 /* USER CODE END 1 */
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

@@ -242,17 +242,17 @@ void Send_FrameData(tCmdID cmdid, uint8_t * pchMessage,uint8_t dwLength)
 **   发送函数是通过串口6发送出去的
 */
 
-void sendata(float data1,float data2,float data3,uint8_t flag)
+void sendata(float data1,float data2,float data3,uint8_t flag1,uint8_t flag2,uint8_t flag3,uint8_t flag4,uint8_t flag5,uint8_t flag6)
 {
 
 	client_custom_data_t       custom_data_t; 
   custom_data_t.data_id = 0xD180;//数据内容id（固定）
   custom_data_t.sender_id = 1;//机器人id
   custom_data_t.cilent_id = 0x0101;//客户端id
-	custom_data_t.data1 = 0;//imu_data.gz;
-	custom_data_t.data2 = 2.0f;
-	custom_data_t.data3 = 2.0f;
-  custom_data_t.masks = 0;//后六位flag
+	custom_data_t.data1 = data1;//imu_data.gz;
+	custom_data_t.data2 = data2;
+	custom_data_t.data3 = data3;
+  custom_data_t.masks = (flag1<<5) || (flag2<<4) || (flag3<<3) || (flag4<<2) || (flag5<<1) || (flag6);//后六位flag
 	Send_FrameData(custom_data,(uint8_t *)&custom_data_t,sizeof(client_custom_data_t));	
 
 }

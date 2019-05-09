@@ -211,7 +211,7 @@ void Gimbal_Contrl_Task(void const * argument)
           pid_calc(&pid_yaw_jy61_spd,(-ptr_jy61_t_angular_velocity.vz), pid_yaw_jy61.pos_out);
           Yaw_Current_Value= (pid_yaw_jy61_spd.pos_out);
       }
-      else
+      else//跟随
       {
         /*yaw轴云台保护*/
         back:  
@@ -231,21 +231,7 @@ void Gimbal_Contrl_Task(void const * argument)
       yaw_follow_last:pid_calc(&pid_yaw_jy61_follow,(ptr_jy61_t_yaw.final_angle),yaw_set_follow.expect);
           pid_calc(&pid_yaw_jy61_follow_spd,(ptr_jy61_t_angular_velocity.vz), pid_yaw_jy61_follow.pos_out);
           Yaw_Current_Value= (-pid_yaw_jy61_follow_spd.pos_out);
-      }
-      switch(chassis_gimble_Mode_flg)
-      {
-        case 0://分离，yaw使用编码器
-        {
-          
-        }break;
-        case 1://跟随，yaw使用陀螺仪
-        {
-          
-          
-          
-        }break;
-      }  
-		    
+      } 
       #endif
 //        Pitch_Current_Value = 0;
 //        Yaw_Current_Value = 0;

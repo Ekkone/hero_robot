@@ -8,14 +8,11 @@
 
 
 #define SizeofReferee 200
-#define SizeofMinipc  7
+#define SizeofMinipc  14
 extern uint8_t USART3_RX_DATA[(SizeofReferee)];//裁判系统
 extern uint16_t USART3_RX_NUM;
-extern uint8_t UART4_RX_DATA[(SizeofMinipc)];//外接PC大云台
+extern uint8_t UART4_RX_DATA[(SizeofMinipc)];//外接PC
 extern uint16_t UART4_RX_NUM;
-extern uint8_t UART5_RX_DATA[(SizeofMinipc)];//外接PC小云台
-extern uint16_t UART5_RX_NUM;
-
 /* 本模块向外部提供的数据类型定义 --------------------------------------------*/
 
 ///////////////遥控/////////////////////

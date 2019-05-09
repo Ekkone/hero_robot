@@ -84,7 +84,7 @@ else if(val>=max)\
 #define	RatedPower				80		//额定功率
 #define	BoundaryOFNormal	75		//退出充电进入正常状态的最大功率
 //ABS（BoundaryOFCharge - BoundaryOFNormal）是最大的电容充电功率35
-#define MinVoltOFCap			15.0f	//电容放电的最小允许电压                       16.0
+#define MinVoltOFCap			16.0f	//电容放电的最小允许电压                       16.0
 #define	RatedCurrent			6000.0//额定功率下对应的额定电流值（发送给电调的值） 5000.0
 #define SoftLimitRP				55.0f		//进入软件限制的剩余能量值
 #define	Filed							1.5f		//屏蔽范围                                    2.0
@@ -706,17 +706,7 @@ uint8_t set_bits(uint8_t n, uint8_t m)
 		return buff;
 }
 
-uint8_t	Show_CapVolt(void)
+float	Show_CapVolt(void)
 {
-		uint8_t capvolt = 0,capvolt_num = 0;
-	
-		capvolt_num =  6 - (uint8_t)((24.0f - current_get.Capacitance_Volt) / 1.5);
-	
-		capvolt = set_bits(0,capvolt_num);
-	
-		if (current_get.Capacitance_Volt <= MinVoltOFCap)
-		{
-				return 0;
-		}
-		
+    return (current_get.Capacitance_Volt - MinVoltOFCap)*12.5;	
 }

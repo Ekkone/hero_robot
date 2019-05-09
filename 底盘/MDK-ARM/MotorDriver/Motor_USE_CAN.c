@@ -57,8 +57,6 @@ extern RC_Ctl_t RC_Ctl;
 extern uint8_t chassis_gimble_Mode_flg;
 uint8_t stir_motor_flag = 0;
 int16_t yaw_speed;
-int16_t OutLine_Flag;
-int16_t task_OutLine_Flag;
 int16_t R_key_v;
 int16_t R_rc_ch0;
 int16_t R_rc_ch1;
@@ -232,32 +230,7 @@ void CAN_RX_YK(CAN_HandleTypeDef * hcan)
  RC_Ctl.rc.s2=rx_date[7];
 	
 }
-void CAN_RX_ERROR(CAN_HandleTypeDef * hcan)
-{
-	OutLine_Flag = (int16_t)(rx_date[0]<<8 |rx_date[1]);
-	task_OutLine_Flag = (int16_t) (rx_date[2]<<8 |rx_date[3]);
-}
 //发送，大云台
-uint8_t TX_DATA_B[8];
-void CAN_Send_chassis( CAN_HandleTypeDef * hcan,int16_t speed_rpm1, int16_t speed_rpm2, 
-	int16_t speed_rpm3, int16_t speed_rpm4)
-{
-	    CANSend_DP.DLC = 0x08;
-			CANSend_DP.IDE = CAN_ID_STD;
-			CANSend_DP.RTR = CAN_RTR_DATA;
-			CANSend_DP.StdId = CAN_Chassis;
-  
-      TX_DATA_B[0] = OutLine_Flag>>8;;
-	    TX_DATA_B[1] = OutLine_Flag;
-	    TX_DATA_B[2] = task_OutLine_Flag>>8;;
-      TX_DATA_B[3] = task_OutLine_Flag;
-	    TX_DATA_B[4] = 0x00;
-	    TX_DATA_B[5] = 0x00;
-	    TX_DATA_B[6] = 0x00;
-	    TX_DATA_B[7] = 0x00;
-	
-			HAL_CAN_AddTxMessage(hcan, &CANSend_DP, TX_DATA_B, (uint32_t *)CAN_TX_MAILBOX0 );
-}
 uint8_t TX_REFEREE_B[9];
 void CAN_Send_Referee_B( CAN_HandleTypeDef * hcan)
 {
@@ -308,36 +281,13 @@ void CAN_Send_Referee_S( CAN_HandleTypeDef * hcan)
 			CANSend_Referee_S.RTR = CAN_RTR_DATA;
 			CANSend_Referee_S.StdId = CAN_Referee_S;
   
-      TX_DATA_S[0] = stir_motor_flag;
-      TX_DATA_S[1] = Robot.remainHp >> 8;
-      TX_DATA_S[2] = Robot.remainHp;
-      TX_DATA_S[3] = Robot.heat.shoot_17_cooling_limit>>8;	//float型数据，扩大100倍后强制转换成uint16_t型
-      TX_DATA_S[4] = Robot.heat.shoot_17_cooling_limit;
-      TX_DATA_S[5] = Robot.heat.shoot_17_heat>>8;	//17mm枪口热
-      TX_DATA_S[6] = Robot.heat.shoot_17_heat;
-      TX_DATA_S[7] = communication_message;
-	
+      TX_DATA_S[0] = minipc_rx_small.angle_yaw >> 8;
+      TX_DATA_S[1] = minipc_rx_small.angle_yaw;
+      TX_DATA_S[2] = minipc_rx_small.angle_pit>>8;
+      TX_DATA_S[3] = minipc_rx_small.angle_pit;
+      TX_DATA_S[4] = minipc_rx_small.state_flag;
+      TX_DATA_S[5] = (stir_motor_flag << 7) | (communication_message & 0x7f);
+      TX_DATA_S[6] = (uint16_t)Robot.heat.shoot_17_cooling_limit>>8;
+      TX_DATA_S[7] = (uint16_t)Robot.heat.shoot_17_cooling_limit;
 			HAL_CAN_AddTxMessage(hcan, &CANSend_Referee_S, TX_DATA_S, (uint32_t *)CAN_TX_MAILBOX0 );
-}
-//小云台视觉数据以及控制数据
-uint8_t TX_DATA_MINI_S[8];
-
-void CAN_Send_MINI_S( CAN_HandleTypeDef * hcan)
-{
-	    CANSend_MINI_S.DLC = 0x08;
-			CANSend_MINI_S.IDE = CAN_ID_STD;
-			CANSend_MINI_S.RTR = CAN_RTR_DATA;
-			CANSend_MINI_S.StdId = CAN_Mini_S;
-  
-      TX_DATA_MINI_S[0] = minipc_rx_small.angle_yaw >> 8;
-      TX_DATA_MINI_S[1] = minipc_rx_small.angle_yaw;
-      TX_DATA_MINI_S[2] = minipc_rx_small.angle_pit>>8;
-      TX_DATA_MINI_S[3] = minipc_rx_small.angle_pit;
-      TX_DATA_MINI_S[4] = minipc_rx_small.state_flag;
-      TX_DATA_MINI_S[5] = stir_motor_flag;	
-      TX_DATA_MINI_S[6] = (uint16_t)Robot.heat.shoot_17_cooling_limit>>8;
-      TX_DATA_MINI_S[7] = (uint16_t)Robot.heat.shoot_17_cooling_limit;
-
-	
-			HAL_CAN_AddTxMessage(hcan, &CANSend_MINI_S, TX_DATA_MINI_S, (uint32_t *)CAN_TX_MAILBOX0 );
 }

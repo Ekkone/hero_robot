@@ -72,7 +72,7 @@ extern  MyTimeTick  time_for_limit;
 /* 本模块向外部提供的接口函数原型声明 ----------------------------------------*/
 void power_limit(float  Current_get[4]);
 void Super_Capacitance(float  Current_get[4]);
-
+float	Show_CapVolt(void);
 float Limit_filter(float oldData,float newData,float val);
 float LPF_1st(float oldData, float newData, float lpf_factor);
 
