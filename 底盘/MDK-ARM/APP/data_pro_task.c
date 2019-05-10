@@ -271,9 +271,8 @@ void Remote_Data_Task(void const * argument)
 			VAL_LIMIT(moto_3508_set.dstVmmps_Y, XY_speed_min, XY_speed_max);	
 			VAL_LIMIT(moto_3508_set.dstVmmps_W, W_speed_min, W_speed_max);
         
-      CAN_Send_Referee_B(&hcan1);
-      CAN_Send_Referee_S(&hcan1);       
-      
+      CAN_Send_S(&hcan1);       
+      CAN_Send_B(&hcan1);
       press_counter++;
         osDelayUntil(&xLastWakeTime, REMOTE_PERIOD);
 	}

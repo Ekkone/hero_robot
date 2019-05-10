@@ -162,13 +162,14 @@ void ShotProcess()
 ****************************************************************************************/
 uint8_t back_flag = 0;
 uint8_t round_flag = 0;
+extern uint8_t GunReady;
 void MouseKeyControlProcess() 
 {
   static uint16_t delay = 0;
  
   CAN_Send_YK(&hcan1,RC_Ctl.key.v,0,0,RC_Ctl.rc.s1,RC_Ctl.rc.s2);
   /*弹舱空则传送电机开*/
-  if(BULLTE_EMPTY)
+  if(BULLTE_EMPTY && GunReady)
     stir_motor_flag = 1;
   else
     stir_motor_flag = 0;

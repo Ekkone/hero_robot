@@ -338,7 +338,7 @@ void CAN_Send_YK( CAN_HandleTypeDef * hcan,
 			CAN_Data_YK.DLC = 0x08;
 			CAN_Data_YK.IDE = CAN_ID_STD;
 			CAN_Data_YK.RTR = CAN_RTR_DATA;
-			CAN_Data_YK.StdId = 0x110;
+			CAN_Data_YK.StdId = CAN_Remote;
 
 			CAN_Data_YK.Data[0]=key_v>>8;
 			CAN_Data_YK.Data[1]=key_v;
@@ -358,7 +358,7 @@ void CAN_Send_YT( CAN_HandleTypeDef * hcan, int16_t yaw_angle, int16_t yaw_speed
 			CANSend_YT.DLC = 0x08;
 			CANSend_YT.IDE = CAN_ID_STD;
 			CANSend_YT.RTR = CAN_RTR_DATA;
-			CANSend_YT.StdId = 0x120;
+			CANSend_YT.StdId = CAN_Yaw;
 
 			CANSend_YT.Data[0]=yaw_angle>>8;
 			CANSend_YT.Data[1]=yaw_angle;
@@ -371,46 +371,12 @@ void CAN_Send_YT( CAN_HandleTypeDef * hcan, int16_t yaw_angle, int16_t yaw_speed
 	
 			hcan->pTxMsg = &CANSend_YT;
 			HAL_CAN_Transmit(hcan,30);
-}	
-void CAN_Send_Error( CAN_HandleTypeDef * hcan, int16_t OutLine_Flag, int16_t task_OutLine_Flag )
-{
-			CANSend_Error.DLC = 0x08;
-			CANSend_Error.IDE = CAN_ID_STD;
-			CANSend_Error.RTR = CAN_RTR_DATA;
-			CANSend_Error.StdId = 0x119;
-
-			CANSend_Error.Data[0]=OutLine_Flag>>8;
-			CANSend_Error.Data[1]=OutLine_Flag;
-			CANSend_Error.Data[2]=task_OutLine_Flag>>8;
-			CANSend_Error.Data[3]=task_OutLine_Flag;
-			CANSend_Error.Data[4]=0;
-			CANSend_Error.Data[5]=0;
-			CANSend_Error.Data[6]=0;
-			CANSend_Error.Data[7]=0;
-	
-			hcan->pTxMsg = &CANSend_Error;
-			HAL_CAN_Transmit(hcan,30);
-}	
-
-void CAN_Get_Chassis( CAN_HandleTypeDef * hcan)
-{
-			moto_chassis_get[0].speed_rpm = (int16_t)(hcan->pRxMsg->Data[0]<<8 | hcan->pRxMsg->Data[1]) ;
-	    moto_chassis_get[1].speed_rpm  =(int16_t)(hcan->pRxMsg->Data[2]<<8 | hcan->pRxMsg->Data[3]) ;
-	    moto_chassis_get[2].speed_rpm = (int16_t)(hcan->pRxMsg->Data[4]<<8 | hcan->pRxMsg->Data[5]) ;
-	    moto_chassis_get[3].speed_rpm = (int16_t)(hcan->pRxMsg->Data[6]<<8 | hcan->pRxMsg->Data[7]) ;
-}	
-void CAN_Get_Referee( CAN_HandleTypeDef * hcan)
-{
-  Robot.remainHp = (uint16_t)(hcan->pRxMsg->Data[0]<<8 | hcan->pRxMsg->Data[1]) ;
-  Robot.heat.shoot_42_speed = (uint16_t)(hcan->pRxMsg->Data[2]<<8 | hcan->pRxMsg->Data[3]) ;
-  Robot.heat.shoot_42_heat = (uint16_t)(hcan->pRxMsg->Data[4]<<8 | hcan->pRxMsg->Data[5]) ;
-  Robot.heat.shoot_42_cooling_limit = (uint16_t)(hcan->pRxMsg->Data[6]<<8 | hcan->pRxMsg->Data[7]) ;
-}
-void CAN_Get_MiniPC( CAN_HandleTypeDef * hcan)
+}		
+extern uint16_t remain_heat;
+void CAN_Receive( CAN_HandleTypeDef * hcan)
 {
   minipc_rx_big.angle_yaw = (int16_t)(hcan->pRxMsg->Data[0]<<8 | hcan->pRxMsg->Data[1]) ;
   minipc_rx_big.angle_pit = (int16_t) (hcan->pRxMsg->Data[2]<<8 | hcan->pRxMsg->Data[3]) ;
   minipc_rx_big.state_flag = (uint8_t)(hcan->pRxMsg->Data[4]);
-  Robot.level = (uint8_t)(hcan->pRxMsg->Data[5]);
-  
+  remain_heat = (uint16_t)(hcan->pRxMsg->Data[5]<<8 | hcan->pRxMsg->Data[6]) ;
 }

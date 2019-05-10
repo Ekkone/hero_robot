@@ -23,11 +23,9 @@ typedef enum
   CAN_YT = 0x120,
 	CAN_YK = 0x110,
   /*µ×ÅÌ->ÔÆÌ¨*/
-  CAN_Referee_B = 0x011,
-  CAN_Mini_B = 0X012,
+  CAN_TX_B = 0X012,
   /*µ×ÅÌ->Ð¡ÔÆÌ¨*/
-  CAN_Referee_S = 0x013,
-  CAN_Mini_S = 0X114,
+  CAN_TX_S = 0x013,
   /*CAN2*/
 	CAN_3510Moto_ALL_ID = 0x200,
 	CAN_3510Moto1_ID = 0x201,
@@ -86,10 +84,8 @@ void get_total_angle(moto_measure_t *p);
 
 void CAN_RX_YK(CAN_HandleTypeDef * hcan);
 void CAN_RX_YT(CAN_HandleTypeDef * hcan);
-void CAN_Send_Referee_B( CAN_HandleTypeDef * hcan);
-void CAN_Send_MINI_B( CAN_HandleTypeDef * hcan);
-void CAN_Send_Referee_S( CAN_HandleTypeDef * hcan);
-void CAN_Send_MINI_S( CAN_HandleTypeDef * hcan);
+void CAN_Send_B( CAN_HandleTypeDef * hcan);
+void CAN_Send_S( CAN_HandleTypeDef * hcan);
 
 #endif
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

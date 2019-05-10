@@ -611,17 +611,9 @@ void HAL_CAN_RxCpltCallback(CAN_HandleTypeDef *hcan)
 					get_moto_measure_6623(&pit_get,&hcan1);
 				}
 			}break;
-			case CAN_Referee_B:
+			case CAN_RX_B:
 			{
-				CAN_Get_Referee(hcan);
-			}break;
-      case CAN_Chassis:
-			{
-				CAN_Get_Chassis(hcan);
-			}break;
-      case CAN_Mini_B:
-			{
-				CAN_Get_MiniPC(hcan);
+				CAN_Receive(hcan);
 			}break;
 			default: break;
 		}

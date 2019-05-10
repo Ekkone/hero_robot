@@ -38,17 +38,17 @@ void GUN_Init(void)
 	HAL_TIM_PWM_Start(&htim5,TIM_CHANNEL_1);
 	HAL_TIM_PWM_Start(&htim5,TIM_CHANNEL_2);
 	TIM5->CCR1 = 200;
-//	HAL_Delay(3000);
-//	TIM5->CCR1 = 100;
-//	HAL_Delay(2000);
-//	TIM5->CCR1= 103;
-//	HAL_Delay(1000);
-//	TIM5->CCR2 = 200;
-//	HAL_Delay(3000);
-//	TIM5->CCR2 = 100;
-//	HAL_Delay(2000);
-//	TIM5->CCR2= 103;
-//	HAL_Delay(1000);
+	HAL_Delay(3000);
+	TIM5->CCR1 = 100;
+	HAL_Delay(2000);
+	TIM5->CCR1= 103;
+	HAL_Delay(1000);
+	TIM5->CCR2 = 200;
+	HAL_Delay(3000);
+	TIM5->CCR2 = 100;
+	HAL_Delay(2000);
+	TIM5->CCR2= 103;
+	HAL_Delay(1000);
 
 
 }

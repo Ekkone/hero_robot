@@ -550,13 +550,14 @@ void HAL_CAN_RxCpltCallback(CAN_HandleTypeDef *hcan)
 	{
 		switch(hcan->pRxMsg->StdId)
 		{
-      case CAN_Referee_S:
+      case CAN_RX_S:
 			{
         Communication_flag = 1;
         RefreshDeviceOutLineTime(Remote_NO);
         RefreshDeviceOutLineTime(MiniPC_NO);
-				CAN_Get_Referee(hcan);
+				CAN_Receive_S(hcan);
 			}break;
+      default:break;
 		}
 		if( HAL_BUSY == HAL_CAN_Receive_IT(&hcan2, CAN_FIFO0))//开启中断接收
 		{

@@ -20,6 +20,7 @@
 /* 外部变量声明--------------------------------------------------------------*/
 Heat_Gun_t  ptr_heat_gun_t;
 uint8_t MoCa_Flag = 0;
+uint16_t remain_heat = 0;
 ramp_function_source_t shoot;
 extern uint8_t shot_frequency;
 extern float Golf_speed;
@@ -79,14 +80,14 @@ void Gun_Task(void const * argument)
       case Stop:
       {
         /*摩擦轮停止*/
-        set_M_speed = 100;
-        //ptr_heat_gun_t.sht_flg = 11;
+        set_M_speed = 103;
+        ptr_heat_gun_t.sht_flg = GunStop;
       }break;
       case Init:
       {
         /*摩擦轮初始化*/
         set_M_speed = 105;
-        //ptr_heat_gun_t.sht_flg = 11;
+        ptr_heat_gun_t.sht_flg = GunStop;
       }break;
       case LowSpeed:
       {
@@ -107,9 +108,8 @@ void Gun_Task(void const * argument)
     ramp_calc(&shoot,set_M_speed);
     Friction_Wheel_Motor(shoot.out,shoot.out);
     /*热量限制*/
-    remain_heat = Robot.heat.shoot_17_cooling_limit - Robot.heat.shoot_17_heat;
     if(remain_heat < 30)
-//      ptr_heat_gun_t.sht_flg = GunStop;
+      ptr_heat_gun_t.sht_flg = GunStop;
     /*判断发射模式*/
     switch(ptr_heat_gun_t.sht_flg)
     {

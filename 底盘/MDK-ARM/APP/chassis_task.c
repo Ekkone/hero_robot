@@ -148,7 +148,6 @@ void Chassis_Contrl_Task(void const * argument)
 												pid_3508_spd[3].pos_out);
 
       } 
-			CAN_Send_MINI_B(&hcan1);;
 			osDelayUntil(&xLastWakeTime, CHASSIS_PERIOD);
   }
 }

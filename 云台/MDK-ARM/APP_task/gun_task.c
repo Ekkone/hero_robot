@@ -20,6 +20,8 @@
 /* 外部变量声明--------------------------------------------------------------*/
 Heat_Gun_t  ptr_heat_gun_t;
 uint8_t MoCa_Flag = 0;
+uint8_t GunReady = 0;
+uint16_t remain_heat = 0;
 extern uint8_t shot_frequency;
 extern float Golf_speed;
 //Power_Heat * power_heat;
@@ -59,6 +61,8 @@ void Gun_Pid_Init()
 	*	@supplement	枪口热量限制任务
 	*	@retval	
 ****************************************************************************************/
+uint32_t run_time = 0;
+uint8_t time_flag = 0;
 void Gun_Task(void const * argument)
 { 
 
@@ -74,7 +78,7 @@ void Gun_Task(void const * argument)
   uint8_t block_flag;
   uint8_t bochi_count = 0;//拨齿计数 0-4
   uint8_t contiue_flag = 0;
-  uint16_t remain_heat = 0;
+  
 	Gun_Pid_Init();
   /*设定发弹*/
 
@@ -93,11 +97,10 @@ void Gun_Task(void const * argument)
       case 1:
       {
         /*摩擦轮速度*/
-        set_M_speed = 7000;
+        set_M_speed = 3000;
       }break;
     }
     /*热量限制*/
-    remain_heat = Robot.heat.shoot_42_cooling_limit - Robot.heat.shoot_42_heat;
     if(remain_heat < 100)
       ptr_heat_gun_t.sht_flg = GunStop;
     /*判断发射模式*/
@@ -122,6 +125,7 @@ void Gun_Task(void const * argument)
 			}break;
       case GunOne://单发模式
       {
+        time_flag = 1;
         /*设定角度*/
         if(bochi_count != 4)//前四个角度
         {
@@ -143,7 +147,7 @@ void Gun_Task(void const * argument)
         }
         /*进入位置环*/
         bochi_count++;
-        ptr_heat_gun_t.sht_flg = 11;
+        ptr_heat_gun_t.sht_flg = GunHold;
         contiue_flag = 0;
         
       }break;
@@ -162,6 +166,21 @@ void Gun_Task(void const * argument)
 
 			default :break;
     }
+    if(time_flag)
+    {
+      run_time++;
+      GunReady = 0;
+    }
+    else GunReady = 1;
+    if(run_time > 60)
+    {
+      time_flag = 0;
+      run_time = 0;
+    }
+//    if(ABS(moto_dial_get.total_angle - set_angle) < 1000)
+//      GunReady = 1;
+//    else 
+//      GunReady = 0;
      ptr_heat_gun_t.sht_flg = GunHold;//默认位置环
      /*速度环*/
      pid_calc(&pid_dial_spd,moto_dial_get.speed_rpm ,set_speed);

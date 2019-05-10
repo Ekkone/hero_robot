@@ -25,8 +25,7 @@ typedef enum
   CAN_GM6020_YAW = 0X205,
   /*CAN2*/
 	/*µ×ÅÌ->Ð¡ÔÆÌ¨*/
-  CAN_Referee_S = 0x013,
-  CAN_Mini_S = 0X114	
+  CAN_RX_S = 0x013
   
 }CAN_Message_ID;
 
@@ -69,8 +68,7 @@ void get_moto_measure_3508(moto_measure_t *ptr,CAN_HandleTypeDef * hcan);
 void get_moto_offset(moto_measure_t *ptr,CAN_HandleTypeDef * hcan);
 void get_total_angle(moto_measure_t *p);
 
-void CAN_Get_Referee( CAN_HandleTypeDef * hcan);
-void CAN_Get_MiniPC( CAN_HandleTypeDef * hcan);
+void CAN_Receive_S( CAN_HandleTypeDef * hcan);
 #endif
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
 
