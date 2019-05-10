@@ -89,9 +89,26 @@ void ChassisModeProcess()
 					 }
            if(RC_Ctl.rc.s1 == 1)
              hard_brak();
+           communication_message = 1;//睡眠模式
 }
 void ShotProcess()
 {	
+  switch(RC_Ctl.rc.s1)
+  {
+    case 1:
+    {
+      communication_message = 1;//睡眠模式
+    }break;
+    case 3:
+    {
+      communication_message = 1;//自动模式
+    }break;
+    case 2:
+    {
+      communication_message = 0;//睡眠模式
+    }break;
+    default: break;
+  }
   moto_3508_set.dstVmmps_W=((RC_Ctl.rc.ch0-0x400)*5);
 	moto_3508_set.dstVmmps_Y=-((RC_Ctl.rc.ch1-0x400)*5);
 }

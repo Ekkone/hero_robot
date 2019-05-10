@@ -49,8 +49,8 @@ void Chassis_pid_init(void)
 	 pid_3508_pos.deadband=150;
 	
 	 PID_struct_init(&pid_chassis_follow, POSITION_PID,3000,1000,
-	               2.9f, 0.01f , 20.0f  );
-//	  pid_chassis_follow.deadband=10;
+	               2.9f, 0.01f , 30.0f  );
+//	  pid_chassis_follow.deadband=10;  
 	 PID_struct_init(&pid_chassis_follow_spd, POSITION_PID,3000,1000,
 	                1.0f, 0.0f , 0.0f  );
 	
@@ -104,7 +104,7 @@ void Chassis_Contrl_Task(void const * argument)
       /*跟随速度环*/ 
 			pid_calc(&pid_chassis_follow_spd,-yaw_speed,pid_chassis_follow.pos_out);
       moto_3508_set.dstVmmps_W = pid_chassis_follow_spd.pos_out;
-      if(abs(Angle_gap)<150)  moto_3508_set.dstVmmps_W=0;
+      if(abs(Angle_gap)<50)  moto_3508_set.dstVmmps_W=0;
         /*麦轮解算得出wheel[4]*/
 			motor_move_setvmmps(wheel,moto_3508_set.dstVmmps_X,moto_3508_set.dstVmmps_Y,moto_3508_set.dstVmmps_W); 	
     }

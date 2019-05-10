@@ -50,7 +50,6 @@ void testTask(void const * argument)
   #if printf_sendware
 		  int16_t  *ptr = &angle; //初始化指针
       int16_t  *p1  = &speed_set;
-			angle	= (pit_get.total_angle);
 			/*用虚拟示波器，发送数据*/
 			vcan_sendware((uint8_t *)ptr,sizeof(angle));
 		

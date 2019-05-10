@@ -106,24 +106,22 @@ void ShotProcess()
 {
   /*底盘模式默认分离*/
   chassis_gimble_Mode_flg = 0;
-  pit_set.expect = pit_set.expect - (0x400-RC_Ctl.rc.ch3)/20;	
-  yaw_set.expect = yaw_set.expect - (0x400-RC_Ctl.rc.ch2)/20;	
-     
   yaw_set_follow.expect = ptr_jy61_t_yaw.final_angle;//更新跟随陀螺仪期望
   
-  MoCa_Flag = 1; 
+  MoCa_Flag = 0; 
   if(press_counter >= press_times)//左按键延迟，  时间由press_time控制
 	{
 		press_counter=press_times+1;
     switch(RC_Ctl.rc.s1)
       {
-        case 1://上,只传送电机开
-        {
-          stir_motor_flag = 1;
-        }break;
-        case 3://中,只拨盘单发
+        case 1://上
         {
           /*拨盘单发*/
+          /*弹舱空则传送电机开*/
+          if(BULLTE_EMPTY)
+            stir_motor_flag = 1;
+          else
+            stir_motor_flag = 0; 
            shot_anjian_counter++;
             if(shot_anjian_counter > shot_frequency)//非连续触发信号
             {
@@ -131,21 +129,21 @@ void ShotProcess()
               press_counter=0;
               shot_anjian_counter=0;
             }
-           stir_motor_flag = 0;           
+          pit_set.expect = pit_set.expect - (0x400-RC_Ctl.rc.ch3)/20;	
+          yaw_set.expect = yaw_set.expect - (0x400-RC_Ctl.rc.ch2)/20;	
         }break;
-        case 2://下，传送电机和拨盘一起
+        case 3://中,大枪管视觉
         {
-          /*拨盘单发*/
-          shot_anjian_counter++;
-            if(shot_anjian_counter > shot_frequency)//非连续触发信号
-            {
-              ptr_heat_gun_t.sht_flg = GunOne;//单发
-              press_counter = 0;
-              shot_anjian_counter = 0;
-            }
-            
+           stir_motor_flag = 0; 
+            yaw_set.expect = yaw_set.expect - minipc_rx_big.angle_yaw;
+            pit_set.expect = pit_set.expect - minipc_rx_big.angle_pit;            
+        }break;
+        case 2://下，小枪管视觉
+        {
+            pit_set.expect = pit_set.expect - (0x400-RC_Ctl.rc.ch3)/20;	
+            yaw_set.expect = yaw_set.expect - (0x400-RC_Ctl.rc.ch2)/20;	
             /*传送电机*/
-            stir_motor_flag = 1;
+            stir_motor_flag = 0;
         }break;
         
         default:break;
@@ -164,7 +162,7 @@ void ShotProcess()
 ****************************************************************************************/
 uint8_t back_flag = 0;
 uint8_t round_flag = 0;
-void MouseKeyControlProcess()
+void MouseKeyControlProcess() 
 {
   static uint16_t delay = 0;
  
@@ -195,7 +193,7 @@ void MouseKeyControlProcess()
      else
       yaw_set_follow.expect = yaw_set_follow.expect -  RC_Ctl.mouse.x/2;	
     
-     yaw_set.expect = yaw_get.total_angle;//更新分离编码器期望
+     yaw_set.expect = -yaw_get.total_angle;//更新分离编码器期望
    }
    else if(chassis_gimble_Mode_flg == 0 || round_flag == 1)//WY运动，底盘云台分离
    {
