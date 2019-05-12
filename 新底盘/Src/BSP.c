@@ -78,7 +78,7 @@ void BSP_Init(void)
   MX_ADC2_Init();
   MX_ADC3_Init();
 	/*串口*/
-	MX_USART2_UART_Init();;
+	MX_USART2_UART_Init();
   MX_USART6_UART_Init();
   MX_UART8_Init();
 	/*SPI*/
@@ -95,6 +95,7 @@ void BSP_Init(void)
   __HAL_DMA_DISABLE_IT(&hdma_adc2,DMA_IT_TC | DMA_IT_HT | DMA_IT_TE | DMA_IT_FE | DMA_IT_DME);
   __HAL_DMA_DISABLE_IT(&hdma_adc3,DMA_IT_TC | DMA_IT_HT | DMA_IT_TE | DMA_IT_FE | DMA_IT_DME);
 	/*使能DMA中断*/
+  HAL_UART_Receive_DMA(&huart2,UART8_RX_DATA,SizeofMinipc);
   HAL_UART_Receive_DMA(&huart6,USART6_RX_DATA,SizeofReferee);
   HAL_UART_Receive_DMA(&huart8,UART8_RX_DATA,SizeofMinipc);
 	/*使能can中断*/

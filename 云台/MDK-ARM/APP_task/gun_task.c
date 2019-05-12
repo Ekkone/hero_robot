@@ -177,10 +177,6 @@ void Gun_Task(void const * argument)
       time_flag = 0;
       run_time = 0;
     }
-//    if(ABS(moto_dial_get.total_angle - set_angle) < 1000)
-//      GunReady = 1;
-//    else 
-//      GunReady = 0;
      ptr_heat_gun_t.sht_flg = GunHold;//默认位置环
      /*速度环*/
      pid_calc(&pid_dial_spd,moto_dial_get.speed_rpm ,set_speed);

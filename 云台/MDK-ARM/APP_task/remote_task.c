@@ -49,14 +49,13 @@ uint8_t chassis_gimble_Mode_flg = 0;
 
 void Minipc_Pid_Init()
 {
-		PID_struct_init(&pid_minipc_yaw, POSITION_PID, 6000, 5000,
-									1.0f,	0.01f, 1.0f);  
+		PID_struct_init(&pid_minipc_yaw, POSITION_PID, 1000, 1000,
+									0.27f,	0.01f, 0.0f); 
+    pid_minipc_yaw.deadband = 5;  
 		//pid_pos[i].deadband=500;
-		PID_struct_init(&pid_minipc_pit, POSITION_PID, 6000, 5000,
-									1.0f,	0.01f, 1.0f	);   
-		pid_pit_spd.deadband=10;//2.5f,	0.03f,	1.0f	
-	
-//    HAL_GPIO_WritePin(GPIOH, GPIO_PIN_5, GPIO_PIN_SET);   //电源引脚 _待续
+		PID_struct_init(&pid_minipc_pit, POSITION_PID, 500, 500,
+									0.05f,	0.0f, 0.00f	);   
+//		pid_pit_spd.deadband=10;//2.5f,	0.03f,	1.0f	
 }
 void ChassisModeProcess()
 {
@@ -134,9 +133,17 @@ void ShotProcess()
         }break;
         case 3://中,大枪管视觉
         {
-           stir_motor_flag = 0; 
-            yaw_set.expect = yaw_set.expect - minipc_rx_big.angle_yaw;
-            pit_set.expect = pit_set.expect - minipc_rx_big.angle_pit;            
+           stir_motor_flag = 0;
+           if(minipc_rx_big.state_flag)
+           {
+            pid_calc(&pid_minipc_pit, minipc_rx_big.angle_pit,0);
+            pid_calc(&pid_minipc_yaw, minipc_rx_big.angle_yaw,0);
+            yaw_set.expect += pid_minipc_yaw.pos_out;
+            pit_set.expect += pid_minipc_pit.pos_out;
+            minipc_rx_big.angle_yaw = 0;
+            minipc_rx_big.state_flag = 0;
+            minipc_rx_big.angle_pit = 0;  
+           }             
         }break;
         case 2://下，小枪管视觉
         {
@@ -190,7 +197,14 @@ void MouseKeyControlProcess()
   if(chassis_gimble_Mode_flg == 1 || back_flag == 1) //XY运动，底盘跟随云台
    {
      if(CTRL_Press&&R_Press&&minipc_rx_big.state_flag)//辅助瞄准
-       yaw_set_follow.expect = yaw_set_follow.expect + minipc_rx_big.angle_yaw;
+     {
+        pid_calc(&pid_minipc_pit,0, minipc_rx_big.angle_pit);
+        pid_calc(&pid_minipc_yaw,0, minipc_rx_big.angle_yaw);
+        yaw_set.expect -= pid_minipc_yaw.pos_out;
+        pit_set.expect -= pid_minipc_pit.pos_out;
+        minipc_rx_big.angle_yaw = 0;
+        minipc_rx_big.angle_pit = 0;            
+     }
      else
       yaw_set_follow.expect = yaw_set_follow.expect -  RC_Ctl.mouse.x/2;	
     
@@ -199,7 +213,14 @@ void MouseKeyControlProcess()
    else if(chassis_gimble_Mode_flg == 0 || round_flag == 1)//WY运动，底盘云台分离
    {
      if(CTRL_Press&&R_Press&&minipc_rx_big.state_flag)//辅助瞄准
-       yaw_set.expect = yaw_set.expect - minipc_rx_big.angle_yaw;
+     {
+        pid_calc(&pid_minipc_pit,0, minipc_rx_big.angle_pit);
+        pid_calc(&pid_minipc_yaw,0, minipc_rx_big.angle_yaw);
+        yaw_set.expect -= pid_minipc_yaw.pos_out;
+        pit_set.expect -= pid_minipc_pit.pos_out;
+        minipc_rx_big.angle_yaw = 0;
+        minipc_rx_big.angle_pit = 0;            
+     }
      else
       yaw_set.expect = yaw_set.expect + RC_Ctl.mouse.x/2;
      
@@ -261,6 +282,7 @@ void Remote_Data_Task(void const * argument)
     uint32_t NotifyValue;
 		portTickType xLastWakeTime;
 		xLastWakeTime = xTaskGetTickCount();
+    Minipc_Pid_Init();
 	for(;;)
 	{
 		/*刷新断线时间*/

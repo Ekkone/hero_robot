@@ -19,7 +19,7 @@
  uint8_t USART6_RX_DATA[(SizeofReferee)];//裁判系统
  uint16_t USART6_RX_NUM ;
  uint8_t UART8_RX_DATA[(SizeofMinipc)];//外接PC大云台
- uint16_t UART4_RX_NUM ;
+ uint16_t UART8_RX_NUM ;
 RC_Ctl_t RC_Ctl; //遥控数据
 /* 内部宏定义 ----------------------------------------------------------------*/
 

@@ -268,6 +268,7 @@ void BSP_Init(void)
 	/*定时器*/
   MX_TIM12_Init();//测速模块定时器
 	MX_TIM6_Init();
+  MX_TIM5_Init();
 	SystemState_Inite();
 
 	/*串口*/

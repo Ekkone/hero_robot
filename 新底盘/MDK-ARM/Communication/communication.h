@@ -12,7 +12,7 @@
 extern uint8_t USART6_RX_DATA[(SizeofReferee)];//裁判系统
 extern uint16_t USART6_RX_NUM;
 extern uint8_t UART8_RX_DATA[(SizeofMinipc)];//外接PC
-extern uint16_t UART4_RX_NUM;
+extern uint16_t UART8_RX_NUM;
 /* 本模块向外部提供的数据类型定义 --------------------------------------------*/
 
 ///////////////遥控/////////////////////

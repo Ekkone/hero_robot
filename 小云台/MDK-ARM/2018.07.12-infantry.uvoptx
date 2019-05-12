@@ -305,6 +305,36 @@
           <WinNumber>1</WinNumber>
           <ItemText>Robot.level</ItemText>
         </Ww>
+        <Ww>
+          <count>30</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>shoot.out</ItemText>
+        </Ww>
+        <Ww>
+          <count>31</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>MoCa_Flag</ItemText>
+        </Ww>
+        <Ww>
+          <count>32</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>set_M_speed,0x0A</ItemText>
+        </Ww>
+        <Ww>
+          <count>33</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>pid_dial_spd.pos_out</ItemText>
+        </Ww>
+        <Ww>
+          <count>34</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>moto_dial_get.speed_rpm,0x0A</ItemText>
+        </Ww>
+        <Ww>
+          <count>35</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>minipc_rx_small,0x0A</ItemText>
+        </Ww>
       </WatchWindow1>
       <WatchWindow2>
         <Ww>
@@ -640,8 +670,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\云台\MDK-ARM\MotorDriver\Motor_USE_TIM.c</PathWithFileName>
-      <FilenameWithoutPath>Motor_USE_TIM.c</FilenameWithoutPath>
+      <PathWithFileName>..\Src\AX-12A.c</PathWithFileName>
+      <FilenameWithoutPath>AX-12A.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -652,8 +682,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\Src\AX-12A.c</PathWithFileName>
-      <FilenameWithoutPath>AX-12A.c</FilenameWithoutPath>
+      <PathWithFileName>.\MotorDriver\Motor_USE_TIM.c</PathWithFileName>
+      <FilenameWithoutPath>Motor_USE_TIM.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -696,8 +726,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\云台\MDK-ARM\Algorithm\user_lib.c</PathWithFileName>
-      <FilenameWithoutPath>user_lib.c</FilenameWithoutPath>
+      <PathWithFileName>.\Algorithm\protocol.c</PathWithFileName>
+      <FilenameWithoutPath>protocol.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -708,8 +738,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>.\Algorithm\protocol.c</PathWithFileName>
-      <FilenameWithoutPath>protocol.c</FilenameWithoutPath>
+      <PathWithFileName>.\Algorithm\user_lib.c</PathWithFileName>
+      <FilenameWithoutPath>user_lib.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>

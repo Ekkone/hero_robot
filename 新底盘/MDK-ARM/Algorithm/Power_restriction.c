@@ -346,42 +346,9 @@ float Shield(float num,float waterline,float filed)
 */
 void Get_ADC_Value(void)
 {
-		static uint32_t *buff1 = uhADC1ConvertedValue; //底盘总电流adc数据
 		static uint32_t *buff2 = uhADC2ConvertedValue; //电容总电压Hadc数据
 		static uint32_t *buff3 = uhADC3ConvertedValue; //电容总电压Ladc数据
 
-		//总电流adc数据处理
-		float sum1 = 0;
-		
-		for(uint8_t i = 0;i < 10;i++)
-		{
-			sum1 += buff1[i];
-		}
-	
-		sum1 =  sum1 / 10;
-		
-		if(current_get.Current_Offset_num > 200)
-		{
-			current_get.CurrentCalculat = (sum1 * (0.00080566f) - 2.50f) * 25.0f -
-																		 current_get.Current_Offset;
-		}
-		else
-		{
-			current_get.Current_Offset_num++;
-			
-			current_get.CurrentCalculat = (sum1 * (0.00080566f) - 2.50f) * 25.0f;
-			
-			if(current_get.Current_Offset_num > 50)
-			{
-        current_get.Current_Referee = (float)Robot.Chassis_Power.Chassis_Current * 0.001;
-				current_get.Current_Offset += current_get.CurrentCalculat - current_get.Current_Referee;
-			}
-			if(current_get.Current_Offset_num > 200)
-			{
-				current_get.Current_Offset = current_get.Current_Offset/150.0f;
-			}
-		}
-		
 		//电容电压ADC数据处理,暂做均值处理
 		static uint32_t sum_voltH = 0,sum_voltL = 0;
 		static float buff[6] = {0};
@@ -416,33 +383,9 @@ void Get_ADC_Value(void)
 
 void Power_Calculate(void)
 {
-    static float power_referee_last = 0;
 		limit.Power_Referee =  Robot.Chassis_Power.chassis_Power;
-    limit.Volt_Referee = Robot.Chassis_Power.Chassis_Volt * 0.001;
-//		if(limit.Volt_Referee != 0)//防止裁判系统失效
-//		{
-//			limit.Power_Calculat = current_get.CurrentCalculat * limit.Volt_Referee * 0.001;
 
-//		}else
-		{
-			limit.Power_Calculat = current_get.CurrentCalculat * 23.3f;		
-		}
-		
-		limit.Power_Chassis_Calculat = current_get.Chassis_Current * 23.3f;//current_get.Capacitance_Volt;
-		
-    if(limit.Power_Referee !=power_referee_last)
-    {
-        limit.Power_Calculat = limit.Power_Referee;
-    }
-    
-    power_referee_last = limit.Power_Referee;
-    
-            limit.Power_Calculat = limit.Power_Referee;//test
-
-    
-		VAL_LIMIT(limit.Power_Calculat,0,300);
-		VAL_LIMIT(limit.Power_Chassis_Calculat,0,300);
-
+    limit.Power_Calculat = limit.Power_Referee;
 }
 
 /*
@@ -451,34 +394,11 @@ void Power_Calculate(void)
 ** Output: NULL
 */
 void Remain_Power_Calculate(void)
-{
-		/*采集时间*/
-		MyTime_statistics(&time_for_RP);
-	
-		/*能量缓存计算*/
-		if(limit.PowerRemain_Calculat_Last < 60 || limit.Power_Calculat > 80)
-		{
-			limit.PowerRemain_Calculat -= (limit.Power_Calculat - 80) * time_for_RP.time * 0.001f;
-		}
-		if(limit.Power_Calculat < 80 && limit.PowerRemain_Calculat_Last == 60)
-		{
-			limit.PowerRemain_Calculat = 60 - (limit.Power_Calculat - 80) * time_for_RP.time * 0.001f;
-		}
-		
+{	
 		/*有裁判系统更新数据，就使用裁判系统数据*/
 		limit.PowerRemain_Referee = Robot.Chassis_Power.Chassis_Power_buffer;
-		if(limit.PowerRemain_Referee != limit.PowerRemain_Referee_last)
-		{
-			limit.PowerRemain_Calculat = limit.PowerRemain_Referee;
-		}
-		limit.PowerRemain_Referee_last = limit.PowerRemain_Referee;	
-		
-    limit.PowerRemain_Calculat = limit.PowerRemain_Referee;//test
-		/*清空总时间*/
-		MyTime_memset(&time_for_RP,2);		
-		
-		/*恢复能量缓存*/
-		VAL_LIMIT(limit.PowerRemain_Calculat, 0.0f, 60.0f);
+
+    limit.PowerRemain_Calculat = limit.PowerRemain_Referee;
 }
 /*
 ** Descriptions:电容电压处理
@@ -583,15 +503,6 @@ void Super_Capacitance(float * Current_get)
 		/*处理电容电压*/
 		Cap_Volt_Treatment(MinVoltOFCap,Filed);
 	
-	
-		/*等待底盘电机电流检测模块采集偏置量*/
-		if(current_get.Current_Offset_num < 200)
-		{
-//				printf("current:%f,power:%f,capVolt:%f,ChassisP:%f，ChassisI:%f,state2:%d,%d\n\r",current_get.CurrentCalculat,limit.Power_Calculat,current_get.Capacitance_Volt,limit.Power_Chassis_Calculat,current_get.Chassis_Current,state2,flag);
-
-				return;
-		}
-		
 		/*判断一级状态*/
 		if (state1)
 		{

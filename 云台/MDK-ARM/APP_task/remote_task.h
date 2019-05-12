@@ -27,7 +27,7 @@
 #define  ACC_SPEED    30 
 #define  DEC_SPEED    300 
 /*按键*/
-#define PRESS_DELAY  30
+#define PRESS_DELAY  17
 /* ----------------------- PC Key Definition-------------------------------- */
 #define KEY_PRESSED_OFFSET_W ((uint16_t)1 << 0)
 #define KEY_PRESSED_OFFSET_S ((uint16_t)1 << 1)

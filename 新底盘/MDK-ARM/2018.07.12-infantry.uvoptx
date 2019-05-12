@@ -158,112 +158,67 @@
         <Ww>
           <count>0</count>
           <WinNumber>1</WinNumber>
-          <ItemText>delay</ItemText>
+          <ItemText>pit_get.angle,0x0A</ItemText>
         </Ww>
         <Ww>
           <count>1</count>
           <WinNumber>1</WinNumber>
-          <ItemText>Right_Press</ItemText>
+          <ItemText>yaw_get.angle,0x0A</ItemText>
         </Ww>
         <Ww>
           <count>2</count>
           <WinNumber>1</WinNumber>
-          <ItemText>ptr_jy61_t_yaw</ItemText>
+          <ItemText>chassis_gimble_Mode_flg</ItemText>
         </Ww>
         <Ww>
           <count>3</count>
           <WinNumber>1</WinNumber>
-          <ItemText>pit_get.angle,0x0A</ItemText>
+          <ItemText>Robot.heat.shoot_42_cooling_limit</ItemText>
         </Ww>
         <Ww>
           <count>4</count>
           <WinNumber>1</WinNumber>
-          <ItemText>yaw_get.angle,0x0A</ItemText>
+          <ItemText>Robot.heat.shoot_42_heat</ItemText>
         </Ww>
         <Ww>
           <count>5</count>
           <WinNumber>1</WinNumber>
-          <ItemText>pid_pit_jy61_spd.pos_out</ItemText>
+          <ItemText>Robot.remainHp</ItemText>
         </Ww>
         <Ww>
           <count>6</count>
           <WinNumber>1</WinNumber>
-          <ItemText>chassis_gimble_Mode_flg</ItemText>
+          <ItemText>stir_motor_flag</ItemText>
         </Ww>
         <Ww>
           <count>7</count>
           <WinNumber>1</WinNumber>
-          <ItemText>yaw_set.expect</ItemText>
+          <ItemText>Robot</ItemText>
         </Ww>
         <Ww>
           <count>8</count>
           <WinNumber>1</WinNumber>
-          <ItemText>ptr_heat_gun_t.sht_flg</ItemText>
+          <ItemText>capvolt</ItemText>
         </Ww>
         <Ww>
           <count>9</count>
           <WinNumber>1</WinNumber>
-          <ItemText>Robot.heat.shoot_42_cooling_limit</ItemText>
+          <ItemText>UART8_RX_DATA</ItemText>
         </Ww>
         <Ww>
           <count>10</count>
           <WinNumber>1</WinNumber>
-          <ItemText>Robot.heat.shoot_42_heat</ItemText>
+          <ItemText>minipc_rx_big,0x0A</ItemText>
         </Ww>
         <Ww>
           <count>11</count>
           <WinNumber>1</WinNumber>
-          <ItemText>Robot.remainHp</ItemText>
+          <ItemText>minipc_rx_small,0x0A</ItemText>
         </Ww>
         <Ww>
           <count>12</count>
           <WinNumber>1</WinNumber>
-          <ItemText>pit_get</ItemText>
-        </Ww>
-        <Ww>
-          <count>13</count>
-          <WinNumber>1</WinNumber>
-          <ItemText>stir_motor_flag</ItemText>
-        </Ww>
-        <Ww>
-          <count>14</count>
-          <WinNumber>1</WinNumber>
-          <ItemText>remain_heat,0x0A</ItemText>
-        </Ww>
-        <Ww>
-          <count>15</count>
-          <WinNumber>1</WinNumber>
-          <ItemText>value</ItemText>
-        </Ww>
-        <Ww>
-          <count>16</count>
-          <WinNumber>1</WinNumber>
-          <ItemText>run_time,0x0A</ItemText>
-        </Ww>
-        <Ww>
-          <count>17</count>
-          <WinNumber>1</WinNumber>
-          <ItemText>time_flag,0x0A</ItemText>
-        </Ww>
-        <Ww>
-          <count>18</count>
-          <WinNumber>1</WinNumber>
-          <ItemText>GunReady,0x0A</ItemText>
-        </Ww>
-        <Ww>
-          <count>19</count>
-          <WinNumber>1</WinNumber>
-          <ItemText>uhADC1ConvertedValue,0x0A</ItemText>
-        </Ww>
-        <Ww>
-          <count>20</count>
-          <WinNumber>1</WinNumber>
-          <ItemText>uhADC2ConvertedValue,0x0A</ItemText>
-        </Ww>
-        <Ww>
-          <count>21</count>
-          <WinNumber>1</WinNumber>
-          <ItemText>uhADC3ConvertedValue,0x0A</ItemText>
+          <ItemText>\\hero_robot\Communication/minipc.c\minipc_rx_big.state_flag</ItemText>
         </Ww>
       </WatchWindow1>
       <WatchWindow2>

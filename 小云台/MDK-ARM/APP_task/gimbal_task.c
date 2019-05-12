@@ -29,6 +29,8 @@ pid_t pid_yaw       = {0};  //yaw轴位置环
 pid_t pid_pit       = {0};	//pit轴位置环
 pid_t pid_yaw_spd   = {0};	//yaw轴速度环
 pid_t pid_pit_spd   = {0};	//pit轴速度环
+pid_t pid_minipc_pit    = {0};
+pid_t pid_minipc_yaw    = {0};
 
 
 pid_t pid_yaw_jy61 = {0};  //外接陀螺仪 /*目前只用于位置环*/ 
@@ -51,6 +53,10 @@ pid_t pid_pit_jy61_spd = {0};
 void gimbal_pid_init(void)
 {
 		/*pitch axis motor pid parameter*/
+  PID_struct_init(&pid_minipc_pit, POSITION_PID, 800, 500,
+									0.01f, 0.0f, 0.0f);
+  PID_struct_init(&pid_minipc_yaw, POSITION_PID, 800, 500,
+                  0.04f, 0.0f, 0.0f);
   #if imu
   /*imu pid parameter*/
   /*暂时稳定版*/
@@ -154,7 +160,7 @@ void Gimbal_Contrl_Task(void const * argument)
         }break;
         case PatrolMode://巡逻模式，yaw轴周期转动
         {
-          pit_set.expect = 250 - pit_get.offset_angle;
+          //pit_set.expect = 250 - pit_get.offset_angle;
           if((yaw_set.expect) > 3500 \
             || (yaw_set.expect ) < -1300)
             {
@@ -165,10 +171,13 @@ void Gimbal_Contrl_Task(void const * argument)
         }break;
         case SnipeMode://狙击模式
         {
-          yaw_set.expect = minipc_rx_small.angle_yaw + yaw_set.expect;
-          pit_set.expect = minipc_rx_small.angle_pit + pit_set.expect;
+          pid_calc(&pid_minipc_pit,0, minipc_rx_small.angle_pit);
+          pid_calc(&pid_minipc_yaw,0, minipc_rx_small.angle_yaw);
+          yaw_set.expect += pid_minipc_yaw.pos_out;
+          pit_set.expect -= pid_minipc_pit.pos_out;
           minipc_rx_small.angle_yaw = 0;
           minipc_rx_small.angle_pit = 0;
+          minipc_rx_small.state_flag = 0;
         }break;
       }
       /*云台限位保护*/
@@ -191,7 +200,7 @@ void Gimbal_Contrl_Task(void const * argument)
       pid_calc(&pid_pit_spd,(imu_data.gy), pid_pit.pos_out);
       Pitch_Current_Value=(pid_pit_spd.pos_out); 
         
-      /*yaw轴云台保护1200-8100*/
+      /*yaw轴云台保护-1400~3600*/
       if((yaw_set.expect) > 3600)
       {
         if(yaw_set.expect <= yaw_set.expect_last)

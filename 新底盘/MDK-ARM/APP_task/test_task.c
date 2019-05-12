@@ -67,7 +67,7 @@ void testTask(void const * argument)
       float *p3 = &speed__;
 			angle	= (pit_get.total_angle);
 			/*用虚拟示波器，发送数据*/
-			vcan_sendware((uint8_t *)ptr,sizeof(angle));
+//			vcan_sendware((uint8_t *)ptr,sizeof(angle));
 		
 //		printf("  pit=%d \n\t",pit_get.total_angle);
 //	  printf("  yaw=%d \n\t",yaw_get.angle);

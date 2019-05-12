@@ -83,7 +83,7 @@ DMA_HandleTypeDef hdma_uart8_rx;
 #endif /* __GNUC__ */ /** * @brief Retargets the C library printf function to the USART. * @param None * @retval None */ 
 PUTCHAR_PROTOTYPE { 
 //while(HAL_UART_GetState(&huart3) == HAL_UART_STATE_BUSY_TX){}
-HAL_UART_Transmit(&huart2, (uint8_t *)&ch, 1, 100); 
+HAL_UART_Transmit(&huart8, (uint8_t *)&ch, 1, 100); 
 return ch; }//´®¿Úµ÷ÊÔ±ØÐë
 
 #define uart_putbuff Usart_SendArray

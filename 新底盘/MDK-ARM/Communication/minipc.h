@@ -6,12 +6,9 @@
 #include "SystemState.h"
 
 typedef struct{
-
-unsigned char 		frame_header; 		  //帧头0xFD
  int16_t 					angle_yaw;     			//yaw angle
  int16_t 					angle_pit;     			//pitch angle 
 unsigned char 		state_flag;     		//当前状态：【0 未瞄准目标 】【 1 近距离锁定目标】【2 远距离锁定目标】【3 打符模式】
-unsigned char 		frame_tail; 	  	  //帧尾0xFC
 }Minipc_Rx;
 
 typedef struct{

@@ -172,18 +172,18 @@ void Gimbal_Contrl_Task(void const * argument)
       IMU_Get_Data();
       
       /*云台限位保护*/
-      /*pit正常280-800*/
-      if((pit_set.expect + pit_get.offset_angle) > 800)
+      /*pit正常200-1300*/
+      if((pit_set.expect + pit_get.offset_angle) > 1300)
       {
         if(pit_set.expect <= pit_set.expect_last)
           goto pit_last;
-        pit_set.expect = 800 - pit_get.offset_angle;
+        pit_set.expect = 1300 - pit_get.offset_angle;
       }
-      if((pit_set.expect + pit_get.offset_angle) < 280)
+      if((pit_set.expect + pit_get.offset_angle) < 200)
       {
         if(pit_set.expect >= pit_set.expect_last)
           goto pit_last;
-        pit_set.expect = 280 - pit_get.offset_angle;
+        pit_set.expect = 200 - pit_get.offset_angle;
       }
       //pit轴编码器
       pit_last:pid_calc(&pid_pit_jy61, pit_get.total_angle, pit_set.expect);
@@ -195,18 +195,18 @@ void Gimbal_Contrl_Task(void const * argument)
         if(back_flag)
           goto back;
         /*yaw轴云台保护3100-4300*/
-          if((yaw_set.expect + yaw_get.offset_angle) > 4300)
-          {
-            if(yaw_set.expect <= yaw_set.expect_last)
-              goto yaw_last;
-            yaw_set.expect = 4300 - yaw_get.offset_angle;
-          }
-          if((yaw_set.expect + yaw_get.offset_angle) < 3100)
-          {
-            if(yaw_set.expect >= yaw_set.expect_last)
-              goto yaw_last;
-            yaw_set.expect = 3100 - yaw_get.offset_angle;
-          }
+        if((yaw_get.offset_angle - yaw_set.expect) > 4300)
+        {
+          if(yaw_set.expect >= yaw_set.expect_last)
+            goto yaw_last;
+            yaw_set.expect = yaw_get.offset_angle - 4300;
+        }
+        if((yaw_get.offset_angle - yaw_set.expect) < 3100)
+        {
+          if(yaw_set.expect <= yaw_set.expect_last)
+            goto yaw_last;
+            yaw_set.expect = yaw_get.offset_angle - 3100;
+        }
           yaw_last:pid_calc(&pid_yaw_jy61,(-yaw_get.total_angle),yaw_set.expect);
           pid_calc(&pid_yaw_jy61_spd,(-ptr_jy61_t_angular_velocity.vz), pid_yaw_jy61.pos_out);
           Yaw_Current_Value= (pid_yaw_jy61_spd.pos_out);
@@ -214,19 +214,18 @@ void Gimbal_Contrl_Task(void const * argument)
       else//跟随
       {
         /*yaw轴云台保护*/
-        back:  
+        back:
           if(yaw_get.angle > 4300)
           {
-            if(yaw_set_follow.expect <= yaw_set_follow.expect_last)
-            goto yaw_follow_last;
-            yaw_set_follow.expect = ptr_jy61_t_yaw.final_angle;
+            if(yaw_set_follow.expect >= yaw_set_follow.expect_last)
+              goto yaw_follow_last;
+              yaw_set_follow.expect = ptr_jy61_t_yaw.final_angle;
           }
-
           if(yaw_get.angle < 3100)
           {
-            if(yaw_set_follow.expect >= yaw_set_follow.expect_last)
-            goto yaw_follow_last;
-            yaw_set_follow.expect = ptr_jy61_t_yaw.final_angle;
+            if(yaw_set_follow.expect <= yaw_set_follow.expect_last)
+              goto yaw_follow_last;
+              yaw_set_follow.expect = ptr_jy61_t_yaw.final_angle;
           }
       yaw_follow_last:pid_calc(&pid_yaw_jy61_follow,(ptr_jy61_t_yaw.final_angle),yaw_set_follow.expect);
           pid_calc(&pid_yaw_jy61_follow_spd,(ptr_jy61_t_angular_velocity.vz), pid_yaw_jy61_follow.pos_out);

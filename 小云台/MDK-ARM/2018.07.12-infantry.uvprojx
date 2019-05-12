@@ -493,14 +493,14 @@
               <FilePath>.\MotorDriver\Motor_USE_CAN.c</FilePath>
             </File>
             <File>
-              <FileName>Motor_USE_TIM.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\云台\MDK-ARM\MotorDriver\Motor_USE_TIM.c</FilePath>
-            </File>
-            <File>
               <FileName>AX-12A.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\Src\AX-12A.c</FilePath>
+            </File>
+            <File>
+              <FileName>Motor_USE_TIM.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\MotorDriver\Motor_USE_TIM.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -518,14 +518,14 @@
               <FilePath>.\Algorithm\SystemState.c</FilePath>
             </File>
             <File>
-              <FileName>user_lib.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\云台\MDK-ARM\Algorithm\user_lib.c</FilePath>
-            </File>
-            <File>
               <FileName>protocol.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\Algorithm\protocol.c</FilePath>
+            </File>
+            <File>
+              <FileName>user_lib.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Algorithm\user_lib.c</FilePath>
             </File>
           </Files>
         </Group>

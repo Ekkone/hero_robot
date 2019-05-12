@@ -136,8 +136,8 @@ void MouseKeyControlProcess()
   else round_flag = 0;
 	if(SHIFT_Press)//最高速度
       {
-        XY_speed_max = 5000;//(NORMAL_SPEED_MAX)*3.5;
-        XY_speed_min = -5000;//(NORMAL_SPEED_MIN)*3.5;
+        XY_speed_max = 7000;//(NORMAL_SPEED_MAX)*3.5;
+        XY_speed_min = -7000;//(NORMAL_SPEED_MIN)*3.5;
         W_speed_max = 3000;
         W_speed_min = -3000; 
       }
@@ -150,8 +150,8 @@ void MouseKeyControlProcess()
     }
   else//正常速度
   {
-     XY_speed_max = 4000;//(NORMAL_SPEED_MAX)*3.5;
-     XY_speed_min = -4000;//(NORMAL_SPEED_MIN)*3.5;
+     XY_speed_max = 5000;//(NORMAL_SPEED_MAX)*3.5;
+     XY_speed_min = -5000;//(NORMAL_SPEED_MIN)*3.5;
      W_speed_max = 2000;
      W_speed_min = -2000;
   }
@@ -243,6 +243,7 @@ void hard_brak()
 	*	@supplement	遥控数据接收及处理任务
 	*	@retval	
 ****************************************************************************************/
+float capvolt;
 void Remote_Data_Task(void const * argument)
 {
 		portTickType xLastWakeTime;
@@ -253,6 +254,7 @@ void Remote_Data_Task(void const * argument)
 	for(;;)
 	{
     /*发送给操作界面*/
+    capvolt = Show_CapVolt();
     sendata(Show_CapVolt(),0,0,stir_motor_flag,1,1,1,1,1);
 			RefreshTaskOutLineTime(RemoteDataTask_ON);
 				switch(RC_Ctl.rc.s2)
@@ -271,8 +273,10 @@ void Remote_Data_Task(void const * argument)
 			VAL_LIMIT(moto_3508_set.dstVmmps_Y, XY_speed_min, XY_speed_max);	
 			VAL_LIMIT(moto_3508_set.dstVmmps_W, W_speed_min, W_speed_max);
         
-      CAN_Send_S(&hcan1);       
-      CAN_Send_B(&hcan1);
+      CAN_Send_S(&hcan1);
+      minipc_rx_big.angle_yaw  = 0;
+      minipc_rx_big.angle_pit  = 0;
+      minipc_rx_big.state_flag = 0;
       press_counter++;
         osDelayUntil(&xLastWakeTime, REMOTE_PERIOD);
 	}

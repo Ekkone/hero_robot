@@ -18,8 +18,6 @@ else if(val>=max)\
 /* 任务相关信息定义----------------------------------------------------------*/
 //extern osMessageQId JSYS_QueueHandle;
 /* 内部常量定义--------------------------------------------------------------*/
-pid_t pid_minipc_yaw={0};
-pid_t pid_minipc_pit={0};
 pid_t pid_stir_spd;
 #define REMOTE_PERIOD 2
 #define MINIPC_PERIOD 2
@@ -49,17 +47,6 @@ int8_t chassis_gimble_Mode_flg;
 /* 内部函数原型声明-----------------------------------------------------------*/
 
 
-void Minipc_Pid_Init()
-{
-		PID_struct_init(&pid_minipc_yaw, POSITION_PID, 6000, 5000,
-									1.0f,	0.01f, 1.0f);  
-		//pid_pos[i].deadband=500;
-		PID_struct_init(&pid_minipc_pit, POSITION_PID, 6000, 5000,
-									1.0f,	0.01f, 1.0f	);   
-		pid_pit_spd.deadband=10;//2.5f,	0.03f,	1.0f	
-	
-//    HAL_GPIO_WritePin(GPIOH, GPIO_PIN_5, GPIO_PIN_SET);   //电源引脚 _待续
-}
 
 /***************************************************************************************
 **
@@ -81,19 +68,19 @@ void ManualMode()
       {
         case 1://上
         {
-            MoCa_Flag = Stop;
+            MoCa_Flag = Init;
           ptr_heat_gun_t.sht_flg=GunStop;
         }break;
         case 3://中,开启摩擦轮低速
         {
-            MoCa_Flag = LowSpeed;     
+            MoCa_Flag = Init;     
             ptr_heat_gun_t.sht_flg=GunFire;
         }break;
         case 2://下，开启摩擦轮高速与拨盘电机
         {
          
           ptr_heat_gun_t.sht_flg=GunFire;
-            MoCa_Flag = MiddleSpeed; 
+            MoCa_Flag = Init; 
            /*拨盘电机*/
         }break;
         
@@ -195,6 +182,7 @@ void AutoMode()
     else
     {
       gimbal_mode = PatrolMode;
+//      gimbal_mode = SleepMode;
       MoCa_Flag = Init;
       ptr_heat_gun_t.sht_flg=GunStop;
     }
@@ -252,6 +240,7 @@ void Remote_Data_Task(void const * argument)
     else
       set_stir_speed = 0;
       /*速度环*/
+    //set_stir_speed = -700;
        pid_calc(&pid_stir_spd,moto_stir_get.speed_rpm ,set_stir_speed);
        Stir_Motor(&hcan1,pid_stir_spd.pos_out);
 			osDelayUntil(&xLastWakeTime, REMOTE_PERIOD);

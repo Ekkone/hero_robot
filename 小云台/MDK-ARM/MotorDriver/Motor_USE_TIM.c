@@ -34,15 +34,20 @@ void GUN_Init(void)
 {
   /*Ä¦²ÁÂÖ*/
 		__HAL_TIM_ENABLE(&htim5);
-		HAL_TIM_PWM_Start(&htim5,TIM_CHANNEL_1);
-		HAL_TIM_PWM_Start(&htim5,TIM_CHANNEL_2);
-		TIM5_PWM_Init(2000,2000);
-		HAL_Delay(3000);
-		TIM5_PWM_Init(1000,1000);
-		HAL_Delay(2000);
-		TIM5_PWM_Init(lowspeed,lowspeed);
-  
-		HAL_GPIO_WritePin(GPIOG, GPIO_PIN_13, GPIO_PIN_RESET);
+	HAL_TIM_PWM_Start(&htim5,TIM_CHANNEL_1);
+	HAL_TIM_PWM_Start(&htim5,TIM_CHANNEL_2);
+	TIM5->CCR1 = 200;
+	HAL_Delay(3000);
+	TIM5->CCR1 = 100;
+	HAL_Delay(2000);
+	TIM5->CCR1= 103;
+	HAL_Delay(1000);
+	TIM5->CCR2 = 200;
+	HAL_Delay(3000);
+	TIM5->CCR2 = 100;
+	HAL_Delay(2000);
+	TIM5->CCR2= 103;
+	HAL_Delay(1000);
 }
 
 /**

@@ -15,6 +15,8 @@
 
 /* 包含头文件 ----------------------------------------------------------------*/
 #include "minipc.h"
+#include "can.h"
+#include "Motor_USE_CAN.h"
 /* 内部自定义数据类型 --------------------------------------------------------*/
 
 /* 内部宏定义 ----------------------------------------------------------------*/
@@ -48,15 +50,18 @@ void Get_MiniPC_Handle(void)
   uint8_t *buff = UART8_RX_DATA;
   uint8_t frame_header = buff[0];
 	uint8_t frame_tail 	 = buff[6];
+  RefreshDeviceOutLineTime(MINI_NO);
 	if((frame_header == 0xFD) && (frame_tail == 0xFC))
 	{
     RefreshDeviceOutLineTime(MINI_NO);
 		minipc_rx_big.angle_yaw  = (int16_t)(buff[1]<<8|buff[2]);
 		minipc_rx_big.angle_pit  = (int16_t)(buff[3]<<8|buff[4]);
-		minipc_rx_big.state_flag = buff[5];//0无目标，1有目标，2低速，3中速，4高速
+		minipc_rx_big.state_flag = buff[5];//0无目标，1有目标，2低速，3中速，4高速       
+      CAN_Send_B(&hcan1);
 	}
   else if((frame_header == 0xFF) && (frame_tail == 0xFE))
 	{
+    RefreshDeviceOutLineTime(MINI_NO);
 		minipc_rx_small.angle_yaw  = (int16_t)(buff[1]<<8|buff[2]);
 		minipc_rx_small.angle_pit  = (int16_t)(buff[3]<<8|buff[4]);
 		minipc_rx_small.state_flag = buff[5];//0无目标，1有目标，2低速，3中速，4高速

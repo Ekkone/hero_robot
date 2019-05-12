@@ -158,6 +158,7 @@ void Check_Task(void const * argument)
     if(!(SystemState.OutLine_Flag&0x40))//MINI
       LED7_Blink();
     else LED7(0);
+    printf("1");
     osDelayUntil(&xLastWakeTime,200);
     #endif
     

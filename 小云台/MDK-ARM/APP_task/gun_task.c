@@ -43,7 +43,7 @@ void Gun_Pid_Init()
 //									5.0f,	0.0f,	3.0f);  
 		//pid_dial_pos.deadband = 10;
 		PID_struct_init(&pid_dial_spd, POSITION_PID, 10000, 5000,
-									5.0f,	0.03f,	0.0f	);  
+									4.0f,	0.05f,	0.0f	);  
 }
 /* 任务主体部分 -------------------------------------------------------------*/
 
@@ -60,13 +60,13 @@ void Gun_Task(void const * argument)
 	osDelay(100);
 	portTickType xLastWakeTime;
 	xLastWakeTime = xTaskGetTickCount();
-  ramp_init(&shoot,0.05,150,100);//抹茶轮斜坡
+  ramp_init(&shoot,0.05,190,100);//抹茶轮斜坡
 	Gun_Pid_Init();
   /*设定发弹*/
   uint8_t motor_stop_flag=0;
 	static int32_t set_angle = 0;
 	int32_t set_speed = 0;
-  int32_t set_M_speed = 0;
+  int32_t set_M_speed = 103;
 	static uint8_t set_cnt = 0;
   static uint8_t block_flag;
   static uint16_t remain_heat = 0;
@@ -77,39 +77,39 @@ void Gun_Task(void const * argument)
 		RefreshTaskOutLineTime(GunTask_ON);
     switch(MoCa_Flag)
     {
-      case Stop:
-      {
-        /*摩擦轮停止*/
-        set_M_speed = 103;
-        ptr_heat_gun_t.sht_flg = GunStop;
-      }break;
       case Init:
       {
         /*摩擦轮初始化*/
-        set_M_speed = 105;
-        ptr_heat_gun_t.sht_flg = GunStop;
+        shoot.max_value=103;
+        ramp_calc(&shoot,103);
+        Friction_Wheel_Motor(shoot.out,shoot.out);
       }break;
       case LowSpeed:
       {
         /*摩擦轮低速*/
-        set_M_speed = 130;
+        shoot.max_value = 130;
+        ramp_calc(&shoot,130);
+        Friction_Wheel_Motor(shoot.out,shoot.out);
       }break;
       case MiddleSpeed:
       {
         /*摩擦轮中速*/
-        set_M_speed = 160;
+        shoot.max_value = 160;
+        ramp_calc(&shoot,160);
+        Friction_Wheel_Motor(shoot.out,shoot.out);
       }break;
       case HighSpeed:
       {
         /*摩擦轮速低速*/
-        set_M_speed = 190;
+        shoot.max_value = 190;
+        ramp_calc(&shoot,190);
+        Friction_Wheel_Motor(shoot.out,shoot.out);
       }break;
     }
-    ramp_calc(&shoot,set_M_speed);
-    Friction_Wheel_Motor(shoot.out,shoot.out);
+    
     /*热量限制*/
     if(remain_heat < 30)
-      ptr_heat_gun_t.sht_flg = GunStop;
+      //ptr_heat_gun_t.sht_flg = GunStop;
     /*判断发射模式*/
     switch(ptr_heat_gun_t.sht_flg)
     {
@@ -133,7 +133,7 @@ void Gun_Task(void const * argument)
 			}break;
       case GunFire://连发模式
       {
-				set_speed = 1000;
+				set_speed = 800;
 //        contiue_flag = 0;
       }break;
 //      case GunHold:
@@ -145,9 +145,11 @@ void Gun_Task(void const * argument)
 			default :break; 
     }
      /*速度环*/
+    set_speed = 800;
      pid_calc(&pid_dial_spd,moto_dial_get.speed_rpm ,-set_speed);
      /*驱动拨弹电机*/
 		 Shot_Motor(&hcan1,pid_dial_spd.pos_out);
+//    Shot_Motor(&hcan1,5000);
     /*清零标志位*/
 		 minipc_rx_small.state_flag=0;
 		 set_speed = 0;	   

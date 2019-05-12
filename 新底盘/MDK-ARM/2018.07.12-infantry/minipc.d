@@ -58,3 +58,5 @@
 2018.07.12-infantry\minipc.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h
 2018.07.12-infantry\minipc.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/semphr.h
 2018.07.12-infantry\minipc.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/event_groups.h
+2018.07.12-infantry\minipc.o: ..\Inc\can.h
+2018.07.12-infantry\minipc.o: .\MotorDriver\Motor_USE_CAN.h

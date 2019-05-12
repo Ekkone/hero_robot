@@ -336,7 +336,20 @@ void DMA1_Stream6_IRQHandler(void)
 }
 void USART2_IRQHandler (void)
 {
-	 
+	 static  BaseType_t  pxHigherPriorityTaskWoken;
+  uint8_t tmp1,tmp2;
+    tmp1 = __HAL_UART_GET_FLAG(&huart2, UART_FLAG_IDLE);   //空闲中断中将已收字节数取出后，停止DMA
+    tmp2 = __HAL_UART_GET_IT_SOURCE(&huart2, UART_IT_IDLE);
+    if((tmp1 != RESET)&&(tmp2 != RESET))
+    {
+      __HAL_DMA_DISABLE(&hdma_usart2_rx);
+      __HAL_UART_CLEAR_IDLEFLAG(&huart2);
+		
+		UART8_RX_NUM=(SizeofMinipc)-(hdma_usart2_rx.Instance->NDTR);
+    Get_MiniPC_Handle();
+    __HAL_DMA_SET_COUNTER(&hdma_usart2_rx,SizeofMinipc);
+    __HAL_DMA_ENABLE(&hdma_usart2_rx);	
+    }
   /* USER CODE END UART8_IRQn 1 */
 }
 
@@ -369,7 +382,7 @@ void UART8_IRQHandler(void)
       __HAL_DMA_DISABLE(&hdma_uart8_rx);
       __HAL_UART_CLEAR_IDLEFLAG(&huart8);
 		
-		UART4_RX_NUM=(SizeofMinipc)-(hdma_uart8_rx.Instance->NDTR);
+		UART8_RX_NUM=(SizeofMinipc)-(hdma_uart8_rx.Instance->NDTR);
     Get_MiniPC_Handle();
     __HAL_DMA_SET_COUNTER(&hdma_uart8_rx,SizeofMinipc);
     __HAL_DMA_ENABLE(&hdma_uart8_rx);	
