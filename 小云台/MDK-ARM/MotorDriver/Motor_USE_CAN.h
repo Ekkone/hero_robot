@@ -47,6 +47,7 @@ typedef struct{
   int32_t      run_time;
 	int32_t      cmd_time;
 	int32_t      reverse_time;
+  int32_t      REVE_time;
 }moto_measure_t;
 
 /* Exported constants------------------------------------------------------------*/
@@ -60,8 +61,7 @@ void Cloud_Platform_Motor(CAN_HandleTypeDef * hcan,int16_t yaw,int16_t	pitch);
 void Cloud_Platform_Motor_Correct(CAN_HandleTypeDef * hcan);
 void Cloud_Platform_Motor_Disable(CAN_HandleTypeDef * hcan);
 
-void Shot_Motor(CAN_HandleTypeDef * hcan,int16_t bo_value);
-void Stir_Motor(CAN_HandleTypeDef * hcan,int16_t value);
+void Shot_Motor(CAN_HandleTypeDef * hcan,int16_t bo_value,int16_t stir_value);
 void get_moto_measure_GM6020(moto_measure_t *ptr,CAN_HandleTypeDef * hcan);
 void get_moto_measure_GM3510(moto_measure_t *ptr,CAN_HandleTypeDef * hcan);
 void get_moto_measure_3508(moto_measure_t *ptr,CAN_HandleTypeDef * hcan);

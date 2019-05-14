@@ -57,7 +57,7 @@ void Get_MiniPC_Handle(void)
 		minipc_rx_big.angle_yaw  = (int16_t)(buff[1]<<8|buff[2]);
 		minipc_rx_big.angle_pit  = (int16_t)(buff[3]<<8|buff[4]);
 		minipc_rx_big.state_flag = buff[5];//0无目标，1有目标，2低速，3中速，4高速       
-      CAN_Send_B(&hcan1);
+      
 	}
   else if((frame_header == 0xFF) && (frame_tail == 0xFE))
 	{

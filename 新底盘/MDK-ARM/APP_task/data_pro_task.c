@@ -34,8 +34,10 @@ pid_t pid_stir_spd;
 ------------------------------------------------------------------------------
 */
 /* 内部变量------------------------------------------------------------------*/
-int16_t XY_speed_max = 12000;
-int16_t XY_speed_min = -12000; 
+int16_t Y_speed_max = 6000;
+int16_t Y_speed_min = -6000; 
+int16_t X_speed_max = 4000;
+int16_t X_speed_min = -4000; 
 int16_t W_speed_max = 2000;
 int16_t W_speed_min = -2000; 
 uint8_t press_counter;
@@ -101,11 +103,11 @@ void ShotProcess()
     }break;
     case 3:
     {
-      communication_message = 1;//自动模式
+      communication_message = 1;//睡眠模式
     }break;
     case 2:
     {
-      communication_message = 0;//睡眠模式
+      communication_message = 0;//自动模式
     }break;
     default: break;
   }
@@ -136,22 +138,28 @@ void MouseKeyControlProcess()
   else round_flag = 0;
 	if(SHIFT_Press)//最高速度
       {
-        XY_speed_max = 7000;//(NORMAL_SPEED_MAX)*3.5;
-        XY_speed_min = -7000;//(NORMAL_SPEED_MIN)*3.5;
+        Y_speed_max = 7000;//(NORMAL_SPEED_MAX)*3.5;
+        Y_speed_min = -7000;//(NORMAL_SPEED_MIN)*3.5;
+        X_speed_max = 5000;//(NORMAL_SPEED_MAX)*3.5;
+        X_speed_min = -5000;//(NORMAL_SPEED_MIN)*3.5;
         W_speed_max = 3000;
         W_speed_min = -3000; 
       }
   else if(G_Press)//慢速
     {
-      XY_speed_max = 500;//(NORMAL_SPEED_MAX)*3.5;
-      XY_speed_min = -500;//(NORMAL_SPEED_MIN)*3.5;
+      Y_speed_max = 500;//(NORMAL_SPEED_MAX)*3.5;
+      Y_speed_min = -500;//(NORMAL_SPEED_MIN)*3.5;
+      X_speed_max = 500;//(NORMAL_SPEED_MAX)*3.5;
+      X_speed_min = -500;//(NORMAL_SPEED_MIN)*3.5;
       W_speed_max = 500;
       W_speed_min = -500; 
     }
   else//正常速度
   {
-     XY_speed_max = 5000;//(NORMAL_SPEED_MAX)*3.5;
-     XY_speed_min = -5000;//(NORMAL_SPEED_MIN)*3.5;
+     Y_speed_max = 5000;//(NORMAL_SPEED_MAX)*3.5;
+     Y_speed_min = -5000;//(NORMAL_SPEED_MIN)*3.5;
+     X_speed_max = 3000;//(NORMAL_SPEED_MAX)*3.5;
+     X_speed_min = -3000;//(NORMAL_SPEED_MIN)*3.5;
      W_speed_max = 2000;
      W_speed_min = -2000;
   }
@@ -269,11 +277,14 @@ void Remote_Data_Task(void const * argument)
 					default :break;
 				}					
 				
-			VAL_LIMIT(moto_3508_set.dstVmmps_X, XY_speed_min, XY_speed_max);
-			VAL_LIMIT(moto_3508_set.dstVmmps_Y, XY_speed_min, XY_speed_max);	
+			VAL_LIMIT(moto_3508_set.dstVmmps_X, X_speed_min, X_speed_max);
+			VAL_LIMIT(moto_3508_set.dstVmmps_Y, Y_speed_min, Y_speed_max);	
 			VAL_LIMIT(moto_3508_set.dstVmmps_W, W_speed_min, W_speed_max);
-        
+      CAN_Send_B(&hcan1);
       CAN_Send_S(&hcan1);
+      minipc_rx_small.angle_yaw  = 0;
+      minipc_rx_small.angle_pit  = 0;
+      minipc_rx_small.state_flag = 0;
       minipc_rx_big.angle_yaw  = 0;
       minipc_rx_big.angle_pit  = 0;
       minipc_rx_big.state_flag = 0;

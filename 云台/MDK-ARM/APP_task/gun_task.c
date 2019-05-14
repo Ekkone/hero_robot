@@ -97,7 +97,7 @@ void Gun_Task(void const * argument)
       case 1:
       {
         /*摩擦轮速度*/
-        set_M_speed = 3000;
+        set_M_speed = 6000;
       }break;
     }
     /*热量限制*/

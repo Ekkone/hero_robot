@@ -566,5 +566,23 @@ void HAL_CAN_RxCpltCallback(CAN_HandleTypeDef *hcan)
 		}	
 	}
 }
+/**
+	**************************************************************
+	** Descriptions:外部中断回调函数
+	** Input: 	
+  **						
+	**					
+	**					
+	** Output: 全局变量 
+	**************************************************************
+**/
+extern uint8_t gun_ready_flag;
+void	HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
+{
+	if(GPIO_Pin == Check_Pin)//行程开关
+	{
+    gun_ready_flag = 1;
+	}
+}
 /* USER CODE END 1 */
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

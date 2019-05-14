@@ -145,13 +145,10 @@
 #define LED8_Blink()  HAL_GPIO_TogglePin(LED_GPIO_Port,LED8_Pin) 
 #endif	 
 	
-//光电门	
-#define gate2_Pin GPIO_PIN_7
-#define gate2_GPIO_Port GPIOI
-#define gate2_EXTI_IRQn EXTI9_5_IRQn
-#define gate1_Pin GPIO_PIN_2
-#define gate1_GPIO_Port GPIOI
-#define gate1_EXTI_IRQn EXTI2_IRQn
+//行程开关
+#define Check_Pin GPIO_PIN_2
+#define Check_GPIO_Port GPIOI
+#define Check_EXTI_IRQn EXTI2_IRQn
 	 
 void MX_GPIO_Init(void);
 

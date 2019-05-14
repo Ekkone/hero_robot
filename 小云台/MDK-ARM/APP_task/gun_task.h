@@ -40,9 +40,8 @@ typedef enum
 typedef enum
 {
   GunStop = 0,
-  GunOne,
   GunFire,
-  GunHold
+  GunBack
 }GunMode;
 /* 本模块向外部提供的宏定义--------------------------------------------------*/
 
@@ -52,7 +51,10 @@ extern Heat_Gun_t  ptr_heat_gun_t;
 extern volatile float remain_power;
 extern uint8_t MoCa_Flag ;
 
-/* 本模块向外部提供的接口函数原型声明----------------------------------------*/
+/* 本模块向外部提供的接口函数原型
+声明----------------------------------------*/
+uint8_t Check_locked(void);
+uint8_t Check_stir_locked(void);
 void Gun_Task(void const * argument);
 
 /* 全局配置区----------------------------------------------------------------*/

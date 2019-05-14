@@ -513,11 +513,6 @@
               <FilePath>.\Algorithm\Power_restriction.c</FilePath>
             </File>
             <File>
-              <FileName>protocol.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\Algorithm\protocol.c</FilePath>
-            </File>
-            <File>
               <FileName>Caloric_restriction.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\Algorithm\Caloric_restriction.c</FilePath>
@@ -541,6 +536,11 @@
               <FileName>minipc.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\Communication\minipc.c</FilePath>
+            </File>
+            <File>
+              <FileName>protocol.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Communication\protocol.c</FilePath>
             </File>
           </Files>
         </Group>

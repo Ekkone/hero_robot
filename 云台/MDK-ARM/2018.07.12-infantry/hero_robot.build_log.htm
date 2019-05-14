@@ -22,18 +22,42 @@ Dialog DLL:      TCM.DLL V1.36.1.0
  
 <h2>Project:</h2>
 F:\Work\hero_robot\ÔÆÌ¨\MDK-ARM\2018.07.12-infantry.uvprojx
-Project File Date:  05/11/2019
+Project File Date:  05/13/2019
 
 <h2>Output:</h2>
 *** Using Compiler 'V5.06 update 6 (build 750)', folder: 'D:\Keil\ARM\ARMCC\Bin'
 Build target 'hero_robot'
-compiling remote_task.c...
-APP_task\remote_task.c(282): warning:  #177-D: variable "NotifyValue"  was declared but never referenced
-      uint32_t NotifyValue;
-APP_task\remote_task.c: 1 warning, 0 errors
+compiling gun_task.c...
+../Drivers/CMSIS/Include/arm_math.h(4889): warning:  #223-D: function "__SMUAD" declared implicitly
+      acc = (q31_t) __SMUAD((uint32_t)S->A0, (uint32_t)in);
+../Drivers/CMSIS/Include/arm_math.h(4893): warning:  #223-D: function "__SMLALD" declared implicitly
+      acc = (q63_t)__SMLALD((uint32_t)S->A1, (uint32_t)*vstate, (uint64_t)acc);
+../Drivers/CMSIS/Include/arm_math.h(4907): warning:  #223-D: function "__SSAT" declared implicitly
+      out = (q15_t) (__SSAT((acc >> 15), 16));
+../Drivers/CMSIS/Include/arm_math.h(5032): warning:  #223-D: function "__QADD" declared implicitly
+      *pIbeta = __QADD(product1, product2);
+../Drivers/CMSIS/Include/arm_math.h(5129): warning:  #223-D: function "__QSUB" declared implicitly
+      *pIb = __QSUB(product2, product1);
+../Drivers/CMSIS/Include/arm_math.h(5250): warning:  #223-D: function "__QADD" declared implicitly
+      *pId = __QADD(product1, product2);
+../Drivers/CMSIS/Include/arm_math.h(5253): warning:  #223-D: function "__QSUB" declared implicitly
+      *pIq = __QSUB(product4, product3);
+../Drivers/CMSIS/Include/arm_math.h(5363): warning:  #223-D: function "__QSUB" declared implicitly
+      *pIalpha = __QSUB(product1, product2);
+../Drivers/CMSIS/Include/arm_math.h(5366): warning:  #223-D: function "__QADD" declared implicitly
+      *pIbeta = __QADD(product4, product3);
+APP_task\gun_task.c(122): warning:  #111-D: statement is unreachable
+            }break;
+APP_task\gun_task.c(73): warning:  #177-D: variable "motor_stop_flag"  was declared but never referenced
+    uint8_t motor_stop_flag=0;
+APP_task\gun_task.c(77): warning:  #177-D: variable "set_cnt"  was declared but never referenced
+    uint8_t set_cnt = 0;
+APP_task\gun_task.c(78): warning:  #177-D: variable "block_flag"  was declared but never referenced
+    uint8_t block_flag;
+APP_task\gun_task.c: 13 warnings, 0 errors
 linking...
-Program Size: Code=25556 RO-data=752 RW-data=296 ZI-data=20936  
-"2018.07.12-infantry\hero_robot.axf" - 0 Error(s), 1 Warning(s).
+Program Size: Code=25412 RO-data=752 RW-data=296 ZI-data=20936  
+"2018.07.12-infantry\hero_robot.axf" - 0 Error(s), 13 Warning(s).
 
 <h2>Software Packages used:</h2>
 
@@ -56,7 +80,7 @@ Package Vendor: Keil
 <h2>Collection of Component Files used:</h2>
 
    * Component: ARM::CMSIS:CORE:5.2.0
-Build Time Elapsed:  00:00:08
+Build Time Elapsed:  00:00:05
 </pre>
 </body>
 </html>

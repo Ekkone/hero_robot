@@ -143,7 +143,7 @@ void Cloud_Platform_Motor_Disable(CAN_HandleTypeDef * hcan)
 	** Output: NULL
 	**************************************************************
 **/
-void Shot_Motor(CAN_HandleTypeDef * hcan,int16_t bo_value)
+void Shot_Motor(CAN_HandleTypeDef * hcan,int16_t bo_value,int16_t stir_value)
 {
 
 			Shot_Motor_Data.DLC = 0x08;
@@ -155,8 +155,8 @@ void Shot_Motor(CAN_HandleTypeDef * hcan,int16_t bo_value)
 			Shot_Motor_Data.Data[1]=bo_value;
 			Shot_Motor_Data.Data[2]=0;
 			Shot_Motor_Data.Data[3]=0;
-			Shot_Motor_Data.Data[4]=0;
-			Shot_Motor_Data.Data[5]=0;
+			Shot_Motor_Data.Data[4]=stir_value>>8;
+			Shot_Motor_Data.Data[5]=stir_value;
 			Shot_Motor_Data.Data[6]=0;
 			Shot_Motor_Data.Data[7]=0;
 	

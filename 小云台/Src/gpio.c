@@ -196,18 +196,15 @@ void MX_GPIO_Init(void)
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
   HAL_GPIO_Init(Buzzer_GPIO_Port, &GPIO_InitStruct);
 
-	//两个光电门
-  GPIO_InitStruct.Pin = gate2_Pin|gate1_Pin;
+	//行程开关
+  GPIO_InitStruct.Pin = Check_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
-  HAL_GPIO_Init(GPIOI, &GPIO_InitStruct);
+  HAL_GPIO_Init(Check_GPIO_Port, &GPIO_InitStruct);
 
-	//两个外部中断
-	HAL_NVIC_SetPriority(EXTI2_IRQn, 5, 0);
-  HAL_NVIC_EnableIRQ(EXTI2_IRQn);
+	HAL_NVIC_SetPriority(Check_EXTI_IRQn, 5, 0);
+  HAL_NVIC_EnableIRQ(Check_EXTI_IRQn);
 
-  HAL_NVIC_SetPriority(EXTI9_5_IRQn, 5, 0);
-  HAL_NVIC_EnableIRQ(EXTI9_5_IRQn);
 }
 
 

@@ -27,6 +27,40 @@ Project File Date:  05/11/2019
 <h2>Output:</h2>
 *** Using Compiler 'V5.06 update 6 (build 750)', folder: 'D:\Keil\ARM\ARMCC\Bin'
 Build target 'hero_robot'
+compiling gun_task.c...
+../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f427xx.h(70): warning:  #47-D: incompatible redefinition of macro "__FPU_PRESENT" 
+  #define __FPU_PRESENT             1U       /*!< FPU present   	 */
+../Drivers/CMSIS/Include/arm_math.h(4889): warning:  #223-D: function "__SMUAD" declared implicitly
+      acc = (q31_t) __SMUAD((uint32_t)S->A0, (uint32_t)in);
+../Drivers/CMSIS/Include/arm_math.h(4893): warning:  #223-D: function "__SMLALD" declared implicitly
+      acc = (q63_t)__SMLALD((uint32_t)S->A1, (uint32_t)*vstate, (uint64_t)acc);
+../Drivers/CMSIS/Include/arm_math.h(4907): warning:  #223-D: function "__SSAT" declared implicitly
+      out = (q15_t) (__SSAT((acc >> 15), 16));
+../Drivers/CMSIS/Include/arm_math.h(5032): warning:  #223-D: function "__QADD" declared implicitly
+      *pIbeta = __QADD(product1, product2);
+../Drivers/CMSIS/Include/arm_math.h(5129): warning:  #223-D: function "__QSUB" declared implicitly
+      *pIb = __QSUB(product2, product1);
+../Drivers/CMSIS/Include/arm_math.h(5250): warning:  #223-D: function "__QADD" declared implicitly
+      *pId = __QADD(product1, product2);
+../Drivers/CMSIS/Include/arm_math.h(5253): warning:  #223-D: function "__QSUB" declared implicitly
+      *pIq = __QSUB(product4, product3);
+../Drivers/CMSIS/Include/arm_math.h(5363): warning:  #223-D: function "__QSUB" declared implicitly
+      *pIalpha = __QSUB(product1, product2);
+../Drivers/CMSIS/Include/arm_math.h(5366): warning:  #223-D: function "__QADD" declared implicitly
+      *pIbeta = __QADD(product4, product3);
+APP_task\gun_task.c(72): warning:  #177-D: variable "motor_stop_flag"  was declared but never referenced
+    uint8_t motor_stop_flag=0;
+APP_task\gun_task.c(73): warning:  #550-D: variable "set_cnt"  was set but never used
+    uint8_t set_cnt = 0;
+APP_task\gun_task.c(74): warning:  #177-D: variable "set_angle"  was declared but never referenced
+  	static int32_t set_angle = 0;
+APP_task\gun_task.c(76): warning:  #177-D: variable "set_M_speed"  was declared but never referenced
+    int32_t set_M_speed = 103;
+APP_task\gun_task.c(77): warning:  #177-D: variable "block_flag"  was declared but never referenced
+    static uint8_t block_flag;
+APP_task\gun_task.c(79): warning:  #177-D: variable "contiue_flag"  was declared but never referenced
+    static uint8_t contiue_flag = 0;
+APP_task\gun_task.c: 16 warnings, 0 errors
 compiling gimbal_task.c...
 ../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f427xx.h(70): warning:  #47-D: incompatible redefinition of macro "__FPU_PRESENT" 
   #define __FPU_PRESENT             1U       /*!< FPU present   	 */
@@ -36,8 +70,8 @@ APP_task\gimbal_task.c(128): warning:  #550-D: variable "pit_protect_correct_2" 
   	uint16_t pit_protect_correct_2 = 0;
 APP_task\gimbal_task.c: 3 warnings, 0 errors
 linking...
-Program Size: Code=25776 RO-data=752 RW-data=248 ZI-data=19944  
-"2018.07.12-infantry\hero_robot.axf" - 0 Error(s), 3 Warning(s).
+Program Size: Code=25964 RO-data=752 RW-data=256 ZI-data=19960  
+"2018.07.12-infantry\hero_robot.axf" - 0 Error(s), 19 Warning(s).
 
 <h2>Software Packages used:</h2>
 
@@ -60,7 +94,7 @@ Package Vendor: Keil
 <h2>Collection of Component Files used:</h2>
 
    * Component: ARM::CMSIS:CORE:5.2.0
-Build Time Elapsed:  00:00:04
+Build Time Elapsed:  00:00:07
 </pre>
 </body>
 </html>

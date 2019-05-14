@@ -3,7 +3,7 @@
 <title>Static Call Graph - [2018.07.12-infantry\hero_robot.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image 2018.07.12-infantry\hero_robot.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060750: Last Updated: Mon May 13 04:50:00 2019
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060750: Last Updated: Tue May 14 23:13:07 2019
 <BR><P>
 <H3>Maximum Stack Usage =        320 bytes + Unknown(Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -515,7 +515,7 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[97]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_CAN_Transmit
 </UL>
-<BR>[Called By]<UL><LI><a href="#[b1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Get_MiniPC_Handle
+<BR>[Called By]<UL><LI><a href="#[72]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Remote_Data_Task
 </UL>
 
 <P><STRONG><a name="[98]"></a>CAN_Send_S</STRONG> (Thumb, 78 bytes, Stack size 8 bytes, motor_use_can.o(i.CAN_Send_S))
@@ -696,11 +696,10 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[a4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Super_Capacitance
 </UL>
 
-<P><STRONG><a name="[b1]"></a>Get_MiniPC_Handle</STRONG> (Thumb, 96 bytes, Stack size 16 bytes, minipc.o(i.Get_MiniPC_Handle))
-<BR><BR>[Stack]<UL><LI>Max Depth = 64<LI>Call Chain = Get_MiniPC_Handle &rArr; CAN_Send_B &rArr; HAL_CAN_Transmit
+<P><STRONG><a name="[b1]"></a>Get_MiniPC_Handle</STRONG> (Thumb, 76 bytes, Stack size 16 bytes, minipc.o(i.Get_MiniPC_Handle))
+<BR><BR>[Stack]<UL><LI>Max Depth = 24<LI>Call Chain = Get_MiniPC_Handle &rArr; RefreshDeviceOutLineTime
 </UL>
 <BR>[Calls]<UL><LI><a href="#[b2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RefreshDeviceOutLineTime
-<LI><a href="#[96]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CAN_Send_B
 </UL>
 <BR>[Called By]<UL><LI><a href="#[30]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART2_IRQHandler
 <LI><a href="#[5c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART8_IRQHandler
@@ -815,10 +814,10 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[bb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GetTick
 </UL>
-<BR>[Called By]<UL><LI><a href="#[96]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CAN_Send_B
-<LI><a href="#[a7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Chassis_Motor_Disable
+<BR>[Called By]<UL><LI><a href="#[a7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Chassis_Motor_Disable
 <LI><a href="#[a5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Chassis_Motor
 <LI><a href="#[98]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CAN_Send_S
+<LI><a href="#[96]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CAN_Send_B
 </UL>
 
 <P><STRONG><a name="[ae]"></a>HAL_DMA_IRQHandler</STRONG> (Thumb, 414 bytes, Stack size 32 bytes, stm32f4xx_hal_dma.o(i.HAL_DMA_IRQHandler))
@@ -1311,7 +1310,7 @@ Global Symbols
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f427xx.o(RESET)
 </UL>
-<P><STRONG><a name="[eb]"></a>MouseKeyControlProcess</STRONG> (Thumb, 578 bytes, Stack size 48 bytes, data_pro_task.o(i.MouseKeyControlProcess))
+<P><STRONG><a name="[eb]"></a>MouseKeyControlProcess</STRONG> (Thumb, 590 bytes, Stack size 48 bytes, data_pro_task.o(i.MouseKeyControlProcess))
 <BR><BR>[Stack]<UL><LI>Max Depth = 52<LI>Call Chain = MouseKeyControlProcess &rArr; pid_calc
 </UL>
 <BR>[Calls]<UL><LI><a href="#[a2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;pid_calc
@@ -1391,7 +1390,7 @@ Global Symbols
 <BR><BR>[Called By]<UL><LI><a href="#[a4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Super_Capacitance
 </UL>
 
-<P><STRONG><a name="[72]"></a>Remote_Data_Task</STRONG> (Thumb, 356 bytes, Stack size 24 bytes, data_pro_task.o(i.Remote_Data_Task))
+<P><STRONG><a name="[72]"></a>Remote_Data_Task</STRONG> (Thumb, 376 bytes, Stack size 24 bytes, data_pro_task.o(i.Remote_Data_Task))
 <BR><BR>[Stack]<UL><LI>Max Depth = 168<LI>Call Chain = Remote_Data_Task &rArr; sendata &rArr; Send_FrameData &rArr; HAL_UART_Transmit &rArr; UART_WaitOnFlagUntilTimeout
 </UL>
 <BR>[Calls]<UL><LI><a href="#[9f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;xTaskGetTickCount
@@ -1401,6 +1400,7 @@ Global Symbols
 <LI><a href="#[f0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Show_CapVolt
 <LI><a href="#[a8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PID_struct_init
 <LI><a href="#[98]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CAN_Send_S
+<LI><a href="#[96]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CAN_Send_B
 <LI><a href="#[f2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ShotProcess
 <LI><a href="#[eb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MouseKeyControlProcess
 <LI><a href="#[9c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ChassisModeProcess
@@ -1531,14 +1531,14 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[5c]"></a>UART8_IRQHandler</STRONG> (Thumb, 80 bytes, Stack size 16 bytes, stm32f4xx_it.o(i.UART8_IRQHandler))
-<BR><BR>[Stack]<UL><LI>Max Depth = 80<LI>Call Chain = UART8_IRQHandler &rArr; Get_MiniPC_Handle &rArr; CAN_Send_B &rArr; HAL_CAN_Transmit
+<BR><BR>[Stack]<UL><LI>Max Depth = 40<LI>Call Chain = UART8_IRQHandler &rArr; Get_MiniPC_Handle &rArr; RefreshDeviceOutLineTime
 </UL>
 <BR>[Calls]<UL><LI><a href="#[b1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Get_MiniPC_Handle
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f427xx.o(RESET)
 </UL>
 <P><STRONG><a name="[30]"></a>USART2_IRQHandler</STRONG> (Thumb, 80 bytes, Stack size 16 bytes, stm32f4xx_it.o(i.USART2_IRQHandler))
-<BR><BR>[Stack]<UL><LI>Max Depth = 80<LI>Call Chain = USART2_IRQHandler &rArr; Get_MiniPC_Handle &rArr; CAN_Send_B &rArr; HAL_CAN_Transmit
+<BR><BR>[Stack]<UL><LI>Max Depth = 40<LI>Call Chain = USART2_IRQHandler &rArr; Get_MiniPC_Handle &rArr; RefreshDeviceOutLineTime
 </UL>
 <BR>[Calls]<UL><LI><a href="#[b1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Get_MiniPC_Handle
 </UL>
