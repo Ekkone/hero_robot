@@ -335,6 +335,11 @@
           <WinNumber>1</WinNumber>
           <ItemText>minipc_rx_small,0x0A</ItemText>
         </Ww>
+        <Ww>
+          <count>36</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>remain_heat,0x0A</ItemText>
+        </Ww>
       </WatchWindow1>
       <WatchWindow2>
         <Ww>

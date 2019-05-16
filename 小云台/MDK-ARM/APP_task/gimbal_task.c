@@ -54,9 +54,9 @@ void gimbal_pid_init(void)
 {
 		/*pitch axis motor pid parameter*/
   PID_struct_init(&pid_minipc_pit, POSITION_PID, 800, 500,
-									0.01f, 0.0f, 0.0f);
+									0.03f, 0.0f, 0.0f);
   PID_struct_init(&pid_minipc_yaw, POSITION_PID, 800, 500,
-                  0.02f, 0.001f, 0.001f);
+                  0.10f, 0.00003f, 0.0f);
   #if imu
   /*imu pid parameter*/
   /*暂时稳定版*/
@@ -147,7 +147,6 @@ void Gimbal_Contrl_Task(void const * argument)
         IMU_Get_Data();
       
       /*云台模式判断*/
-      //gimbal_mode = Manual_Mode;
       switch(gimbal_mode)
       {
         case Manual_Mode://手动模式，遥控器控制

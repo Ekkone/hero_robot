@@ -60,8 +60,8 @@ uint8_t gun_ready_flag = 0;
 void ManualMode()
 {
    gimbal_mode = Manual_Mode;
-   pit_set.expect = pit_set.expect -(0x400-RC_Ctl.rc.ch3)/20;	
-   yaw_set.expect = yaw_set.expect + (0x400-RC_Ctl.rc.ch2)/20;	
+   pit_set.expect = pit_set.expect - (0x400-RC_Ctl.rc.ch3)/40;	
+   yaw_set.expect = yaw_set.expect + (0x400-RC_Ctl.rc.ch2)/40;	
 
   if(press_counter >= press_times)//左按键延迟，时间由press_time控制
 	{
@@ -75,7 +75,7 @@ void ManualMode()
         }break;
         case 3://中,开启摩擦轮低速
         {
-            MoCa_Flag = MiddleSpeed;     
+            MoCa_Flag = HighSpeed;     
             ptr_heat_gun_t.sht_flg=GunFire;
         }break;
         case 2://下，开启摩擦轮高速与拨盘电机
@@ -100,10 +100,10 @@ void ManualMode()
 ****************************************************************************************/
 void Sleep_Mode(uint8_t mode)
 { 
+  MoCa_Flag = Init;
   gun_check_flag = 1;//检测
   gun_ready_flag = 0;//未就绪
   gimbal_mode = SleepMode;
-  MoCa_Flag = Init;//摩擦轮关闭
   if(mode)
   {
     /*键鼠控制*/
@@ -156,6 +156,7 @@ void Sleep_Mode(uint8_t mode)
 ****************************************************************************************/
 void AutoMode()
 {
+  MoCa_Flag = HighSpeed;
 //  if(gun_check_flag)
 //  {
 //    gimbal_mode = PatrolMode;
@@ -170,22 +171,18 @@ void AutoMode()
       {
         case 1:
         {
-          MoCa_Flag = LowSpeed;
           ptr_heat_gun_t.sht_flg=GunStop;
         }break;
         case 2:
         {
-          MoCa_Flag = LowSpeed;
           ptr_heat_gun_t.sht_flg=GunFire;
         }break;
         case 3:
         {
-          MoCa_Flag = MiddleSpeed;
           ptr_heat_gun_t.sht_flg=GunFire;
         }break;
         case 4:
         {
-          MoCa_Flag = HighSpeed;
           ptr_heat_gun_t.sht_flg=GunFire;
         }break;
       }
@@ -193,7 +190,7 @@ void AutoMode()
     else
     {
       gimbal_mode = PatrolMode;
-      MoCa_Flag = Init;
+//      gimbal_mode = SleepMode;
       ptr_heat_gun_t.sht_flg=GunStop;
     }
 //    if(gun_ready_flag)
@@ -225,6 +222,7 @@ void Remote_Data_Task(void const * argument)
 	{
 		/*刷新断线时间*/
     RefreshTaskOutLineTime(RemoteDataTask_ON);
+//    RemoteData_flag = 1;
     if(RemoteData_flag)//遥控控制
 		{
 			RemoteData_flag = 0;

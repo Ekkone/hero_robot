@@ -19,7 +19,7 @@
 #define NO_READY 0
 /* 外部变量声明--------------------------------------------------------------*/
 Heat_Gun_t  ptr_heat_gun_t;
-uint8_t MoCa_Flag = Init;
+volatile uint8_t MoCa_Flag = Init;
 uint16_t remain_heat = 0;
 ramp_function_source_t shoot;
 extern uint8_t shot_frequency;
@@ -83,37 +83,22 @@ void Gun_Task(void const * argument)
 	{
     /*刷新断线时间*/
 		RefreshTaskOutLineTime(GunTask_ON);
-//    MoCa_Flag = MiddleSpeed;
     switch(MoCa_Flag)
     {
       case Init:
       {
-        /*摩擦轮初始化*/
-        shoot.max_value=105;
-        ramp_calc(&shoot,103);
-        Friction_Wheel_Motor(shoot.out,shoot.out);
-      }break;
-      case LowSpeed:
-      {
-        /*摩擦轮低速*/
-        shoot.max_value = 110;
-        ramp_calc(&shoot,103);
-        Friction_Wheel_Motor(shoot.out,shoot.out);
-      }break;
-      case MiddleSpeed:
-      {
         /*摩擦轮中速*/
-        shoot.max_value = 117;
+        shoot.max_value=103;
         ramp_calc(&shoot,103);
         Friction_Wheel_Motor(shoot.out,shoot.out);
-      }break;
+      }
       case HighSpeed:
       {
-        /*摩擦轮速低速*/
-        shoot.max_value = 125;
+        /*摩擦轮中速*/
+        shoot.max_value=117;
         ramp_calc(&shoot,103);
         Friction_Wheel_Motor(shoot.out,shoot.out);
-      }break;
+      }
     }
     
     /*热量限制*/
@@ -126,6 +111,8 @@ void Gun_Task(void const * argument)
 			{
         set_speed = 0;
         set_cnt = 0;
+        moto_dial_get.run_time=GetSystemTimer();//未堵转时间
+        locktime = 0;
 			}break;
       case GunFire://连发模式
       {
@@ -135,8 +122,7 @@ void Gun_Task(void const * argument)
           set_speed = -800;
         }
         else//未堵转
-          set_speed = 800;
-
+          set_speed = 2000;
       }break;
 			default :break; 
     }
@@ -172,7 +158,7 @@ uint8_t Check_locked(void)
   if(!locktime)
   {
 		     /*判断拨盘是否转到位置*/			
-					if(my_abs(moto_dial_get.round_cnt) >=3)
+					if(my_abs(moto_dial_get.round_cnt) >=2)
 						{
 							
 										moto_dial_get.round_cnt=0;
@@ -207,7 +193,7 @@ uint8_t Check_stir_locked(void)
 						}
 						else if( my_abs(moto_stir_get.run_time-moto_stir_get.cmd_time)>STIR_BLOCK_TIME )//堵转判定
 						{
-                    stir_locktime = 100;
+                    stir_locktime = 60;
 									  return 1;	//堵转
             }
             else return 0;//堵转时间继续加力

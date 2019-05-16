@@ -196,7 +196,7 @@ void MouseKeyControlProcess()
   else round_flag = 0;
   if(chassis_gimble_Mode_flg == 1 || back_flag == 1) //XY运动，底盘跟随云台
    {
-      yaw_set_follow.expect = yaw_set_follow.expect -  RC_Ctl.mouse.x/2;	
+      yaw_set_follow.expect = yaw_set_follow.expect -  RC_Ctl.mouse.x*0.4;	
     
      yaw_set.expect = -yaw_get.total_angle;//更新分离编码器期望
    }
@@ -210,7 +210,7 @@ void MouseKeyControlProcess()
         minipc_rx_big.angle_yaw = 0;           
      }
      else
-      yaw_set.expect = yaw_set.expect + RC_Ctl.mouse.x/2;
+      yaw_set.expect = yaw_set.expect + RC_Ctl.mouse.x*0.4;
      
      yaw_set_follow.expect = ptr_jy61_t_yaw.final_angle;//更新跟随陀螺仪期望
    }

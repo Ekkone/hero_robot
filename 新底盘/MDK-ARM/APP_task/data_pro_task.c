@@ -142,8 +142,8 @@ void MouseKeyControlProcess()
         Y_speed_min = -7000;//(NORMAL_SPEED_MIN)*3.5;
         X_speed_max = 5000;//(NORMAL_SPEED_MAX)*3.5;
         X_speed_min = -5000;//(NORMAL_SPEED_MIN)*3.5;
-        W_speed_max = 3000;
-        W_speed_min = -3000; 
+        W_speed_max = 4000;
+        W_speed_min = -4000; 
       }
   else if(G_Press)//慢速
     {
@@ -158,10 +158,10 @@ void MouseKeyControlProcess()
   {
      Y_speed_max = 5000;//(NORMAL_SPEED_MAX)*3.5;
      Y_speed_min = -5000;//(NORMAL_SPEED_MIN)*3.5;
-     X_speed_max = 3000;//(NORMAL_SPEED_MAX)*3.5;
-     X_speed_min = -3000;//(NORMAL_SPEED_MIN)*3.5;
-     W_speed_max = 2000;
-     W_speed_min = -2000;
+     X_speed_max = 4000;//(NORMAL_SPEED_MAX)*3.5;
+     X_speed_min = -4000;//(NORMAL_SPEED_MIN)*3.5;
+     W_speed_max = 3000;
+     W_speed_min = -3000;
   }
 	/*Y向速度*/
   if(W_Press)                       moto_3508_set.dstVmmps_Y -= ACC_SPEED;//按下W键
