@@ -41,6 +41,7 @@ uint8_t shot_frequency = 100;
 int8_t chassis_gimble_Mode_flg;
 uint8_t gun_check_flag = 0;
 uint8_t gun_ready_flag = 0;
+extern uint8_t heat_limit;
 //volatile float remain_power=0.0;   //底盘功率 _待续
 //float power; 				 //底盘功率 _测试
 
@@ -101,9 +102,10 @@ void ManualMode()
 void Sleep_Mode(uint8_t mode)
 { 
   MoCa_Flag = Init;
-  gun_check_flag = 1;//检测
   gun_ready_flag = 0;//未就绪
   gimbal_mode = SleepMode;
+  heat_limit = 1;
+  ptr_heat_gun_t.sht_flg = GunStop;
   if(mode)
   {
     /*键鼠控制*/
@@ -121,27 +123,27 @@ void Sleep_Mode(uint8_t mode)
   else
   {
     /*遥控控制*/
-  if(press_counter >= press_times)//左按键延迟，时间由press_time控制
-	{
-		press_counter=press_times+1;
-    switch(RC_Ctl.rc.s1)
-      {
-        case 1://上,关闭仓门
+    if(press_counter >= press_times)//左按键延迟，时间由press_time控制
+    {
+      press_counter=press_times+1;
+      switch(RC_Ctl.rc.s1)
         {
-            Close_Door();
-        }break;
-        case 3://中,打开仓门
-        {
-            Open_Door();           
-        }break;
-        case 2://下
-        {
-            
-        }break;
-        
-        default:break;
+          case 1://上,关闭仓门
+          {
+              Close_Door();
+          }break;
+          case 3://中,打开仓门
+          {
+              Open_Door();           
+          }break;
+          case 2://下
+          {
+              
+          }break;
+          
+          default:break;
+      }
     }
-  }
   }
   
   
@@ -154,16 +156,23 @@ void Sleep_Mode(uint8_t mode)
 	*	@supplement	自动模式
 	*	@retval	
 ****************************************************************************************/
+extern uint16_t remain_heat;
+uint16_t remain_heat_last;
 void AutoMode()
 {
   MoCa_Flag = HighSpeed;
-//  if(gun_check_flag)
-//  {
-//    gimbal_mode = PatrolMode;
-//    MoCa_Flag = Init;
-//    ptr_heat_gun_t.sht_flg=GunFire;//补弹
-//  }
-//  else 
+  heat_limit = 1;
+  if(!gun_ready_flag)
+  {
+    gimbal_mode = SleepMode;
+    MoCa_Flag = Init;
+    ptr_heat_gun_t.sht_flg=GunFire;//补弹
+    if(remain_heat < remain_heat_last)
+    {
+      gun_ready_flag = 1;//开始正常检测
+    }
+  }
+  else 
     if(minipc_rx_small.state_flag)  
     {
       gimbal_mode = SnipeMode;
@@ -193,10 +202,13 @@ void AutoMode()
 //      gimbal_mode = SleepMode;
       ptr_heat_gun_t.sht_flg=GunStop;
     }
-//    if(gun_ready_flag)
-//    {
-//      gun_check_flag = 0;
-//    }
+    remain_heat_last = remain_heat;
+}
+void CleanMode(void)
+{
+  heat_limit = 0;
+  gimbal_mode = SleepMode;
+  ptr_heat_gun_t.sht_flg = GunFire;
 }
 
 /* 任务主体部分 -------------------------------------------------------------*/
@@ -244,7 +256,9 @@ void Remote_Data_Task(void const * argument)
     {
       Communication_flag = 0;
       if(!communication_message)AutoMode();//自动模式
-      else          Sleep_Mode(MOUSE_MODE);//休眠模式
+      else if(communication_message == 4)//清弹模式
+        CleanMode();
+      else  Sleep_Mode(MOUSE_MODE);//休眠模式
     }
     
 			osDelayUntil(&xLastWakeTime, REMOTE_PERIOD);

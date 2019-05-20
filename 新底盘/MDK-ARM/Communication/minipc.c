@@ -34,6 +34,7 @@ HAL_StatusTypeDef HAL_UART_Transmit(UART_HandleTypeDef *huart,
 /* 内部变量 ------------------------------------------------------------------*/
 Minipc_Rx minipc_rx_big;
 Minipc_Rx minipc_rx_small;
+Minipc_Tx minipc_tx;
 //Minipc_Tx minipc_tx;
 /* 函数原型声明 ----------------------------------------------------------*/
 
@@ -67,14 +68,13 @@ void Get_MiniPC_Handle(void)
 		minipc_rx_small.state_flag = buff[5];//0无目标，1有目标，2低速，3中速，4高速
 	}
 }
-//void Send_MiniPC_Data(unsigned char cmd1,unsigned char cmd2,unsigned char state)
-//{
-//	minipc_tx.frame_header = 0xFF;
-//	minipc_tx.cmd1 			   = cmd1;
-//	minipc_tx.cmd1 				 = cmd2;
-//	minipc_tx.frame_tail   = 0xFE;
-//	
-//	HAL_UART_Transmit(&huart2,(uint8_t *)&minipc_tx,sizeof(minipc_tx),10);
+void Send_MiniPC_Data(uint8_t gun,uint8_t camera)
+{
+	minipc_tx.frame_header = 0xFF;
+	minipc_tx.cmd1 			   = camera << 2 | gun;//0:关闭，1:开启,1:小枪口，2:大枪口
+	minipc_tx.frame_tail   = 0xFE;
+	
+	HAL_UART_Transmit(&huart8,(uint8_t *)&minipc_tx,sizeof(minipc_tx),10);
 
-//}
+}
 

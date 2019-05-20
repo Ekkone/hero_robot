@@ -78,6 +78,7 @@ void MiniPC_Data_task(void const * argument);
 void Sleep_Mode(uint8_t mode);
 void ManualMode(void);
 void AutoMode(void);
+void CleanMode(void);
 void Remote_Ctrl(void);
 void Minipc_Pid_Init(void);
 

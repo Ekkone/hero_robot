@@ -79,8 +79,8 @@ void BSP_Init(void)
   MX_ADC3_Init();
 	/*串口*/
 	MX_USART2_UART_Init();
-  MX_USART6_UART_Init();
-  MX_UART8_Init();
+  MX_USART6_UART_Init();//裁判系统
+  MX_UART8_Init();//视觉
 	/*SPI*/
 	MX_SPI5_Init();
 
@@ -103,6 +103,7 @@ void BSP_Init(void)
   HAL_CAN_Receive_IT(&hcan2, CAN_FIFO0);
 	HAL_Delay(1000);
 
+  huart6.gState = HAL_UART_STATE_READY;
 }
 
 

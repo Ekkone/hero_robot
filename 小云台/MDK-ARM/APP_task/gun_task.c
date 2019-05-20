@@ -25,6 +25,7 @@ ramp_function_source_t shoot;
 extern uint8_t shot_frequency;
 extern float Golf_speed;
 extern uint8_t stir_motor_flag;
+uint8_t heat_limit;
 //Power_Heat * power_heat;
 /* 外部函数原型声明-----------------------------------------------------------
 float pid_calc(pid_t* pid, float get, float set);
@@ -102,8 +103,11 @@ void Gun_Task(void const * argument)
     }
     
     /*热量限制*/
-    if(remain_heat < 30)
-//      ptr_heat_gun_t.sht_flg = GunStop;
+    if(heat_limit)
+    {
+      if(remain_heat < 30)
+        ptr_heat_gun_t.sht_flg = GunStop;
+    }
     /*判断发射模式*/
     switch(ptr_heat_gun_t.sht_flg)
     {

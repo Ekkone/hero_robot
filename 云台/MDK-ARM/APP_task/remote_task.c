@@ -173,7 +173,9 @@ extern uint8_t GunReady;
 void MouseKeyControlProcess() 
 {
   static uint16_t delay = 0;
- 
+  static uint8_t last_state = 0;
+  static uint8_t keep_flag = 0;
+  static uint32_t time = 0;
   CAN_Send_YK(&hcan1,RC_Ctl.key.v,0,0,RC_Ctl.rc.s1,RC_Ctl.rc.s2);
   /*弹舱空则传送电机开*/
   if(BULLTE_EMPTY && GunReady)
@@ -202,7 +204,7 @@ void MouseKeyControlProcess()
    }
    else if(chassis_gimble_Mode_flg == 0 || round_flag == 1)//WY运动，底盘云台分离
    {
-     if(CTRL_Press&&R_Press&&minipc_rx_big.state_flag)//辅助瞄准
+     if(R_Press&&minipc_rx_big.state_flag)//辅助瞄准
      {
         
         pid_calc(&pid_minipc_yaw, minipc_rx_big.angle_yaw,0);
@@ -214,14 +216,30 @@ void MouseKeyControlProcess()
      
      yaw_set_follow.expect = ptr_jy61_t_yaw.final_angle;//更新跟随陀螺仪期望
    }
-   if(CTRL_Press&&R_Press&&minipc_rx_big.state_flag)//辅助瞄准
+   if(R_Press)//辅助瞄准
    {
+     if(!time)//第一次进入记录云台模式
+     {
+       last_state = chassis_gimble_Mode_flg;
+     }
+     chassis_gimble_Mode_flg = 0;//分离模式
      pid_calc(&pid_minipc_pit, minipc_rx_big.angle_pit,0);
      pit_set.expect += pid_minipc_pit.pos_out;
      minipc_rx_big.state_flag = 0;
      minipc_rx_big.angle_pit = 0;
+     keep_flag = 1;
+     time++;
    }
-   else pit_set.expect = pit_set.expect - RC_Ctl.mouse.y/2;	//鼠标（移动速度*1000/50）
+   else 
+   {
+     if(keep_flag)//恢复云台模式，只进一次
+     {
+       keep_flag = 0;
+       time = 0;
+       chassis_gimble_Mode_flg = last_state;
+     }
+     pit_set.expect = pit_set.expect - RC_Ctl.mouse.y/2;	//鼠标（移动速度*1000/50）
+   }
    /*CTRL+鼠标右键关闭摩擦轮*/
    if(CTRL_Press&&Right_Press)
    {

@@ -39,7 +39,7 @@
 2018.07.12-infantry\protocol.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h
 2018.07.12-infantry\protocol.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h
 2018.07.12-infantry\protocol.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h
-2018.07.12-infantry\protocol.o: ..\Inc\USART.h
+2018.07.12-infantry\protocol.o: ..\Inc\usart.h
 2018.07.12-infantry\protocol.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h
 2018.07.12-infantry\protocol.o: D:\Keil\ARM\ARMCC\Bin\..\include\stddef.h
 2018.07.12-infantry\protocol.o: ..\Inc\FreeRTOSConfig.h

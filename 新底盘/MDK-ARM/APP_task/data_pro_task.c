@@ -46,6 +46,8 @@ uint8_t shot_frequency = 100;
 uint8_t chassis_gimble_Mode_flg = 0;
 uint8_t communication_message = 1;
 uint8_t stir_flag = 0;
+uint8_t gun_num = 0;
+uint8_t camera_flag = 0;
 extern int16_t yaw_speed;
 //volatile float remain_power=0.0;   //底盘功率 _待续
 //float power; 				 //底盘功率 _测试
@@ -103,7 +105,7 @@ void ShotProcess()
     }break;
     case 3:
     {
-      communication_message = 1;//睡眠模式
+      communication_message = 4;//清弹模式
     }break;
     case 2:
     {
@@ -225,6 +227,16 @@ void MouseKeyControlProcess()
     if(Z_Press && CTRL_Press) communication_message = 3;//关闭仓门
     else if(Z_Press)          communication_message = 2;//打开仓门 
   }
+  
+  if(R_Press)//辅助瞄准
+    gun_num = 2;
+  else 
+    gun_num = 1;
+  if(CTRL_Press&&X_Press)
+    camera_flag = 0;
+  else if(X_Press)
+    camera_flag = 1;
+   
 }
 
 
@@ -263,6 +275,7 @@ void Remote_Data_Task(void const * argument)
 	{
     /*发送给操作界面*/
     capvolt = Show_CapVolt();
+//    sendata(1,0,0,1,0,0,1,1,0);
     sendata(Show_CapVolt(),0,0,stir_motor_flag,1,1,1,1,1);
 			RefreshTaskOutLineTime(RemoteDataTask_ON);
 				switch(RC_Ctl.rc.s2)
@@ -282,6 +295,7 @@ void Remote_Data_Task(void const * argument)
 			VAL_LIMIT(moto_3508_set.dstVmmps_W, W_speed_min, W_speed_max);
       CAN_Send_B(&hcan1);
       CAN_Send_S(&hcan1);
+      Send_MiniPC_Data(gun_num,camera_flag);
       minipc_rx_small.angle_yaw  = 0;
       minipc_rx_small.angle_pit  = 0;
       minipc_rx_small.state_flag = 0;

@@ -15,7 +15,6 @@ typedef struct{
 
 unsigned char 		frame_header; 		  //֡ͷ0xFD
 unsigned char 		cmd1;     					//cmd1
-unsigned char 		cmd2;     					//cmd2 
 unsigned char 		frame_tail; 	  	  //֡β0xFC
 }Minipc_Tx;
 
@@ -23,11 +22,9 @@ unsigned char 		frame_tail; 	  	  //֡β0xFC
 extern Minipc_Rx minipc_rx_big;
 extern Minipc_Rx minipc_rx_small;
 
-extern uint8_t USART4_RX_DATA[(SizeofMinipc)];		//MiniPC
-extern uint16_t USART4_RX_NUM;
-
 void Get_MiniPC_Handle(void);
-void Send_MiniPC_Data(unsigned char cmd1,unsigned char cmd2,unsigned char state);
+void Send_MiniPC_Data(uint8_t gun,uint8_t camera);
+
 
 
 #endif

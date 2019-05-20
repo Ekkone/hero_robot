@@ -204,7 +204,7 @@ uint16_t append_crc16_check_sum(uint8_t* pchMessage, uint32_t dwLength)
 **			pchMessage：发送数据的首地址，需要是tSelfDefine格式的
 **			dwLength：数据长度
 ** Output: 无
-**   发送函数是通过串口3发送出去的
+**   发送函数是通过串口6发送出去的
 */
 void Send_FrameData(tCmdID cmdid, uint8_t * pchMessage,uint8_t dwLength)
 {	
@@ -232,7 +232,7 @@ void Send_FrameData(tCmdID cmdid, uint8_t * pchMessage,uint8_t dwLength)
   	i = sizeof(SelfDefineFrame.FrameHeader) + sizeof(SelfDefineFrame.CmdID)  + sizeof(SelfDefineFrame.CRC16) + dwLength;//计算实际帧的长度
 	  SelfDefineFrame.CRC16 = append_crc16_check_sum((uint8_t *)&SelfDefineFrame,i);
 	
-	HAL_UART_Transmit(&huart3,(uint8_t *)&SelfDefineFrame,sizeof(custom_dataFrame),100);
+	HAL_UART_Transmit(&huart6,(uint8_t *)&SelfDefineFrame,sizeof(custom_dataFrame),100);
 	
 }
 /*
@@ -247,9 +247,14 @@ void sendata(float data1,float data2,float data3,uint8_t flag1,uint8_t flag2,uin
 
 	client_custom_data_t       custom_data_t; 
   custom_data_t.data_id = 0xD180;//数据内容id（固定）
+  #if RED
   custom_data_t.sender_id = 1;//机器人id
   custom_data_t.cilent_id = 0x0101;//客户端id
-	custom_data_t.data1 = data1;//imu_data.gz;
+  #else 
+  custom_data_t.sender_id = 11;//机器人id
+  custom_data_t.cilent_id = 0x0111;//客户端id
+  #endif
+	custom_data_t.data1 = data1;
 	custom_data_t.data2 = data2;
 	custom_data_t.data3 = data3;
   custom_data_t.masks = (flag1<<5) || (flag2<<4) || (flag3<<3) || (flag4<<2) || (flag5<<1) || (flag6);//后六位flag

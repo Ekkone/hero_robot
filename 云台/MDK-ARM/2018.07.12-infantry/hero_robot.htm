@@ -3,7 +3,7 @@
 <title>Static Call Graph - [2018.07.12-infantry\hero_robot.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image 2018.07.12-infantry\hero_robot.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060750: Last Updated: Wed May 15 23:18:53 2019
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060750: Last Updated: Mon May 20 23:43:18 2019
 <BR><P>
 <H3>Maximum Stack Usage =        336 bytes + Unknown(Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -557,6 +557,10 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[155]"></a>_ll_ushift_r</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, llushr.o(.text), UNUSED)
+
+<P><STRONG><a name="[156]"></a>__decompress</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, __dczerorl.o(.text), UNUSED)
+
+<P><STRONG><a name="[157]"></a>__decompress0</STRONG> (Thumb, 58 bytes, Stack size unknown bytes, __dczerorl.o(.text), UNUSED)
 
 <P><STRONG><a name="[8f]"></a>BSP_Init</STRONG> (Thumb, 222 bytes, Stack size 8 bytes, bsp.o(i.BSP_Init))
 <BR><BR>[Stack]<UL><LI>Max Depth = 192<LI>Call Chain = BSP_Init &rArr; MPU6500_Init &rArr; IMU_Get_Data &rArr; MPU6500_Read_Regs &rArr; HAL_SPI_TransmitReceive &rArr; SPI_CheckFlag_BSY &rArr; SPI_WaitFlagStateUntilTimeout
@@ -1600,7 +1604,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[71]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Remote_Data_Task
 </UL>
 
-<P><STRONG><a name="[113]"></a>MouseKeyControlProcess</STRONG> (Thumb, 540 bytes, Stack size 64 bytes, remote_task.o(i.MouseKeyControlProcess))
+<P><STRONG><a name="[113]"></a>MouseKeyControlProcess</STRONG> (Thumb, 558 bytes, Stack size 64 bytes, remote_task.o(i.MouseKeyControlProcess))
 <BR><BR>[Stack]<UL><LI>Max Depth = 152<LI>Call Chain = MouseKeyControlProcess &rArr; __aeabi_dsub &rArr; __aeabi_dadd &rArr; _double_epilogue &rArr; _double_round
 </UL>
 <BR>[Calls]<UL><LI><a href="#[c0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;pid_calc
@@ -1873,11 +1877,11 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[121]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Usart_SendArray
 </UL>
 
-<P><STRONG><a name="[156]"></a>__scatterload_copy</STRONG> (Thumb, 14 bytes, Stack size unknown bytes, handlers.o(i.__scatterload_copy), UNUSED)
+<P><STRONG><a name="[158]"></a>__scatterload_copy</STRONG> (Thumb, 14 bytes, Stack size unknown bytes, handlers.o(i.__scatterload_copy), UNUSED)
 
-<P><STRONG><a name="[157]"></a>__scatterload_null</STRONG> (Thumb, 2 bytes, Stack size unknown bytes, handlers.o(i.__scatterload_null), UNUSED)
+<P><STRONG><a name="[159]"></a>__scatterload_null</STRONG> (Thumb, 2 bytes, Stack size unknown bytes, handlers.o(i.__scatterload_null), UNUSED)
 
-<P><STRONG><a name="[158]"></a>__scatterload_zeroinit</STRONG> (Thumb, 14 bytes, Stack size unknown bytes, handlers.o(i.__scatterload_zeroinit), UNUSED)
+<P><STRONG><a name="[15a]"></a>__scatterload_zeroinit</STRONG> (Thumb, 14 bytes, Stack size unknown bytes, handlers.o(i.__scatterload_zeroinit), UNUSED)
 
 <P><STRONG><a name="[12d]"></a>abs_limit</STRONG> (Thumb, 42 bytes, Stack size 0 bytes, pid.o(i.abs_limit))
 <BR><BR>[Called By]<UL><LI><a href="#[c0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;pid_calc
