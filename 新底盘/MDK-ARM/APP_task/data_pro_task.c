@@ -140,8 +140,8 @@ void MouseKeyControlProcess()
   else round_flag = 0;
 	if(SHIFT_Press)//最高速度
       {
-        Y_speed_max = 7000;//(NORMAL_SPEED_MAX)*3.5;
-        Y_speed_min = -7000;//(NORMAL_SPEED_MIN)*3.5;
+        Y_speed_max = 9000;//(NORMAL_SPEED_MAX)*3.5;
+        Y_speed_min = -9000;//(NORMAL_SPEED_MIN)*3.5;
         X_speed_max = 5000;//(NORMAL_SPEED_MAX)*3.5;
         X_speed_min = -5000;//(NORMAL_SPEED_MIN)*3.5;
         W_speed_max = 4000;

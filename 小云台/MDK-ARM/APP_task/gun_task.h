@@ -41,7 +41,7 @@ typedef enum
 {
   GunStop = 0,
   GunFire,
-  GunBack
+  GunReady
 }GunMode;
 /* 本模块向外部提供的宏定义--------------------------------------------------*/
 

@@ -160,7 +160,7 @@ void Gimbal_Contrl_Task(void const * argument)
         }break;
         case PatrolMode://巡逻模式，yaw轴周期转动
         {
-          //pit_set.expect = 250 - pit_get.offset_angle;
+          pit_set.expect = 250 - pit_get.offset_angle;
           if((yaw_set.expect) > 3500 \
             || (yaw_set.expect ) < -1300)
             {

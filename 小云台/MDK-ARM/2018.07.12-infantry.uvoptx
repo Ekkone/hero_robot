@@ -293,7 +293,7 @@
         <Ww>
           <count>27</count>
           <WinNumber>1</WinNumber>
-          <ItemText>communication_message</ItemText>
+          <ItemText>communication_message,0x0A</ItemText>
         </Ww>
         <Ww>
           <count>28</count>
@@ -337,6 +337,11 @@
         </Ww>
         <Ww>
           <count>36</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>remain_heat,0x0A</ItemText>
+        </Ww>
+        <Ww>
+          <count>37</count>
           <WinNumber>1</WinNumber>
           <ItemText>remain_heat,0x0A</ItemText>
         </Ww>

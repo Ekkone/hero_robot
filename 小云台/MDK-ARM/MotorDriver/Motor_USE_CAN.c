@@ -309,7 +309,7 @@ void get_total_angle(moto_measure_t *p){
 	p->last_angle = p->angle;
 }
 extern uint8_t stir_motor_flag;
-extern uint16_t remain_heat;
+volatile uint16_t remain_heat = 0;
 void CAN_Receive_S( CAN_HandleTypeDef * hcan)
 {
   minipc_rx_small.angle_yaw = (int16_t)(hcan->pRxMsg->Data[0]<<8 | hcan->pRxMsg->Data[1]) ;

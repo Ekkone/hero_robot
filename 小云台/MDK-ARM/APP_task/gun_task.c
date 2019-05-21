@@ -20,7 +20,6 @@
 /* 外部变量声明--------------------------------------------------------------*/
 Heat_Gun_t  ptr_heat_gun_t;
 volatile uint8_t MoCa_Flag = Init;
-uint16_t remain_heat = 0;
 ramp_function_source_t shoot;
 extern uint8_t shot_frequency;
 extern float Golf_speed;
@@ -76,7 +75,6 @@ void Gun_Task(void const * argument)
 	int32_t set_speed = 0;
   int32_t set_M_speed = 103;
   static uint8_t block_flag;
-  static uint16_t remain_heat = 0;
   static uint8_t contiue_flag = 0;
 
   int16_t set_stir_speed = 0;
@@ -97,7 +95,7 @@ void Gun_Task(void const * argument)
       {
         /*摩擦轮中速*/
         shoot.max_value=117;
-        ramp_calc(&shoot,103);
+        ramp_calc(&shoot,10);
         Friction_Wheel_Motor(shoot.out,shoot.out);
       }
     }

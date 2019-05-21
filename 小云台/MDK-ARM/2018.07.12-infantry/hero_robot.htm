@@ -3,7 +3,7 @@
 <title>Static Call Graph - [2018.07.12-infantry\hero_robot.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image 2018.07.12-infantry\hero_robot.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060750: Last Updated: Mon May 20 19:27:46 2019
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060750: Last Updated: Wed May 22 01:19:55 2019
 <BR><P>
 <H3>Maximum Stack Usage =        336 bytes + Unknown(Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -588,7 +588,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[8d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BSP_Init
 </UL>
 
-<P><STRONG><a name="[118]"></a>AutoMode</STRONG> (Thumb, 88 bytes, Stack size 20 bytes, remote_task.o(i.AutoMode))
+<P><STRONG><a name="[118]"></a>AutoMode</STRONG> (Thumb, 110 bytes, Stack size 20 bytes, remote_task.o(i.AutoMode))
 <BR><BR>[Stack]<UL><LI>Max Depth = 20<LI>Call Chain = AutoMode
 </UL>
 <BR>[Called By]<UL><LI><a href="#[6f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Remote_Data_Task
@@ -812,7 +812,7 @@ Global Symbols
 <LI><a href="#[a8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Check_locked
 </UL>
 
-<P><STRONG><a name="[70]"></a>Gimbal_Contrl_Task</STRONG> (Thumb, 630 bytes, Stack size 16 bytes, gimbal_task.o(i.Gimbal_Contrl_Task))
+<P><STRONG><a name="[70]"></a>Gimbal_Contrl_Task</STRONG> (Thumb, 646 bytes, Stack size 16 bytes, gimbal_task.o(i.Gimbal_Contrl_Task))
 <BR><BR>[Stack]<UL><LI>Max Depth = 152<LI>Call Chain = Gimbal_Contrl_Task &rArr; IMU_Get_Data &rArr; MPU6500_Read_Regs &rArr; HAL_SPI_TransmitReceive &rArr; SPI_CheckFlag_BSY &rArr; SPI_WaitFlagStateUntilTimeout
 </UL>
 <BR>[Calls]<UL><LI><a href="#[a3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osDelay
@@ -835,8 +835,8 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[71]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Gun_Task
 </UL>
 
-<P><STRONG><a name="[71]"></a>Gun_Task</STRONG> (Thumb, 372 bytes, Stack size 16 bytes, gun_task.o(i.Gun_Task))
-<BR><BR>[Stack]<UL><LI>Max Depth = 96<LI>Call Chain = Gun_Task &rArr; osDelay &rArr; vTaskDelay &rArr; xTaskResumeAll &rArr; xTaskIncrementTick
+<P><STRONG><a name="[71]"></a>Gun_Task</STRONG> (Thumb, 366 bytes, Stack size 8 bytes, gun_task.o(i.Gun_Task))
+<BR><BR>[Stack]<UL><LI>Max Depth = 88<LI>Call Chain = Gun_Task &rArr; osDelay &rArr; vTaskDelay &rArr; xTaskResumeAll &rArr; xTaskIncrementTick
 </UL>
 <BR>[Calls]<UL><LI><a href="#[a3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osDelay
 <LI><a href="#[a4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;xTaskGetTickCount

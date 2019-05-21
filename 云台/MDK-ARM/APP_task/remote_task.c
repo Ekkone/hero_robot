@@ -50,11 +50,11 @@ uint8_t chassis_gimble_Mode_flg = 0;
 void Minipc_Pid_Init()
 {
 		PID_struct_init(&pid_minipc_yaw, POSITION_PID, 1000, 1000,
-									0.7f,	0.1f, 0.000f); 
+									0.7f,	0.01f, 0.000f); 
     //pid_minipc_yaw.deadband = 5;  
 		//pid_pos[i].deadband=500;
-		PID_struct_init(&pid_minipc_pit, POSITION_PID, 500, 500,
-									0.3f,	0.02f, 0.00f	);   
+		PID_struct_init(&pid_minipc_pit, POSITION_PID, 1000, 1000,
+									0.5f,	0.04f, 0.00f	);   
 //		pid_pit_spd.deadband=10;//2.5f,	0.03f,	1.0f	
 }
 void ChassisModeProcess()
@@ -230,7 +230,7 @@ void MouseKeyControlProcess()
      keep_flag = 1;
      time++;
    }
-   else 
+   else
    {
      if(keep_flag)//恢复云台模式，只进一次
      {

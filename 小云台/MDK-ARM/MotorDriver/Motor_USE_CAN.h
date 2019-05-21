@@ -55,6 +55,7 @@ extern moto_measure_t   moto_dial_get;
 extern moto_measure_t   moto_stir_get;
 extern moto_measure_t   pit_get;
 extern moto_measure_t   yaw_get;
+extern volatile uint16_t remain_heat;
 /* Internal functions ------------------------------------------------------- */
 /* Exported functions ------------------------------------------------------- */
 void Cloud_Platform_Motor(CAN_HandleTypeDef * hcan,int16_t yaw,int16_t	pitch);

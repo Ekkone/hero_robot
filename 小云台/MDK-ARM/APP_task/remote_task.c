@@ -156,8 +156,9 @@ void Sleep_Mode(uint8_t mode)
 	*	@supplement	自动模式
 	*	@retval	
 ****************************************************************************************/
-extern uint16_t remain_heat;
+extern volatile uint16_t remain_heat;
 uint16_t remain_heat_last;
+uint32_t delay_time = 0;
 void AutoMode()
 {
   MoCa_Flag = HighSpeed;
@@ -165,7 +166,6 @@ void AutoMode()
   if(!gun_ready_flag)
   {
     gimbal_mode = SleepMode;
-    MoCa_Flag = Init;
     ptr_heat_gun_t.sht_flg=GunFire;//补弹
     if(remain_heat < remain_heat_last)
     {
@@ -195,12 +195,19 @@ void AutoMode()
           ptr_heat_gun_t.sht_flg=GunFire;
         }break;
       }
+      delay_time = 0;
     }
-    else
+    else 
     {
-      gimbal_mode = PatrolMode;
-//      gimbal_mode = SleepMode;
+      delay_time++;
       ptr_heat_gun_t.sht_flg=GunStop;
+      if(delay_time > 50)//
+      {
+        delay_time = 51;
+        gimbal_mode = PatrolMode;
+      }
+      else
+        gimbal_mode = SnipeMode;
     }
     remain_heat_last = remain_heat;
 }
@@ -255,7 +262,7 @@ void Remote_Data_Task(void const * argument)
     else if(Communication_flag)//自动控制
     {
       Communication_flag = 0;
-      if(!communication_message)AutoMode();//自动模式
+      if(communication_message == 0) AutoMode();//自动模式
       else if(communication_message == 4)//清弹模式
         CleanMode();
       else  Sleep_Mode(MOUSE_MODE);//休眠模式
