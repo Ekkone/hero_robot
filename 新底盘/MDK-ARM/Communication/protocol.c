@@ -257,7 +257,7 @@ void sendata(float data1,float data2,float data3,uint8_t flag1,uint8_t flag2,uin
 	custom_data_t.data1 = data1;
 	custom_data_t.data2 = data2;
 	custom_data_t.data3 = data3;
-  custom_data_t.masks = (flag1<<5) || (flag2<<4) || (flag3<<3) || (flag4<<2) || (flag5<<1) || (flag6);//后六位flag
+  custom_data_t.masks = (flag1<<5) | (flag2<<4) | (flag3<<3) | (flag4<<2) | (flag5<<1) | (flag6);//后六位flag
 	Send_FrameData(custom_data,(uint8_t *)&custom_data_t,sizeof(client_custom_data_t));	
 
 }

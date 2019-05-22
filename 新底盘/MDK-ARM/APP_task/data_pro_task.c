@@ -276,7 +276,7 @@ void Remote_Data_Task(void const * argument)
     /*发送给操作界面*/
     capvolt = Show_CapVolt();
 //    sendata(1,0,0,1,0,0,1,1,0);
-    sendata(Show_CapVolt(),0,0,stir_motor_flag,1,1,1,1,1);
+    sendata(capvolt,0,0,!stir_motor_flag,0,0,0,0,0);
 			RefreshTaskOutLineTime(RemoteDataTask_ON);
 				switch(RC_Ctl.rc.s2)
 				{

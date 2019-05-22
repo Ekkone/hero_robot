@@ -27,10 +27,97 @@ Project File Date:  05/11/2019
 <h2>Output:</h2>
 *** Using Compiler 'V5.06 update 6 (build 750)', folder: 'D:\Keil\ARM\ARMCC\Bin'
 Build target 'hero_robot'
+compiling stm32f4xx_it.c...
+../Src/stm32f4xx_it.c(339): warning:  #177-D: variable "pxHigherPriorityTaskWoken"  was declared but never referenced
+  	 static  BaseType_t  pxHigherPriorityTaskWoken;
+../Src/stm32f4xx_it.c(358): warning:  #177-D: variable "pxHigherPriorityTaskWoken"  was declared but never referenced
+    static  BaseType_t  pxHigherPriorityTaskWoken;
+../Src/stm32f4xx_it.c(376): warning:  #177-D: variable "pxHigherPriorityTaskWoken"  was declared but never referenced
+    static  BaseType_t  pxHigherPriorityTaskWoken;
+../Src/stm32f4xx_it.c: 3 warnings, 0 errors
+compiling main.c...
+compiling test_task.c...
+APP_task\test_task.h(27): warning:  #1-D: last line of file ends without a newline
+  /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
+APP_task\test_task.c(44): warning:  #177-D: variable "counter_last"  was declared but never referenced
+  		static uint16_t counter_last;
+APP_task\test_task.c(45): warning:  #177-D: variable "count"  was declared but never referenced
+  		static uint8_t count = 0;
+APP_task\test_task.c(63): warning:  #177-D: variable "ptr"  was declared but never referenced
+  		  int16_t  *ptr = &angle; //³õÊ¼»¯Ö¸Õë
+APP_task\test_task.c(64): warning:  #177-D: variable "p1"  was declared but never referenced
+        int16_t  *p1  = &speed_set;
+APP_task\test_task.c(65): warning:  #177-D: variable "p2"  was declared but never referenced
+        float  *p2  = &(limit.Power_Calculat);
+APP_task\test_task.c(67): warning:  #177-D: variable "p3"  was declared but never referenced
+        float *p3 = &speed__;
+APP_task\test_task.c(30): warning:  #177-D: variable "micro_timenow"  was declared but never referenced
+  	static double micro_timenow = 0;
+APP_task\test_task.c(31): warning:  #177-D: variable "micro_timelast"  was declared but never referenced
+  	static double micro_timelast = 0;
+APP_task\test_task.c(32): warning:  #177-D: variable "micro_time"  was declared but never referenced
+  	static double micro_time = 0;
+APP_task\test_task.c(34): warning:  #177-D: variable "angle_yaw"  was declared but never referenced
+    int16_t angle_yaw = 0;
+APP_task\test_task.c(39): warning:  #177-D: variable "speed"  was declared but never referenced
+    float speed[30];
+APP_task\test_task.c(79): warning:  #1-D: last line of file ends without a newline
+  /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
+APP_task\test_task.c: 13 warnings, 0 errors
+compiling freertos.c...
+../Drivers/CMSIS/Include/arm_math.h(4889): warning:  #223-D: function "__SMUAD" declared implicitly
+      acc = (q31_t) __SMUAD((uint32_t)S->A0, (uint32_t)in);
+../Drivers/CMSIS/Include/arm_math.h(4893): warning:  #223-D: function "__SMLALD" declared implicitly
+      acc = (q63_t)__SMLALD((uint32_t)S->A1, (uint32_t)*vstate, (uint64_t)acc);
+../Drivers/CMSIS/Include/arm_math.h(4907): warning:  #223-D: function "__SSAT" declared implicitly
+      out = (q15_t) (__SSAT((acc >> 15), 16));
+../Drivers/CMSIS/Include/arm_math.h(5032): warning:  #223-D: function "__QADD" declared implicitly
+      *pIbeta = __QADD(product1, product2);
+../Drivers/CMSIS/Include/arm_math.h(5129): warning:  #223-D: function "__QSUB" declared implicitly
+      *pIb = __QSUB(product2, product1);
+../Drivers/CMSIS/Include/arm_math.h(5250): warning:  #223-D: function "__QADD" declared implicitly
+      *pId = __QADD(product1, product2);
+../Drivers/CMSIS/Include/arm_math.h(5253): warning:  #223-D: function "__QSUB" declared implicitly
+      *pIq = __QSUB(product4, product3);
+../Drivers/CMSIS/Include/arm_math.h(5363): warning:  #223-D: function "__QSUB" declared implicitly
+      *pIalpha = __QSUB(product1, product2);
+../Drivers/CMSIS/Include/arm_math.h(5366): warning:  #223-D: function "__QADD" declared implicitly
+      *pIbeta = __QADD(product4, product3);
+../Src/freertos.c: 9 warnings, 0 errors
+compiling status_task.c...
+APP_task\status_task.h(27): warning:  #1-D: last line of file ends without a newline
+  /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
+APP_task\status_task.c(171): warning:  #1-D: last line of file ends without a newline
+  /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
+APP_task\status_task.c: 2 warnings, 0 errors
+compiling BSP.c...
+compiling chassis_task.c...
 compiling data_pro_task.c...
+compiling Motor_USE_CAN.c...
+MotorDriver\Motor_USE_CAN.c(250): warning:  #1-D: last line of file ends without a newline
+  }
+MotorDriver\Motor_USE_CAN.c: 1 warning, 0 errors
+compiling pid.c...
+compiling Power_restriction.c...
+Algorithm\Power_restriction.c(424): warning:  #940-D: missing return statement at end of non-void function "Down_Shield" 
+  }
+Algorithm\Power_restriction.c(488): warning:  #177-D: variable "total_current"  was declared but never referenced
+  		static float total_current = 0;
+Algorithm\Power_restriction.c(489): warning:  #550-D: variable "flag"  was set but never used
+  		static uint8_t flag = 0;
+Algorithm\Power_restriction.c(622): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+      return (current_get.Capacitance_Volt - MinVoltOFCap)*12.5;	
+Algorithm\Power_restriction.c: 4 warnings, 0 errors
+compiling protocol.c...
+Communication\protocol.c(278): warning:  #177-D: variable "crc8_flag"  was declared but never referenced
+  		static uint8_t crc8_flag = 0,crc16_flag = 0;
+Communication\protocol.c(278): warning:  #177-D: variable "crc16_flag"  was declared but never referenced
+  		static uint8_t crc8_flag = 0,crc16_flag = 0;
+Communication\protocol.c: 2 warnings, 0 errors
+compiling communication.c...
 linking...
-Program Size: Code=22600 RO-data=1500 RW-data=296 ZI-data=21040  
-"2018.07.12-infantry\hero_robot.axf" - 0 Error(s), 0 Warning(s).
+Program Size: Code=22588 RO-data=1500 RW-data=296 ZI-data=21040  
+"2018.07.12-infantry\hero_robot.axf" - 0 Error(s), 34 Warning(s).
 
 <h2>Software Packages used:</h2>
 
@@ -53,7 +140,7 @@ Package Vendor: Keil
 <h2>Collection of Component Files used:</h2>
 
    * Component: ARM::CMSIS:CORE:5.2.0
-Build Time Elapsed:  00:00:37
+Build Time Elapsed:  00:00:35
 </pre>
 </body>
 </html>
