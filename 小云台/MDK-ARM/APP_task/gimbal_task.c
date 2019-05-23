@@ -162,11 +162,11 @@ void Gimbal_Contrl_Task(void const * argument)
         {
           pit_set.expect = 250 - pit_get.offset_angle;
           if((yaw_set.expect) > 3500 \
-            || (yaw_set.expect ) < -1300)
+            || (yaw_set.expect ) < -1350)
             {
               Direction = -Direction;
             }
-          yaw_set.expect += Direction * 5;
+          yaw_set.expect += Direction * 4;
           
         }break;
         case SnipeMode://¾Ñ»÷Ä£Ê½

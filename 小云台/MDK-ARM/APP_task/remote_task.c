@@ -163,16 +163,7 @@ void AutoMode()
 {
   MoCa_Flag = HighSpeed;
   heat_limit = 1;
-  if(!gun_ready_flag)
-  {
-    gimbal_mode = SleepMode;
-    ptr_heat_gun_t.sht_flg=GunFire;//补弹
-    if(remain_heat < remain_heat_last)
-    {
-      gun_ready_flag = 1;//开始正常检测
-    }
-  }
-  else 
+  
     if(minipc_rx_small.state_flag)  
     {
       gimbal_mode = SnipeMode;
@@ -201,13 +192,21 @@ void AutoMode()
     {
       delay_time++;
       ptr_heat_gun_t.sht_flg=GunStop;
-      if(delay_time > 50)//
+      if(delay_time > 200)//
       {
-        delay_time = 51;
+        delay_time = 201;
         gimbal_mode = PatrolMode;
       }
       else
         gimbal_mode = SnipeMode;
+    }
+    if(!gun_ready_flag)
+    {
+      ptr_heat_gun_t.sht_flg=GunFire;//补弹
+      if(remain_heat < remain_heat_last)
+      {
+        gun_ready_flag = 1;//开始正常检测
+      }
     }
     remain_heat_last = remain_heat;
 }

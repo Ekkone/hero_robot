@@ -140,8 +140,8 @@ void MouseKeyControlProcess()
   else round_flag = 0;
 	if(SHIFT_Press)//最高速度
       {
-        Y_speed_max = 9000;//(NORMAL_SPEED_MAX)*3.5;
-        Y_speed_min = -9000;//(NORMAL_SPEED_MIN)*3.5;
+        Y_speed_max = 7500;//(NORMAL_SPEED_MAX)*3.5;
+        Y_speed_min = -7500;//(NORMAL_SPEED_MIN)*3.5;
         X_speed_max = 5000;//(NORMAL_SPEED_MAX)*3.5;
         X_speed_min = -5000;//(NORMAL_SPEED_MIN)*3.5;
         W_speed_max = 4000;
@@ -158,8 +158,8 @@ void MouseKeyControlProcess()
     }
   else//正常速度
   {
-     Y_speed_max = 5000;//(NORMAL_SPEED_MAX)*3.5;
-     Y_speed_min = -5000;//(NORMAL_SPEED_MIN)*3.5;
+     Y_speed_max = 6000;//(NORMAL_SPEED_MAX)*3.5;
+     Y_speed_min = -6000;//(NORMAL_SPEED_MIN)*3.5;
      X_speed_max = 4000;//(NORMAL_SPEED_MAX)*3.5;
      X_speed_min = -4000;//(NORMAL_SPEED_MIN)*3.5;
      W_speed_max = 3000;
@@ -222,12 +222,29 @@ void MouseKeyControlProcess()
   {
     communication_message = 0;//自动模式
   }
-  if(communication_message)
+  static uint8_t PatrolFlag = 0;
+  if(communication_message)//休眠模式
   {
     if(Z_Press && CTRL_Press) communication_message = 3;//关闭仓门
-    else if(Z_Press)          communication_message = 2;//打开仓门 
+    else if(Z_Press)          communication_message = 2;//打开仓门
+
+    if(PatrolFlag)
+    {
+      if(!R_Press)
+      {
+        communication_message = 0;
+        PatrolFlag = 0;
+      }
+    }
   }
-  
+  else//自动模式
+  {
+    if(R_Press)
+    {
+      PatrolFlag = 1;
+      communication_message = 1;//睡眠模式
+    }
+  }
   if(R_Press)//辅助瞄准
     gun_num = 2;
   else 
@@ -264,6 +281,8 @@ void hard_brak()
 	*	@retval	
 ****************************************************************************************/
 float capvolt;
+uint8_t small_gun_flag;
+uint8_t big_gun_flag;
 void Remote_Data_Task(void const * argument)
 {
 		portTickType xLastWakeTime;
@@ -274,9 +293,16 @@ void Remote_Data_Task(void const * argument)
 	for(;;)
 	{
     /*发送给操作界面*/
+    if(minipc_rx_small.state_flag != 0 &&  minipc_rx_small.state_flag != 1)
+         small_gun_flag = 1;
+    else small_gun_flag = 0;
+    
+    if(minipc_rx_big.state_flag != 0 &&  minipc_rx_big.state_flag != 1)
+         big_gun_flag = 1;
+    else big_gun_flag = 0;
     capvolt = Show_CapVolt();
 //    sendata(1,0,0,1,0,0,1,1,0);
-    sendata(capvolt,0,0,!stir_motor_flag,0,0,0,0,0);
+    sendata(capvolt,0,0,!stir_motor_flag,small_gun_flag,0,0,0,big_gun_flag);
 			RefreshTaskOutLineTime(RemoteDataTask_ON);
 				switch(RC_Ctl.rc.s2)
 				{

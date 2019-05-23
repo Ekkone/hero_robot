@@ -50,11 +50,11 @@ uint8_t chassis_gimble_Mode_flg = 0;
 void Minipc_Pid_Init()
 {
 		PID_struct_init(&pid_minipc_yaw, POSITION_PID, 1000, 1000,
-									0.7f,	0.01f, 0.000f); 
+									0.7f,	0.01f, 0.0001f); 
     //pid_minipc_yaw.deadband = 5;  
 		//pid_pos[i].deadband=500;
 		PID_struct_init(&pid_minipc_pit, POSITION_PID, 1000, 1000,
-									0.5f,	0.04f, 0.00f	);   
+									0.5f,	0.04f, 0.0001f	);   
 //		pid_pit_spd.deadband=10;//2.5f,	0.03f,	1.0f	
 }
 void ChassisModeProcess()
@@ -138,8 +138,10 @@ void ShotProcess()
            {
             pid_calc(&pid_minipc_pit, minipc_rx_big.angle_pit,0);
             pid_calc(&pid_minipc_yaw, minipc_rx_big.angle_yaw,0);
-            yaw_set.expect += pid_minipc_yaw.pos_out;
-            pit_set.expect += pid_minipc_pit.pos_out;
+//            yaw_set.expect += pid_minipc_yaw.pos_out;
+//            pit_set.expect += pid_minipc_pit.pos_out;
+             yaw_set.expect += minipc_rx_big.angle_yaw;
+             pit_set.expect += minipc_rx_big.angle_pit;
             minipc_rx_big.angle_yaw = 0;
             minipc_rx_big.state_flag = 0;
             minipc_rx_big.angle_pit = 0;  
@@ -207,8 +209,12 @@ void MouseKeyControlProcess()
      if(R_Press&&minipc_rx_big.state_flag)//辅助瞄准
      {
         
-        pid_calc(&pid_minipc_yaw, minipc_rx_big.angle_yaw,0);
-        yaw_set.expect += pid_minipc_yaw.pos_out;
+//        pid_calc(&pid_minipc_yaw, minipc_rx_big.angle_yaw,0);
+//        yaw_set.expect += pid_minipc_yaw.pos_out;
+       if(abs(minipc_rx_big.angle_yaw) < 5)
+          minipc_rx_big.angle_yaw =  minipc_rx_big.angle_yaw*0.5;
+       else minipc_rx_big.angle_pit =  minipc_rx_big.angle_pit*1.3;
+       yaw_set.expect -= minipc_rx_big.angle_yaw;
         minipc_rx_big.angle_yaw = 0;           
      }
      else
@@ -223,8 +229,12 @@ void MouseKeyControlProcess()
        last_state = chassis_gimble_Mode_flg;
      }
      chassis_gimble_Mode_flg = 0;//分离模式
-     pid_calc(&pid_minipc_pit, minipc_rx_big.angle_pit,0);
-     pit_set.expect += pid_minipc_pit.pos_out;
+//     pid_calc(&pid_minipc_pit, minipc_rx_big.angle_pit,0);
+//     pit_set.expect += pid_minipc_pit.pos_out;
+     if(abs(minipc_rx_big.angle_pit) < 16)
+          minipc_rx_big.angle_pit =  minipc_rx_big.angle_pit*0.4;
+     else minipc_rx_big.angle_pit =  minipc_rx_big.angle_pit;
+     pit_set.expect -= minipc_rx_big.angle_pit;
      minipc_rx_big.state_flag = 0;
      minipc_rx_big.angle_pit = 0;
      keep_flag = 1;

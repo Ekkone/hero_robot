@@ -8,8 +8,8 @@
 #include "FreeRTOS.h"
 #include "cmsis_os.h"
 
-#define RED  1
-#define BLUE 0
+#define RED  0
+#define BLUE 1
 
 #define UP_REG_ID    0xA0  //up layer regional id
 #define DN_REG_ID    0xA5  //down layer regional id
