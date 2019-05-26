@@ -39,7 +39,7 @@ int16_t angle[2];
 
 extern int16_t yaw_speed;
 #define CHASSIS_PERIOD 5
-#define Middle_angle 3700
+#define Middle_angle 4144
 /* 内部函数原型声明----------------------------------------------------------*/
 void Chassis_pid_init(void)
 {

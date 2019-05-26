@@ -211,9 +211,9 @@ void MouseKeyControlProcess()
         
 //        pid_calc(&pid_minipc_yaw, minipc_rx_big.angle_yaw,0);
 //        yaw_set.expect += pid_minipc_yaw.pos_out;
-       if(abs(minipc_rx_big.angle_yaw) < 5)
-          minipc_rx_big.angle_yaw =  minipc_rx_big.angle_yaw*0.5;
-       else minipc_rx_big.angle_pit =  minipc_rx_big.angle_pit*1.3;
+       if(abs(minipc_rx_big.angle_yaw) < 25)
+          minipc_rx_big.angle_yaw =  minipc_rx_big.angle_yaw*0.1;
+       else minipc_rx_big.angle_yaw =  minipc_rx_big.angle_yaw*0.6;
        yaw_set.expect -= minipc_rx_big.angle_yaw;
         minipc_rx_big.angle_yaw = 0;           
      }
@@ -231,9 +231,9 @@ void MouseKeyControlProcess()
      chassis_gimble_Mode_flg = 0;//·ÖÀëÄ£Ê½
 //     pid_calc(&pid_minipc_pit, minipc_rx_big.angle_pit,0);
 //     pit_set.expect += pid_minipc_pit.pos_out;
-     if(abs(minipc_rx_big.angle_pit) < 16)
-          minipc_rx_big.angle_pit =  minipc_rx_big.angle_pit*0.4;
-     else minipc_rx_big.angle_pit =  minipc_rx_big.angle_pit;
+     if(abs(minipc_rx_big.angle_pit) < 22)
+          minipc_rx_big.angle_pit =  minipc_rx_big.angle_pit*0.1;
+     else minipc_rx_big.angle_pit =  minipc_rx_big.angle_pit*0.5;
      pit_set.expect -= minipc_rx_big.angle_pit;
      minipc_rx_big.state_flag = 0;
      minipc_rx_big.angle_pit = 0;

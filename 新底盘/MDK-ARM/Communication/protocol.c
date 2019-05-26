@@ -28,6 +28,8 @@
 
 /* 内部常量定义---------------------------------------------------------------*/
 ROBOT Robot;
+client_custom_data_t       custom_data_t={0}; 
+
 const uint8_t CRC8_INIT     = 0xff;
 const uint8_t CRC8_TAB[256] = {
   0x00, 0x5e, 0xbc, 0xe2, 0x61, 0x3f, 0xdd, 0x83, 0xc2, 0x9c, 0x7e, 0x20, 0xa3, 0xfd, 0x1f, 0x41,
@@ -245,15 +247,14 @@ void Send_FrameData(tCmdID cmdid, uint8_t * pchMessage,uint8_t dwLength)
 void sendata(float data1,float data2,float data3,uint8_t flag1,uint8_t flag2,uint8_t flag3,uint8_t flag4,uint8_t flag5,uint8_t flag6)
 {
 
-	client_custom_data_t       custom_data_t; 
+	
   custom_data_t.data_id = 0xD180;//数据内容id（固定）
-  #if RED
-  custom_data_t.sender_id = 1;//机器人id
-  custom_data_t.cilent_id = 0x0101;//客户端id
-  #else 
-  custom_data_t.sender_id = 11;//机器人id
-  custom_data_t.cilent_id = 0x0111;//客户端id
-  #endif
+  custom_data_t.sender_id = Robot.id;
+  
+  if(Robot.id > 10)//蓝方
+    custom_data_t.cilent_id = 0x0111;
+  else//红方
+    custom_data_t.cilent_id = 0x0101;
 	custom_data_t.data1 = data1;
 	custom_data_t.data2 = data2;
 	custom_data_t.data3 = data3;

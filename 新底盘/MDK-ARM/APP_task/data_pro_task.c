@@ -140,8 +140,8 @@ void MouseKeyControlProcess()
   else round_flag = 0;
 	if(SHIFT_Press)//最高速度
       {
-        Y_speed_max = 7500;//(NORMAL_SPEED_MAX)*3.5;
-        Y_speed_min = -7500;//(NORMAL_SPEED_MIN)*3.5;
+        Y_speed_max = 7000;//(NORMAL_SPEED_MAX)*3.5;
+        Y_speed_min = -7000;//(NORMAL_SPEED_MIN)*3.5;
         X_speed_max = 5000;//(NORMAL_SPEED_MAX)*3.5;
         X_speed_min = -5000;//(NORMAL_SPEED_MIN)*3.5;
         W_speed_max = 4000;
@@ -158,11 +158,11 @@ void MouseKeyControlProcess()
     }
   else//正常速度
   {
-     Y_speed_max = 6000;//(NORMAL_SPEED_MAX)*3.5;
-     Y_speed_min = -6000;//(NORMAL_SPEED_MIN)*3.5;
+     Y_speed_max = 5500;//(NORMAL_SPEED_MAX)*3.5;
+     Y_speed_min = -5500;//(NORMAL_SPEED_MIN)*3.5;
      X_speed_max = 4000;//(NORMAL_SPEED_MAX)*3.5;
      X_speed_min = -4000;//(NORMAL_SPEED_MIN)*3.5;
-     W_speed_max = 3000;
+     W_speed_max = 3000;  
      W_speed_min = -3000;
   }
 	/*Y向速度*/

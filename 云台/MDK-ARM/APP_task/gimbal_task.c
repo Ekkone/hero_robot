@@ -194,34 +194,34 @@ void Gimbal_Contrl_Task(void const * argument)
       {
         if(back_flag)
           goto back;
-        /*yaw轴云台保护3100-4300*/
-        if((yaw_get.offset_angle - yaw_set.expect) > 4300)
+        /*yaw轴云台保护3600-4700*/
+        if((yaw_get.offset_angle - yaw_set.expect) > 4700)
         {
           if(yaw_set.expect >= yaw_set.expect_last)
             goto yaw_last;
-            yaw_set.expect = yaw_get.offset_angle - 4300;
+            yaw_set.expect = yaw_get.offset_angle - 4700;
         }
-        if((yaw_get.offset_angle - yaw_set.expect) < 3100)
+        if((yaw_get.offset_angle - yaw_set.expect) < 3600)
         {
           if(yaw_set.expect <= yaw_set.expect_last)
             goto yaw_last;
-            yaw_set.expect = yaw_get.offset_angle - 3100;
+            yaw_set.expect = yaw_get.offset_angle - 3600;
         }
           yaw_last:pid_calc(&pid_yaw_jy61,(-yaw_get.total_angle),yaw_set.expect);
           pid_calc(&pid_yaw_jy61_spd,(-ptr_jy61_t_angular_velocity.vz), pid_yaw_jy61.pos_out);
-          Yaw_Current_Value= (pid_yaw_jy61_spd.pos_out);
+          Yaw_Current_Value= (-pid_yaw_jy61_spd.pos_out);
       }
       else//跟随
       {
         /*yaw轴云台保护*/
         back:
-          if(yaw_get.angle > 4300)
+          if(yaw_get.angle > 4840)
           {
             if(yaw_set_follow.expect >= yaw_set_follow.expect_last)
               goto yaw_follow_last;
               yaw_set_follow.expect = ptr_jy61_t_yaw.final_angle;
           }
-          if(yaw_get.angle < 3100)
+          if(yaw_get.angle < 3430)
           {
             if(yaw_set_follow.expect <= yaw_set_follow.expect_last)
               goto yaw_follow_last;
@@ -229,11 +229,11 @@ void Gimbal_Contrl_Task(void const * argument)
           }
       yaw_follow_last:pid_calc(&pid_yaw_jy61_follow,(ptr_jy61_t_yaw.final_angle),yaw_set_follow.expect);
           pid_calc(&pid_yaw_jy61_follow_spd,(ptr_jy61_t_angular_velocity.vz), pid_yaw_jy61_follow.pos_out);
-          Yaw_Current_Value= (-pid_yaw_jy61_follow_spd.pos_out);
+          Yaw_Current_Value= (pid_yaw_jy61_follow_spd.pos_out);
       } 
       #endif
-//        Pitch_Current_Value = 0;
-//        Yaw_Current_Value = 0;
+        //Pitch_Current_Value = 0;
+        //Yaw_Current_Value = 0;
         /*驱动电机*/
 				if(gimbal_disable_flg)//失能
 				{
